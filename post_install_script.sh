@@ -9,10 +9,12 @@ echo "Refreshing repositories..."
 sudo zypper ref
 
 echo "Upgrading system..."
+sudo zypper -v dup
+
+echo "Installing codecs..."
 sudo zypper ar -cfp 90 https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/ packman
 sudo zypper -v dup --from packman --allow-vendor-change
 
-echo "Installing codecs..."
 sudo zypper -v install opi
 opi codecs
 
