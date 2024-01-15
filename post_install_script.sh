@@ -18,7 +18,7 @@ opi codecs
 
 echo "Removing unnecessary packages and installing extra ones..."
 sudo zypper -v rm --clean-deps kmail kontact kmines akregator kaddressbook korganizer kompare konversation tigervnc kleopatra kmahjongg kpat kreversi ksudoku
-sudo zypper -v in in fish neofetch htop flatpak kwrite
+sudo zypper -v in fish neofetch htop flatpak kwrite
 
 echo "Installing build tools..."
 sudo zypper -v in -t pattern devel_basis
@@ -32,6 +32,9 @@ else
     curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
 fi
 
+echo "Copying fish config..."
+cp ./config.fish ~/.config/fish/config.fish -vf
+
 echo "Installing visual studio code..."
 sudo zypper ar obs://devel:tools:ide:vscode devel_tools_ide_vscode
 sudo zypper -v in code
@@ -42,3 +45,4 @@ sudo usermod -a -G wheel $USER
 flatpak install io.missioncenter.MissionCenter com.github.tchx84.Flatseal org.gimp.GIMP org.kde.kdenlive com.valvesoftware.Steam rg.onlyoffice.desktopeditors net.davidotek.pupgui2 com.obsproject.Studio com.github.unrud.VideoDownloader
 
 echo "Post install complete, enjoy your new distro!"
+echo "Please run 'fish && omf install bobthefish' to install the omf theme"
