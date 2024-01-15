@@ -34,7 +34,7 @@ sudo zypper -v install opi
 opi codecs
 
 echo "Removing unnecessary packages and installing extra ones..."
-sudo zypper -v rm --clean-deps kmail kontact kmines akregator kaddressbook korganizer kompare konversation tigervnc kleopatra kmahjongg kpat kreversi ksudoku
+sudo zypper -v rm --clean-deps discover kmail kontact kmines akregator kaddressbook korganizer kompare konversation tigervnc kleopatra kmahjongg kpat kreversi ksudoku
 sudo zypper -v in fish neofetch htop kwrite
 
 echo "Installing build tools..."
