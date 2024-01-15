@@ -5,11 +5,26 @@ if [ $EUID -eq 0 ]; then
     exit
 fi
 
+echo "Ask for hostname and set it"
+read -p "Hostname: " hostname
+sudo hostnamectl hostname $hostname
+
 echo "Refreshing repositories..."
 sudo zypper ref
 
 echo "Upgrading system..."
 sudo zypper -v dup
+
+echo "Check the internet..."
+wget -q --spider http://google.com
+
+if [ $? -eq 0 ]; then
+    echo "Online"
+else
+    echo "Offline"
+    echo "Please restart to progress the post install script!"
+    exit
+fi
 
 echo "Installing codecs..."
 sudo zypper ar -cfp 90 https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/ packman
