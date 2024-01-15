@@ -45,7 +45,7 @@ sudo zypper -v in code
 echo "Configuring flatpak and installing flatpak apps..."
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 sudo usermod -a -G wheel $USER
-flatpak install io.missioncenter.MissionCenter com.github.tchx84.Flatseal org.gimp.GIMP org.kde.kdenlive com.valvesoftware.Steam rg.onlyoffice.desktopeditors net.davidotek.pupgui2 com.obsproject.Studio com.github.unrud.VideoDownloader
+flatpak install io.missioncenter.MissionCenter com.github.tchx84.Flatseal org.gimp.GIMP org.kde.kdenlive com.valvesoftware.Steam org.onlyoffice.desktopeditors net.davidotek.pupgui2 com.obsproject.Studio com.github.unrud.VideoDownloader
 
 echo "Post install complete, enjoy your new distro!"
 echo "Please run 'fish && omf install bobthefish' to install the omf theme"
