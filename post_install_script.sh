@@ -64,5 +64,6 @@ sudo usermod -a -G wheel $USER
 
 flatpak install -y io.missioncenter.MissionCenter com.github.tchx84.Flatseal org.gimp.GIMP org.kde.kdenlive com.valvesoftware.Steam net.davidotek.pupgui2 com.obsproject.Studio com.github.unrud.VideoDownloader
 
+echo "Please reboot for flatpak's path to work"
 echo "Post install complete, enjoy your new distro!"
 echo "Please run 'fish and omf install bobthefish' to install the omf theme"
