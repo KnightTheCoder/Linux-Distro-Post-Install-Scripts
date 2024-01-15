@@ -30,7 +30,7 @@ echo "Installing codecs..."
 sudo zypper ar -cfp 90 https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/ packman
 sudo zypper -v dup -y --from packman --allow-vendor-change
 
-sudo zypper -v in opi -y
+sudo zypper -v in -y opi
 opi codecs
 
 echo "Removing unnecessary packages and installing extra ones..."
