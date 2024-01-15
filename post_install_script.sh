@@ -44,6 +44,7 @@ echo "Installing microsoft fonts..."
 sudo zypper -v in -y fetchmsttfonts
 
 echo "Installing oh my fish!..."
+echo "Please exit from fish once it's done so the install can continue"
 curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
 
 echo "Copying fish config..."
