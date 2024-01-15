@@ -35,7 +35,7 @@ opi codecs
 
 echo "Removing unnecessary packages and installing extra ones..."
 sudo zypper -v rm --clean-deps kmail kontact kmines akregator kaddressbook korganizer kompare konversation tigervnc kleopatra kmahjongg kpat kreversi ksudoku
-sudo zypper -v in fish neofetch htop flatpak kwrite
+sudo zypper -v in fish neofetch htop kwrite
 
 echo "Installing build tools..."
 sudo zypper -v in -t pattern devel_basis
@@ -43,26 +43,26 @@ sudo zypper -v in -t pattern devel_basis
 echo "Installing microsoft fonts..."
 sudo zypper -v in fetchmsttfonts
 
-echo "Checking if omf is installed..."
-is_installed=$(omf)
-if [[ $is_installed//"command not found" == $is_installed ]]; then
-    echo "omf is already installed"
-else
-    echo "omf is not found installing..."
-    curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
-fi
+echo "Installing oh my fish!..."
+curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
 
 echo "Copying fish config..."
 cp ./config.fish ~/.config/fish/config.fish -vf
+
+echo "Installing gaming and other extra apps..."
+sudo zypper in -v lutris goverlay mangohud transmission-gtk haruna celluloid strawberry
 
 echo "Installing visual studio code..."
 sudo zypper ar obs://devel:tools:ide:vscode devel_tools_ide_vscode
 sudo zypper -v in code
 
 echo "Configuring flatpak and installing flatpak apps..."
+sudo zypper -v in flatpak
+
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 sudo usermod -a -G wheel $USER
-flatpak install io.missioncenter.MissionCenter com.github.tchx84.Flatseal org.gimp.GIMP org.kde.kdenlive com.valvesoftware.Steam org.onlyoffice.desktopeditors net.davidotek.pupgui2 com.obsproject.Studio com.github.unrud.VideoDownloader
+
+flatpak install io.missioncenter.MissionCenter com.github.tchx84.Flatseal org.gimp.GIMP org.kde.kdenlive com.valvesoftware.Steam net.davidotek.pupgui2 com.obsproject.Studio com.github.unrud.VideoDownloader
 
 echo "Post install complete, enjoy your new distro!"
 echo "Please run 'fish && omf install bobthefish' to install the omf theme"
