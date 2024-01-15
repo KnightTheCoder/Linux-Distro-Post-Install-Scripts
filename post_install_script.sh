@@ -23,6 +23,9 @@ sudo zypper -v in fish neofetch htop flatpak kwrite
 echo "Installing build tools..."
 sudo zypper -v in -t pattern devel_basis
 
+echo "Installing microsoft fonts..."
+sudo zypper -v in fetchmsttfonts
+
 echo "Checking if omf is installed..."
 is_installed=$(omf)
 if [[ $is_installed//"command not found" == $is_installed ]]; then
