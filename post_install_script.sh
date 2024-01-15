@@ -50,7 +50,7 @@ echo "Copying fish config..."
 cp ./config.fish ~/.config/fish/config.fish -vf
 
 echo "Installing gaming and other extra apps..."
-sudo zypper in -v -y lutris goverlay mangohud transmission-gtk haruna celluloid strawberry
+sudo zypper -v -y in lutris goverlay mangohud transmission-gtk haruna celluloid strawberry
 
 echo "Installing visual studio code..."
 sudo zypper ar obs://devel:tools:ide:vscode devel_tools_ide_vscode
