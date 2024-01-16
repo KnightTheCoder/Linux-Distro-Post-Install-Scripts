@@ -55,7 +55,7 @@ sudo zypper -v in -y lutris goverlay mangohud transmission-gtk haruna celluloid 
 
 echo "Installing visual studio code..."
 sudo zypper ar obs://devel:tools:ide:vscode devel_tools_ide_vscode
-sudo zypper -v in -y code
+sudo zypper -v in code
 
 echo "Configuring flatpak and installing flatpak apps..."
 sudo zypper -v in -y flatpak
