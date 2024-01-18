@@ -5,6 +5,11 @@ if [ $EUID -eq 0 ]; then
     exit
 fi
 
+read -p "Do you want to make a snapshot before the setup?(y/n)" SNAPSHOT_SETUP
+if [ $SNAPSHOT_SETUP -eq "y" ]; then
+    sudo snapper create --description "Pre-Install script snapshot" --cleanup-algorithm number
+fi
+
 echo "Ask for hostname and set it"
 read -p "Hostname: " hostname
 sudo hostnamectl hostname $hostname
@@ -62,6 +67,11 @@ sudo zypper -v in -y flatpak
 
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 sudo usermod -a -G wheel $USER
+
+read -p "Do you want to make a snapshot after setup?(y/n)" SNAPSHOT_POST
+if [ $SNAPSHOT_POST -eq "y" ]; then
+    sudo snapper create --description "Post-Install script snapshot" --cleanup-algorithm number
+fi
 
 flatpak install -y io.missioncenter.MissionCenter com.github.tchx84.Flatseal org.gimp.GIMP org.kde.kdenlive com.valvesoftware.Steam net.davidotek.pupgui2 com.obsproject.Studio com.github.unrud.VideoDownloader
 
