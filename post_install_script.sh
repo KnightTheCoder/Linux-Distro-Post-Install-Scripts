@@ -5,8 +5,8 @@ if [ $EUID -eq 0 ]; then
     exit
 fi
 
-read -p "Do you want to make a snapshot before the setup?(y/n)" SNAPSHOT_SETUP
-if [ $SNAPSHOT_SETUP -eq "y" ]; then
+read -p "Do you want to make a snapshot before the setup?(y/n): " SNAPSHOT_SETUP
+if [ $SNAPSHOT_SETUP = "y" ]; then
     sudo snapper create --description "Pre-Install script snapshot" --cleanup-algorithm number
 fi
 
@@ -68,8 +68,8 @@ sudo zypper -v in -y flatpak
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 sudo usermod -a -G wheel $USER
 
-read -p "Do you want to make a snapshot after setup?(y/n)" SNAPSHOT_POST
-if [ $SNAPSHOT_POST -eq "y" ]; then
+read -p "Do you want to make a snapshot after setup?(y/n): " SNAPSHOT_POST
+if [ $SNAPSHOT_POST = "y" ]; then
     sudo snapper create --description "Post-Install script snapshot" --cleanup-algorithm number
 fi
 
