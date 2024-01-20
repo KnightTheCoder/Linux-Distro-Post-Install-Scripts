@@ -7,7 +7,7 @@ fi
 
 read -p "Do you want to make a snapshot before the setup?(y/n): " SNAPSHOT_SETUP
 if [ $SNAPSHOT_SETUP = "y" ]; then
-    sudo snapper create --description "Pre-Install script snapshot" --cleanup-algorithm number
+    sudo snapper create -d "Pre-Install script snapshot" -c number
 fi
 
 echo "Ask for hostname and set it"
@@ -18,7 +18,7 @@ echo "Refreshing repositories..."
 sudo zypper ref
 
 echo "Upgrading system..."
-sudo zypper -v dup -y
+sudo zypper -vv dup -y
 
 echo "Checking the internet connection..."
 wget -q --spider http://google.com
@@ -33,20 +33,20 @@ fi
 
 echo "Installing codecs..."
 sudo zypper ar -cfp 90 https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/ packman
-sudo zypper -v dup -y --from packman --allow-vendor-change
+sudo zypper -vv dup -y --from packman --allow-vendor-change
 
-sudo zypper -v in -y opi
+sudo zypper -vv in -y opi
 opi codecs
 
 echo "Removing unnecessary packages and installing extra ones..."
-sudo zypper -v rm -y --clean-deps discover kmail kontact kmines akregator kaddressbook korganizer kompare konversation tigervnc kleopatra kmahjongg kpat kreversi ksudoku
-sudo zypper -v in -y fish neofetch htop kwrite
+sudo zypper -vv rm -y --clean-deps discover kmail kontact kmines akregator kaddressbook korganizer kompare konversation tigervnc kleopatra kmahjongg kpat kreversi ksudoku
+sudo zypper -vv in -y fish neofetch htop kwrite btop
 
 echo "Installing build tools..."
-sudo zypper -v in -y -t pattern devel_basis
+sudo zypper -vv in -y -t pattern devel_basis
 
 echo "Installing microsoft fonts..."
-sudo zypper -v in -y fetchmsttfonts
+sudo zypper -vv in -y fetchmsttfonts
 
 echo "Installing oh my fish!..."
 echo "Please exit from fish once it's done so the install can continue"
@@ -56,21 +56,21 @@ echo "Copying fish config..."
 cp ./config.fish ~/.config/fish/config.fish -vf
 
 echo "Installing gaming and other extra apps..."
-sudo zypper -v in -y lutris goverlay mangohud transmission-gtk haruna celluloid strawberry
+sudo zypper -v vin -y lutris goverlay mangohud transmission-gtk haruna celluloid strawberry
 
 echo "Installing visual studio code..."
 sudo zypper ar obs://devel:tools:ide:vscode devel_tools_ide_vscode
-sudo zypper -v in code
+sudo zypper -vv in code
 
 echo "Configuring flatpak and installing flatpak apps..."
-sudo zypper -v in -y flatpak
+sudo zypper -vv in -y flatpak
 
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 sudo usermod -a -G wheel $USER
 
 read -p "Do you want to make a snapshot after setup?(y/n): " SNAPSHOT_POST
 if [ $SNAPSHOT_POST = "y" ]; then
-    sudo snapper create --description "Post-Install script snapshot" --cleanup-algorithm number
+    sudo snapper create -d "Post-Install script snapshot" -c number
 fi
 
 flatpak install -y io.missioncenter.MissionCenter com.github.tchx84.Flatseal org.gimp.GIMP org.kde.kdenlive com.valvesoftware.Steam net.davidotek.pupgui2 com.obsproject.Studio com.github.unrud.VideoDownloader
