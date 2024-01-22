@@ -78,7 +78,7 @@ opi codecs
 
 echo -e "${GREEN}Removing unnecessary packages and installing extra ones...${NC}"
 sudo zypper -vv rm -y --clean-deps discover kmail kontact kmines akregator kaddressbook korganizer kompare konversation tigervnc kleopatra kmahjongg kpat kreversi ksudoku
-sudo zypper -vv in -y fish neofetch htop kwrite btop pipx
+sudo zypper -vv in -y fish neofetch htop kwrite btop python311-pipx
 
 echo -e "${GREEN}Installing trash-cli...${NC}"
 pipx install trash-cli
