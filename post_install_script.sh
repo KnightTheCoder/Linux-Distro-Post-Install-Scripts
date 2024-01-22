@@ -48,7 +48,7 @@ echo -e "${GREEN}Ask for hostname and set it${NC}"
 read -p "Hostname: " hostname
 # Check if hostname is empty
 if [ -z $hostname ]; then
-    $hostname=${USER}PC
+    $hostname="${USER}PC"
 fi
 sudo hostnamectl hostname $hostname
 
