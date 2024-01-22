@@ -28,7 +28,7 @@ create_snapshot() {
     select yn in "Yes" "No"; do
         case $yn in
             Yes ) sudo snapper -v create -d "${snapshot_tag}-Install script snapshot" -c number; break;;
-            No ) exit;;
+            No ) break;;
         esac
     done
 }
