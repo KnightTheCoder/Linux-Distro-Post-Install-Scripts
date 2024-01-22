@@ -8,19 +8,19 @@ YELLOW='\033[0;33m'
 NC='\033[0m' # No Color
 
 create_snapshot() {
-    local snapshot_type = $1 # 0 or anything else
-    local prompt_tag = 'before'
-    local snapshot_tag = 'Pre'
+    local snapshot_type=$1 # 0 or anything else
+    local prompt_tag='before'
+    local snapshot_tag='Pre'
 
     case $snapshot_type in
         0)
-            $prompt_tag = 'before'
-            $snapshot_tag = 'Pre'
+            $prompt_tag='before'
+            $snapshot_tag='Pre'
             ;;
 
         *)
-            $prompt_tag = 'after'
-            $snapshot_tag = 'Post'
+            $prompt_tag='after'
+            $snapshot_tag='Post'
             ;;
     esac
 
@@ -48,7 +48,7 @@ echo -e "${GREEN}Ask for hostname and set it${NC}"
 read -p "Hostname: " hostname
 # Check if hostname is empty
 if [ -z $hostname ]; then
-    $hostname = ${USER}PC
+    $hostname=${USER}PC
 fi
 sudo hostnamectl hostname $hostname
 
