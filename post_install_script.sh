@@ -38,10 +38,6 @@ if [ $EUID -eq 0 ]; then
     exit 1
 fi
 
-# read -p "Do you want to make a snapshot before the setup?(y/n): " SNAPSHOT_SETUP
-# if [ $SNAPSHOT_SETUP = "y" ]; then
-#     sudo snapper create -d "Pre-Install script snapshot" -c number
-# fi
 create_snapshot 0
 
 echo -e "${GREEN}Ask for hostname and set it${NC}"
@@ -90,7 +86,7 @@ echo -e "${GREEN}Installing microsoft fonts...${NC}"
 sudo zypper -vv in -y fetchmsttfonts
 
 echo -e "${GREEN}Installing gaming and other extra apps...${NC}"
-sudo zypper -vv in -y lutris goverlay mangohud transmission-gtk haruna celluloid strawberry
+sudo zypper -vv in -y lutris goverlay mangohud transmission-gtk haruna celluloid strawberry steam steam-devices
 
 echo -e "${GREEN}Installing visual studio code...${NC}"
 sudo zypper ar obs://devel:tools:ide:vscode devel_tools_ide_vscode
@@ -102,13 +98,7 @@ sudo zypper -vv in -y flatpak
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 sudo usermod -a -G wheel $USER
 
-# read -p "Do you want to make a snapshot after setup?(y/n): " SNAPSHOT_POST
-# if [ $SNAPSHOT_POST = "y" ]; then
-#     sudo snapper create -d "Post-Install script snapshot" -c number
-# fi
-create_snapshot 1
-
-flatpak install -y io.missioncenter.MissionCenter com.github.tchx84.Flatseal org.gimp.GIMP org.kde.kdenlive com.valvesoftware.Steam net.davidotek.pupgui2 com.obsproject.Studio com.github.unrud.VideoDownloader
+flatpak install -y io.missioncenter.MissionCenter com.github.tchx84.Flatseal org.gimp.GIMP org.kde.kdenlive net.davidotek.pupgui2 com.obsproject.Studio com.github.unrud.VideoDownloader
 
 echo -e "${GREEN}Installing oh my fish!...${NC}"
 echo -e "${YELLOW}Please run omf install bobthefish and exit from fish once it's done so the install can continue${NC}"
@@ -116,6 +106,8 @@ curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install 
 
 echo -e "${GREEN}Copying fish config...${NC}"
 cp ./config.fish ~/.config/fish/config.fish -vf
+
+create_snapshot 1
 
 echo -e "${YELLOW}Please reboot for flatpak's path to work${NC}"
 echo -e "${GREEN}Post install complete, enjoy your new distro!${NC}"
