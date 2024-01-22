@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# Made based on https://www.techhut.tv/opensuse-5-things-you-must-do-after-installing/
+
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
@@ -44,6 +46,10 @@ create_snapshot 0
 
 echo -e "${GREEN}Ask for hostname and set it${NC}"
 read -p "Hostname: " hostname
+# Check if hostname is empty
+if [ -z $hostname ]; then
+    $hostname = ${USER}PC
+fi
 sudo hostnamectl hostname $hostname
 
 echo -e "${GREEN}Refreshing repositories...${NC}"
@@ -72,7 +78,10 @@ opi codecs
 
 echo -e "${GREEN}Removing unnecessary packages and installing extra ones...${NC}"
 sudo zypper -vv rm -y --clean-deps discover kmail kontact kmines akregator kaddressbook korganizer kompare konversation tigervnc kleopatra kmahjongg kpat kreversi ksudoku
-sudo zypper -vv in -y fish neofetch htop kwrite btop
+sudo zypper -vv in -y fish neofetch htop kwrite btop pipx
+
+echo -e "${GREEN}Installing trash-cli...${NC}"
+pipx install trash-cli
 
 echo -e "${GREEN}Installing build tools...${NC}"
 sudo zypper -vv in -y -t pattern devel_basis
