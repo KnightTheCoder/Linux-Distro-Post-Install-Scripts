@@ -111,7 +111,7 @@ create_snapshot 1
 flatpak install -y io.missioncenter.MissionCenter com.github.tchx84.Flatseal org.gimp.GIMP org.kde.kdenlive com.valvesoftware.Steam net.davidotek.pupgui2 com.obsproject.Studio com.github.unrud.VideoDownloader
 
 echo -e "${GREEN}Installing oh my fish!...${NC}"
-echo -e "${YELLOW}Please exit from fish once it's done so the install can continue${NC}"
+echo -e "${YELLOW}Please run omf install bobthefish and exit from fish once it's done so the install can continue${NC}"
 curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
 
 echo -e "${GREEN}Copying fish config...${NC}"
@@ -119,4 +119,3 @@ cp ./config.fish ~/.config/fish/config.fish -vf
 
 echo -e "${YELLOW}Please reboot for flatpak's path to work${NC}"
 echo -e "${GREEN}Post install complete, enjoy your new distro!${NC}"
-echo -e "${YELLOW}Please run 'fish and omf install bobthefish' to install the omf theme${NC}"
