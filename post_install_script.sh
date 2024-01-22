@@ -14,20 +14,20 @@ create_snapshot() {
 
     case $snapshot_type in
         0)
-            $prompt_tag='before'
-            $snapshot_tag='Pre'
+            prompt_tag='before'
+            snapshot_tag='Pre'
             ;;
 
         *)
-            $prompt_tag='after'
-            $snapshot_tag='Post'
+            prompt_tag='after'
+            snapshot_tag='Post'
             ;;
     esac
 
     echo -e "${GREEN}Do you want to make a snapshot before the setup?(y/n)${NC} "
     select yn in "Yes" "No"; do
         case $yn in
-            Yes ) sudo snapper create -d "${snapshot_tag}-Install script snapshot" -c number; break;;
+            Yes ) sudo snapper -v create -d "${snapshot_tag}-Install script snapshot" -c number; break;;
             No ) exit;;
         esac
     done
@@ -48,7 +48,7 @@ echo -e "${GREEN}Ask for hostname and set it${NC}"
 read -p "Hostname: " hostname
 # Check if hostname is empty
 if [ -z $hostname ]; then
-    $hostname="${USER}PC"
+    hostname="${USER}PC"
 fi
 sudo hostnamectl hostname $hostname
 
