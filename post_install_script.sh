@@ -1,80 +1,113 @@
 #!/usr/bin/env bash
 
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+NC='\033[0m' # No Color
+
+create_snapshot() {
+    local snapshot_type = $1 # 0 or anything else
+    local prompt_tag = 'before'
+    local snapshot_tag = 'Pre'
+
+    case $snapshot_type in
+        0)
+            $prompt_tag = 'before'
+            $snapshot_tag = 'Pre'
+            ;;
+
+        *)
+            $prompt_tag = 'after'
+            $snapshot_tag = 'Post'
+            ;;
+    esac
+
+    echo -ne "${GREEN}Do you want to make a snapshot before the setup?(y/n)${NC} "
+    select yn in "Yes" "No"; do
+        case $yn in
+            Yes ) sudo snapper create -d "${snapshot_tag}-Install script snapshot" -c number; break;;
+            No ) exit;;
+        esac
+    done
+}
+
 if [ $EUID -eq 0 ]; then
-    echo "Please run without root!"
-    exit
+    echo -e "${RED}Please run without root!${NC}"
+    exit 1
 fi
 
-read -p "Do you want to make a snapshot before the setup?(y/n): " SNAPSHOT_SETUP
-if [ $SNAPSHOT_SETUP = "y" ]; then
-    sudo snapper create -d "Pre-Install script snapshot" -c number
-fi
+# read -p "Do you want to make a snapshot before the setup?(y/n): " SNAPSHOT_SETUP
+# if [ $SNAPSHOT_SETUP = "y" ]; then
+#     sudo snapper create -d "Pre-Install script snapshot" -c number
+# fi
+create_snapshot 0
 
-echo "Ask for hostname and set it"
+echo -e "${GREEN}Ask for hostname and set it${NC}"
 read -p "Hostname: " hostname
 sudo hostnamectl hostname $hostname
 
-echo "Refreshing repositories..."
+echo -e "${GREEN}Refreshing repositories...${NC}"
 sudo zypper ref
 
-echo "Upgrading system..."
+echo -e "${GREEN}Upgrading system...${NC}"
 sudo zypper -vv dup -y
 
-echo "Checking the internet connection..."
+echo -e "${GREEN}Checking the internet connection...${NC}"
 wget -q --spider http://google.com
 
 if [ $? -eq 0 ]; then
-    echo "Online"
+    echo -e "${GREEN}Online${NC}"
 else
-    echo "Offline"
-    echo "Please restart to progress the post install script!"
-    exit
+    echo -e "${RED}Offline"
+    echo -e "Please restart to progress the post install script!${NC}"
+    exit 0
 fi
 
-echo "Installing codecs..."
+echo -e "${GREEN}Installing codecs...${NC}"
 sudo zypper ar -cfp 90 https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/ packman
 sudo zypper -vv dup -y --from packman --allow-vendor-change
 
 sudo zypper -vv in -y opi
 opi codecs
 
-echo "Removing unnecessary packages and installing extra ones..."
+echo -e "${GREEN}Removing unnecessary packages and installing extra ones...${NC}"
 sudo zypper -vv rm -y --clean-deps discover kmail kontact kmines akregator kaddressbook korganizer kompare konversation tigervnc kleopatra kmahjongg kpat kreversi ksudoku
 sudo zypper -vv in -y fish neofetch htop kwrite btop
 
-echo "Installing build tools..."
+echo -e "${GREEN}Installing build tools...${NC}"
 sudo zypper -vv in -y -t pattern devel_basis
 
-echo "Installing microsoft fonts..."
+echo -e "${GREEN}Installing microsoft fonts...${NC}"
 sudo zypper -vv in -y fetchmsttfonts
 
-echo "Installing oh my fish!..."
-echo "Please exit from fish once it's done so the install can continue"
-curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
-
-echo "Copying fish config..."
-cp ./config.fish ~/.config/fish/config.fish -vf
-
-echo "Installing gaming and other extra apps..."
+echo -e "${GREEN}Installing gaming and other extra apps...${NC}"
 sudo zypper -v vin -y lutris goverlay mangohud transmission-gtk haruna celluloid strawberry
 
-echo "Installing visual studio code..."
+echo -e "${GREEN}Installing visual studio code...${NC}"
 sudo zypper ar obs://devel:tools:ide:vscode devel_tools_ide_vscode
 sudo zypper -vv in code
 
-echo "Configuring flatpak and installing flatpak apps..."
+echo -e "${GREEN}Configuring flatpak and installing flatpak apps...${NC}"
 sudo zypper -vv in -y flatpak
 
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 sudo usermod -a -G wheel $USER
 
-read -p "Do you want to make a snapshot after setup?(y/n): " SNAPSHOT_POST
-if [ $SNAPSHOT_POST = "y" ]; then
-    sudo snapper create -d "Post-Install script snapshot" -c number
-fi
+# read -p "Do you want to make a snapshot after setup?(y/n): " SNAPSHOT_POST
+# if [ $SNAPSHOT_POST = "y" ]; then
+#     sudo snapper create -d "Post-Install script snapshot" -c number
+# fi
+create_snapshot 1
 
 flatpak install -y io.missioncenter.MissionCenter com.github.tchx84.Flatseal org.gimp.GIMP org.kde.kdenlive com.valvesoftware.Steam net.davidotek.pupgui2 com.obsproject.Studio com.github.unrud.VideoDownloader
 
-echo "Please reboot for flatpak's path to work"
-echo "Post install complete, enjoy your new distro!"
-echo "Please run 'fish and omf install bobthefish' to install the omf theme"
+echo -e "${GREEN}Installing oh my fish!...${NC}"
+echo -e "${YELLOW}Please exit from fish once it's done so the install can continue${NC}"
+curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
+
+echo -e "${GREEN}Copying fish config...${NC}"
+cp ./config.fish ~/.config/fish/config.fish -vf
+
+echo -e "${YELLOW}Please reboot for flatpak's path to work${NC}"
+echo -e "${GREEN}Post install complete, enjoy your new distro!${NC}"
+echo -e "${YELLOW}Please run 'fish and omf install bobthefish' to install the omf theme${NC}"
