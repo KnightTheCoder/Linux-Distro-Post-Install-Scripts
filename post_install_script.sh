@@ -24,7 +24,7 @@ create_snapshot() {
             ;;
     esac
 
-    echo -e "${GREEN}Do you want to make a snapshot before the setup?(y/n)${NC} "
+    echo -e "${GREEN}Do you want to make a snapshot ${prompt_tag} the setup?(y/n)${NC} "
     select yn in "Yes" "No"; do
         case $yn in
             Yes ) sudo snapper -v create -d "${snapshot_tag}-Install script snapshot" -c number; break;;
