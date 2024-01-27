@@ -91,8 +91,10 @@ echo -e "${GREEN}Installing gaming and other extra apps...${NC}"
 sudo zypper -vv in -y lutris goverlay mangohud transmission-gtk haruna celluloid strawberry steam steam-devices
 
 echo -e "${GREEN}Installing visual studio code...${NC}"
-sudo zypper ar obs://devel:tools:ide:vscode devel_tools_ide_vscode
-sudo zypper -vv in code
+# sudo zypper ar obs://devel:tools:ide:vscode devel_tools_ide_vscode
+# sudo zypper -vv in code
+# install microsoft's vscode instead of the open source one, so the official packages can be used
+opi vscode
 
 echo -e "${GREEN}Configuring flatpak and installing flatpak apps...${NC}"
 sudo zypper -vv in -y flatpak
