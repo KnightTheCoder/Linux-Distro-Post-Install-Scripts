@@ -89,7 +89,7 @@ echo -e "${GREEN}Installing microsoft fonts...${NC}"
 sudo zypper -vv in -y fetchmsttfonts
 
 echo -e "${GREEN}Installing gaming and other extra apps...${NC}"
-sudo zypper -vv in -y lutris goverlay mangohud transmission-gtk haruna celluloid strawberry steam steam-devices
+sudo zypper -vv in -y lutris goverlay mangohud gamemode transmission-gtk haruna celluloid strawberry steam steam-devices
 
 echo -e "${GREEN}Installing visual studio code...${NC}"
 # sudo zypper ar obs://devel:tools:ide:vscode devel_tools_ide_vscode
