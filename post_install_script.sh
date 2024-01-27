@@ -72,7 +72,7 @@ echo -e "${GREEN}Installing codecs...${NC}"
 # sudo zypper -vv dup -y --from packman --allow-vendor-change
 
 sudo zypper -vv in -y opi
-opi codecs
+sudo opi -n codecs
 
 echo -e "${GREEN}Removing unnecessary packages and installing extra ones...${NC}"
 sudo zypper -vv rm -y --clean-deps discover kmail kontact kmines akregator kaddressbook korganizer kompare konversation tigervnc kleopatra kmahjongg kpat kreversi ksudoku
@@ -94,7 +94,7 @@ echo -e "${GREEN}Installing visual studio code...${NC}"
 # sudo zypper ar obs://devel:tools:ide:vscode devel_tools_ide_vscode
 # sudo zypper -vv in code
 # install microsoft's vscode instead of the open source one, so the official packages can be used
-opi vscode
+sudo opi -n vscode
 
 echo -e "${GREEN}Configuring flatpak and installing flatpak apps...${NC}"
 sudo zypper -vv in -y flatpak
