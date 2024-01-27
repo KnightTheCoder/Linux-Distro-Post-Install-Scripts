@@ -66,8 +66,10 @@ else
 fi
 
 echo -e "${GREEN}Installing codecs...${NC}"
-sudo zypper ar -cfp 90 https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/ packman
-sudo zypper -vv dup -y --from packman --allow-vendor-change
+# opi will do the same as packman so no need to install
+# sudo zypper ar -cfp 90 https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/ packman
+# sudo zypper ar -cfp 90 'https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/Essentials/' packman-essentials
+# sudo zypper -vv dup -y --from packman --allow-vendor-change
 
 sudo zypper -vv in -y opi
 opi codecs
