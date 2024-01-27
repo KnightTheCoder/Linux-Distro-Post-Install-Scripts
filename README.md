@@ -12,6 +12,6 @@ Made based on [this blog](https://www.techhut.tv/opensuse-5-things-you-must-do-a
 
 # How to run
 
-Make executable ```chmod a+x ./post_install_script.sh```
+Make executable ```chmod +x ./post_install_script.sh```
 
 Run ```./post_install_script.sh ```
