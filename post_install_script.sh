@@ -114,18 +114,19 @@ cp ./config.fish ~/.config/fish/config.fish -vf
 
 echo -e "${GREEN}Would you like to install nerd fonts?(y/n) ${NC}"
 select yn in "Yes" "No"; do
-        case $yn in
-            Yes ) 
-                wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/Hack.zip
-                unzip ./Hack.zip -d Hack
-                cp -fv ./Hack/*.ttf ~/.local/share/fonts
-                fc-cache -fv
-                # Delete all fonts in the directory after caching
-                rm -fv ./Hack/*.ttf
-                break;;
-            No ) break;;
-        esac
-    done
+    case $yn in
+        Yes ) 
+            wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/Hack.zip
+            unzip ./Hack.zip -d Hack
+            cp -fv ./Hack/*.ttf ~/.local/share/fonts
+            fc-cache -fv
+            # Delete all fonts in the directory after caching
+            rm -fv ./Hack/*.ttf
+            break;;
+        No )
+            break;;
+    esac
+done
 
 create_snapshot 1
 
