@@ -112,6 +112,20 @@ curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install 
 echo -e "${GREEN}Copying fish config...${NC}"
 cp ./config.fish ~/.config/fish/config.fish -vf
 
+echo -e "${GREEN}Would you like to install nerd fonts?(y/n) ${NC}"
+select yn in "Yes" "No"; do
+        case $yn in
+            Yes ) 
+                wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/Hack.zip
+                unzip -v ./Hack.zip -d Hack
+                cd Hack
+                cp -fv *.ttf ~/.local/share/fonts
+                fc-cache -fv
+                break;;
+            No ) break;;
+        esac
+    done
+
 create_snapshot 1
 
 echo -e "${YELLOW}Please reboot for flatpak's path to work${NC}"
