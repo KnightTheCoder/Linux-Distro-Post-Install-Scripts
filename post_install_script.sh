@@ -117,7 +117,7 @@ select yn in "Yes" "No"; do
         case $yn in
             Yes ) 
                 wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/Hack.zip
-                unzip -v ./Hack.zip
+                unzip ./Hack.zip
                 cp -fv ./*.ttf ~/.local/share/fonts
                 fc-cache -fv
                 # Delete all fonts in the directory after caching
