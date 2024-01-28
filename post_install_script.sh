@@ -122,7 +122,7 @@ unzip ./Hack.zip -d Hack
 cp -fv ./Hack/*.ttf ~/.local/share/fonts
 fc-cache -fv
 # Delete all fonts in the directory after caching
-rm -rfv ./Hack
+rm -rfv ./Hack Hack.zip
 
 create_snapshot 1
 
