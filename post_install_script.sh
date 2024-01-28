@@ -27,7 +27,6 @@ create_snapshot() {
     echo -e "${GREEN}Do you want to make a snapshot ${prompt_tag} the setup?(y/n)${NC} "
     select yn in "Yes" "No"; do
         case $yn in
-            # Yes ) sudo snapper -v create -d "${snapshot_tag}-Install script snapshot" -c number; break;;
             Yes ) sudo snapper -v create -d "${snapshot_tag}-Install script snapshot"; break;;
             No ) break;;
         esac
@@ -68,16 +67,13 @@ fi
 
 echo -e "${GREEN}Installing codecs...${NC}"
 # opi will do the same as packman so no need to install
-# sudo zypper ar -cfp 90 https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/ packman
-# sudo zypper ar -cfp 90 'https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/Essentials/' packman-essentials
-# sudo zypper -vv dup -y --from packman --allow-vendor-change
 
 sudo zypper -vv in -y opi
 sudo opi -n codecs
 
 echo -e "${GREEN}Removing unnecessary packages and installing extra ones...${NC}"
 sudo zypper -vv rm -y --clean-deps discover kmail kontact kmines akregator kaddressbook korganizer kompare konversation tigervnc kleopatra kmahjongg kpat kreversi ksudoku
-sudo zypper -vv in -y fish neofetch htop kwrite btop python311-pipx
+sudo zypper -vv in -y fish neofetch htop kwrite btop nvim python311-pipx
 
 echo -e "${GREEN}Installing trash-cli...${NC}"
 pipx install trash-cli
@@ -92,10 +88,15 @@ echo -e "${GREEN}Installing gaming and other extra apps...${NC}"
 sudo zypper -vv in -y lutris goverlay mangohud gamemode transmission-gtk haruna celluloid strawberry steam steam-devices
 
 echo -e "${GREEN}Installing visual studio code...${NC}"
-# sudo zypper ar obs://devel:tools:ide:vscode devel_tools_ide_vscode
-# sudo zypper -vv in code
 # install microsoft's vscode instead of the open source one, so the official packages can be used
 sudo opi -n vscode
+
+echo -e "${GREEN}Installing nodejs...${NC}"
+sudo zypper -vv in -y nodejs20
+sudo npm -g i npm npm-check
+
+echo -e "${GREEN}Installing .Net...${NC}"
+sudo opi -n dotnet
 
 echo -e "${GREEN}Configuring flatpak and installing flatpak apps...${NC}"
 sudo zypper -vv in -y flatpak
@@ -112,21 +113,16 @@ curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install 
 echo -e "${GREEN}Copying fish config...${NC}"
 cp ./config.fish ~/.config/fish/config.fish -vf
 
-echo -e "${GREEN}Would you like to install nerd fonts?(y/n) ${NC}"
-select yn in "Yes" "No"; do
-    case $yn in
-        Yes ) 
-            wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/Hack.zip
-            unzip ./Hack.zip -d Hack
-            cp -fv ./Hack/*.ttf ~/.local/share/fonts
-            fc-cache -fv
-            # Delete all fonts in the directory after caching
-            rm -fv ./Hack/*.ttf
-            break;;
-        No )
-            break;;
-    esac
-done
+echo -e "${GREEN}Installing nvchad...${NC}"
+git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1 && nvim
+
+echo -e "${GREEN}Installing nerd fonts...${NC}"
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/Hack.zip
+unzip ./Hack.zip -d Hack
+cp -fv ./Hack/*.ttf ~/.local/share/fonts
+fc-cache -fv
+# Delete all fonts in the directory after caching
+rm -fv ./Hack/*.ttf
 
 create_snapshot 1
 
