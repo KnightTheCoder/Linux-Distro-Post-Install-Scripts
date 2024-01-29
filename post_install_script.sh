@@ -68,6 +68,7 @@ sudo opi -n codecs
 
 echo -e "${GREEN}Removing unnecessary packages and installing extra ones...${NC}"
 sudo zypper -vv rm -y --clean-deps discover kmail kontact kmines akregator kaddressbook korganizer kompare konversation tigervnc kleopatra kmahjongg kpat kreversi ksudoku
+sudo zypper -vv rm -y --clean-deps patterns-kde-kde_pim patterns-games-games  patterns-kde-kde_games patterns-office-office patterns-kde-kde_office
 sudo zypper -vv in -y fish neofetch htop kwrite btop neovim python311-pipx lynis
 
 echo -e "${GREEN}Installing trash-cli...${NC}"
@@ -99,7 +100,7 @@ sudo zypper -vv in -y flatpak
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 sudo usermod -a -G wheel $USER
 
-flatpak install -y io.missioncenter.MissionCenter com.github.tchx84.Flatseal org.gimp.GIMP org.kde.kdenlive net.davidotek.pupgui2 com.obsproject.Studio com.github.unrud.VideoDownloader
+flatpak install -y io.missioncenter.MissionCenter com.github.tchx84.Flatseal org.gimp.GIMP org.kde.kdenlive net.davidotek.pupgui2 com.obsproject.Studio com.github.unrud.VideoDownloader org.libreoffice.LibreOffice
 
 echo -e "${GREEN}Installing oh my fish!...${NC}"
 echo -e "${YELLOW}Please run omf install bobthefish and exit from fish once it's done so the install can continue${NC}"
@@ -123,11 +124,15 @@ echo -e "${GREEN}Settinng up zram...${NC}"
 sudo zypper -vv in -y systemd-zram-service
 sudo systemctl enable --now zramswap.service
 
+echo -e "${GREEN}Settings up QEMU/KVM...${NC}"
+sudo zypper -vv in -y patterns-server-kvm_tools
+sudo usermod -a -G libvirt $USER
+
 echo -e "${GREEN}Ask for hostname and set it${NC}"
 echo -e "${YELLOW}Leave empty to not change it${NC}"
 read -p "Hostname: " hostname
 # Check if hostname is not empty
-if [ -n $hostname ]; then
+if [ ! -z $hostname ]; then
     sudo hostnamectl hostname $hostname
 fi
 
