@@ -24,11 +24,14 @@ create_snapshot() {
             ;;
     esac
 
-    echo -e "${GREEN}Do you want to make a snapshot ${prompt_tag} the setup?(y/n)${NC} "
+    echo -e "${GREEN}Do you want to make a snapshot ${prompt_tag} the setup?${NC} "
     select yn in "Yes" "No"; do
         case $yn in
-            Yes ) sudo snapper -v create -d "${snapshot_tag}-Install script snapshot"; break;;
-            No ) break;;
+            Yes )
+                sudo snapper -v create -d "${snapshot_tag}-Install script snapshot"
+                break;;
+            No )
+                break;;
         esac
     done
 }
@@ -39,14 +42,6 @@ if [ $EUID -eq 0 ]; then
 fi
 
 create_snapshot 0
-
-echo -e "${GREEN}Ask for hostname and set it${NC}"
-read -p "Hostname: " hostname
-# Check if hostname is empty
-if [ -z $hostname ]; then
-    hostname="${USER}PC"
-fi
-sudo hostnamectl hostname $hostname
 
 echo -e "${GREEN}Refreshing repositories...${NC}"
 sudo zypper ref
@@ -73,7 +68,7 @@ sudo opi -n codecs
 
 echo -e "${GREEN}Removing unnecessary packages and installing extra ones...${NC}"
 sudo zypper -vv rm -y --clean-deps discover kmail kontact kmines akregator kaddressbook korganizer kompare konversation tigervnc kleopatra kmahjongg kpat kreversi ksudoku
-sudo zypper -vv in -y fish neofetch htop kwrite btop neovim python311-pipx
+sudo zypper -vv in -y fish neofetch htop kwrite btop neovim python311-pipx lynis
 
 echo -e "${GREEN}Installing trash-cli...${NC}"
 pipx install trash-cli
@@ -123,6 +118,29 @@ cp -fv ./Hack/*.ttf ~/.local/share/fonts
 fc-cache -fv
 # Delete all fonts in the directory after caching
 rm -rfv ./Hack Hack.zip
+
+echo -e "${GREEN}Settinng up zram...${NC}"
+sudo zypper -vv in -y systemd-zram-service
+sudo systemctl enable --now zramswap.service
+
+echo -e "${GREEN}Ask for hostname and set it${NC}"
+echo -e "${YELLOW}Leave empty to not change it${NC}"
+read -p "Hostname: " hostname
+# Check if hostname is not empty
+if [ -n $hostname ]; then
+    sudo hostnamectl hostname $hostname
+fi
+
+echo -e "${GREEN}Would you like to run an audit?${NC}"
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes )
+            sudo lynis audit system
+            break;;
+        No )
+            break;;
+    esac
+done
 
 create_snapshot 1
 
