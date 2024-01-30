@@ -66,10 +66,14 @@ echo -e "${GREEN}Installing codecs...${NC}"
 sudo zypper -vv in -y opi
 sudo opi -n codecs
 
+# Install NVIDIA repository
+sudo zypper addrepo --refresh https://download.nvidia.com/opensuse/tumbleweed NVIDIA
+sudo zypper install-new-recommends --repo NVIDIA
+
 echo -e "${GREEN}Removing unnecessary packages and installing extra ones...${NC}"
 sudo zypper -vv rm -y --clean-deps discover kmail kontact kmines akregator kaddressbook korganizer kompare konversation tigervnc kleopatra kmahjongg kpat kreversi ksudoku
-sudo zypper -vv rm -y --clean-deps patterns-kde-kde_pim patterns-games-games  patterns-kde-kde_games
-sudo zypper -vv in -y fish neofetch htop kwrite btop neovim python311-pipx lynis
+sudo zypper -vv rm -y --clean-deps patterns-kde-kde_pim patterns-games-games patterns-kde-kde_games
+sudo zypper -vv in -y fish neofetch kwrite btop neovim python311-pipx lynis
 
 echo -e "${GREEN}Installing trash-cli...${NC}"
 pipx install trash-cli
@@ -125,7 +129,7 @@ sudo zypper -vv in -y systemd-zram-service
 sudo systemctl enable --now zramswap.service
 
 # Can't get it to work for now
-read -p "Would you like to install QEMU? (Warning: experimental, internet doesn't work for now)"
+echo -e "${GREEN}Would you like to install QEMU? (Warning: experimental, internet doesn't work for now)${NC}"
 select yn in "Yes" "No"; do
     case $yn in
         Yes )
