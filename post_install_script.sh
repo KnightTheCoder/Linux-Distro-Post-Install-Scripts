@@ -68,7 +68,7 @@ sudo opi -n codecs
 
 echo -e "${GREEN}Removing unnecessary packages and installing extra ones...${NC}"
 sudo zypper -vv rm -y --clean-deps discover kmail kontact kmines akregator kaddressbook korganizer kompare konversation tigervnc kleopatra kmahjongg kpat kreversi ksudoku
-sudo zypper -vv rm -y --clean-deps patterns-kde-kde_pim patterns-games-games  patterns-kde-kde_games patterns-office-office patterns-kde-kde_office
+sudo zypper -vv rm -y --clean-deps patterns-kde-kde_pim patterns-games-games  patterns-kde-kde_games
 sudo zypper -vv in -y fish neofetch htop kwrite btop neovim python311-pipx lynis
 
 echo -e "${GREEN}Installing trash-cli...${NC}"
@@ -81,7 +81,7 @@ echo -e "${GREEN}Installing microsoft fonts...${NC}"
 sudo zypper -vv in -y fetchmsttfonts
 
 echo -e "${GREEN}Installing gaming and other extra apps...${NC}"
-sudo zypper -vv in -y lutris goverlay mangohud gamemode transmission-gtk haruna celluloid strawberry steam steam-devices
+sudo zypper -vv in -y lutris goverlay mangohud gamemode transmission-gtk haruna celluloid strawberry steam steam-devices gimp kdenlive
 
 echo -e "${GREEN}Installing visual studio code...${NC}"
 # install microsoft's vscode instead of the open source one, so the official packages can be used
@@ -100,7 +100,7 @@ sudo zypper -vv in -y flatpak
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 sudo usermod -a -G wheel $USER
 
-flatpak install -y io.missioncenter.MissionCenter com.github.tchx84.Flatseal org.gimp.GIMP org.kde.kdenlive net.davidotek.pupgui2 com.obsproject.Studio com.github.unrud.VideoDownloader org.libreoffice.LibreOffice
+flatpak install -y io.missioncenter.MissionCenter com.github.tchx84.Flatseal net.davidotek.pupgui2 com.obsproject.Studio com.github.unrud.VideoDownloader io.github.spacingbat3.webcord com.brave.Browser net.mullvad.MullvadBrowser
 
 echo -e "${GREEN}Installing oh my fish!...${NC}"
 echo -e "${YELLOW}Please run omf install bobthefish and exit from fish once it's done so the install can continue${NC}"
