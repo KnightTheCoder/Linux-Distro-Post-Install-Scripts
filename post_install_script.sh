@@ -124,6 +124,20 @@ echo -e "${GREEN}Settinng up zram...${NC}"
 sudo zypper -vv in -y systemd-zram-service
 sudo systemctl enable --now zramswap.service
 
+# Can't get it to work for now
+read -p "Would you like to install QEMU? (Warning: experimental, internet doesn't work for now)"
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes )
+            echo -e "${GREEN}Configuring QEMU...${NC}"
+            sudo zypper -vv in -y patterns-server-kvm_tools patterns-server-kvm_server
+            sudo usermod -a -G libvirt $USER
+            break;;
+        No )
+            break;;
+    esac
+done
+
 echo -e "${GREEN}Ask for hostname and set it${NC}"
 echo -e "${YELLOW}Leave empty to not change it${NC}"
 read -p "Hostname: " hostname
