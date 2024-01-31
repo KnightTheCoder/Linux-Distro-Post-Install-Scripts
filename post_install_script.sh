@@ -66,9 +66,19 @@ echo -e "${GREEN}Installing codecs...${NC}"
 sudo zypper -vv in -y opi
 sudo opi -n codecs
 
-# Install NVIDIA repository
-sudo zypper addrepo --refresh https://download.nvidia.com/opensuse/tumbleweed NVIDIA
-sudo zypper install-new-recommends --repo NVIDIA
+# Install NVIDIA drivers
+echo -e "${GREEN}Would you like to install the NVIDIA driver?${NC} "
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes )
+            echo -e "${GREEN}Installing NVIDIA driver...${NC}"
+            sudo zypper addrepo --refresh https://download.nvidia.com/opensuse/tumbleweed NVIDIA
+            sudo zypper install-new-recommends --repo NVIDIA
+            break;;
+        No )
+            break;;
+    esac
+done
 
 echo -e "${GREEN}Removing unnecessary packages and installing extra ones...${NC}"
 sudo zypper -vv rm -y --clean-deps discover kmail kontact kmines akregator kaddressbook korganizer kompare konversation tigervnc kleopatra kmahjongg kpat kreversi ksudoku
@@ -129,12 +139,20 @@ sudo zypper -vv in -y systemd-zram-service
 sudo systemctl enable --now zramswap.service
 
 # Can't get it to work for now
+# Possible fix https://forums.opensuse.org/t/yast-to-install-kvm-hypervisor-libvirt-daemon-not-installed-from-gui-or-pattern-kvm-server-kvm-tools/165960
+# What worked: follow forums, turn off internet, turn on default then restart internet, then NAT works
+# Note: have to restart every time you start the computer, will make boot time longer
 echo -e "${GREEN}Would you like to install QEMU? (Warning: experimental, internet doesn't work for now)${NC}"
 select yn in "Yes" "No"; do
     case $yn in
         Yes )
             echo -e "${GREEN}Configuring QEMU...${NC}"
-            sudo zypper -vv in -y patterns-server-kvm_tools patterns-server-kvm_server
+            sudo zypper -vv in -yt pattern kvm_server kvm_tools
+
+            sudo zypper -vv in -y libvirtd-daemon
+            sudo systemctl enable libvirtd
+            sudo systemctl start libvirtd
+            
             sudo usermod -a -G libvirt $USER
             break;;
         No )
