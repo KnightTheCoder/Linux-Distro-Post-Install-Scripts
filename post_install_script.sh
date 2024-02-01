@@ -29,9 +29,9 @@ create_snapshot() {
         case $yn in
             Yes )
                 sudo snapper -v create -d "${snapshot_tag}-Install script snapshot"
-                break;;
+                ;;
             No )
-                break;;
+                ;;
         esac
     done
 }
@@ -74,9 +74,9 @@ select yn in "Yes" "No"; do
             echo -e "${GREEN}Installing NVIDIA driver...${NC}"
             sudo zypper addrepo --refresh https://download.nvidia.com/opensuse/tumbleweed NVIDIA
             sudo zypper install-new-recommends --repo NVIDIA
-            break;;
+            ;;
         No )
-            break;;
+            ;;
     esac
 done
 
@@ -107,6 +107,10 @@ sudo npm -g i npm npm-check
 
 echo -e "${GREEN}Installing .Net...${NC}"
 sudo opi -n dotnet
+
+echo -e "${GREEN}Installing rust...${NC}"
+sudo zypper -vv in -y rustup
+rustup toolchain install stable
 
 echo -e "${GREEN}Configuring flatpak and installing flatpak apps...${NC}"
 sudo zypper -vv in -y flatpak
@@ -154,9 +158,9 @@ select yn in "Yes" "No"; do
             sudo systemctl start libvirtd
             
             sudo usermod -a -G libvirt $USER
-            break;;
+            ;;
         No )
-            break;;
+            ;;
     esac
 done
 
@@ -173,13 +177,13 @@ select yn in "Yes" "No"; do
     case $yn in
         Yes )
             sudo lynis audit system
-            break;;
+            ;;
         No )
-            break;;
+            ;;
     esac
 done
 
 create_snapshot 1
 
-echo -e "${YELLOW}Please reboot for flatpak's path to work${NC}"
+echo -e "${YELLOW}Please reboot for flatpak's path and QEMU to work${NC}"
 echo -e "${GREEN}Post install complete, enjoy your new distro!${NC}"
