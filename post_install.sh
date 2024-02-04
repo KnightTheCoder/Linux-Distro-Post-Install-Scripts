@@ -47,12 +47,12 @@ echo -e "${GREEN}Checking package manager...${NC}"
 if [[ $chosen_distro = "1" && -x "/usr/bin/zypper" ]]; then
   echo -e "${GREEN}zypper found for OpenSUSE!${NC}"
 elif [[ $chosen_distro = "2" && -x "/usr/bin/dnf" ]]; then
-  echo "${GREEN}dnf found for Fedora!${NC}"
+  echo -e "${GREEN}dnf found for Fedora!${NC}"
   sh ./distros/fedora/setup.sh
 elif [[ $chosen_distro = "3" && -x "/usr/bin/pacman" ]]; then
   echo "${GREEN}pacman found for Arch linux!${NC}"
 elif [[ $chosen_distro = "4" && -x "/usr/bin/apt" ]]; then
-  echo "${GREEN}apt found for Debian!${NC}"
+  echo -e "${GREEN}apt found for Debian!${NC}"
 else
   echo -e "${RED}Can't continue! Mismatched package manager and distro!${NC}"
   exit 1
