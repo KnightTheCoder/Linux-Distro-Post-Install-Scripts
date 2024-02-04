@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-# Made based on https://www.techhut.tv/opensuse-5-things-you-must-do-after-installing/
-
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
@@ -50,9 +48,8 @@ echo -e "${GREEN}Upgrading system...${NC}"
 sudo zypper -vv dup -y
 
 echo -e "${GREEN}Checking the internet connection...${NC}"
-wget -q --spider http://google.com
 
-if [ $? -eq 0 ]; then
+if wget -q --spider http://google.com; then
     echo -e "${GREEN}Online${NC}"
 else
     echo -e "${RED}Offline"
@@ -116,7 +113,7 @@ echo -e "${GREEN}Configuring flatpak and installing flatpak apps...${NC}"
 sudo zypper -vv in -y flatpak
 
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-sudo usermod -a -G wheel $USER
+sudo usermod -a -G wheel "$USER"
 
 flatpak install -y io.missioncenter.MissionCenter com.github.tchx84.Flatseal net.davidotek.pupgui2 com.obsproject.Studio com.github.unrud.VideoDownloader io.github.spacingbat3.webcord com.brave.Browser net.mullvad.MullvadBrowser
 
@@ -125,7 +122,7 @@ echo -e "${YELLOW}Please run omf install bobthefish and exit from fish once it's
 curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
 
 echo -e "${GREEN}Copying fish config...${NC}"
-cp ./config.fish ~/.config/fish/config.fish -vf
+cp ../../config/config.fish ~/.config/fish/config.fish -vf
 
 echo -e "${GREEN}Installing nvchad...${NC}"
 git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1 && nvim
@@ -146,6 +143,7 @@ sudo systemctl enable --now zramswap.service
 # Possible fix https://forums.opensuse.org/t/yast-to-install-kvm-hypervisor-libvirt-daemon-not-installed-from-gui-or-pattern-kvm-server-kvm-tools/165960
 # What worked: follow forums, turn off internet, turn on default then restart internet, then NAT works
 # Note: have to restart every time you start the computer, will make boot time longer
+# Second Note: Only wicked seems to work for now
 echo -e "${GREEN}Would you like to install QEMU? (Warning: experimental, internet doesn't work for now)${NC}"
 select yn in "Yes" "No"; do
     case $yn in
@@ -153,11 +151,11 @@ select yn in "Yes" "No"; do
             echo -e "${GREEN}Configuring QEMU...${NC}"
             sudo zypper -vv in -yt pattern kvm_server kvm_tools
 
-            sudo zypper -vv in -y libvirtd-daemon
-            sudo systemctl enable libvirtd
+            sudo zypper -vv in -y libvirt-daemon
+            sudo systemctl enable --now libvirtd
             sudo systemctl start libvirtd
             
-            sudo usermod -a -G libvirt $USER
+            sudo usermod -a -G libvirt "$USER"
             ;;
         No )
             ;;
@@ -166,10 +164,10 @@ done
 
 echo -e "${GREEN}Ask for hostname and set it${NC}"
 echo -e "${YELLOW}Leave empty to not change it${NC}"
-read -p "Hostname: " hostname
+read -pr "Hostname: " hostname
 # Check if hostname is not empty
-if [ ! -z $hostname ]; then
-    sudo hostnamectl hostname $hostname
+if [ -n "$hostname" ]; then
+    sudo hostnamectl hostname "$hostname"
 fi
 
 echo -e "${GREEN}Would you like to run an audit?${NC}"
