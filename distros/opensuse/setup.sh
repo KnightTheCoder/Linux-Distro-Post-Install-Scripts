@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[0;33m'
-NC='\033[0m' # No Color
+# shellcheck source=./shared/colors.sh
+source "./shared/colors.sh"
 
 create_snapshot() {
     local snapshot_type=$1 # 0 or anything else
@@ -80,10 +78,7 @@ done
 echo -e "${GREEN}Removing unnecessary packages and installing extra ones...${NC}"
 sudo zypper -vv rm -y --clean-deps discover kmail kontact kmines akregator kaddressbook korganizer kompare konversation tigervnc kleopatra kmahjongg kpat kreversi ksudoku
 sudo zypper -vv rm -y --clean-deps patterns-kde-kde_pim patterns-games-games patterns-kde-kde_games
-sudo zypper -vv in -y fish neofetch kwrite btop neovim python311-pipx lynis
-
-echo -e "${GREEN}Installing trash-cli...${NC}"
-pipx install trash-cli
+sudo zypper -vv in -y fish neofetch kwrite btop neovim lynis
 
 echo -e "${GREEN}Installing build tools...${NC}"
 sudo zypper -vv in -y -t pattern devel_basis
@@ -94,9 +89,15 @@ sudo zypper -vv in -y fetchmsttfonts
 echo -e "${GREEN}Installing gaming and other extra apps...${NC}"
 sudo zypper -vv in -y lutris goverlay mangohud gamemode transmission-gtk haruna celluloid strawberry steam steam-devices gimp kdenlive
 
+echo -e "${GREEN}Installing itch.io desktop app${NC}"
+sh "../../shared/itch.sh"
+
 echo -e "${GREEN}Installing visual studio code...${NC}"
 # install microsoft's vscode instead of the open source one, so the official packages can be used
 sudo opi -n vscode
+
+echo -e "${GREEN}Installing vscode extensions...${NC}"
+sh "../../shared/vscode.sh"
 
 echo -e "${GREEN}Installing nodejs...${NC}"
 sudo zypper -vv in -y nodejs20
@@ -128,12 +129,7 @@ echo -e "${GREEN}Installing nvchad...${NC}"
 git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1 && nvim
 
 echo -e "${GREEN}Installing nerd fonts...${NC}"
-wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/Hack.zip
-unzip ./Hack.zip -d Hack
-cp -fv ./Hack/*.ttf ~/.local/share/fonts
-fc-cache -fv
-# Delete all fonts in the directory after caching
-rm -rfv ./Hack Hack.zip
+sh "../../shared/hack_font.sh"
 
 echo -e "${GREEN}Settinng up zram...${NC}"
 sudo zypper -vv in -y systemd-zram-service

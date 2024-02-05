@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[0;33m'
-NC='\033[0m' # No Color
+# shellcheck source=./shared/colors.sh
+source "./shared/colors.sh"
 
 resolve_distro() {
   case $1 in
@@ -46,13 +44,16 @@ echo -e "${GREEN}Your chosen distro is $(resolve_distro "$chosen_distro")${NC}"
 echo -e "${GREEN}Checking package manager...${NC}"
 if [[ $chosen_distro = "1" && -x "/usr/bin/zypper" ]]; then
   echo -e "${GREEN}zypper found for OpenSUSE!${NC}"
+  sh "./distros/opensuse/setup.sh"
 elif [[ $chosen_distro = "2" && -x "/usr/bin/dnf" ]]; then
   echo -e "${GREEN}dnf found for Fedora!${NC}"
-  sh ./distros/fedora/setup.sh
+  sh "./distros/fedora/setup.sh"
 elif [[ $chosen_distro = "3" && -x "/usr/bin/pacman" ]]; then
   echo "${GREEN}pacman found for Arch linux!${NC}"
+  sh "./distros/arch/setup.sh"
 elif [[ $chosen_distro = "4" && -x "/usr/bin/apt" ]]; then
   echo -e "${GREEN}apt found for Debian!${NC}"
+  sh "./distros/debian/setup.sh"
 else
   echo -e "${RED}Can't continue! Mismatched package manager and distro!${NC}"
   exit 1
