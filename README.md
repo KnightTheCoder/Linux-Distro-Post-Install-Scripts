@@ -1,4 +1,4 @@
-# Post install script for OpenSUSE Tumbleweed (KDE)
+# Post install script for Linux
 
 ## Supported distros
 * OpenSUSE
