@@ -1,26 +1,26 @@
-# Post install script for OpenSUSE Tumbleweed (KDE)
+# Post install script for Linux
 
-# About
-Made based on [this blog](https://www.techhut.tv/opensuse-5-things-you-must-do-after-installing/)
+## Supported distros
+* OpenSUSE
+* Fedora
+* Debian
+* Arch linux
 
-This script is only intended for OpenSUSE Tumbleweed with KDE desktop, it may not work as intended with other desktops
-
-# Features
+## Features
+* Choose the apps and configurations you need
 * Updates the system
-* Creates snapshots before and after the script
-* Includes additional codecs (packman) and installs opi for using the Open Build Service (OBS)
-* Removes unnecessary games and packages (Intended for KDE Plasma)
-* Adds the following command line utilities: fish, neofetch, htop, btop, neovim, trash-cli
-* Add lynis for auditing your system
+* Setup flatpak and install apps
+* Downloads and install hack nerd fonts
+* Installs Visual Studio Code extensions and copies the keybindings
+* Installs gaming launchers such as Steam, lutris itch desktop app
+* Installs wine and Protonup-Qt to run windows games
+* Adds lynis for auditing your system
 * Copies fish config
 * Installs NvChad for neovim
-* Installs Microsoft and nerd hack fonts
-* Configures flatpak and installs my most used apps
-* Experimental option to install QEMU/KVM (Internet doesn't seem to work with either NAT or a bridge for now)
-* Optionally sets hostname
+* Install the GitHub CLI
 
-# How to run
+## How to run
 
-Make executable ```chmod +x ./post_install_script.sh```
+Make executable ```chmod +x ./post_install.sh```
 
-Run ```./post_install_script.sh ```
+Run ```./post_install.sh ```
