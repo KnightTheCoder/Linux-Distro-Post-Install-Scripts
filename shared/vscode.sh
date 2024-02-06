@@ -45,6 +45,5 @@ for ext in "${extensions[@]}"; do
 done
 
 # Copy key bindings
-WORK_DIR=$(pwd)
-cd "$WORK_DIR" || exit
+cd "$(dirname "$0")" || exit
 cp -fv "./../config/keybindings.json" "$HOME/.config/Code/User"

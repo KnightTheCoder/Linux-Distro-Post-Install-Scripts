@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
-# shellcheck source=./shared/colors.sh
-source "./shared/colors.sh"
+cd "$(dirname "$0")" || exit
+
+# shellcheck source=../../shared/colors.sh
+source "../../shared/colors.sh"
 
 create_snapshot() {
     local snapshot_type=$1 # 0 or anything else
@@ -25,9 +27,9 @@ create_snapshot() {
         case $yn in
             Yes )
                 sudo snapper -v create -d "${snapshot_tag}-Install script snapshot"
-                ;;
+                break;;
             No )
-                ;;
+                break;;
         esac
     done
 }
@@ -69,9 +71,9 @@ select yn in "Yes" "No"; do
             echo -e "${GREEN}Installing NVIDIA driver...${NC}"
             sudo zypper addrepo --refresh https://download.nvidia.com/opensuse/tumbleweed NVIDIA
             sudo zypper install-new-recommends --repo NVIDIA
-            ;;
+            break;;
         No )
-            ;;
+            break;;
     esac
 done
 
@@ -113,11 +115,9 @@ sudo zypper -vv in -y gh
 
 echo -e "${GREEN}Configuring flatpak and installing flatpak apps...${NC}"
 sudo zypper -vv in -y flatpak
-
-flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 sudo usermod -a -G wheel "$USER"
 
-flatpak install -y io.missioncenter.MissionCenter com.github.tchx84.Flatseal net.davidotek.pupgui2 com.obsproject.Studio com.github.unrud.VideoDownloader io.github.spacingbat3.webcord com.brave.Browser net.mullvad.MullvadBrowser
+source "../../shared/flatpak.sh"
 
 echo -e "${GREEN}Installing oh my fish!...${NC}"
 echo -e "${YELLOW}Please run omf install bobthefish and exit from fish once it's done so the install can continue${NC}"
@@ -153,9 +153,9 @@ select yn in "Yes" "No"; do
             sudo systemctl start libvirtd
             
             sudo usermod -a -G libvirt "$USER"
-            ;;
+            break;;
         No )
-            ;;
+            break;;
     esac
 done
 
@@ -172,9 +172,9 @@ select yn in "Yes" "No"; do
     case $yn in
         Yes )
             sudo lynis audit system
-            ;;
+            break;;
         No )
-            ;;
+            break;;
     esac
 done
 

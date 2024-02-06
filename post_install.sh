@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+cd "$(dirname "$0")" || exit
+
 # shellcheck source=./shared/colors.sh
 source "./shared/colors.sh"
 
