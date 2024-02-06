@@ -39,6 +39,12 @@ extensions=(
     "zignd.html-css-class-completion"
 )
 
+# Install extensions
 for ext in "${extensions[@]}"; do
     code --force --install-extension "$ext"
 done
+
+# Copy key bindings
+WORK_DIR=$(pwd)
+cd "$WORK_DIR" || exit
+cp -fv "./../config/keybindings.json" "$HOME/.config/Code/User"

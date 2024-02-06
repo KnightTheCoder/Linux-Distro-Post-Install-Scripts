@@ -96,7 +96,6 @@ echo -e "${GREEN}Installing visual studio code...${NC}"
 # install microsoft's vscode instead of the open source one, so the official packages can be used
 sudo opi -n vscode
 
-echo -e "${GREEN}Installing vscode extensions...${NC}"
 sh "../../shared/vscode.sh"
 
 echo -e "${GREEN}Installing nodejs...${NC}"
@@ -109,6 +108,8 @@ sudo opi -n dotnet
 echo -e "${GREEN}Installing rust...${NC}"
 sudo zypper -vv in -y rustup
 rustup toolchain install stable
+
+sudo zypper -vv in -y gh
 
 echo -e "${GREEN}Configuring flatpak and installing flatpak apps...${NC}"
 sudo zypper -vv in -y flatpak
@@ -123,10 +124,10 @@ echo -e "${YELLOW}Please run omf install bobthefish and exit from fish once it's
 curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
 
 echo -e "${GREEN}Copying fish config...${NC}"
-cp ../../config/config.fish ~/.config/fish/config.fish -vf
+cp "../../config/config.fish" "$HOME/.config/fish/config.fish" -vf
 
 echo -e "${GREEN}Installing nvchad...${NC}"
-git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1 && nvim
+git clone https://github.com/NvChad/NvChad "$HOME/.config/nvim" --depth 1 && nvim
 
 echo -e "${GREEN}Installing nerd fonts...${NC}"
 sh "../../shared/hack_font.sh"

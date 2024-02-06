@@ -49,7 +49,7 @@ elif [[ $chosen_distro = "2" && -x "/usr/bin/dnf" ]]; then
   echo -e "${GREEN}dnf found for Fedora!${NC}"
   sh "./distros/fedora/setup.sh"
 elif [[ $chosen_distro = "3" && -x "/usr/bin/pacman" ]]; then
-  echo "${GREEN}pacman found for Arch linux!${NC}"
+  echo -e "${GREEN}pacman found for Arch linux!${NC}"
   sh "./distros/arch/setup.sh"
 elif [[ $chosen_distro = "4" && -x "/usr/bin/apt" ]]; then
   echo -e "${GREEN}apt found for Debian!${NC}"
