@@ -78,9 +78,9 @@ select yn in "Yes" "No"; do
 done
 
 echo -e "${GREEN}Removing unnecessary packages and installing extra ones...${NC}"
-sudo zypper -vv rm -y --clean-deps discover kmail kontact kmines akregator kaddressbook korganizer kompare konversation tigervnc kleopatra kmahjongg kpat kreversi ksudoku
+sudo zypper -vv rm -y --clean-deps discover kmail kontact kmines akregator kaddressbook korganizer kompare konversation kleopatra kmahjongg kpat kreversi ksudoku
 sudo zypper -vv rm -y --clean-deps patterns-kde-kde_pim patterns-games-games patterns-kde-kde_games
-sudo zypper -vv in -y fish neofetch kwrite btop neovim lynis
+sudo zypper -vv in -y fish neofetch kwrite btop neovim lynis gh
 
 echo -e "${GREEN}Installing build tools...${NC}"
 sudo zypper -vv in -y -t pattern devel_basis
@@ -111,13 +111,11 @@ echo -e "${GREEN}Installing rust...${NC}"
 sudo zypper -vv in -y rustup
 rustup toolchain install stable
 
-sudo zypper -vv in -y gh
-
 echo -e "${GREEN}Configuring flatpak and installing flatpak apps...${NC}"
 sudo zypper -vv in -y flatpak
 sudo usermod -a -G wheel "$USER"
 
-source "../../shared/flatpak.sh"
+sh "../../shared/flatpak.sh"
 
 echo -e "${GREEN}Installing oh my fish!...${NC}"
 echo -e "${YELLOW}Please run omf install bobthefish and exit from fish once it's done so the install can continue${NC}"
@@ -161,7 +159,8 @@ done
 
 echo -e "${GREEN}Ask for hostname and set it${NC}"
 echo -e "${YELLOW}Leave empty to not change it${NC}"
-read -pr "Hostname: " hostname
+echo -en "${GREEN}Hostname: ${NC}"
+read -r hostname
 # Check if hostname is not empty
 if [ -n "$hostname" ]; then
     sudo hostnamectl hostname "$hostname"
@@ -179,6 +178,3 @@ select yn in "Yes" "No"; do
 done
 
 create_snapshot 1
-
-echo -e "${YELLOW}Please reboot for flatpak's path and QEMU to work${NC}"
-echo -e "${GREEN}Post install complete, enjoy your new distro!${NC}"

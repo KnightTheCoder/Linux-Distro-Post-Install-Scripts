@@ -95,3 +95,7 @@ else
   echo -e "${RED}Can't continue! Mismatched package manager and distro!${NC}"
   exit 1
 fi
+
+echo -e "${YELLOW}Please reboot for flatpak's path and QEMU to work${NC}"
+echo -e "${YELLOW}Please run 'gh auth login' to start using GitHub CLI${NC}"
+echo -e "${GREEN}Post install complete, enjoy your new distro!${NC}"
