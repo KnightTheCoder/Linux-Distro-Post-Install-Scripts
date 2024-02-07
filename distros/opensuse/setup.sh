@@ -80,7 +80,7 @@ done
 echo -e "${GREEN}Removing unnecessary packages and installing extra ones...${NC}"
 sudo zypper -vv rm -y --clean-deps discover kmail kontact kmines akregator kaddressbook korganizer kompare konversation kleopatra kmahjongg kpat kreversi ksudoku xscreensaver
 sudo zypper -vv rm -y --clean-deps patterns-kde-kde_pim patterns-games-games patterns-kde-kde_games
-sudo zypper -vv in -y fish neofetch kwrite btop neovim lynis gh
+sudo zypper -vv in -y fish neofetch kwrite btop neovim lynis gh eza bat
 
 echo -e "${GREEN}Installing build tools...${NC}"
 sudo zypper -vv in -y -t pattern devel_basis
