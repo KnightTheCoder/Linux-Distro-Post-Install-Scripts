@@ -5,4 +5,7 @@ if status is-interactive
     set -g theme_display_user yes
     set -g theme_display_hostname yes
     set -g theme_nerd_fonts yes
+
+    alias ls="eza"
+    alias cat="bat"
 end
