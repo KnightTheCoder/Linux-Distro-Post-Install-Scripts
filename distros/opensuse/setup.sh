@@ -78,7 +78,7 @@ select yn in "Yes" "No"; do
 done
 
 echo -e "${GREEN}Removing unnecessary packages and installing extra ones...${NC}"
-sudo zypper -vv rm -y --clean-deps discover kmail kontact kmines akregator kaddressbook korganizer kompare konversation kleopatra kmahjongg kpat kreversi ksudoku
+sudo zypper -vv rm -y --clean-deps discover kmail kontact kmines akregator kaddressbook korganizer kompare konversation kleopatra kmahjongg kpat kreversi ksudoku xscreensaver
 sudo zypper -vv rm -y --clean-deps patterns-kde-kde_pim patterns-games-games patterns-kde-kde_games
 sudo zypper -vv in -y fish neofetch kwrite btop neovim lynis gh
 
@@ -133,29 +133,6 @@ sh "../../shared/hack_font.sh"
 echo -e "${GREEN}Settinng up zram...${NC}"
 sudo zypper -vv in -y systemd-zram-service
 sudo systemctl enable --now zramswap.service
-
-# Can't get it to work for now
-# Possible fix https://forums.opensuse.org/t/yast-to-install-kvm-hypervisor-libvirt-daemon-not-installed-from-gui-or-pattern-kvm-server-kvm-tools/165960
-# What worked: follow forums, turn off internet, turn on default then restart internet, then NAT works
-# Note: have to restart every time you start the computer, will make boot time longer
-# Second Note: Only wicked seems to work for now
-echo -e "${GREEN}Would you like to install QEMU? (Warning: experimental, internet doesn't work for now)${NC}"
-select yn in "Yes" "No"; do
-    case $yn in
-        Yes )
-            echo -e "${GREEN}Configuring QEMU...${NC}"
-            sudo zypper -vv in -yt pattern kvm_server kvm_tools
-
-            sudo zypper -vv in -y libvirt-daemon
-            sudo systemctl enable --now libvirtd
-            sudo systemctl start libvirtd
-            
-            sudo usermod -a -G libvirt "$USER"
-            break;;
-        No )
-            break;;
-    esac
-done
 
 echo -e "${GREEN}Ask for hostname and set it${NC}"
 echo -e "${YELLOW}Leave empty to not change it${NC}"
