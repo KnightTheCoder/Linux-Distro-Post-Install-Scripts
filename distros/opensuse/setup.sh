@@ -69,8 +69,8 @@ select yn in "Yes" "No"; do
     case $yn in
         Yes )
             echo -e "${GREEN}Installing NVIDIA driver...${NC}"
-            sudo zypper addrepo --refresh https://download.nvidia.com/opensuse/tumbleweed NVIDIA
-            sudo zypper install-new-recommends --repo NVIDIA
+            sudo zypper -vv addrepo --refresh https://download.nvidia.com/opensuse/tumbleweed NVIDIA
+            sudo zypper -vv install-new-recommends --repo NVIDIA
             break;;
         No )
             break;;
@@ -82,17 +82,18 @@ sudo zypper -vv rm -y --clean-deps discover kmail kontact kmines akregator kaddr
 sudo zypper -vv rm -y --clean-deps patterns-kde-kde_pim patterns-games-games patterns-kde-kde_games
 sudo zypper -vv in -y fish neofetch kwrite btop neovim lynis gh eza bat
 
-echo -e "${GREEN}Installing build tools...${NC}"
-sudo zypper -vv in -y -t pattern devel_basis
-
-echo -e "${GREEN}Installing microsoft fonts...${NC}"
-sudo zypper -vv in -y fetchmsttfonts
+# Tools for gaming
 
 echo -e "${GREEN}Installing gaming and other extra apps...${NC}"
 sudo zypper -vv in -y lutris goverlay mangohud gamemode transmission-gtk haruna celluloid strawberry steam steam-devices gimp kdenlive
 
 echo -e "${GREEN}Installing itch.io desktop app${NC}"
 sh "../../shared/itch.sh"
+
+# Tools for development
+
+echo -e "${GREEN}Installing build tools...${NC}"
+sudo zypper -vv in -y -t pattern devel_basis
 
 echo -e "${GREEN}Installing visual studio code...${NC}"
 # install microsoft's vscode instead of the open source one, so the official packages can be used
@@ -111,23 +112,30 @@ echo -e "${GREEN}Installing rust...${NC}"
 sudo zypper -vv in -y rustup
 rustup toolchain install stable
 
-echo -e "${GREEN}Configuring flatpak and installing flatpak apps...${NC}"
-sudo zypper -vv in -y flatpak
-sudo usermod -a -G wheel "$USER"
+# Fonts
 
-sh "../../shared/flatpak.sh"
+echo -e "${GREEN}Installing microsoft fonts...${NC}"
+sudo zypper -vv in -y fetchmsttfonts
+
+echo -e "${GREEN}Installing nerd fonts...${NC}"
+sh "../../shared/hack_font.sh"
+
+# Configurations
 
 sh "../../shared/fish.sh"
 
 echo -e "${GREEN}Installing nvchad...${NC}"
 git clone https://github.com/NvChad/NvChad "$HOME/.config/nvim" --depth 1 && nvim
 
-echo -e "${GREEN}Installing nerd fonts...${NC}"
-sh "../../shared/hack_font.sh"
-
 echo -e "${GREEN}Settinng up zram...${NC}"
 sudo zypper -vv in -y systemd-zram-service
 sudo systemctl enable --now zramswap.service
+
+echo -e "${GREEN}Configuring flatpak and installing flatpak apps...${NC}"
+sudo zypper -vv in -y flatpak
+sudo usermod -a -G wheel "$USER"
+
+sh "../../shared/flatpak.sh"
 
 echo -e "${GREEN}Ask for hostname and set it${NC}"
 echo -e "${YELLOW}Leave empty to not change it${NC}"
