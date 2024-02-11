@@ -117,12 +117,7 @@ sudo usermod -a -G wheel "$USER"
 
 sh "../../shared/flatpak.sh"
 
-echo -e "${GREEN}Installing oh my fish!...${NC}"
-echo -e "${YELLOW}Please run omf install bobthefish and exit from fish once it's done so the install can continue${NC}"
-curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
-
-echo -e "${GREEN}Copying fish config...${NC}"
-cp "../../config/config.fish" "$HOME/.config/fish/config.fish" -vf
+sh "../../shared/fish.sh"
 
 echo -e "${GREEN}Installing nvchad...${NC}"
 git clone https://github.com/NvChad/NvChad "$HOME/.config/nvim" --depth 1 && nvim
