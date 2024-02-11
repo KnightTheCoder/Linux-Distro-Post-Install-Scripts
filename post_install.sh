@@ -67,7 +67,7 @@ else
   chosen_distro="-1"
 fi
 
-echo -e "${GREEN}$(resolve_distro "$chosen_distro") detected!${NC}"
+echo -e "${GREEN}$(resolve_distro "$chosen_distro") and ${package_manager} detected!${NC}"
 whiptail --title "Autodetection" --yesno "$(resolve_distro "$chosen_distro") detected with ${package_manager} as your package manager!\nIs this correct?" 0 0
 correct=$?
 
