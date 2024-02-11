@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-# Global colors
-export RED='\033[0;31m'
-export GREEN='\033[0;32m'
-export YELLOW='\033[0;33m'
-export NC='\033[0m' # No Color
+# Global colors 
+readonly RED='\033[0;31m'
+readonly GREEN='\033[0;32m'
+readonly YELLOW='\033[0;33m'
+readonly NC='\033[0m' # No Color
 
 cd "$(dirname "$0")" || exit
 
@@ -115,3 +115,9 @@ function setup_flatpak() {
     # Install flatpaks
     flatpak install -y "${apps[@]}"
 }
+
+# Export reusable colors
+export RED
+export GREEN
+export YELLOW
+export NC
