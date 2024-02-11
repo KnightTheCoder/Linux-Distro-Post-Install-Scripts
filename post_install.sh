@@ -62,9 +62,7 @@ if [ ! -x "/usr/bin/whiptail" ]; then
 
 fi
 
-whiptail --title "Linux Post-Install Script" --msgbox "Welcome to the post install script!\nFirst we'll need to gather some info about your system" 0 0
-
- !  knight@KnightPC  ~/D/B/opensuse_post_install   tui-redesign    sh post_install.sh                                                                              
+whiptail --title "Linux Post-Install Script" --msgbox "Welcome to the post install script!\nFirst we'll need to gather some info about your system" 0 0                                                  
 # Auto detect distro
 if grep -iq opensuse /etc/os-release; then
   chosen_distro="1"
@@ -84,15 +82,16 @@ correct=$?
 
 if [ $correct != "0" ]; then
   chosen_distro=$(
-    whiptail --title "Select distro" --menu "Please select your distro" --ok-button "Select" 0 0 40 \
+    whiptail --title "Select distro" --notags --menu "Please select your distro" --ok-button "Select" 0 0 40 \
       "1" "OpenSUSE" \
       "2" "Fedora" \
       "3" "Arch linux" \
-      "4" "Debian" 3>&2 2>&1 1>&3
+      "4" "Debian" \
+      3>&2 2>&1 1>&3
   )
 
   if [ -z "$chosen_distro" ]; then
-    echo -e "${RED}Aborting...${NC}"
+    echo -e "${RED}User canceled, Aborting...${NC}"
     exit
   fi
 fi

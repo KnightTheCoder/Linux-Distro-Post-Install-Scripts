@@ -34,6 +34,28 @@ function create_snapshot() {
     done
 }
 
+whiptail --title "OpenSUSE" --msgbox "Welcome to the OpenSUSE script!" 0 0
+
+packages=$(
+    whiptail --title "Install List" --separate-output --checklist "Choose what to install/configure" 0 0 0 \
+    "nvidia" "NVIDIA drivers" OFF \
+    "lutris" "Lutris" OFF \
+    "goverlay mangohud gamemode" "Gaming overlay" OFF \
+    "haruna celluloid" "Media players" ON \
+    "strawberry" "Strawberry music player" ON \
+    "transmission-gtk" "Transmission bittorrent client" ON \
+    "steam steam-devices" "Steam" OFF \
+    "gimp" "GIMP" ON \
+    "kdenlive" "Kdenlive" ON \
+    "itch" "Itch desktop app" OFF \
+    "vscode" "Visual Studio Code" OFF \
+    "nodejs20" "Nodejs" OFF \
+    "dotnet" ".NET sdk" OFF \
+    "rustup" "Rust" OFF \
+    "flatpak" "Flatpak" ON \
+    3>&1 1>&2 2>&3
+)
+
 create_snapshot 0
 
 echo -e "${GREEN}Refreshing repositories...${NC}"

@@ -6,14 +6,12 @@ readonly GREEN='\033[0;32m'
 readonly YELLOW='\033[0;33m'
 readonly NC='\033[0m' # No Color
 
-cd "$(dirname "$0")" || exit
-
 # Install the itch desktop app
 function setup_itch_app() {
     # Check if itch is installed
     if [ -x "$HOME/.itch/itch" ]; then
         echo -e "${YELLOW}Itch desktop app is already installed!${NC}"
-        exit
+        return
     fi
 
     wget -O itch-setup "https://itch.io/app/download?platform=linux"
@@ -69,8 +67,7 @@ function setup_vscode() {
     done
 
     # Copy key bindings
-    cd "$(dirname "$0")" || exit
-    cp -fv "./../config/keybindings.json" "$HOME/.config/Code/User"
+    cp -fv "../../config/keybindings.json" "$HOME/.config/Code/User"
 }
 
 function setup_hacknerd_fonts() {
