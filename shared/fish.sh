@@ -2,6 +2,9 @@
 
 cd "$(dirname "$0")" || exit
 
+# shellcheck source=../shared/colors.sh
+source "../shared/colors.sh"
+
 echo -e "${GREEN}Installing oh my fish!...${NC}"
 if [ -d "$HOME/.local/share/omf" ]; then
     echo -e "${YELLOW}oh my fish is already installed!${NC}"

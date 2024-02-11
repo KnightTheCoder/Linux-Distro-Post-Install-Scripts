@@ -5,7 +5,7 @@ cd "$(dirname "$0")" || exit
 # shellcheck source=./shared/colors.sh
 source "./shared/colors.sh"
 
-resolve_distro() {
+function resolve_distro() {
   case $1 in
     "1") echo "OpenSUSE";;
     "2") echo "Fedora";;
@@ -15,8 +15,8 @@ resolve_distro() {
   esac
 }
 
-# Check the package manager
-get_package_manager() {
+# Auto detect the package manager
+function get_package_manager() {
     if [ -x "/usr/bin/zypper" ]; then
      echo "zypper"
   elif [ -x "/usr/bin/dnf" ]; then
@@ -29,6 +29,11 @@ get_package_manager() {
     echo "unknown"
   fi
 }
+
+if [ $EUID -eq 0 ]; then
+  echo -e "${RED}Please run without root!${NC}"
+  exit 1
+fi
 
 package_manager=$(get_package_manager)
 
@@ -63,22 +68,27 @@ else
 fi
 
 echo -e "${GREEN}$(resolve_distro "$chosen_distro") detected!${NC}"
-whiptail --title "Autodetection" --yesno "$(resolve_distro "$chosen_distro") detected!\nIs this correct?" 0 0
+whiptail --title "Autodetection" --yesno "$(resolve_distro "$chosen_distro") detected with ${package_manager} as your package manager!\nIs this correct?" 0 0
 correct=$?
 
 if [ $correct != "0" ]; then
   chosen_distro=$(
-    whiptail --title "Select distro" --menu "Please select your distro" --nocancel --ok-button "Select" 0 0 40 \
+    whiptail --title "Select distro" --menu "Please select your distro" --ok-button "Select" 0 0 40 \
       "1" "OpenSUSE" \
       "2" "Fedora" \
       "3" "Arch linux" \
       "4" "Debian" 3>&2 2>&1 1>&3
   )
+
+  if [ -z "$chosen_distro" ]; then
+    echo -e "${RED}Aborting...${NC}"
+    exit
+  fi
 fi
 
 echo -e "${GREEN}Your chosen distro is $(resolve_distro "$chosen_distro")${NC}"
 
-echo -e "${GREEN}Checking package manager...${NC}"
+echo -e "${GREEN}Checking package manager and distro combination...${NC}"
 if [[ $chosen_distro = "1" && $package_manager = "zypper" ]]; then
   echo -e "${GREEN}zypper found for OpenSUSE!${NC}"
   sh "./distros/opensuse/setup.sh"

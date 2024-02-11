@@ -5,7 +5,7 @@ cd "$(dirname "$0")" || exit
 # shellcheck source=../../shared/colors.sh
 source "../../shared/colors.sh"
 
-create_snapshot() {
+function create_snapshot() {
     local snapshot_type=$1 # 0 or anything else
     local prompt_tag='before'
     local snapshot_tag='Pre'
@@ -33,11 +33,6 @@ create_snapshot() {
         esac
     done
 }
-
-if [ $EUID -eq 0 ]; then
-    echo -e "${RED}Please run without root!${NC}"
-    exit 1
-fi
 
 create_snapshot 0
 
