@@ -2,16 +2,21 @@
 
 cd "$(dirname "$0")" || exit
 
-# shellcheck source=./shared/colors.sh
-source "./shared/colors.sh"
+# shellcheck source=./shared/shared_scripts.sh
+source "./shared/shared_scripts.sh"
 
 function resolve_distro() {
   case $1 in
-    "1") echo "OpenSUSE";;
-    "2") echo "Fedora";;
-    "3") echo "Arch linux";;
-    "4") echo "Debian";;
-    *) echo "Unknown";;
+    "1") echo "OpenSUSE"
+      ;;
+    "2") echo "Fedora"
+      ;;
+    "3") echo "Arch linux"
+      ;;
+    "4") echo "Debian"
+      ;;
+    *) echo "Unknown"
+      ;;
   esac
 }
 
@@ -42,18 +47,24 @@ if [ ! -x "/usr/bin/whiptail" ]; then
   echo -e "${RED}whiptail is not installed! Please install newt to proceed!${NC}"
 
   case $package_manager in
-    "zypper") sudo zypper -vv in -y newt;;
-    "dnf") sudo dnf in -y newt;;
-    "pacman") sudo pacman -S --noconfirm whiptail;;
-    "apt") sudo apt install -y whiptail;;
+    "zypper") sudo zypper -vv in -y newt
+        ;;
+    "dnf") sudo dnf in -y newt
+        ;;
+    "pacman") sudo pacman -S --noconfirm whiptail
+        ;;
+    "apt") sudo apt install -y whiptail
+        ;;
     *) echo -e "${RED}Couldn't detect package manager!${NC}"
-       exit 1;;
+       exit 1
+       ;;
   esac
 
 fi
 
 whiptail --title "Linux Post-Install Script" --msgbox "Welcome to the post install script!\nFirst we'll need to gather some info about your system" 0 0
 
+ !  knight@KnightPC  ~/D/B/opensuse_post_install   tui-redesign    sh post_install.sh                                                                              
 # Auto detect distro
 if grep -iq opensuse /etc/os-release; then
   chosen_distro="1"
@@ -103,6 +114,9 @@ elif [[ $chosen_distro = "4" && $package_manager = "apt" ]]; then
   sh "./distros/debian/setup.sh"
 else
   echo -e "${RED}Can't continue! Mismatched package manager and distro!${NC}"
+  echo -e "${RED}Chosen distro: $(resolve_distro "$chosen_distro")${NC}"
+  echo -e "${RED}Detected package manager: $package_manager${NC}"
+  whiptail --title "Mismatched!" --msgbox "Can't continue! Mismatched package manager and distro!\nChosen distro: $(resolve_distro "$chosen_distro")\nDetected package manager: $package_manager" 0 0
   exit 1
 fi
 

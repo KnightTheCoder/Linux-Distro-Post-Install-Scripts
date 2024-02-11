@@ -2,8 +2,8 @@
 
 cd "$(dirname "$0")" || exit
 
-# shellcheck source=../../shared/colors.sh
-source "../../shared/colors.sh"
+# shellcheck source=.../../shared/shared_scripts.sh
+source "../../shared/shared_scripts.sh"
 
 function create_snapshot() {
     local snapshot_type=$1 # 0 or anything else
@@ -83,7 +83,7 @@ echo -e "${GREEN}Installing gaming and other extra apps...${NC}"
 sudo zypper -vv in -y lutris goverlay mangohud gamemode transmission-gtk haruna celluloid strawberry steam steam-devices gimp kdenlive
 
 echo -e "${GREEN}Installing itch.io desktop app${NC}"
-sh "../../shared/itch.sh"
+setup_itch_app
 
 # Tools for development
 
@@ -94,7 +94,7 @@ echo -e "${GREEN}Installing visual studio code...${NC}"
 # install microsoft's vscode instead of the open source one, so the official packages can be used
 sudo opi -n vscode
 
-sh "../../shared/vscode.sh"
+setup_vscode
 
 echo -e "${GREEN}Installing nodejs...${NC}"
 sudo zypper -vv in -y nodejs20
@@ -113,11 +113,11 @@ echo -e "${GREEN}Installing microsoft fonts...${NC}"
 sudo zypper -vv in -y fetchmsttfonts
 
 echo -e "${GREEN}Installing nerd fonts...${NC}"
-sh "../../shared/hack_font.sh"
+setup_hacknerd_fonts
 
 # Configurations
 
-sh "../../shared/fish.sh"
+setup_fish
 
 echo -e "${GREEN}Installing nvchad...${NC}"
 git clone https://github.com/NvChad/NvChad "$HOME/.config/nvim" --depth 1 && nvim
@@ -130,7 +130,7 @@ echo -e "${GREEN}Configuring flatpak and installing flatpak apps...${NC}"
 sudo zypper -vv in -y flatpak
 sudo usermod -a -G wheel "$USER"
 
-sh "../../shared/flatpak.sh"
+setup_flatpak
 
 echo -e "${GREEN}Ask for hostname and set it${NC}"
 echo -e "${YELLOW}Leave empty to not change it${NC}"
