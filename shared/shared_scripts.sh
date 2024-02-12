@@ -95,15 +95,16 @@ function setup_fish() {
 }
 
 function setup_flatpak() {
-    apps=(
+    local apps=(
         "io.missioncenter.MissionCenter"
         "com.github.tchx84.Flatseal"
         "net.davidotek.pupgui2"
         "com.obsproject.Studio"
         "com.github.unrud.VideoDownloader"
-        "io.github.spacingbat3.webcord"
+        "dev.vencord.Vesktop"
         "com.brave.Browser"
         "net.mullvad.MullvadBrowser"
+        "com.dec05eba.gpu_screen_recorder"
     )
 
     # Setup flathub
