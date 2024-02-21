@@ -23,16 +23,39 @@ function create_snapshot() {
     esac
 
     echo -e "${GREEN}Do you want to make a snapshot ${prompt_tag} the setup?${NC} "
-    select yn in "Yes" "No"; do
-        case $yn in
-            Yes )
-                sudo snapper -v create --description "${snapshot_tag}-Install script snapshot"
-                break;;
-            No )
-                break;;
-        esac
-    done
+    if whiptail --yesno "Do you want to make a snapshot ${prompt_tag} the setup?" 0 0; then
+        sudo snapper -v create --description "${snapshot_tag}-Install script snapshot"
+    fi
 }
+
+# function create_snapshot() {
+#     local snapshot_type=$1 # 0 or anything else
+#     local prompt_tag='before'
+#     local snapshot_tag='Pre'
+
+#     case $snapshot_type in
+#         0)
+#             prompt_tag='before'
+#             snapshot_tag='Pre'
+#             ;;
+
+#         *)
+#             prompt_tag='after'
+#             snapshot_tag='Post'
+#             ;;
+#     esac
+
+#     echo -e "${GREEN}Do you want to make a snapshot ${prompt_tag} the setup?${NC} "
+#     select yn in "Yes" "No"; do
+#         case $yn in
+#             Yes )
+#                 sudo snapper -v create --description "${snapshot_tag}-Install script snapshot"
+#                 break;;
+#             No )
+#                 break;;
+#         esac
+#     done
+# }
 
 whiptail --title "OpenSUSE" --msgbox "Welcome to the OpenSUSE script!" 0 0
 
@@ -124,9 +147,6 @@ packages+=" opi fish neofetch kwrite htop btop neovim lynis gh eza bat fetchmstt
 # Remove extra whitespace
 packages=$(echo "$packages" | xargs)
 
-# Turn into an array
-packages_array=("$packages")
-
 create_snapshot 0
 
 echo -e "${GREEN}Refreshing repositories...${NC}"
@@ -148,7 +168,9 @@ sudo zypper -vv remove -y --clean-deps discover kmail kontact kmines akregator k
 sudo zypper -vv remove -y --clean-deps patterns-kde-kde_pim patterns-games-games patterns-kde-kde_games
 
 # Install packages
-sudo zypper -vv install -y "${packages_array[@]}"
+# Don't use quotes, zypper won't recognize the packages
+# shellcheck disable=SC2086
+sudo zypper -vv install -y $packages
 
 # Install patterns
 sudo zypper -vv install -yt pattern "${patterns[@]}"
