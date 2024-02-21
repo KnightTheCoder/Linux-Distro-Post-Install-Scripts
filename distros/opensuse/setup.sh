@@ -42,7 +42,7 @@ packages=$(
     "lutris" "Lutris" OFF \
     "goverlay mangohud gamemode" "Gaming overlay" OFF \
     "haruna celluloid" "Media players" ON \
-    "strawberry" "Strawberry music player" ON \
+    "strawberry audacious" "Music players" ON \
     "transmission-gtk" "Transmission bittorrent client" ON \
     "steam steam-devices" "Steam" OFF \
     "gimp" "GIMP" ON \
@@ -102,7 +102,7 @@ sudo zypper -vv in -y fish neofetch kwrite btop neovim lynis gh eza bat
 # Tools for gaming
 
 echo -e "${GREEN}Installing gaming and other extra apps...${NC}"
-sudo zypper -vv in -y lutris goverlay mangohud gamemode transmission-gtk haruna celluloid strawberry steam steam-devices gimp kdenlive
+sudo zypper -vv in -y lutris goverlay mangohud gamemode transmission-gtk haruna celluloid strawberry audacious steam steam-devices gimp kdenlive
 
 echo -e "${GREEN}Installing itch.io desktop app${NC}"
 setup_itch_app
