@@ -71,6 +71,11 @@ function setup_vscode() {
 }
 
 function setup_hacknerd_fonts() {
+    if [ -d "$HOME/.local/share/fonts/hacknerdfonts" ]; then
+        echo -e "${RED}Hack nerd fonts already installed!${NC}"
+        return
+    fi
+
     wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/Hack.zip
     unzip ./Hack.zip -d Hack
     mkdir -p "$HOME/.local/share/fonts/hacknerdfonts"
