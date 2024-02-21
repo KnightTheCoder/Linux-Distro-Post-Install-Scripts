@@ -119,7 +119,7 @@ for package in $packages; do
     esac
 done
 
-packages+=" opi fish neofetch kwrite htop btop neovim lynis gh eza bat fetchmsttfonts"
+packages+=" opi fish neofetch kwrite htop btop neovim lynis gh eza bat fetchmsttfonts systemd-zram-service"
 
 # Remove extra whitespace
 packages=$(echo "$packages" | xargs)
