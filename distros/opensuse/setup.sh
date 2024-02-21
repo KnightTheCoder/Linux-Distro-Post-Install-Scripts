@@ -163,7 +163,7 @@ done
 
 # Add user to groups
 for group in "${usergroups[@]}"; do
-    usermod -a -G "$group" "$USER"
+    sudo usermod -a -G "$group" "$USER"
 done
 
 # Run setups
@@ -204,15 +204,13 @@ for app in "${setups[@]}"; do
 done
 
 # Set hostname
-hostname=$(whiptail --title "Hostname" --inputbox "Type in your hostname\n Leavy empty to not change it" 0 0 3>&1 1>&2 2>&3)
 # Check if hostname is not empty
-if $?; then
+if hostname=$(whiptail --title "Hostname" --inputbox "Type in your hostname\nLeave empty to not change it" 0 0 3>&1 1>&2 2>&3); then
     sudo hostnamectl hostname "$hostname"
 fi
 
 # Ask for audit
-whiptail --yesno "Would you like to run an audit?" 0 0
-if $?; then
+if whiptail --yesno "Would you like to run an audit?" 0 0; then
     sudo lynis audit system
 fi
 
