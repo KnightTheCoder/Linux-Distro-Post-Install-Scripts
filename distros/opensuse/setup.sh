@@ -26,7 +26,7 @@ function create_snapshot() {
     select yn in "Yes" "No"; do
         case $yn in
             Yes )
-                sudo snapper -v create -d "${snapshot_tag}-Install script snapshot"
+                sudo snapper -v create --description "${snapshot_tag}-Install script snapshot"
                 break;;
             No )
                 break;;
@@ -59,10 +59,10 @@ packages=$(
 create_snapshot 0
 
 echo -e "${GREEN}Refreshing repositories...${NC}"
-sudo zypper ref
+sudo zypper refresh
 
 echo -e "${GREEN}Upgrading system...${NC}"
-sudo zypper -vv dup -y
+sudo zypper -vv dist-upgrade -y
 
 echo -e "${GREEN}Checking the internet connection...${NC}"
 
@@ -77,7 +77,7 @@ fi
 echo -e "${GREEN}Installing codecs...${NC}"
 # opi will do the same as packman so no need to install
 
-sudo zypper -vv in -y opi
+sudo zypper -vv install -y opi
 sudo opi -n codecs
 
 # Install NVIDIA drivers
@@ -95,14 +95,14 @@ select yn in "Yes" "No"; do
 done
 
 echo -e "${GREEN}Removing unnecessary packages and installing extra ones...${NC}"
-sudo zypper -vv rm -y --clean-deps discover kmail kontact kmines akregator kaddressbook korganizer kompare konversation kleopatra kmahjongg kpat kreversi ksudoku xscreensaver
-sudo zypper -vv rm -y --clean-deps patterns-kde-kde_pim patterns-games-games patterns-kde-kde_games
-sudo zypper -vv in -y fish neofetch kwrite btop neovim lynis gh eza bat
+sudo zypper -vv remove -y --clean-deps discover kmail kontact kmines akregator kaddressbook korganizer kompare konversation kleopatra kmahjongg kpat kreversi ksudoku xscreensaver
+sudo zypper -vv remove -y --clean-deps patterns-kde-kde_pim patterns-games-games patterns-kde-kde_games
+sudo zypper -vv install -y fish neofetch kwrite btop neovim lynis gh eza bat
 
 # Tools for gaming
 
 echo -e "${GREEN}Installing gaming and other extra apps...${NC}"
-sudo zypper -vv in -y lutris goverlay mangohud gamemode transmission-gtk haruna celluloid strawberry audacious steam steam-devices gimp kdenlive
+sudo zypper -vv install -y lutris goverlay mangohud gamemode transmission-gtk haruna celluloid strawberry audacious steam steam-devices gimp kdenlive
 
 echo -e "${GREEN}Installing itch.io desktop app${NC}"
 setup_itch_app
@@ -110,7 +110,7 @@ setup_itch_app
 # Tools for development
 
 echo -e "${GREEN}Installing build tools...${NC}"
-sudo zypper -vv in -y -t pattern devel_basis
+sudo zypper -vv install -y -t pattern devel_basis
 
 echo -e "${GREEN}Installing visual studio code...${NC}"
 # install microsoft's vscode instead of the open source one, so the official packages can be used
@@ -119,20 +119,20 @@ sudo opi -n vscode
 setup_vscode
 
 echo -e "${GREEN}Installing nodejs...${NC}"
-sudo zypper -vv in -y nodejs20
-sudo npm -g i npm npm-check
+sudo zypper -vv install -y nodejs20
+sudo npm -g install npm npm-check
 
 echo -e "${GREEN}Installing .Net...${NC}"
 sudo opi -n dotnet
 
 echo -e "${GREEN}Installing rust...${NC}"
-sudo zypper -vv in -y rustup
+sudo zypper -vv install -y rustup
 rustup toolchain install stable
 
 # Fonts
 
 echo -e "${GREEN}Installing microsoft fonts...${NC}"
-sudo zypper -vv in -y fetchmsttfonts
+sudo zypper -vv install -y fetchmsttfonts
 
 echo -e "${GREEN}Installing nerd fonts...${NC}"
 setup_hacknerd_fonts
@@ -145,11 +145,11 @@ echo -e "${GREEN}Installing nvchad...${NC}"
 git clone https://github.com/NvChad/NvChad "$HOME/.config/nvim" --depth 1 && nvim
 
 echo -e "${GREEN}Settinng up zram...${NC}"
-sudo zypper -vv in -y systemd-zram-service
+sudo zypper -vv install -y systemd-zram-service
 sudo systemctl enable --now zramswap.service
 
 echo -e "${GREEN}Configuring flatpak and installing flatpak apps...${NC}"
-sudo zypper -vv in -y flatpak
+sudo zypper -vv install -y flatpak
 sudo usermod -a -G wheel "$USER"
 
 setup_flatpak
@@ -162,6 +162,29 @@ read -r hostname
 if [ -n "$hostname" ]; then
     sudo hostnamectl hostname "$hostname"
 fi
+
+# QEMU/KVM
+# Reference https://github.com/sysadmin-info/kvm/blob/main/kvm-opensuse.sh
+
+echo -en "${GREEN}Would you like to install QEMU/KVM? ${NC}"
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes )
+            echo -e "${GREEN}Installing QEMU/KVM...${NC}"
+            sudo zypper -vv install -yt pattern kvm_tools kvm_server
+            sudo zypper -vv install -y libvirt bridge-utils
+
+            sudo systemctl start kvm_stat.service
+            sudo systemctl enable kvm_stat.service
+
+            sudo systemctl start libvirtd.service
+            sudo systemctl enable libvirtd.service
+
+            break;;
+        No )
+            break;;
+    esac
+done
 
 echo -e "${GREEN}Would you like to run an audit?${NC}"
 select yn in "Yes" "No"; do
