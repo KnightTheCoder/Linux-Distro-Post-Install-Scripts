@@ -124,7 +124,8 @@ packages+=" opi fish neofetch kwrite htop btop neovim lynis gh eza bat fetchmstt
 # Remove extra whitespace
 packages=$(echo "$packages" | xargs)
 
-echo "${setups[@]}"
+# Turn into an array
+packages_array=("$packages")
 
 create_snapshot 0
 
@@ -133,8 +134,6 @@ sudo zypper refresh
 
 echo -e "${GREEN}Upgrading system...${NC}"
 sudo zypper -vv dist-upgrade -y
-
-echo -e "${GREEN}Checking the internet connection...${NC}"
 
 if wget -q --spider http://google.com; then
     echo -e "${GREEN}Online${NC}"
@@ -149,7 +148,7 @@ sudo zypper -vv remove -y --clean-deps discover kmail kontact kmines akregator k
 sudo zypper -vv remove -y --clean-deps patterns-kde-kde_pim patterns-games-games patterns-kde-kde_games
 
 # Install packages
-sudo zypper -vv install -y "$packages"
+sudo zypper -vv install -y "${packages_array[@]}"
 
 # Install patterns
 sudo zypper -vv install -yt pattern "${patterns[@]}"
