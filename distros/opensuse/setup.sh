@@ -36,10 +36,10 @@ packages=$(
     "haruna celluloid" "Media players" ON \
     "strawberry" "Strawberry music player" ON \
     "audacious" "Audacious music player" OFF \
-    "transmission-gtk" "Transmission bittorrent client" ON \
+    "transmission-gtk" "Transmission bittorrent client" OFF \
     "steam steam-devices" "Steam" OFF \
-    "gimp" "GIMP" ON \
-    "kdenlive" "Kdenlive" ON \
+    "gimp" "GIMP" OFF \
+    "kdenlive" "Kdenlive" OFF \
     "itch" "Itch desktop app" OFF \
     "vscode" "Visual Studio Code" OFF \
     "nodejs20" "Nodejs" OFF \
@@ -119,12 +119,13 @@ packages=$(echo "$packages" | xargs)
 
 create_snapshot 0
 
-echo -e "${GREEN}Refreshing repositories...${NC}"
+# Refresh repositories
 sudo zypper refresh
 
-echo -e "${GREEN}Upgrading system...${NC}"
+# Update system
 sudo zypper -vv dist-upgrade -y
 
+# Check internet after update
 if wget -q --spider http://google.com; then
     echo -e "${GREEN}Online${NC}"
 else
@@ -196,7 +197,7 @@ for app in "${setups[@]}"; do
             ;;
 
         npm )
-            sudo npm -g install npm npm-check
+            setup_npm
             ;;
 
         flatpak )

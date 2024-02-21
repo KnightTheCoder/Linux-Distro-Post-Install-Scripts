@@ -103,6 +103,14 @@ function setup_nvchad() {
     git clone https://github.com/NvChad/NvChad "$HOME/.config/nvim" --depth 1 && nvim
 }
 
+function setup_npm() {
+    sudo npm -g install npm npm-check
+}
+
+function setup_rust() {
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+}
+
 function setup_flatpak() {
     local apps=(
         "io.missioncenter.MissionCenter"
