@@ -94,6 +94,10 @@ function setup_fish() {
     cp -fv "../../config/config.fish" "$HOME/.config/fish/config.fish"
 }
 
+function setup_nvchad() {
+    git clone https://github.com/NvChad/NvChad "$HOME/.config/nvim" --depth 1 && nvim
+}
+
 function setup_flatpak() {
     local apps=(
         "io.missioncenter.MissionCenter"
