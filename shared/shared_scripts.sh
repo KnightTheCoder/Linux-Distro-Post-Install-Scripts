@@ -1,19 +1,17 @@
 #!/usr/bin/env bash
 
-# Global colors
-export RED='\033[0;31m'
-export GREEN='\033[0;32m'
-export YELLOW='\033[0;33m'
-export NC='\033[0m' # No Color
-
-cd "$(dirname "$0")" || exit
+# Global colors 
+readonly RED='\033[0;31m'
+readonly GREEN='\033[0;32m'
+readonly YELLOW='\033[0;33m'
+readonly NC='\033[0m' # No Color
 
 # Install the itch desktop app
 function setup_itch_app() {
     # Check if itch is installed
     if [ -x "$HOME/.itch/itch" ]; then
         echo -e "${YELLOW}Itch desktop app is already installed!${NC}"
-        exit
+        return
     fi
 
     wget -O itch-setup "https://itch.io/app/download?platform=linux"
@@ -69,11 +67,15 @@ function setup_vscode() {
     done
 
     # Copy key bindings
-    cd "$(dirname "$0")" || exit
-    cp -fv "./../config/keybindings.json" "$HOME/.config/Code/User"
+    cp -fv "../../config/keybindings.json" "$HOME/.config/Code/User"
 }
 
 function setup_hacknerd_fonts() {
+    if [ -d "$HOME/.local/share/fonts/hacknerdfonts" ]; then
+        echo -e "${RED}Hack nerd fonts already installed!${NC}"
+        return
+    fi
+
     wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/Hack.zip
     unzip ./Hack.zip -d Hack
     mkdir -p "$HOME/.local/share/fonts/hacknerdfonts"
@@ -97,16 +99,21 @@ function setup_fish() {
     cp -fv "../../config/config.fish" "$HOME/.config/fish/config.fish"
 }
 
+function setup_nvchad() {
+    git clone https://github.com/NvChad/NvChad "$HOME/.config/nvim" --depth 1 && nvim
+}
+
 function setup_flatpak() {
-    apps=(
+    local apps=(
         "io.missioncenter.MissionCenter"
         "com.github.tchx84.Flatseal"
         "net.davidotek.pupgui2"
         "com.obsproject.Studio"
         "com.github.unrud.VideoDownloader"
-        "io.github.spacingbat3.webcord"
+        "dev.vencord.Vesktop"
         "com.brave.Browser"
         "net.mullvad.MullvadBrowser"
+        "com.dec05eba.gpu_screen_recorder"
     )
 
     # Setup flathub
@@ -115,3 +122,9 @@ function setup_flatpak() {
     # Install flatpaks
     flatpak install -y "${apps[@]}"
 }
+
+# Export reusable colors
+export RED
+export GREEN
+export YELLOW
+export NC
