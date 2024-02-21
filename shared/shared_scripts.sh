@@ -72,7 +72,7 @@ function setup_vscode() {
 
 function setup_hacknerd_fonts() {
     if [ -d "$HOME/.local/share/fonts/hacknerdfonts" ]; then
-        echo -e "${RED}Hack nerd fonts already installed!${NC}"
+        echo -e "${YELLOW}Hack nerd fonts already installed!${NC}"
         return
     fi
 

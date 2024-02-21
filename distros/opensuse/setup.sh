@@ -148,6 +148,16 @@ sudo zypper -vv install -yt pattern "${patterns[@]}"
 # Install opi packages
 opi -nm "${opi[@]}"
 
+# Set new repos to refresh
+repos=$(sudo zypper lr)
+if echo "$repos" | grep -iq vscode; then
+    sudo zypper mr --refresh vscode
+fi
+
+if echo "$repos" | grep -iq dotnet; then
+    sudo zypper mr --refresh dotnet
+fi
+
 # Start services
 for serv in "${services[@]}"; do
     sudo systemctl enable --now "$serv"
