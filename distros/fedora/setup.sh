@@ -83,9 +83,6 @@ packages+=" fish neofetch kwrite htop btop neovim lynis gh eza bat"
 # Add latest dnf
 packages+=" dnf5 dnf5-plugins"
 
-# Add codecs
-packages+=" gstreamer1-plugins-{bad-\*,good-\*,base} gstreamer1-plugin-openh264 gstreamer1-plugin-libav --exclude=gstreamer1-plugins-bad-free-devel lame* --exclude=lame-devel  ffmpeg"
-
 # Remove extra whitespace
 packages=$(echo "$packages" | xargs)
 
@@ -105,6 +102,9 @@ sudo dnf upgrade -y --refresh
 
 # Remove unneccessary packages
 sudo dnf remove -y akregator plasma-discover dragon elisa-player kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat qt5-qdbusviewer
+
+# Install codecs
+sudo dnf install -y gstreamer1-plugins-{bad-\*,good-\*,base} gstreamer1-plugin-openh264 gstreamer1-plugin-libav --exclude=gstreamer1-plugins-bad-free-devel lame* --exclude=lame-devel 
 
 # Install packages
 # shellcheck disable=SC2086
