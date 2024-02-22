@@ -152,8 +152,11 @@ for app in "${setups[@]}"; do
             ;;
 
         flatpak )
-            # Remove fedora remote
-            sudo flatpak remote-delete fedora
+            # Remove fedora remote if it exists
+            if flatpak remotes | grep -iq fedora; then
+                sudo flatpak remote-delete fedora
+            fi
+            
             setup_flatpak
             ;;
     esac
