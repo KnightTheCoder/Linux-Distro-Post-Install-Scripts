@@ -104,7 +104,7 @@ sudo rpm -Uvh http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-re
 sudo dnf upgrade -y --refresh
 
 # Remove unneccessary packages
-sudo dnf remove akregator plasma-discover dragon elisa-player kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat qt5-qdbusviewer
+sudo dnf remove -y akregator plasma-discover dragon elisa-player kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat qt5-qdbusviewer
 
 # Install packages
 # shellcheck disable=SC2086
