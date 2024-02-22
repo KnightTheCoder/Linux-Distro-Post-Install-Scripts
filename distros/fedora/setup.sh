@@ -32,6 +32,7 @@ packages=$(
 packages=$(echo "$packages"| tr "\n" " ")
 
 # Add defaults
+services=()
 setups=(hacknerd fish nvchad)
 usergroups=()
 
@@ -48,7 +49,14 @@ for package in $packages; do
             ;;
 
         qemu )
+            packages+=" @virtualization"
+
+            services+=(libvirtd.service)
+
             usergroups+=(libvirt)
+
+            # Remove package
+            packages=${packages//"$package"/}
             ;;
 
         vscode )
@@ -147,6 +155,11 @@ for app in "${setups[@]}"; do
             setup_flatpak
             ;;
     esac
+done
+
+# Start services
+for serv in "${services[@]}"; do
+    sudo systemctl enable --now "$serv"
 done
 
 # Add user to groups
