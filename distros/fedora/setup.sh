@@ -166,16 +166,3 @@ done
 for group in "${usergroups[@]}"; do
     sudo usermod -a -G "$group" "$USER"
 done
-
-# Set hostname
-if hostname=$(whiptail --title "Hostname" --inputbox "Type in your hostname\nLeave empty to not change it" 0 0 3>&1 1>&2 2>&3); then
-    # Check if hostname is not empty
-    if [ -n "$hostname" ]; then
-        sudo hostnamectl hostname "$hostname"
-    fi
-fi
-
-# Ask for audit
-if whiptail --yesno "Would you like to run an audit?" 0 0; then
-    sudo lynis audit system
-fi
