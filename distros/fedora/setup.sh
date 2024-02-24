@@ -88,6 +88,9 @@ packages+=" fish neofetch kwrite htop btop neovim lynis gh eza bat"
 # Add latest dnf
 packages+=" dnf5 dnf5-plugins"
 
+# Dependencies for ms fonts
+packages+=" sudo dnf install curl cabextract xorg-x11-font-utils fontconfig"
+
 # Remove extra whitespace
 packages=$(echo "$packages" | xargs)
 
@@ -114,6 +117,9 @@ sudo dnf install -y gstreamer1-plugins-{bad-\*,good-\*,base} gstreamer1-plugin-o
 # Install packages
 # shellcheck disable=SC2086
 sudo dnf install -y $packages
+
+# Install msfonts
+sudo rpm -i https://downloads.sourceforge.net/project/mscorefonts2/rpms/msttcore-fonts-installer-2.6-1.noarch.rpm
 
 # Start services
 for serv in "${services[@]}"; do
