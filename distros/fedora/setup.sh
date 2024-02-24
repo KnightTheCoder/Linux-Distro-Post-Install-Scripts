@@ -89,7 +89,7 @@ packages+=" fish neofetch kwrite htop btop neovim lynis gh eza bat"
 packages+=" dnf5 dnf5-plugins"
 
 # Dependencies for ms fonts
-packages+=" sudo dnf install curl cabextract xorg-x11-font-utils fontconfig"
+packages+=" curl cabextract xorg-x11-font-utils fontconfig"
 
 # Remove extra whitespace
 packages=$(echo "$packages" | xargs)
