@@ -72,7 +72,7 @@ function setup_vscode() {
 
 function setup_hacknerd_fonts() {
     if [ -d "$HOME/.local/share/fonts/hacknerdfonts" ]; then
-        echo -e "${RED}Hack nerd fonts already installed!${NC}"
+        echo -e "${YELLOW}Hack nerd fonts already installed!${NC}"
         return
     fi
 
@@ -101,6 +101,14 @@ function setup_fish() {
 
 function setup_nvchad() {
     git clone https://github.com/NvChad/NvChad "$HOME/.config/nvim" --depth 1 && nvim
+}
+
+function setup_npm() {
+    sudo npm -g install npm npm-check
+}
+
+function setup_rust() {
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 }
 
 function setup_flatpak() {

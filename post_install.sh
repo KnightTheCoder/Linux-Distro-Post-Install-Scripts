@@ -119,6 +119,22 @@ else
   exit 1
 fi
 
+# Set hostname
+if hostname=$(whiptail --title "Hostname" --inputbox "Type in your hostname\nLeave empty to not change it" 0 0 3>&1 1>&2 2>&3); then
+    # Check if hostname is not empty
+    if [ -n "$hostname" ]; then
+        sudo hostnamectl hostname "$hostname"
+    fi
+fi
+
+# Check if lynis is installed
+if [ -x /usr/bin/lynis ]; then
+  # Ask for audit
+  if whiptail --yesno "Would you like to run an audit?" 0 0; then
+      sudo lynis audit system
+  fi
+fi
+
 echo -e "${YELLOW}Please reboot for flatpak's path and QEMU to work${NC}"
 echo -e "${YELLOW}Please run 'gh auth login' to start using GitHub CLI${NC}"
 echo -e "${GREEN}Post install complete, enjoy your new distro!${NC}"

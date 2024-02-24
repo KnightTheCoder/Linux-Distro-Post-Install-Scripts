@@ -36,10 +36,10 @@ packages=$(
     "haruna celluloid" "Media players" ON \
     "strawberry" "Strawberry music player" ON \
     "audacious" "Audacious music player" OFF \
-    "transmission-gtk" "Transmission bittorrent client" ON \
+    "transmission-gtk" "Transmission bittorrent client" OFF \
     "steam steam-devices" "Steam" OFF \
-    "gimp" "GIMP" ON \
-    "kdenlive" "Kdenlive" ON \
+    "gimp" "GIMP" OFF \
+    "kdenlive" "Kdenlive" OFF \
     "itch" "Itch desktop app" OFF \
     "vscode" "Visual Studio Code" OFF \
     "nodejs20" "Nodejs" OFF \
@@ -119,12 +119,13 @@ packages=$(echo "$packages" | xargs)
 
 create_snapshot 0
 
-echo -e "${GREEN}Refreshing repositories...${NC}"
+# Refresh repositories
 sudo zypper refresh
 
-echo -e "${GREEN}Upgrading system...${NC}"
+# Update system
 sudo zypper -vv dist-upgrade -y
 
+# Check internet after update
 if wget -q --spider http://google.com; then
     echo -e "${GREEN}Online${NC}"
 else
@@ -147,6 +148,16 @@ sudo zypper -vv install -yt pattern "${patterns[@]}"
 
 # Install opi packages
 opi -nm "${opi[@]}"
+
+# Set new repos to refresh
+repos=$(sudo zypper lr)
+if echo "$repos" | grep -iq vscode; then
+    sudo zypper mr --refresh vscode
+fi
+
+if echo "$repos" | grep -iq dotnet; then
+    sudo zypper mr --refresh dotnet
+fi
 
 # Start services
 for serv in "${services[@]}"; do
@@ -186,7 +197,7 @@ for app in "${setups[@]}"; do
             ;;
 
         npm )
-            sudo npm -g install npm npm-check
+            setup_npm
             ;;
 
         flatpak )
@@ -194,18 +205,3 @@ for app in "${setups[@]}"; do
             ;;
     esac
 done
-
-# Set hostname
-if hostname=$(whiptail --title "Hostname" --inputbox "Type in your hostname\nLeave empty to not change it" 0 0 3>&1 1>&2 2>&3); then
-    # Check if hostname is not empty
-    if [ -n "$hostname" ]; then
-        sudo hostnamectl hostname "$hostname"
-    fi
-fi
-
-# Ask for audit
-if whiptail --yesno "Would you like to run an audit?" 0 0; then
-    sudo lynis audit system
-fi
-
-create_snapshot 1
