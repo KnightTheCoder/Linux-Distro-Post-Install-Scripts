@@ -95,8 +95,12 @@ packages+=" curl cabextract xorg-x11-font-utils fontconfig"
 packages=$(echo "$packages" | xargs)
 
 # Modify dnf config file
-# Set parallel downloads and default to yes
-printf "max_parallel_downloads=20\ndefaultyes=True" | sudo tee -a /etc/dnf/dnf.conf
+# Set parallel downloads and default to yes, if it hasn't been set yet
+if grep -iq "max_parallel_downloads=20\ndefaultyes=True" /etc/dnf/dnf.conf; then
+    echo -e "${YELLOW}Config was already modified!${NC}"
+else
+    printf "max_parallel_downloads=20\ndefaultyes=True" | sudo tee -a /etc/dnf/dnf.conf
+fi
 
 # Add rpm fusion repositories
 
