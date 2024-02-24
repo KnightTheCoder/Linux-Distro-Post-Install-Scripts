@@ -2,10 +2,10 @@
 
 cd "$(dirname "$0")" || exit
 
-# shellcheck source=../../shared/colors.sh
-source "../../shared/colors.sh"
+# shellcheck source=.../../shared/shared_scripts.sh
+source "../../shared/shared_scripts.sh"
 
-create_snapshot() {
+function create_snapshot() {
     local snapshot_type=$1 # 0 or anything else
     local prompt_tag='before'
     local snapshot_tag='Pre'
@@ -22,33 +22,110 @@ create_snapshot() {
             ;;
     esac
 
-    echo -e "${GREEN}Do you want to make a snapshot ${prompt_tag} the setup?${NC} "
-    select yn in "Yes" "No"; do
-        case $yn in
-            Yes )
-                sudo snapper -v create -d "${snapshot_tag}-Install script snapshot"
-                break;;
-            No )
-                break;;
-        esac
-    done
+    if whiptail --yesno "Do you want to make a snapshot ${prompt_tag} the setup?" 0 0; then
+        sudo snapper -v create --description "${snapshot_tag}-Install script snapshot"
+    fi
 }
 
-if [ $EUID -eq 0 ]; then
-    echo -e "${RED}Please run without root!${NC}"
-    exit 1
-fi
+whiptail --title "OpenSUSE" --msgbox "Welcome to the OpenSUSE script!" 0 0
+
+packages=$(
+    whiptail --title "Install List" --separate-output --checklist "Choose what to install/configure" 0 0 0 \
+    "lutris" "Lutris" OFF \
+    "goverlay mangohud gamemode" "Gaming overlay" OFF \
+    "haruna celluloid" "Media players" ON \
+    "strawberry" "Strawberry music player" ON \
+    "audacious" "Audacious music player" OFF \
+    "transmission-gtk" "Transmission bittorrent client" OFF \
+    "steam steam-devices" "Steam" OFF \
+    "gimp" "GIMP" OFF \
+    "kdenlive" "Kdenlive" OFF \
+    "itch" "Itch desktop app" OFF \
+    "vscode" "Visual Studio Code" OFF \
+    "nodejs20" "Nodejs" OFF \
+    "dotnet" ".NET sdk" OFF \
+    "rustup" "Rust" OFF \
+    "flatpak" "Flatpak" ON \
+    "qemu" "QEMU/KVM" OFF \
+    3>&1 1>&2 2>&3
+)
+
+# Remove new lines
+packages=$(echo "$packages"| tr "\n" " ")
+
+# Add defaults
+opi=(codecs)
+patterns=(devel_basis)
+services=(zramswap.service)
+setups=(hacknerd fish nvchad)
+usergroups=()
+
+# Add packages to the correct categories
+for package in $packages; do
+    case $package in
+        itch|qemu )
+            if [ "$package" == itch ]; then
+                setups+=("$package")
+            fi
+
+            if [ "$package" == qemu ]; then
+                patterns+=(kvm_tools)
+                patterns+=(kvm_server)
+
+                packages+=" libvirt bridge-utils"
+
+                services+=(kvm_stat.service)
+                services+=(libvirtd.service)
+
+                usergroups+=(libvirt)
+            fi
+
+            # Remove package
+            packages=${packages//"$package"/}
+            ;;
+
+        vscode|dotnet )
+            if [ "$package" == vscode ]; then
+                setups+=(vscode)
+            fi
+
+            opi+=("$package")
+
+            # Remove package
+            packages=${packages//"$package"/}
+            ;;
+
+        rustup )
+            setups+=(rust)
+            ;;
+
+        nodejs20 )
+            setups+=(npm)
+            ;;
+
+        flatpak )
+            setups+=(flatpak)
+            usergroups+=(wheel)
+            ;;
+
+        * ) ;;
+    esac
+done
+
+packages+=" opi fish neofetch kwrite htop btop neovim lynis gh eza bat fetchmsttfonts systemd-zram-service"
+
+# Remove extra whitespace
+packages=$(echo "$packages" | xargs)
 
 create_snapshot 0
 
-echo -e "${GREEN}Refreshing repositories...${NC}"
-sudo zypper ref
+# Refresh repositories
+sudo zypper refresh
 
-echo -e "${GREEN}Upgrading system...${NC}"
-sudo zypper -vv dup -y
+# Update system
+sudo zypper -vv dist-upgrade -y
 
-echo -e "${GREEN}Checking the internet connection...${NC}"
-
+# Check internet after update
 if wget -q --spider http://google.com; then
     echo -e "${GREEN}Online${NC}"
 else
@@ -57,101 +134,74 @@ else
     exit 0
 fi
 
-echo -e "${GREEN}Installing codecs...${NC}"
-# opi will do the same as packman so no need to install
+# Remove unncessary packages
+sudo zypper -vv remove -y --clean-deps discover kmail kontact kmines akregator kaddressbook korganizer kompare konversation kleopatra kmahjongg kpat kreversi ksudoku xscreensaver
+sudo zypper -vv remove -y --clean-deps patterns-kde-kde_pim patterns-games-games patterns-kde-kde_games
 
-sudo zypper -vv in -y opi
-sudo opi -n codecs
+# Install packages
+# Don't use quotes, zypper won't recognize the packages
+# shellcheck disable=SC2086
+sudo zypper -vv install -y $packages
 
-# Install NVIDIA drivers
-echo -e "${GREEN}Would you like to install the NVIDIA driver?${NC} "
-select yn in "Yes" "No"; do
-    case $yn in
-        Yes )
-            echo -e "${GREEN}Installing NVIDIA driver...${NC}"
-            sudo zypper addrepo --refresh https://download.nvidia.com/opensuse/tumbleweed NVIDIA
-            sudo zypper install-new-recommends --repo NVIDIA
-            break;;
-        No )
-            break;;
-    esac
-done
+# Install patterns
+sudo zypper -vv install -yt pattern "${patterns[@]}"
 
-echo -e "${GREEN}Removing unnecessary packages and installing extra ones...${NC}"
-sudo zypper -vv rm -y --clean-deps discover kmail kontact kmines akregator kaddressbook korganizer kompare konversation kleopatra kmahjongg kpat kreversi ksudoku xscreensaver
-sudo zypper -vv rm -y --clean-deps patterns-kde-kde_pim patterns-games-games patterns-kde-kde_games
-sudo zypper -vv in -y fish neofetch kwrite btop neovim lynis gh
+# Install opi packages
+opi -nm "${opi[@]}"
 
-echo -e "${GREEN}Installing build tools...${NC}"
-sudo zypper -vv in -y -t pattern devel_basis
-
-echo -e "${GREEN}Installing microsoft fonts...${NC}"
-sudo zypper -vv in -y fetchmsttfonts
-
-echo -e "${GREEN}Installing gaming and other extra apps...${NC}"
-sudo zypper -vv in -y lutris goverlay mangohud gamemode transmission-gtk haruna celluloid strawberry steam steam-devices gimp kdenlive
-
-echo -e "${GREEN}Installing itch.io desktop app${NC}"
-sh "../../shared/itch.sh"
-
-echo -e "${GREEN}Installing visual studio code...${NC}"
-# install microsoft's vscode instead of the open source one, so the official packages can be used
-sudo opi -n vscode
-
-sh "../../shared/vscode.sh"
-
-echo -e "${GREEN}Installing nodejs...${NC}"
-sudo zypper -vv in -y nodejs20
-sudo npm -g i npm npm-check
-
-echo -e "${GREEN}Installing .Net...${NC}"
-sudo opi -n dotnet
-
-echo -e "${GREEN}Installing rust...${NC}"
-sudo zypper -vv in -y rustup
-rustup toolchain install stable
-
-echo -e "${GREEN}Configuring flatpak and installing flatpak apps...${NC}"
-sudo zypper -vv in -y flatpak
-sudo usermod -a -G wheel "$USER"
-
-sh "../../shared/flatpak.sh"
-
-echo -e "${GREEN}Installing oh my fish!...${NC}"
-echo -e "${YELLOW}Please run omf install bobthefish and exit from fish once it's done so the install can continue${NC}"
-curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
-
-echo -e "${GREEN}Copying fish config...${NC}"
-cp "../../config/config.fish" "$HOME/.config/fish/config.fish" -vf
-
-echo -e "${GREEN}Installing nvchad...${NC}"
-git clone https://github.com/NvChad/NvChad "$HOME/.config/nvim" --depth 1 && nvim
-
-echo -e "${GREEN}Installing nerd fonts...${NC}"
-sh "../../shared/hack_font.sh"
-
-echo -e "${GREEN}Settinng up zram...${NC}"
-sudo zypper -vv in -y systemd-zram-service
-sudo systemctl enable --now zramswap.service
-
-echo -e "${GREEN}Ask for hostname and set it${NC}"
-echo -e "${YELLOW}Leave empty to not change it${NC}"
-echo -en "${GREEN}Hostname: ${NC}"
-read -r hostname
-# Check if hostname is not empty
-if [ -n "$hostname" ]; then
-    sudo hostnamectl hostname "$hostname"
+# Set new repos to refresh
+repos=$(sudo zypper lr)
+if echo "$repos" | grep -iq vscode; then
+    sudo zypper mr --refresh vscode
 fi
 
-echo -e "${GREEN}Would you like to run an audit?${NC}"
-select yn in "Yes" "No"; do
-    case $yn in
-        Yes )
-            sudo lynis audit system
-            break;;
-        No )
-            break;;
-    esac
+if echo "$repos" | grep -iq dotnet; then
+    sudo zypper mr --refresh dotnet
+fi
+
+# Start services
+for serv in "${services[@]}"; do
+    sudo systemctl enable --now "$serv"
 done
 
-create_snapshot 1
+# Add user to groups
+for group in "${usergroups[@]}"; do
+    sudo usermod -a -G "$group" "$USER"
+done
+
+# Run setups
+for app in "${setups[@]}"; do
+    case $app in
+        itch )
+            setup_itch_app
+            ;;
+
+        vscode )
+            setup_vscode
+            ;;
+
+        hacknerd )
+            setup_hacknerd_fonts
+            ;;
+
+        fish )
+            setup_fish
+            ;;
+
+        nvchad )
+            setup_nvchad
+            ;;
+
+        rust )
+            rustup toolchain install stable
+            ;;
+
+        npm )
+            setup_npm
+            ;;
+
+        flatpak )
+            setup_flatpak
+            ;;
+    esac
+done
