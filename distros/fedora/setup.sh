@@ -96,7 +96,7 @@ packages=$(echo "$packages" | xargs)
 
 # Modify dnf config file
 # Set parallel downloads and default to yes, if it hasn't been set yet
-if grep -iq "max_parallel_downloads=20\ndefaultyes=True" /etc/dnf/dnf.conf; then
+if grep -iq "max_parallel_downloads=20" /etc/dnf/dnf.conf && grep -iq "defaultyes=True" /etc/dnf/dnf.conf; then
     echo -e "${YELLOW}Config was already modified!${NC}"
 else
     printf "max_parallel_downloads=20\ndefaultyes=True" | sudo tee -a /etc/dnf/dnf.conf
