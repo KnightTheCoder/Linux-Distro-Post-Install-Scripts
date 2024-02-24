@@ -171,4 +171,3 @@ for app in "${setups[@]}"; do
             ;;
     esac
 done
-
