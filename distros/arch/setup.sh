@@ -25,6 +25,7 @@ packages=$(
     "rustup" "Rust" OFF \
     "flatpak" "Flatpak" ON \
     "qemu" "QEMU/KVM" OFF \
+    "openrgb" "OpenRGB" OFF \
     3>&1 1>&2 2>&3
 )
 
@@ -89,22 +90,35 @@ done
 # Add console apps
 packages+=" fish neofetch kwrite htop btop neovim lynis gh eza bat"
 
+# Add development packages
+packages+=" git base-devel"
+
 # Remove extra whitespace
 packages=$(echo "$packages" | xargs)
 
-# Modify dnf config file
-# Set parallel downloads and default to yes, if it hasn't been set yet
+# Modify packman config file
+# Set parallel downloads, if it hasn't been set yet
 if grep -iq "ParallelDownloads = 100" /etc/pacman.conf; then
     echo -e "${YELLOW}Config was already modified!${NC}"
 else
     printf "ParallelDownloads = 5\n" | sudo tee -a /etc/pacman.conf
 fi
 
+# Install yay
+if [ -x /usr/bin/yay ]; then
+    echo -e "${YELLOW}yay is already installed${NC}"
+else
+    git clone https://aur.archlinux.org/yay-bin.git
+    cd yay-bin || exit
+    makepkg -si
+fi
+
 # Update system
 sudo pacman -Syu --noconfirm
 
+# TODO: list correct packages to remove
 # Remove unneccessary packages
-sudo pacman -Rns akregator plasma-discover dragon elisa-player kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat qt5-qdbusviewer --exclude=flatpak
+sudo pacman -Rns akregator dragon elisa-player kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat qt5-qdbusviewer
 
 # Install packages
 # shellcheck disable=SC2086
