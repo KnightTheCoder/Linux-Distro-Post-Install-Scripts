@@ -35,21 +35,20 @@ packages=$(echo "$packages"| tr "\n" " ")
 services=()
 setups=(hacknerd fish nvchad)
 usergroups=()
+aur=(ttf-ms-win11-auto)
 
 # Add packages to the correct categories
 for package in $packages; do
     case $package in
         itch )
-            if [ "$package" == itch ]; then
-                setups+=("$package")
-            fi
+            setups+=("$package")
 
             # Remove package
             packages=${packages//"$package"/}
             ;;
 
         qemu )
-            packages+=" @virtualization"
+            packages+=" qemu virt-manager virt-viewer dnsmasq vde2 bridge-utils openbsd-netcat dmidecode"
 
             services+=(libvirtd.service)
 
@@ -59,20 +58,28 @@ for package in $packages; do
             packages=${packages//"$package"/}
             ;;
 
-        vscode )
-            setups+=(vscode)
+        vscode|flatpak )
+            if [ "$package" == vscode ]; then
+                aur+=(visual-studio-code-bin)
+
+                # Remove package
+                packages=${packages//"$package"/}
+            fi
+
+            setups+=("$package")
             ;;
 
         rustup )
+            aur+=("$package")
+    
             setups+=(rust)
+
+            # Remove package
+            packages=${packages//"$package"/}
             ;;
 
         nodejs )
             setups+=(npm)
-            ;;
-
-        flatpak )
-            setups+=(flatpak)
             ;;
 
         * ) ;;
@@ -94,14 +101,17 @@ else
 fi
 
 # Update system
-sudo dnf upgrade -y --refresh
+sudo pacman -Syu --noconfirm
 
 # Remove unneccessary packages
-sudo dnf remove -y akregator plasma-discover dragon elisa-player kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat qt5-qdbusviewer --exclude=flatpak
+sudo pacman -Rns akregator plasma-discover dragon elisa-player kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat qt5-qdbusviewer --exclude=flatpak
 
 # Install packages
 # shellcheck disable=SC2086
-sudo dnf install -y $packages
+sudo pacman -S $packages --noconfirm
+
+# Install AUR packages
+yay -S "${aur[@]}"
 
 # Start services
 for serv in "${services[@]}"; do
@@ -137,6 +147,8 @@ for app in "${setups[@]}"; do
             ;;
 
         rust )
+            rustup toolchain install stable
+
             setup_rust
             ;;
 

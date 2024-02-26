@@ -14,7 +14,7 @@ packages=$(
     "haruna celluloid vlc" "Media players" ON \
     "strawberry" "Strawberry music player" ON \
     "audacious" "Audacious music player" OFF \
-    "transmission-gtk" "Transmission bittorrent client" OFF \
+    "transmission" "Transmission bittorrent client" OFF \
     "steam steam-devices" "Steam" OFF \
     "gimp" "GIMP" OFF \
     "kdenlive" "Kdenlive" OFF \
@@ -40,9 +40,7 @@ usergroups=()
 for package in $packages; do
     case $package in
         itch )
-            if [ "$package" == itch ]; then
-                setups+=("$package")
-            fi
+            setups+=("$package")
 
             # Remove package
             packages=${packages//"$package"/}
