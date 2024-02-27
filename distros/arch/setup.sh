@@ -70,11 +70,6 @@ for package in $packages; do
             setups+=("$package")
             ;;
 
-        steam )
-            # Add multilib for steam to work
-            printf "\n[multilib]\n Include = /etc/pacman.d/mirrorlist" | sudo tee -a /etc/pacman.conf
-            ;;
-
         rustup )
             aur+=("$package")
     
@@ -93,7 +88,7 @@ for package in $packages; do
 done
 
 # Add console apps
-packages+=" fish neofetch kwrite htop btop neovim lynis github-cli eza bat zram-generator"
+packages+=" fish neofetch kwrite htop btop neovim lynis github-cli eza bat zram-generator wget curl ark filelight"
 
 # Add development packages
 packages+=" git base-devel"
@@ -101,12 +96,19 @@ packages+=" git base-devel"
 # Remove extra whitespace
 packages=$(echo "$packages" | xargs)
 
+# Add multilib for steam to work
+if grep -iq "\n[multilib]\n Include = /etc/pacman.d/mirrorlist\n" /etc/pacman.conf; then
+    echo -e "${YELLOW}multilib is already included${NC}"
+else
+    printf "\n[multilib]\n Include = /etc/pacman.d/mirrorlist\n" | sudo tee -a /etc/pacman.conf
+fi
+
 # Modify packman config file
 # Set parallel downloads, if it hasn't been set yet
-if grep -iq "ParallelDownloads = 100" /etc/pacman.conf && grep -iq "Color" /etc/pacman.conf && grep -iq "ILoveCandy" /etc/pacman.conf ; then
+if grep -iq "ParallelDownloads = 100" /etc/pacman.conf && grep -iq "Color" /etc/pacman.conf && grep -iq "ILoveCandy" /etc/pacman.conf; then
     echo -e "${YELLOW}Config was already modified!${NC}"
 else
-    printf "\n[options]\n ParallelDownloads = 100\n Color\n ILoveCandy" | sudo tee -a /etc/pacman.conf
+    printf "\n[options]\n ParallelDownloads = 100\n Color\n ILoveCandy\n" | sudo tee -a /etc/pacman.conf
 fi
 
 # Update system
@@ -171,8 +173,6 @@ for app in "${setups[@]}"; do
 
         rust )
             rustup default stable
-
-            setup_rust
             ;;
 
         npm )
