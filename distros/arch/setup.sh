@@ -103,10 +103,10 @@ packages=$(echo "$packages" | xargs)
 
 # Modify packman config file
 # Set parallel downloads, if it hasn't been set yet
-if grep -iq "ParallelDownloads = 100" /etc/pacman.conf; then
+if grep -iq "ParallelDownloads = 100" /etc/pacman.conf && grep -iq "Color" /etc/pacman.conf && grep -iq "ILoveCandy" /etc/pacman.conf ; then
     echo -e "${YELLOW}Config was already modified!${NC}"
 else
-    printf "\n[options]\n ParallelDownloads = 100\n" | sudo tee -a /etc/pacman.conf
+    printf "\n[options]\n ParallelDownloads = 100\n Color\n ILoveCandy" | sudo tee -a /etc/pacman.conf
 fi
 
 # Update system
