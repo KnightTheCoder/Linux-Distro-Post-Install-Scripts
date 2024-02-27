@@ -33,7 +33,7 @@ packages=$(
 packages=$(echo "$packages"| tr "\n" " ")
 
 # Add defaults
-services=()
+services=(systemd-zram-setup@zram0)
 setups=(hacknerd fish nvchad)
 usergroups=()
 aur=(ttf-ms-win11-auto)
@@ -88,7 +88,7 @@ for package in $packages; do
 done
 
 # Add console apps
-packages+=" fish neofetch kwrite htop btop neovim lynis gh eza bat"
+packages+=" fish neofetch kwrite htop btop neovim lynis gh eza bat zram-generator"
 
 # Add development packages
 packages+=" git base-devel"
@@ -118,7 +118,7 @@ sudo pacman -Syu --noconfirm
 
 # TODO: list correct packages to remove
 # Remove unneccessary packages
-sudo pacman -Rns akregator dragon elisa-player kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat qt5-qdbusviewer
+sudo pacman -Rns discover akregator kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat
 
 # Install packages
 # shellcheck disable=SC2086
@@ -126,6 +126,9 @@ sudo pacman -S $packages --noconfirm
 
 # Install AUR packages
 yay -S "${aur[@]}"
+
+# Setup zram
+printf "[zram0]\n zram-size = ram / 2\n compression-algorithm = zstd\n swap-priority = 100\n fs-type = swap\n" | sudo tee -a /etc/pacman.conf
 
 # Start services
 for serv in "${services[@]}"; do
