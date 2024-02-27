@@ -15,13 +15,13 @@ packages=$(
     "strawberry" "Strawberry music player" ON \
     "audacious" "Audacious music player" OFF \
     "transmission-gtk" "Transmission bittorrent client" OFF \
-    "steam steam-devices" "Steam" OFF \
+    "steam" "Steam" OFF \
     "gimp" "GIMP" OFF \
     "kdenlive" "Kdenlive" OFF \
     "itch" "Itch desktop app" OFF \
     "vscode" "Visual Studio Code" ON \
     "nodejs" "Nodejs" OFF \
-    "dotnet" ".NET sdk" OFF \
+    "dotnet-sdk" ".NET sdk" OFF \
     "rustup" "Rust" OFF \
     "flatpak" "Flatpak" ON \
     "qemu" "QEMU/KVM" OFF \
@@ -70,6 +70,11 @@ for package in $packages; do
             setups+=("$package")
             ;;
 
+        steam )
+            # Add multilib for steam to work
+            printf "\n[multilib]\n Include = /etc/pacman.d/mirrorlist" | sudo tee -a /etc/pacman.conf
+            ;;
+
         rustup )
             aur+=("$package")
     
@@ -101,7 +106,7 @@ packages=$(echo "$packages" | xargs)
 if grep -iq "ParallelDownloads = 100" /etc/pacman.conf; then
     echo -e "${YELLOW}Config was already modified!${NC}"
 else
-    printf "[options]\n ParallelDownloads = 100\n" | sudo tee -a /etc/pacman.conf
+    printf "\n[options]\n ParallelDownloads = 100\n" | sudo tee -a /etc/pacman.conf
 fi
 
 # Update system
