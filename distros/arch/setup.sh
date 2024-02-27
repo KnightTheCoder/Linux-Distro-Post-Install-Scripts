@@ -101,16 +101,7 @@ packages=$(echo "$packages" | xargs)
 if grep -iq "ParallelDownloads = 100" /etc/pacman.conf; then
     echo -e "${YELLOW}Config was already modified!${NC}"
 else
-    printf "ParallelDownloads = 5\n" | sudo tee -a /etc/pacman.conf
-fi
-
-# Install yay
-if [ -x /usr/bin/yay ]; then
-    echo -e "${YELLOW}yay is already installed${NC}"
-else
-    git clone https://aur.archlinux.org/yay-bin.git
-    cd yay-bin || exit
-    makepkg -si
+    printf "[options]\n ParallelDownloads = 100\n" | sudo tee -a /etc/pacman.conf
 fi
 
 # Update system
@@ -123,6 +114,15 @@ sudo pacman -Rns discover akregator kaddressbook kmahjongg kmail kontact kmines 
 # Install packages
 # shellcheck disable=SC2086
 sudo pacman -S $packages --noconfirm
+
+# Install yay
+if [ -x /usr/bin/yay ]; then
+    echo -e "${YELLOW}yay is already installed${NC}"
+else
+    git clone https://aur.archlinux.org/yay-bin.git
+    cd yay-bin || exit
+    makepkg -si
+fi
 
 # Install AUR packages
 yay -S "${aur[@]}"
