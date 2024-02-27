@@ -88,7 +88,7 @@ for package in $packages; do
 done
 
 # Add console apps
-packages+=" fish neofetch kwrite htop btop neovim lynis gh eza bat zram-generator"
+packages+=" fish neofetch kwrite htop btop neovim lynis github-cli eza bat zram-generator"
 
 # Add development packages
 packages+=" git base-devel"
