@@ -122,13 +122,14 @@ else
     git clone https://aur.archlinux.org/yay-bin.git
     cd yay-bin || exit
     makepkg -si
+    rm -rf yay-bin
 fi
 
 # Install AUR packages
 yay -S "${aur[@]}"
 
 # Setup zram
-printf "[zram0]\n zram-size = ram / 2\n compression-algorithm = zstd\n swap-priority = 100\n fs-type = swap\n" | sudo tee -a /etc/pacman.conf
+printf "[zram0]\n zram-size = ram / 2\n compression-algorithm = zstd\n swap-priority = 100\n fs-type = swap\n" | sudo tee /etc/systemd/zram-generator.conf
 
 # Start services
 for serv in "${services[@]}"; do
@@ -164,7 +165,7 @@ for app in "${setups[@]}"; do
             ;;
 
         rust )
-            rustup toolchain install stable
+            rustup default stable
 
             setup_rust
             ;;
