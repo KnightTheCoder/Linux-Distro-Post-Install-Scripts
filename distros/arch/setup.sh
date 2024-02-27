@@ -80,6 +80,8 @@ for package in $packages; do
             ;;
 
         nodejs )
+            packages+=" npm"
+
             setups+=(npm)
             ;;
 
@@ -97,7 +99,7 @@ packages+=" git base-devel"
 packages=$(echo "$packages" | xargs)
 
 # Add multilib for steam to work
-if grep -iq "\n[multilib]\n Include = /etc/pacman.d/mirrorlist\n" /etc/pacman.conf; then
+if grep -iq "\n[multilib]\n" /etc/pacman.conf; then
     echo -e "${YELLOW}multilib is already included${NC}"
 else
     printf "\n[multilib]\n Include = /etc/pacman.d/mirrorlist\n" | sudo tee -a /etc/pacman.conf
@@ -120,7 +122,7 @@ sudo pacman -Rns discover akregator kaddressbook kmahjongg kmail kontact kmines 
 
 # Install packages
 # shellcheck disable=SC2086
-sudo pacman -S $packages --noconfirm
+sudo pacman -S $packages --noconfirm --needed
 
 # Install yay
 if [ -x /usr/bin/yay ]; then
