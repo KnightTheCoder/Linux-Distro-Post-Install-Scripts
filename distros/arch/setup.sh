@@ -137,7 +137,7 @@ else
 fi
 
 # Install AUR packages
-yay -S "${aur[@]}"
+yay -S "${aur[@]}" --needed
 
 # Setup zram
 printf "[zram0]\n zram-size = ram / 2\n compression-algorithm = zstd\n swap-priority = 100\n fs-type = swap\n" | sudo tee /etc/systemd/zram-generator.conf
