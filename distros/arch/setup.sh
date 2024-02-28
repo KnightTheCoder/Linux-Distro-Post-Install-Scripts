@@ -33,7 +33,7 @@ packages=$(
 packages=$(echo "$packages"| tr "\n" " ")
 
 # Add defaults
-services=(systemd-zram-setup@zram0)
+services=()
 setups=(hacknerd fish nvchad)
 usergroups=()
 aur=(ttf-ms-win11-auto)
@@ -100,10 +100,10 @@ packages=$(echo "$packages" | xargs)
 
 # TODO: fix config duplication
 # Add multilib for steam to work
-if grep -iqzoP "\n[multilib]\n Include = /etc/pacman.d/mirrorlist\n" /etc/pacman.conf; then
+if grep -iqzoP "\n\[multilib\]\nInclude = /etc/pacman.d/mirrorlist\n" /etc/pacman.conf; then
     echo -e "${YELLOW}multilib is already included${NC}"
 else
-    printf "\n[multilib]\n Include = /etc/pacman.d/mirrorlist\n" | sudo tee -a /etc/pacman.conf
+    printf "\n[multilib]\nInclude = /etc/pacman.d/mirrorlist\n" | sudo tee -a /etc/pacman.conf
 fi
 
 # TODO: fix config duplication
@@ -112,7 +112,7 @@ fi
 if grep -iq "ParallelDownloads = 100" /etc/pacman.conf && grep -iq "Color" /etc/pacman.conf && grep -iq "ILoveCandy" /etc/pacman.conf; then
     echo -e "${YELLOW}Config was already modified!${NC}"
 else
-    printf "\n[options]\n ParallelDownloads = 100\n Color\n ILoveCandy\n" | sudo tee -a /etc/pacman.conf
+    printf "\n[options]\nParallelDownloads = 100\nColor\nILoveCandy\n" | sudo tee -a /etc/pacman.conf
 fi
 
 # Update system
