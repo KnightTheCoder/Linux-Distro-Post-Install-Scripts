@@ -112,6 +112,8 @@ function setup_rust() {
 }
 
 function setup_flatpak() {
+    local extra_apps=("$@")
+
     local apps=(
         "io.missioncenter.MissionCenter"
         "com.github.tchx84.Flatseal"
@@ -123,6 +125,10 @@ function setup_flatpak() {
         "net.mullvad.MullvadBrowser"
         "com.dec05eba.gpu_screen_recorder"
     )
+
+    for app in "${extra_apps[@]}"; do
+        apps+=("$app")
+    done
 
     # Setup flathub
     sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo

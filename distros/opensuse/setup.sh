@@ -47,6 +47,7 @@ packages=$(
     "rustup" "Rust" OFF \
     "flatpak" "Flatpak" ON \
     "qemu" "QEMU/KVM" OFF \
+    "openrgb" "OpenRGB" OFF \
     3>&1 1>&2 2>&3
 )
 
