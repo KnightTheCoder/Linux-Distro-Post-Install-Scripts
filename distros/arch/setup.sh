@@ -90,7 +90,7 @@ for package in $packages; do
 done
 
 # Add console apps
-packages+=" fish neofetch kwrite htop btop neovim lynis github-cli eza bat zram-generator wget curl ark filelight"
+packages+=" plasmawayland-session fish neofetch kwrite htop btop neovim lynis github-cli eza bat zram-generator wget curl ark filelight libreoffice-fresh"
 
 # Add development packages
 packages+=" git base-devel"
