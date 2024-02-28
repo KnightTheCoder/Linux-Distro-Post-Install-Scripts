@@ -112,7 +112,7 @@ sudo rpm -Uvh http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-re
 sudo dnf upgrade -y --refresh
 
 # Remove unneccessary packages
-sudo dnf remove -y akregator plasma-discover dragon elisa-player kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat qt5-qdbusviewer --exclude=flatpak
+sudo dnf remove -y akregator plasma-discover dragon elisa-player kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat kolourpaint qt5-qdbusviewer "libreoffice*" --exclude=flatpak
 
 # Install codecs
 sudo dnf install -y gstreamer1-plugins-{bad-\*,good-\*,base} gstreamer1-plugin-openh264 gstreamer1-plugin-libav --exclude=gstreamer1-plugins-bad-free-devel lame* --exclude=lame-devel 
@@ -176,7 +176,7 @@ for app in "${setups[@]}"; do
                 sudo flatpak remote-delete fedora
             fi
             
-            setup_flatpak
+            setup_flatpak "org.libreoffice.LibreOffice"
             ;;
     esac
 done
