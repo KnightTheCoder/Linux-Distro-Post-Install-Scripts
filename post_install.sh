@@ -68,7 +68,7 @@ if grep -iq opensuse /etc/os-release; then
   chosen_distro="1"
 elif grep -iq fedora /etc/os-release; then
   chosen_distro="2"
-elif grep -iq "arch linux" /etc/os-release; then
+elif grep -iq "arch" /etc/os-release; then
   chosen_distro="3"
 elif grep -iq debian /etc/os-release; then
   chosen_distro="4"
