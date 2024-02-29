@@ -113,7 +113,7 @@ function setup_astrovim() {
     mv ~/.cache/nvim ~/.cache/nvim.bak
 
     # Clone the repository
-    git clone --depth 1 https://github.com/AstroNvim/AstroNvim ~/.config/nvim
+    git clone --depth 1 https://github.com/AstroNvim/AstroNvim "$HOME/.config/nvim"
     nvim
 }
 

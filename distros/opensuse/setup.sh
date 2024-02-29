@@ -164,13 +164,14 @@ opi -nm "${opi[@]}"
 
 # Set new repos to refresh
 repos=$(sudo zypper lr)
-if echo "$repos" | grep -iq vscode; then
-    sudo zypper mr --refresh vscode
-fi
+for repo in $repos; do
+    case $repo in
+        vscode|dotnet )
+            sudo zypper mr --refresh "$repo"
+            ;;
 
-if echo "$repos" | grep -iq dotnet; then
-    sudo zypper mr --refresh dotnet
-fi
+    esac
+done
 
 # Start services
 for serv in "${services[@]}"; do
