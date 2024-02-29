@@ -34,9 +34,21 @@ packages=$(echo "$packages"| tr "\n" " ")
 
 # Add defaults
 services=()
-setups=(hacknerd fish nvchad)
+setups=(hacknerd fish)
 usergroups=()
 aur=(ttf-ms-win11-auto)
+
+nvim_config=$(whiptail --menu "Choose a neovim configuration (choose nvchad if unsure)" 0 0 0 \
+    "nvchad" "NVChad" \
+    "astrovim" "Astrovim" \
+    3>&1 1>&2 2>&3
+)
+
+if [ -z "$nvim_config" ]; then
+    setups+=(nvchad)
+else
+    setup+=("$nvim_config")
+fi
 
 # Add packages to the correct categories
 for package in $packages; do
@@ -173,6 +185,10 @@ for app in "${setups[@]}"; do
 
         nvchad )
             setup_nvchad
+            ;;
+
+        astrovim )
+            setup_astrovim
             ;;
 
         rust )
