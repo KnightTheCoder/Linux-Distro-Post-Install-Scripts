@@ -77,10 +77,13 @@ else
 fi
 
 echo -e "${GREEN}$(resolve_distro "$chosen_distro") and ${package_manager} detected!${NC}"
-whiptail --title "Autodetection" --yesno "$(resolve_distro "$chosen_distro") detected with ${package_manager} as your package manager!\nIs this correct?" 0 0
-correct=$?
 
-if [ $correct != "0" ]; then
+if [ "$chosen_distro" -gt -1 ]; then
+  whiptail --title "Autodetection" --yesno "$(resolve_distro "$chosen_distro") detected with ${package_manager} as your package manager!\nIs this correct?" 0 0
+  correct=$?
+fi
+
+if [ "$correct" != "0" ]; then
   chosen_distro=$(
     whiptail --title "Select distro" --notags --menu "Please select your distro" --ok-button "Select" 0 0 40 \
       "1" "OpenSUSE" \
@@ -127,12 +130,9 @@ if hostname=$(whiptail --title "Hostname" --inputbox "Type in your hostname\nLea
     fi
 fi
 
-# Check if lynis is installed
-if [ -x /usr/bin/lynis ]; then
-  # Ask for audit
-  if whiptail --yesno "Would you like to run an audit?" 0 0; then
-      sudo lynis audit system
-  fi
+# Check if lynis is installed and ask for audit 
+if [ -x /usr/bin/lynis ] && whiptail --yesno "Would you like to run an audit?" 0 0; then
+  sudo lynis audit system
 fi
 
 echo -e "${YELLOW}Please reboot for flatpak's path and QEMU to work${NC}"
