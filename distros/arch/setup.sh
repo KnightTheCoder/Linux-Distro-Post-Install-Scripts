@@ -47,7 +47,7 @@ nvim_config=$(whiptail --menu "Choose a neovim configuration (choose nvchad if u
 if [ -z "$nvim_config" ]; then
     setups+=(nvchad)
 else
-    setup+=("$nvim_config")
+    setups+=("$nvim_config")
 fi
 
 # Add packages to the correct categories
