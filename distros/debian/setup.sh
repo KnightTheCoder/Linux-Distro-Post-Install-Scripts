@@ -27,7 +27,6 @@ packages=$(
     "rustup" "Rust" OFF \
     "flatpak" "Flatpak" ON \
     "qemu" "QEMU/KVM" OFF \
-    "openrgb" "OpenRGB" OFF \
     3>&1 1>&2 2>&3
 )
 
@@ -103,13 +102,6 @@ for package in $packages; do
 
         flatpak )
             setups+=(flatpak)
-            ;;
-
-        openrgb )
-            # Remove package
-            packages=${packages//"$package"/}
-
-            setups+=(openrgb)
             ;;
 
         * ) ;;
@@ -212,12 +204,6 @@ for app in "${setups[@]}"; do
             sudo chmod 644 /etc/apt/keyrings/gierens.gpg /etc/apt/sources.list.d/gierens.list
             sudo apt update
             sudo apt install -y eza
-            ;;
-
-        openrgb )
-            sudo add-apt-repository ppa:thopiekar/openrgb
-            sudo nala update
-            sudo nala install -y openrgb
             ;;
 
         flatpak )

@@ -143,14 +143,15 @@ function setup_flatpak() {
     )
 
     for app in "${extra_apps[@]}"; do
-        apps+=("$app")
+        apps+=" $app"
     done
 
     # Setup flathub
     sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
     # Install flatpaks
-    flatpak install -y "${apps[@]}"
+    # shellcheck disable=SC2086
+    flatpak install -y $apps
 }
 
 # Export reusable colors
