@@ -62,14 +62,14 @@ for package in $packages; do
             ;;
 
         qemu )
+            # Remove package
+            packages=${packages//"$package"/}
+
             packages+=" qemu-kvm libvirt-clients libvirt-daemon-system bridge-utils virtinst libvirt-daemon virt-manager"
 
             services+=(libvirtd.service)
 
             usergroups+=(libvirt)
-
-            # Remove package
-            packages=${packages//"$package"/}
             ;;
 
         vscode )
