@@ -128,16 +128,19 @@ function setup_rust() {
 function setup_flatpak() {
     local extra_apps=("$@")
 
-    local apps=(
-        "io.missioncenter.MissionCenter"
-        "com.github.tchx84.Flatseal"
-        "net.davidotek.pupgui2"
-        "com.obsproject.Studio"
-        "com.github.unrud.VideoDownloader"
-        "dev.vencord.Vesktop"
-        "com.brave.Browser"
-        "net.mullvad.MullvadBrowser"
-        "com.dec05eba.gpu_screen_recorder"
+    local apps
+    apps=$(
+        whiptail --title "Flatpaks to install" --separate-output --checklist "Choose what to install for flatpak" 0 0 0 \
+        "io.missioncenter.MissionCenter" "MissionCenter" ON \
+        "com.github.tchx84.Flatseal" "Flatseal" ON \
+        "net.davidotek.pupgui2" "ProtonUp-QT" OFF \
+        "com.obsproject.Studio" "OBS Studio" OFF \
+        "com.github.unrud.VideoDownloader" "Video Downloader" ON \
+        "dev.vencord.Vesktop" "Vesktop" OFF \
+        "com.brave.Browser" "Brave browser" OFF \
+        "net.mullvad.MullvadBrowser" "Mullavad Browser" OFF \
+        "com.dec05eba.gpu_screen_recorder" "GPU screen recoder" OFF \
+        3>&1 1>&2 2>&3
     )
 
     for app in "${extra_apps[@]}"; do
