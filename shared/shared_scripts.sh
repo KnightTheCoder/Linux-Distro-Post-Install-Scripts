@@ -139,6 +139,7 @@ function setup_flatpak() {
         "com.brave.Browser" "Brave browser" OFF \
         "net.mullvad.MullvadBrowser" "Mullavad Browser" OFF \
         "com.dec05eba.gpu_screen_recorder" "GPU screen recoder" OFF \
+        "org.qbittorrent.qBittorrent" "qbittorrent bittorrent client" OFF \
         3>&1 1>&2 2>&3
     )
 
