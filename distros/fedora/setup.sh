@@ -11,7 +11,9 @@ packages=$(
     whiptail --title "Install List" --separate-output --checklist "Choose what to install/configure" 0 0 0 \
     "lutris" "Lutris" OFF \
     "goverlay mangohud gamemode" "Gaming overlay" OFF \
-    "haruna celluloid vlc" "Media players" ON \
+    "haruna" "Haruna media player" ON \
+    "celluloid" "Celluloid media player" ON \
+    "vlc" "VLC media player" ON \
     "strawberry" "Strawberry music player" ON \
     "audacious" "Audacious music player" OFF \
     "transmission" "Transmission bittorrent client" OFF \
@@ -46,7 +48,7 @@ nvim_config=$(whiptail --menu "Choose a neovim configuration (choose nvchad if u
 if [ -z "$nvim_config" ]; then
     setups+=(nvchad)
 else
-    setup+=("$nvim_config")
+    setups+=("$nvim_config")
 fi
 
 # Add packages to the correct categories

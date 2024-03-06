@@ -104,16 +104,16 @@ echo -e "${GREEN}Your chosen distro is $(resolve_distro "$chosen_distro")${NC}"
 echo -e "${GREEN}Checking package manager and distro combination...${NC}"
 if [[ $chosen_distro = "1" && $package_manager = "zypper" ]]; then
   echo -e "${GREEN}zypper found for OpenSUSE!${NC}"
-  sh "./distros/opensuse/setup.sh"
+  bash "./distros/opensuse/setup.sh"
 elif [[ $chosen_distro = "2" && $package_manager = "dnf" ]]; then
   echo -e "${GREEN}dnf found for Fedora!${NC}"
-  sh "./distros/fedora/setup.sh"
+  bash "./distros/fedora/setup.sh"
 elif [[ $chosen_distro = "3" && $package_manager = "pacman" ]]; then
   echo -e "${GREEN}pacman found for Arch linux!${NC}"
-  sh "./distros/arch/setup.sh"
+  bash "./distros/arch/setup.sh"
 elif [[ $chosen_distro = "4" && $package_manager = "apt" ]]; then
   echo -e "${GREEN}apt found for Debian!${NC}"
-  sh "./distros/debian/setup.sh"
+  bash "./distros/debian/setup.sh"
 else
   echo -e "${RED}Can't continue! Mismatched package manager and distro!${NC}"
   echo -e "${RED}Chosen distro: $(resolve_distro "$chosen_distro")${NC}"
