@@ -5,7 +5,7 @@ cd "$(dirname "$0")" || exit
 # shellcheck source=.../../shared/shared_scripts.sh
 source "../../shared/shared_scripts.sh"
 
-whiptail --title "Debian" --msgbox "Welcome to the debian script!" 0 0
+whiptail --title "Debian/Ubuntu" --msgbox "Welcome to the debian/ubuntu script!" 0 0
 
 packages=$(
     whiptail --title "Install List" --separate-output --checklist "Choose what to install/configure" 0 0 0 \
@@ -91,15 +91,13 @@ for package in $packages; do
             ;;
 
         dotnet )
+            setups+=(dotnet)
+
             if grep -iq "ID=debian"; then
-                wget https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
-                sudo dpkg -i packages-microsoft-prod.deb
-                rm packages-microsoft-prod.deb
-
+                setups+=(dotnet)
             else
-                sudo nala update && sudo nala install -y dotnet-sdk-8.0
+                packages+=" dotnet-sdk-8.0"
             fi
-
             ;;
 
         flatpak )
@@ -190,6 +188,14 @@ for app in "${setups[@]}"; do
 
         npm )
             setup_npm
+            ;;
+
+        dotnet )
+            wget https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+            sudo dpkg -i packages-microsoft-prod.deb
+            rm packages-microsoft-prod.deb
+
+            sudo nala update && sudo nala install -y dotnet-sdk-8.0
             ;;
 
         flatpak )
