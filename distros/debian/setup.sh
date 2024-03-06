@@ -113,7 +113,7 @@ sudo apt install -y nala
 sudo nala -y upgrade
 
 # Remove unnecessary packages
-# TODO: Include packages here
+sudo nala remove -y plasma-discover elisa dragonplayer kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat kolourpaint
 
 # Install packages
 # shellcheck disable=SC2086
