@@ -91,14 +91,14 @@ for package in $packages; do
             ;;
 
         dotnet )
+            # Remove package
+            packages=${packages//"$package"/}
+
             if grep -iq "ID=debian" /etc/os-release; then
                 setups+=(dotnet)
             else
                 packages+=" dotnet-sdk-8.0"
             fi
-
-            # Remove package
-            packages=${packages//"$package"/}
             ;;
 
         flatpak )
