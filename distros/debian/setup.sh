@@ -81,6 +81,9 @@ for package in $packages; do
 
         rustup )
             setups+=(rust)
+
+            # Remove package
+            packages=${packages//"$package"/}
             ;;
 
         nodejs )
