@@ -57,7 +57,6 @@ function setup_vscode() {
         "visualstudioexptteam.intellicode-api-usage-examples"
         "visualstudioexptteam.vscodeintellicode"
         "vue.volar"
-        "vue.vscode-typescript-vue-plugin"
         "zignd.html-css-class-completion"
     )
 
