@@ -90,6 +90,18 @@ for package in $packages; do
             setups+=(npm)
             ;;
 
+        dotnet )
+            if grep -iq "ID=debian"; then
+                wget https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+                sudo dpkg -i packages-microsoft-prod.deb
+                rm packages-microsoft-prod.deb
+
+            else
+                sudo nala update && sudo nala install -y dotnet-sdk-8.0
+            fi
+
+            ;;
+
         flatpak )
             setups+=(flatpak)
             ;;
