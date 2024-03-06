@@ -21,7 +21,7 @@ packages=$(
     "gimp" "GIMP" OFF \
     "kdenlive" "Kdenlive" OFF \
     "itch" "Itch desktop app" OFF \
-    "vscode" "Visual Studio Code" ON \
+    "vscode" "Visual Studio Code" OFF \
     "nodejs" "Nodejs" OFF \
     "dotnet" ".NET sdk" OFF \
     "rustup" "Rust" OFF \
@@ -73,6 +73,7 @@ for package in $packages; do
 
         vscode )
             setups+=(vscode)
+            packages+=" apt-transport-https"
 
             # Remove package
             packages=${packages//"$package"/}
@@ -158,7 +159,6 @@ for app in "${setups[@]}"; do
             sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
             rm -f packages.microsoft.gpg
 
-            sudo nala install -y apt-transport-https
             sudo nala update
             sudo nala install -y code
 

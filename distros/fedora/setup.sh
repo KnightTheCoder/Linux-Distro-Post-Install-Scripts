@@ -17,11 +17,12 @@ packages=$(
     "strawberry" "Strawberry music player" ON \
     "audacious" "Audacious music player" OFF \
     "transmission" "Transmission bittorrent client" OFF \
+    "qbittorrent" "Qbittorrent bittorrent client" OFF \
     "steam steam-devices" "Steam" OFF \
     "gimp" "GIMP" OFF \
     "kdenlive" "Kdenlive" OFF \
     "itch" "Itch desktop app" OFF \
-    "vscode" "Visual Studio Code" ON \
+    "vscode" "Visual Studio Code" OFF \
     "nodejs" "Nodejs" OFF \
     "dotnet" ".NET sdk" OFF \
     "rustup" "Rust" OFF \
