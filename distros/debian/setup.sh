@@ -36,7 +36,7 @@ packages=$(echo "$packages"| tr "\n" " ")
 
 # Add defaults
 services=()
-setups=(hacknerd fish)
+setups=(hacknerd fish eza)
 usergroups=()
 
 nvim_config=$(whiptail --menu "Choose a neovim configuration (choose nvchad if unsure)" 0 0 0 \
@@ -110,7 +110,7 @@ for package in $packages; do
 done
 
 # Add console apps
-packages+=" fish neofetch kwrite htop btop neovim lynis gh eza bat"
+packages+=" fish neofetch kwrite htop btop neovim lynis gh bat curl wget gpg"
 
 # Ms fonts installer and fontconfig
 packages+=" ttf-mscorefonts-installer fontconfig"
@@ -124,7 +124,7 @@ sudo apt update
 sudo apt install -y nala
 
 # Update system
-sudo nala -y upgrade
+sudo nala upgrade -y
 
 # Remove unnecessary packages
 sudo nala remove -y plasma-discover elisa dragonplayer kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat kolourpaint thunderbird
@@ -154,7 +154,6 @@ for app in "${setups[@]}"; do
             ;;
 
         vscode )
-            sudo nala install -y wget gpg
             wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
             sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
             sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
@@ -197,6 +196,15 @@ for app in "${setups[@]}"; do
             rm packages-microsoft-prod.deb
 
             sudo nala update && sudo nala install -y dotnet-sdk-8.0
+            ;;
+
+        eza )
+            sudo mkdir -p /etc/apt/keyrings
+            wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | sudo gpg --dearmor -o /etc/apt/keyrings/gierens.gpg
+            echo "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de stable main" | sudo tee /etc/apt/sources.list.d/gierens.list
+            sudo chmod 644 /etc/apt/keyrings/gierens.gpg /etc/apt/sources.list.d/gierens.list
+            sudo apt update
+            sudo apt install -y eza
             ;;
 
         flatpak )
