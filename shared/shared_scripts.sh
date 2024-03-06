@@ -136,6 +136,7 @@ function setup_flatpak() {
         "com.obsproject.Studio" "OBS Studio" OFF \
         "com.github.unrud.VideoDownloader" "Video Downloader" ON \
         "dev.vencord.Vesktop" "Vesktop" OFF \
+        "com.google.Chrome" "Google Chrome" OFF \
         "com.brave.Browser" "Brave browser" OFF \
         "net.mullvad.MullvadBrowser" "Mullavad Browser" OFF \
         "com.dec05eba.gpu_screen_recorder" "GPU screen recoder" OFF \

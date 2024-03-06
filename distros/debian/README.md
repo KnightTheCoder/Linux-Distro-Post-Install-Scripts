@@ -1,7 +1,7 @@
 # Post install script for Debian/Ubuntu with plasma desktop
 
 # About
-This script is only intended for Debian/UBuntu with KDE desktop, it may not work as intended with other desktops
+This script is only intended for Debian/UBuntu with KDE desktop and Linux mint with Cinnamon desktop, it may not work as intended with other desktops
 
 # Features
 * Updates the system
