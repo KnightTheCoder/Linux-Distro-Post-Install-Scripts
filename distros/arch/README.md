@@ -1,4 +1,4 @@
-# Post install script for Fedora KDE spin
+# Post install script for Arch linux with plasma desktop
 
 # About
 This script is only intended for Arch linux with KDE desktop, it may not work as intended with other desktops
@@ -11,8 +11,9 @@ This script is only intended for Arch linux with KDE desktop, it may not work as
 * Adds the following command line utilities: fish, neofetch, htop, btop, neovim
 * Add lynis for auditing your system
 * Copies fish config
-* Installs NvChad for neovim
-* Installs Microsoft and nerd hack fonts
+* Installs NvChad or Astrovim for neovim
+* Downloads and installs Microsoft and hack nerd fonts
 * Configures flatpak and installs my most used apps
 * Installs QEMU/KVM
+* Installs the GitHub CLI
 * Optionally sets hostname
