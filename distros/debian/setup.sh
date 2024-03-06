@@ -105,6 +105,13 @@ for package in $packages; do
             setups+=(flatpak)
             ;;
 
+        openrgb )
+            # Remove package
+            packages=${packages//"$package"/}
+
+            setups+=(openrgb)
+            ;;
+
         * ) ;;
     esac
 done
@@ -205,6 +212,12 @@ for app in "${setups[@]}"; do
             sudo chmod 644 /etc/apt/keyrings/gierens.gpg /etc/apt/sources.list.d/gierens.list
             sudo apt update
             sudo apt install -y eza
+            ;;
+
+        openrgb )
+            sudo add-apt-repository ppa:thopiekar/openrgb
+            sudo nala update
+            sudo nala install -y openrgb
             ;;
 
         flatpak )
