@@ -61,7 +61,7 @@ packages=$(echo "$packages"| tr "\n" " ")
 opi=(codecs)
 patterns=(devel_basis)
 services=(zramswap.service)
-setups=(hacknerd fish)
+setups=(hacknerd fish directories)
 usergroups=()
 
 nvim_config=$(whiptail --menu "Choose a neovim configuration (choose nvchad if unsure)" 0 0 0 \
@@ -223,6 +223,10 @@ for app in "${setups[@]}"; do
 
         flatpak )
             setup_flatpak
+            ;;
+
+        directories )
+            setup_user_directories
             ;;
     esac
 done

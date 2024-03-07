@@ -37,7 +37,7 @@ packages=$(echo "$packages"| tr "\n" " ")
 
 # Add defaults
 services=()
-setups=(hacknerd fish)
+setups=(hacknerd fish directories)
 usergroups=()
 aur=(ttf-ms-win11-auto)
 
@@ -205,5 +205,9 @@ for app in "${setups[@]}"; do
         flatpak )
             setup_flatpak
             ;;
+
+        directories )
+            setup_user_directories
+            ;;            
     esac
 done
