@@ -41,17 +41,8 @@ setups=(hacknerd fish)
 usergroups=()
 aur=(ttf-ms-win11-auto)
 
-nvim_config=$(whiptail --menu "Choose a neovim configuration (choose nvchad if unsure)" 0 0 0 \
-    "nvchad" "NVChad" \
-    "astrovim" "Astrovim" \
-    3>&1 1>&2 2>&3
-)
-
-if [ -z "$nvim_config" ]; then
-    setups+=(nvchad)
-else
-    setups+=("$nvim_config")
-fi
+nvim_config=$(choose_nvim_config)
+setups+=("$nvim_config")
 
 # Add packages to the correct categories
 for package in $packages; do

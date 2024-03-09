@@ -98,6 +98,18 @@ function setup_fish() {
     cp -fv "../../config/config.fish" "$HOME/.config/fish/config.fish"
 }
 
+function choose_nvim_config() {
+    nvim_config=$(whiptail --menu "Choose a neovim configuration (choose nvchad if unsure)" 0 0 0 \
+        "nvchad" "NVChad" \
+        "astrovim" "Astrovim" \
+        3>&1 1>&2 2>&3
+    )
+
+    if [ -n "$nvim_config" ]; then
+        echo "$nvim_config"
+    fi
+}
+
 function setup_nvchad() {
     git clone https://github.com/NvChad/NvChad "$HOME/.config/nvim" --depth 1 && nvim
 }
