@@ -35,7 +35,7 @@ packages=$(echo "$packages"| tr "\n" " ")
 
 # Add defaults
 services=()
-setups=(hacknerd fish eza directories)
+setups=(hacknerd fish eza)
 usergroups=()
 
 nvim_config=$(whiptail --menu "Choose a neovim configuration (choose nvchad if unsure)" 0 0 0 \
@@ -208,10 +208,6 @@ for app in "${setups[@]}"; do
 
         flatpak )
             setup_flatpak
-            ;;
-
-        directories )
-            setup_user_directories
             ;;
     esac
 done

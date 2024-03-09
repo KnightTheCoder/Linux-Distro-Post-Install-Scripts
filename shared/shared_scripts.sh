@@ -156,20 +156,6 @@ function setup_flatpak() {
     flatpak install -y $apps
 }
 
-function setup_user_directories() {
-    local directories=(
-        "Development"
-        "Games"
-        "LutrisPrefixes"
-    )
-
-    for directory in "${directories[@]}"; do
-        if [ ! -d "$HOME/$directory" ]; then
-            mkdir -v "$HOME/$directory"
-        fi
-    done
-}
-
 # Export reusable colors
 export RED
 export GREEN
