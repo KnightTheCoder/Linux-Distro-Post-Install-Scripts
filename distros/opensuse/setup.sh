@@ -34,7 +34,6 @@ packages=$(
     "lutris" "Lutris" OFF \
     "goverlay mangohud gamemode" "Gaming overlay" OFF \
     "steam steam-devices" "Steam" OFF \
-    "itch" "Itch desktop app" OFF \
     "haruna" "Haruna media player" ON \
     "celluloid" "Celluloid media player" ON \
     "vlc" "VLC media player" ON \
@@ -71,22 +70,16 @@ setups+=("$nvim_config")
 # Add packages to the correct categories
 for package in $packages; do
     case $package in
-        itch|qemu )
-            if [ "$package" == itch ]; then
-                setups+=("$package")
-            fi
+        qemu )
+            patterns+=(kvm_tools)
+            patterns+=(kvm_server)
 
-            if [ "$package" == qemu ]; then
-                patterns+=(kvm_tools)
-                patterns+=(kvm_server)
+            packages+=" libvirt bridge-utils"
 
-                packages+=" libvirt bridge-utils"
+            services+=(kvm_stat.service)
+            services+=(libvirtd.service)
 
-                services+=(kvm_stat.service)
-                services+=(libvirtd.service)
-
-                usergroups+=(libvirt)
-            fi
+            usergroups+=(libvirt)
 
             # Remove package
             packages=${packages//"$package"/}
@@ -181,10 +174,6 @@ done
 # Run setups
 for app in "${setups[@]}"; do
     case $app in
-        itch )
-            setup_itch_app
-            ;;
-
         vscode )
             setup_vscode
             ;;
