@@ -11,6 +11,7 @@ packages=$(
     whiptail --title "Install List" --separate-output --checklist "Choose what to install/configure" 0 0 0 \
     "lutris" "Lutris" OFF \
     "goverlay mangohud gamemode" "Gaming overlay" OFF \
+    "steam steam-devices" "Steam" OFF \
     "haruna" "Haruna media player" ON \
     "celluloid" "Celluloid media player" ON \
     "vlc" "VLC media player" ON \
@@ -18,10 +19,8 @@ packages=$(
     "audacious" "Audacious music player" OFF \
     "transmission" "Transmission bittorrent client" OFF \
     "qbittorrent" "Qbittorrent bittorrent client" OFF \
-    "steam steam-devices" "Steam" OFF \
     "gimp" "GIMP" OFF \
     "kdenlive" "Kdenlive" OFF \
-    "itch" "Itch desktop app" OFF \
     "vscode" "Visual Studio Code" OFF \
     "nodejs" "Nodejs" OFF \
     "dotnet" ".NET sdk" OFF \
@@ -40,28 +39,12 @@ services=()
 setups=(hacknerd fish)
 usergroups=()
 
-nvim_config=$(whiptail --menu "Choose a neovim configuration (choose nvchad if unsure)" 0 0 0 \
-    "nvchad" "NVChad" \
-    "astrovim" "Astrovim" \
-    3>&1 1>&2 2>&3
-)
-
-if [ -z "$nvim_config" ]; then
-    setups+=(nvchad)
-else
-    setups+=("$nvim_config")
-fi
+nvim_config=$(choose_nvim_config)
+setups+=("$nvim_config")
 
 # Add packages to the correct categories
 for package in $packages; do
     case $package in
-        itch )
-            setups+=("$package")
-
-            # Remove package
-            packages=${packages//"$package"/}
-            ;;
-
         qemu )
             packages+=" @virtualization"
 
@@ -152,10 +135,6 @@ done
 # Run setups
 for app in "${setups[@]}"; do
     case $app in
-        itch )
-            setup_itch_app
-            ;;
-
         vscode )
             sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
             sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'

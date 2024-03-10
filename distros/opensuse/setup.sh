@@ -33,24 +33,24 @@ packages=$(
     whiptail --title "Install List" --separate-output --checklist "Choose what to install/configure" 0 0 0 \
     "lutris" "Lutris" OFF \
     "goverlay mangohud gamemode" "Gaming overlay" OFF \
+    "steam steam-devices" "Steam" OFF \
     "haruna" "Haruna media player" ON \
     "celluloid" "Celluloid media player" ON \
     "vlc" "VLC media player" ON \
     "strawberry" "Strawberry music player" ON \
     "audacious" "Audacious music player" OFF \
+    "libreoffice" "Libreoffice" OFF \
     "transmission-gtk" "Transmission bittorrent client" OFF \
     "qbittorrent" "Qbittorrent bittorrent client" OFF \
-    "steam steam-devices" "Steam" OFF \
     "gimp" "GIMP" OFF \
     "kdenlive" "Kdenlive" OFF \
-    "itch" "Itch desktop app" OFF \
     "vscode" "Visual Studio Code" OFF \
     "nodejs20" "Nodejs" OFF \
     "dotnet" ".NET sdk" OFF \
     "rustup" "Rust" OFF \
     "flatpak" "Flatpak" ON \
     "qemu" "QEMU/KVM" OFF \
-    "openrgb" "OpenRGB" OFF \
+    "OpenRGB" "OpenRGB" OFF \
     3>&1 1>&2 2>&3
 )
 
@@ -64,40 +64,22 @@ services=(zramswap.service)
 setups=(hacknerd fish)
 usergroups=()
 
-nvim_config=$(whiptail --menu "Choose a neovim configuration (choose nvchad if unsure)" 0 0 0 \
-    "nvchad" "NVChad" \
-    "astrovim" "Astrovim" \
-    3>&1 1>&2 2>&3
-)
-
-if [ -z "$nvim_config" ]; then
-    setups+=(nvchad)
-else
-    setups+=("$nvim_config")
-fi
+nvim_config=$(choose_nvim_config)
+setups+=("$nvim_config")
 
 # Add packages to the correct categories
 for package in $packages; do
     case $package in
-        itch|qemu )
-            if [ "$package" == itch ]; then
-                setups+=("$package")
-            fi
+        qemu )
+            patterns+=(kvm_tools)
+            patterns+=(kvm_server)
 
-            if [ "$package" == qemu ]; then
-                patterns+=(kvm_tools)
-                patterns+=(kvm_server)
+            packages+=" libvirt bridge-utils"
 
-                packages+=" libvirt bridge-utils"
+            services+=(kvm_stat.service)
+            services+=(libvirtd.service)
 
-                services+=(kvm_stat.service)
-                services+=(libvirtd.service)
-
-                usergroups+=(libvirt)
-            fi
-
-            # Remove package
-            packages=${packages//"$package"/}
+            usergroups+=(libvirt)
             ;;
 
         vscode|dotnet )
@@ -189,10 +171,6 @@ done
 # Run setups
 for app in "${setups[@]}"; do
     case $app in
-        itch )
-            setup_itch_app
-            ;;
-
         vscode )
             setup_vscode
             ;;
@@ -226,3 +204,5 @@ for app in "${setups[@]}"; do
             ;;
     esac
 done
+
+create_snapshot 1

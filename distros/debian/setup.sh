@@ -11,16 +11,15 @@ packages=$(
     whiptail --title "Install List" --separate-output --checklist "Choose what to install/configure" 0 0 0 \
     "lutris" "Lutris" OFF \
     "goverlay mangohud gamemode" "Gaming overlay" OFF \
+    "steam steam-devices" "Steam" OFF \
     "haruna" "Haruna media player" ON \
     "celluloid" "Celluloid media player" ON \
     "vlc" "VLC media player" ON \
-    "strawberry" "Strawberry music player" ON \
     "audacious" "Audacious music player" OFF \
+    "libreoffice" "Libreoffice" OFF \
     "transmission" "Transmission bittorrent client" OFF \
-    "steam steam-devices" "Steam" OFF \
     "gimp" "GIMP" OFF \
     "kdenlive" "Kdenlive" OFF \
-    "itch" "Itch desktop app" OFF \
     "vscode" "Visual Studio Code" OFF \
     "nodejs" "Nodejs" OFF \
     "dotnet" ".NET sdk" OFF \
@@ -38,28 +37,12 @@ services=()
 setups=(hacknerd fish eza)
 usergroups=()
 
-nvim_config=$(whiptail --menu "Choose a neovim configuration (choose nvchad if unsure)" 0 0 0 \
-    "nvchad" "NVChad" \
-    "astrovim" "Astrovim" \
-    3>&1 1>&2 2>&3
-)
-
-if [ -z "$nvim_config" ]; then
-    setups+=(nvchad)
-else
-    setups+=("$nvim_config")
-fi
+nvim_config=$(choose_nvim_config)
+setups+=("$nvim_config")
 
 # Add packages to the correct categories
 for package in $packages; do
     case $package in
-        itch )
-            setups+=("$package")
-
-            # Remove package
-            packages=${packages//"$package"/}
-            ;;
-
         qemu )
             # Remove package
             packages=${packages//"$package"/}
@@ -110,7 +93,7 @@ for package in $packages; do
 done
 
 # Add console apps
-packages+=" fish neofetch kwrite htop btop neovim lynis gh bat curl wget gpg"
+packages+=" git build-essential fish neofetch kwrite htop btop neovim lynis gh bat curl wget gpg"
 
 # Ms fonts installer and fontconfig
 packages+=" ttf-mscorefonts-installer fontconfig"
@@ -149,10 +132,6 @@ done
 # Run setups
 for app in "${setups[@]}"; do
     case $app in
-        itch )
-            setup_itch_app
-            ;;
-
         vscode )
             wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
             sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
@@ -202,8 +181,9 @@ for app in "${setups[@]}"; do
             wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | sudo gpg --dearmor -o /etc/apt/keyrings/gierens.gpg
             echo "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de stable main" | sudo tee /etc/apt/sources.list.d/gierens.list
             sudo chmod 644 /etc/apt/keyrings/gierens.gpg /etc/apt/sources.list.d/gierens.list
-            sudo apt update
-            sudo apt install -y eza
+
+            sudo nala update
+            sudo nala install -y eza
             ;;
 
         flatpak )

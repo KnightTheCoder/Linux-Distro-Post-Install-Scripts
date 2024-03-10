@@ -11,17 +11,17 @@ packages=$(
     whiptail --title "Install List" --separate-output --checklist "Choose what to install/configure" 0 0 0 \
     "lutris" "Lutris" OFF \
     "goverlay mangohud gamemode" "Gaming overlay" OFF \
+    "steam" "Steam" OFF \
     "haruna" "Haruna media player" ON \
     "celluloid" "Celluloid media player" ON \
     "vlc" "VLC media player" ON \
     "strawberry" "Strawberry music player" ON \
     "audacious" "Audacious music player" OFF \
+    "libreoffice-fresh" "Libreoffice" OFF \
     "transmission-gtk" "Transmission bittorrent client" OFF \
     "qbittorrent" "Qbittorrent bittorrent client" OFF \
-    "steam" "Steam" OFF \
     "gimp" "GIMP" OFF \
     "kdenlive" "Kdenlive" OFF \
-    "itch" "Itch desktop app" OFF \
     "vscode" "Visual Studio Code" OFF \
     "nodejs" "Nodejs" OFF \
     "dotnet-sdk" ".NET sdk" OFF \
@@ -41,28 +41,12 @@ setups=(hacknerd fish)
 usergroups=()
 aur=(ttf-ms-win11-auto)
 
-nvim_config=$(whiptail --menu "Choose a neovim configuration (choose nvchad if unsure)" 0 0 0 \
-    "nvchad" "NVChad" \
-    "astrovim" "Astrovim" \
-    3>&1 1>&2 2>&3
-)
-
-if [ -z "$nvim_config" ]; then
-    setups+=(nvchad)
-else
-    setups+=("$nvim_config")
-fi
+nvim_config=$(choose_nvim_config)
+setups+=("$nvim_config")
 
 # Add packages to the correct categories
 for package in $packages; do
     case $package in
-        itch )
-            setups+=("$package")
-
-            # Remove package
-            packages=${packages//"$package"/}
-            ;;
-
         qemu )
             packages+=" qemu virt-manager virt-viewer dnsmasq vde2 bridge-utils openbsd-netcat dmidecode"
 
@@ -105,7 +89,7 @@ for package in $packages; do
 done
 
 # Add console apps
-packages+=" plasmawayland-session fish neofetch kwrite htop btop neovim lynis github-cli eza bat zram-generator wget curl ark filelight libreoffice-fresh"
+packages+=" fish neofetch kwrite htop btop neovim lynis github-cli eza bat zram-generator wget curl ark filelight"
 
 # Add development packages
 packages+=" git base-devel"
@@ -170,10 +154,6 @@ done
 # Run setups
 for app in "${setups[@]}"; do
     case $app in
-        itch )
-            setup_itch_app
-            ;;
-
         vscode )
             setup_vscode
             ;;
