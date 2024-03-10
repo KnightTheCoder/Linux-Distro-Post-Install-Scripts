@@ -207,3 +207,5 @@ for app in "${setups[@]}"; do
             ;;
     esac
 done
+
+create_snapshot 1
