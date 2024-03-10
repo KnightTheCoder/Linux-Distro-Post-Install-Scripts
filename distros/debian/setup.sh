@@ -14,7 +14,6 @@ packages=$(
     "haruna" "Haruna media player" ON \
     "celluloid" "Celluloid media player" ON \
     "vlc" "VLC media player" ON \
-    "strawberry" "Strawberry music player" ON \
     "audacious" "Audacious music player" OFF \
     "transmission" "Transmission bittorrent client" OFF \
     "steam steam-devices" "Steam" OFF \
