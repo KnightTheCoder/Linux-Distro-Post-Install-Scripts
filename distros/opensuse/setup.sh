@@ -80,9 +80,6 @@ for package in $packages; do
             services+=(libvirtd.service)
 
             usergroups+=(libvirt)
-
-            # Remove package
-            packages=${packages//"$package"/}
             ;;
 
         vscode|dotnet )
