@@ -11,17 +11,18 @@ packages=$(
     whiptail --title "Install List" --separate-output --checklist "Choose what to install/configure" 0 0 0 \
     "lutris" "Lutris" OFF \
     "goverlay mangohud gamemode" "Gaming overlay" OFF \
+    "steam" "Steam" OFF \
+    "itch" "Itch desktop app" OFF \
     "haruna" "Haruna media player" ON \
     "celluloid" "Celluloid media player" ON \
     "vlc" "VLC media player" ON \
     "strawberry" "Strawberry music player" ON \
     "audacious" "Audacious music player" OFF \
+    "libreoffice-fresh" "Libreoffice" OFF \
     "transmission-gtk" "Transmission bittorrent client" OFF \
     "qbittorrent" "Qbittorrent bittorrent client" OFF \
-    "steam" "Steam" OFF \
     "gimp" "GIMP" OFF \
     "kdenlive" "Kdenlive" OFF \
-    "itch" "Itch desktop app" OFF \
     "vscode" "Visual Studio Code" OFF \
     "nodejs" "Nodejs" OFF \
     "dotnet-sdk" ".NET sdk" OFF \
@@ -96,7 +97,7 @@ for package in $packages; do
 done
 
 # Add console apps
-packages+=" fish neofetch kwrite htop btop neovim lynis github-cli eza bat zram-generator wget curl ark filelight libreoffice-fresh"
+packages+=" fish neofetch kwrite htop btop neovim lynis github-cli eza bat zram-generator wget curl ark filelight"
 
 # Add development packages
 packages+=" git base-devel"

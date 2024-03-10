@@ -144,15 +144,20 @@ function setup_flatpak() {
         whiptail --title "Flatpaks to install" --separate-output --checklist "Choose what to install for flatpak" 0 0 0 \
         "io.missioncenter.MissionCenter" "MissionCenter" ON \
         "com.github.tchx84.Flatseal" "Flatseal" ON \
+        "com.valvesoftware.Steam" "Steam" OFF \
         "net.davidotek.pupgui2" "ProtonUp-QT" OFF \
         "com.obsproject.Studio" "OBS Studio" OFF \
+        "com.dec05eba.gpu_screen_recorder" "GPU screen recoder" OFF \
         "com.github.unrud.VideoDownloader" "Video Downloader" ON \
+        "org.gimp.GIMP" "GIMP" OFF \
+        "org.kde.kdenlive" "Kdenlive" OFF \
         "dev.vencord.Vesktop" "Vesktop" OFF \
         "com.google.Chrome" "Google Chrome" OFF \
         "com.brave.Browser" "Brave browser" OFF \
         "net.mullvad.MullvadBrowser" "Mullavad Browser" OFF \
-        "com.dec05eba.gpu_screen_recorder" "GPU screen recoder" OFF \
+        "org.libreoffice.LibreOffice" "Libreoffice" OFF \
         "org.qbittorrent.qBittorrent" "qbittorrent bittorrent client" OFF \
+        "com.transmissionbt.Transmission" "Transmission bittorrent client" OFF \
         3>&1 1>&2 2>&3
     )
 
