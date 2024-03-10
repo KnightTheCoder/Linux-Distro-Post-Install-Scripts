@@ -6,20 +6,6 @@ readonly GREEN='\033[0;32m'
 readonly YELLOW='\033[0;33m'
 readonly NC='\033[0m' # No Color
 
-# Install the itch desktop app
-function setup_itch_app() {
-    # Check if itch is installed
-    if [ -x "$HOME/.itch/itch" ]; then
-        echo -e "${YELLOW}Itch desktop app is already installed!${NC}"
-        return
-    fi
-
-    wget -O itch-setup "https://itch.io/app/download?platform=linux"
-    chmod +x "./itch-setup"
-    ./itch-setup
-    rm -vf "./itch-setup"
-}
-
 # Install vscode extensions and copy keybindings
 function setup_vscode() {
     local extensions=(
@@ -90,12 +76,25 @@ function setup_fish() {
     if [ -d "$HOME/.local/share/omf" ]; then
         echo -e "${YELLOW}oh my fish is already installed!${NC}"
     else
-        echo -e "${YELLOW}Please run omf install bobthefish and exit from fish once it's done so the install can continue${NC}"
+        echo -e "${YELLOW}Please exit from fish once it's done so the install can continue${NC}"
         curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
+        fish "./setup_theme.fish"
     fi
 
     echo -e "${GREEN}Copying fish config...${NC}"
     cp -fv "../../config/config.fish" "$HOME/.config/fish/config.fish"
+}
+
+function choose_nvim_config() {
+    nvim_config=$(whiptail --menu "Choose a neovim configuration (choose nvchad if unsure)" 0 0 0 \
+        "nvchad" "NVChad" \
+        "astrovim" "Astrovim" \
+        3>&1 1>&2 2>&3
+    )
+
+    if [ -n "$nvim_config" ]; then
+        echo "$nvim_config"
+    fi
 }
 
 function setup_nvchad() {
@@ -132,15 +131,21 @@ function setup_flatpak() {
         whiptail --title "Flatpaks to install" --separate-output --checklist "Choose what to install for flatpak" 0 0 0 \
         "io.missioncenter.MissionCenter" "MissionCenter" ON \
         "com.github.tchx84.Flatseal" "Flatseal" ON \
+        "com.valvesoftware.Steam" "Steam" OFF \
+        "io.itch.itch" "Itch desktop app" OFF \
         "net.davidotek.pupgui2" "ProtonUp-QT" OFF \
         "com.obsproject.Studio" "OBS Studio" OFF \
+        "com.dec05eba.gpu_screen_recorder" "GPU screen recoder" OFF \
         "com.github.unrud.VideoDownloader" "Video Downloader" ON \
+        "org.gimp.GIMP" "GIMP" OFF \
+        "org.kde.kdenlive" "Kdenlive" OFF \
         "dev.vencord.Vesktop" "Vesktop" OFF \
         "com.google.Chrome" "Google Chrome" OFF \
         "com.brave.Browser" "Brave browser" OFF \
         "net.mullvad.MullvadBrowser" "Mullavad Browser" OFF \
-        "com.dec05eba.gpu_screen_recorder" "GPU screen recoder" OFF \
+        "org.libreoffice.LibreOffice" "Libreoffice" OFF \
         "org.qbittorrent.qBittorrent" "qbittorrent bittorrent client" OFF \
+        "com.transmissionbt.Transmission" "Transmission bittorrent client" OFF \
         3>&1 1>&2 2>&3
     )
 
