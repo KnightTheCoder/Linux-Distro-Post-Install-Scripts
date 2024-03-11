@@ -103,12 +103,12 @@ function setup_nvchad() {
 
 function setup_astrovim() {
     # Make a backup of your current nvim folder
-    mv ~/.config/nvim ~/.config/nvim.bak
+    rm ~/.config/nvim
 
     # Clean neovim folders
-    mv ~/.local/share/nvim ~/.local/share/nvim.bak
-    mv ~/.local/state/nvim ~/.local/state/nvim.bak
-    mv ~/.cache/nvim ~/.cache/nvim.bak
+    rm ~/.local/share/nvim
+    rm ~/.local/state/nvim
+    rm ~/.cache/nvim
 
     # Clone the repository
     git clone --depth 1 https://github.com/AstroNvim/AstroNvim "$HOME/.config/nvim"
