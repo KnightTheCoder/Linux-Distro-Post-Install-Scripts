@@ -76,7 +76,7 @@ function setup_fish() {
     if [ -d "$HOME/.local/share/omf" ]; then
         echo -e "${YELLOW}oh my fish is already installed!${NC}"
     else
-        echo -e "${YELLOW}Please exit from fish once it's done so the install can continue${NC}"
+        echo -e "${YELLOW}Please run 'omf install bobthefish' and exit from fish once it's done so the install can continue${NC}"
         curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
     fi
 
