@@ -78,7 +78,6 @@ function setup_fish() {
     else
         echo -e "${YELLOW}Please exit from fish once it's done so the install can continue${NC}"
         curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
-        fish "../../shared/setup_theme.fish"
     fi
 
     echo -e "${GREEN}Copying fish config...${NC}"
