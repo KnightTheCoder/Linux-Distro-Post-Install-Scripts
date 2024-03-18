@@ -91,6 +91,11 @@ function setup_fish() {
 }
 
 function choose_nvim_config() {
+    # Since neovim versions are too old for either config to work, don't ask when using them
+    if grep -iq debian /etc/os-release; then
+        return
+    fi
+
     nvim_config=$(whiptail --menu "Choose a neovim configuration (choose nvchad if unsure)" 0 0 0 \
         "nvchad" "NVChad" \
         "astrovim" "Astrovim" \
@@ -107,17 +112,15 @@ function setup_nvchad() {
 }
 
 function setup_astrovim() {
-    # Make a backup of your current nvim folder
-    rm ~/.config/nvim
+    # Clean neovim config folder
+    rm -rf ~/.config/nvim
 
     # Clean neovim folders
-    rm ~/.local/share/nvim
-    rm ~/.local/state/nvim
-    rm ~/.cache/nvim
+    rm -rf ~/.local/share/nvim
+    rm -rf ~/.local/state/nvim
+    rm -rf ~/.cache/nvim 
 
-    # Clone the repository
-    git clone --depth 1 https://github.com/AstroNvim/AstroNvim "$HOME/.config/nvim"
-    nvim
+    git clone --depth 1 https://github.com/AstroNvim/AstroNvim "$HOME/.config/nvim" && nvim
 }
 
 function setup_npm() {
