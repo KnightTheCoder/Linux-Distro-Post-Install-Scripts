@@ -136,6 +136,7 @@ fi
 sudo zypper -vv remove -y --clean-deps discover kmail kontact kmines akregator kaddressbook korganizer kompare konversation kleopatra kmahjongg kpat kreversi ksudoku xscreensaver
 sudo zypper -vv remove -y --clean-deps patterns-kde-kde_pim patterns-games-games patterns-kde-kde_games
 sudo zypper -vv al -t pattern kde_games games kde_pim
+sudo zypper -vv al discover6
 
 # Install packages
 # Don't use quotes, zypper won't recognize the packages
