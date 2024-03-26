@@ -16,6 +16,6 @@ This script is only intended for OpenSUSE Tumbleweed with KDE desktop, it may no
 * Installs NvChad or Astrovim for neovim
 * Downloads and installs Microsoft and hack nerd fonts
 * Configures flatpak and installs my most used apps
-* Experimental option to install QEMU/KVM (Internet doesn't seem to work with either NAT or a bridge for now)
+* Experimental option to install QEMU/KVM
 * Installs the GitHub CLI
 * Optionally sets hostname
