@@ -34,8 +34,9 @@ packages=$(echo "$packages"| tr "\n" " ")
 
 # Add defaults
 services=()
-setups=(hacknerd fish eza)
+setups=(hacknerd eza)
 usergroups=()
+remove_packages="elisa dragonplayer kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat kolourpaint thunderbird"
 
 nvim_config=$(choose_nvim_config)
 setups+=("$nvim_config")
@@ -52,6 +53,15 @@ for package in $packages; do
             services+=(libvirtd.service)
 
             usergroups+=(libvirt)
+            ;;
+
+        lutris )
+            setups+=(lutris)
+
+            packages+=" wine"
+
+            # Remove package
+            packages=${packages//"$package"/}
             ;;
 
         vscode )
@@ -71,6 +81,8 @@ for package in $packages; do
 
         nodejs )
             setups+=(npm)
+
+            packages+=" npm"
             ;;
 
         dotnet )
@@ -92,6 +104,9 @@ for package in $packages; do
     esac
 done
 
+# Add fish setup to be last
+setups+=(fish)
+
 # Add console apps
 packages+=" git build-essential fish neofetch kwrite htop btop neovim lynis gh bat curl wget gpg"
 
@@ -100,6 +115,25 @@ packages+=" ttf-mscorefonts-installer fontconfig"
 
 # Remove extra whitespace
 packages=$(echo "$packages" | xargs)
+
+# Ask if you want to remove discover
+if whiptail --title "Remove discover" --yesno "Would you like to remove discover?" 0 0; then
+    remove_packages+=" plasma-discover"
+fi
+
+if grep -iq "kde neon" /etc/os-release; then
+    # Add 32 bit support to kde neon, mostly for steam to work
+    sudo dpkg --add-architecture i386
+
+    # Download files for installing nala
+    wget -O 'volian-keyring.deb' "https://gitlab.com/volian/volian-archive/uploads/d9473098bc12525687dc9aca43d50159/volian-archive-keyring_0.2.0_all.deb"
+    sudo apt install ./volian-keyring.deb
+
+    wget -O 'volian-nala.deb' "https://gitlab.com/volian/volian-archive/uploads/d00e44faaf2cc8aad526ca520165a0af/volian-archive-nala_0.2.0_all.deb"
+    sudo apt install ./volian-nala.deb
+
+    rm -v "volian-*.deb"
+fi
 
 sudo apt update
 
@@ -110,7 +144,8 @@ sudo apt install -y nala
 sudo nala upgrade -y
 
 # Remove unnecessary packages
-sudo nala remove -y plasma-discover elisa dragonplayer kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat kolourpaint thunderbird
+# shellcheck disable=SC2086
+sudo nala remove -y $remove_packages
 
 # Install packages
 # shellcheck disable=SC2086
@@ -132,6 +167,12 @@ done
 # Run setups
 for app in "${setups[@]}"; do
     case $app in
+        lutris )
+            wget -O 'lutris.deb' "https://github.com/lutris/lutris/releases/download/v0.5.16/lutris_0.5.16_all.deb"
+            sudo apt install ./lutris.deb
+            rm -v ./lutris.deb
+            ;;
+
         vscode )
             wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
             sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
@@ -146,10 +187,6 @@ for app in "${setups[@]}"; do
 
         hacknerd )
             setup_hacknerd_fonts
-            ;;
-
-        fish )
-            setup_fish
             ;;
 
         nvchad )
@@ -188,6 +225,10 @@ for app in "${setups[@]}"; do
 
         flatpak )
             setup_flatpak
+            ;;
+            
+        fish )
+            setup_fish
             ;;
     esac
 done
