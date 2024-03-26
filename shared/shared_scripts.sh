@@ -76,16 +76,26 @@ function setup_fish() {
     if [ -d "$HOME/.local/share/omf" ]; then
         echo -e "${YELLOW}oh my fish is already installed!${NC}"
     else
-        echo -e "${YELLOW}Please exit from fish once it's done so the install can continue${NC}"
+        echo -e "${YELLOW}Please run 'omf install bobthefish' and exit from fish once it's done so the install can continue${NC}"
         curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
-        fish "./setup_theme.fish"
     fi
 
     echo -e "${GREEN}Copying fish config...${NC}"
-    cp -fv "../../config/config.fish" "$HOME/.config/fish/config.fish"
+
+    # Need to use a different config for debian based systems because it's called batcat and not bat on them
+    if grep -iq debian /etc/os-release; then
+        cp -fv "../..config/config_debian.fish" "$HOME/.config/fish/config.fish"
+    else
+        cp -fv "../../config/config.fish" "$HOME/.config/fish/config.fish"
+    fi
 }
 
 function choose_nvim_config() {
+    # Since neovim versions are too old for either config to work, don't ask when using them
+    if grep -iq debian /etc/os-release; then
+        return
+    fi
+
     nvim_config=$(whiptail --menu "Choose a neovim configuration (choose nvchad if unsure)" 0 0 0 \
         "nvchad" "NVChad" \
         "astrovim" "Astrovim" \
@@ -102,17 +112,15 @@ function setup_nvchad() {
 }
 
 function setup_astrovim() {
-    # Make a backup of your current nvim folder
-    mv ~/.config/nvim ~/.config/nvim.bak
+    # Clean neovim config folder
+    rm -rf ~/.config/nvim
 
     # Clean neovim folders
-    mv ~/.local/share/nvim ~/.local/share/nvim.bak
-    mv ~/.local/state/nvim ~/.local/state/nvim.bak
-    mv ~/.cache/nvim ~/.cache/nvim.bak
+    rm -rf ~/.local/share/nvim
+    rm -rf ~/.local/state/nvim
+    rm -rf ~/.cache/nvim 
 
-    # Clone the repository
-    git clone --depth 1 https://github.com/AstroNvim/AstroNvim "$HOME/.config/nvim"
-    nvim
+    git clone --depth 1 https://github.com/AstroNvim/AstroNvim "$HOME/.config/nvim" && nvim
 }
 
 function setup_npm() {
