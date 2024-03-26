@@ -54,6 +54,13 @@ for package in $packages; do
             usergroups+=(libvirt)
             ;;
 
+        lutris )
+            setups+=(lutris)
+
+            # Remove package
+            packages=${packages//"$package"/}
+            ;;
+
         vscode )
             setups+=(vscode)
             packages+=" apt-transport-https"
@@ -111,6 +118,8 @@ if grep -iq "kde neon" /etc/os-release; then
 
     wget -O 'volian-nala.deb' "https://gitlab.com/volian/volian-archive/uploads/d00e44faaf2cc8aad526ca520165a0af/volian-archive-nala_0.2.0_all.deb"
     sudo apt install ./volian-nala.deb
+
+    rm -v "volian-*.deb"
 fi
 
 sudo apt update
@@ -144,6 +153,12 @@ done
 # Run setups
 for app in "${setups[@]}"; do
     case $app in
+        lutris )
+            wget -O 'lutris.deb' "https://github.com/lutris/lutris/releases/download/v0.5.16/lutris_0.5.16_all.deb"
+            sudo nala install ./lutris.deb
+            rm -v ./lutris.deb
+            ;;
+
         vscode )
             wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
             sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
