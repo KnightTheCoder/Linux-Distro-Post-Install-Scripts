@@ -188,15 +188,7 @@ for app in "${setups[@]}"; do
         hacknerd )
             setup_hacknerd_fonts
             ;;
-
-        nvchad )
-            setup_nvchad
-            ;;
-
-        astrovim )
-            setup_astrovim
-            ;;
-
+            
         rust )
             setup_rust
             ;;
