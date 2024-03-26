@@ -40,6 +40,7 @@ services=()
 setups=(hacknerd fish)
 usergroups=()
 aur=(ttf-ms-win11-auto)
+remove_packages="akregator kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat"
 
 nvim_config=$(choose_nvim_config)
 setups+=("$nvim_config")
@@ -97,6 +98,11 @@ packages+=" git base-devel"
 # Remove extra whitespace
 packages=$(echo "$packages" | xargs)
 
+# Ask if you want to remove discover
+if whiptail --title "Remove discover" --yesno "Would you like to remove discover?" 0 0; then
+    remove_packages+=" discover"
+fi
+
 # TODO: fix config duplication
 # Add multilib for steam to work
 if grep -iqzoP "\n\[multilib\]\nInclude = /etc/pacman.d/mirrorlist\n" /etc/pacman.conf; then
@@ -119,7 +125,8 @@ sudo pacman -Syu --noconfirm
 
 # TODO: list correct packages to remove
 # Remove unneccessary packages
-sudo pacman -Rns discover akregator kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat
+# shellcheck disable=SC2086
+sudo pacman -Rns $remove_packages
 
 # Install packages
 # shellcheck disable=SC2086

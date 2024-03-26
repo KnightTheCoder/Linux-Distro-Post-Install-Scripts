@@ -36,6 +36,7 @@ packages=$(echo "$packages"| tr "\n" " ")
 services=()
 setups=(hacknerd fish eza)
 usergroups=()
+remove_packages="elisa dragonplayer kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat kolourpaint thunderbird"
 
 nvim_config=$(choose_nvim_config)
 setups+=("$nvim_config")
@@ -110,6 +111,11 @@ packages+=" ttf-mscorefonts-installer fontconfig"
 # Remove extra whitespace
 packages=$(echo "$packages" | xargs)
 
+# Ask if you want to remove discover
+if whiptail --title "Remove discover" --yesno "Would you like to remove discover?" 0 0; then
+    remove_packages+=" plasma-discover"
+fi
+
 if grep -iq "kde neon" /etc/os-release; then
     # Add 32 bit support to kde neon, mostly for steam to work
     sudo dpkg --add-architecture i386
@@ -133,7 +139,8 @@ sudo apt install -y nala
 sudo nala upgrade -y
 
 # Remove unnecessary packages
-sudo nala remove -y plasma-discover elisa dragonplayer kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat kolourpaint thunderbird
+# shellcheck disable=SC2086
+sudo nala remove -y $remove_packages
 
 # Install packages
 # shellcheck disable=SC2086
