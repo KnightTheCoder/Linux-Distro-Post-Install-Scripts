@@ -84,7 +84,7 @@ function setup_fish() {
 
     # Need to use a different config for debian based systems because it's called batcat and not bat on them
     if grep -iq debian /etc/os-release; then
-        cp -fv "../..config/config_debian.fish" "$HOME/.config/fish/config.fish"
+        cp -fv "../../config/config_debian.fish" "$HOME/.config/fish/config.fish"
     else
         cp -fv "../../config/config.fish" "$HOME/.config/fish/config.fish"
     fi

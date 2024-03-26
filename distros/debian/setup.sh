@@ -101,6 +101,18 @@ packages+=" ttf-mscorefonts-installer fontconfig"
 # Remove extra whitespace
 packages=$(echo "$packages" | xargs)
 
+if grep -iq "kde neon" /etc/os-release; then
+    # Add 32 bit support to kde neon, mostly for steam to work
+    sudo dpkg --add-architecture i386
+
+    # Download files for installing nala
+    wget -O 'volian-keyring.deb' "https://gitlab.com/volian/volian-archive/uploads/d9473098bc12525687dc9aca43d50159/volian-archive-keyring_0.2.0_all.deb"
+    sudo apt install ./volian-keyring.deb
+
+    wget -O 'volian-nala.deb' "https://gitlab.com/volian/volian-archive/uploads/d00e44faaf2cc8aad526ca520165a0af/volian-archive-nala_0.2.0_all.deb"
+    sudo apt install ./volian-nala.deb
+fi
+
 sudo apt update
 
 # Install nala
