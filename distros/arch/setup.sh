@@ -37,9 +37,10 @@ packages=$(echo "$packages"| tr "\n" " ")
 
 # Add defaults
 services=()
-setups=(hacknerd fish)
+setups=(hacknerd)
 usergroups=()
 aur=(ttf-ms-win11-auto)
+remove_packages="akregator kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat"
 
 nvim_config=$(choose_nvim_config)
 setups+=("$nvim_config")
@@ -88,6 +89,9 @@ for package in $packages; do
     esac
 done
 
+# Add fish setup to be last
+setups+=(fish)
+
 # Add console apps
 packages+=" fish neofetch kwrite htop btop neovim lynis github-cli eza bat zram-generator wget curl ark filelight"
 
@@ -96,6 +100,11 @@ packages+=" git base-devel"
 
 # Remove extra whitespace
 packages=$(echo "$packages" | xargs)
+
+# Ask if you want to remove discover
+if whiptail --title "Remove discover" --yesno "Would you like to remove discover?" 0 0; then
+    remove_packages+=" discover"
+fi
 
 # TODO: fix config duplication
 # Add multilib for steam to work
@@ -119,7 +128,8 @@ sudo pacman -Syu --noconfirm
 
 # TODO: list correct packages to remove
 # Remove unneccessary packages
-sudo pacman -Rns discover akregator kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat
+# shellcheck disable=SC2086
+sudo pacman -Rns $remove_packages
 
 # Install packages
 # shellcheck disable=SC2086
@@ -162,10 +172,6 @@ for app in "${setups[@]}"; do
             setup_hacknerd_fonts
             ;;
 
-        fish )
-            setup_fish
-            ;;
-
         nvchad )
             setup_nvchad
             ;;
@@ -184,6 +190,10 @@ for app in "${setups[@]}"; do
 
         flatpak )
             setup_flatpak
+            ;;
+
+        fish )
+            setup_fish
             ;;
     esac
 done

@@ -61,8 +61,10 @@ packages=$(echo "$packages"| tr "\n" " ")
 opi=(codecs)
 patterns=(devel_basis)
 services=(zramswap.service)
-setups=(hacknerd fish)
+setups=(hacknerd)
 usergroups=()
+remove_packages="kmail kontact kmines akregator kaddressbook korganizer kompare konversation kleopatra kmahjongg kpat kreversi ksudoku xscreensaver"
+remove_patterns="kde_games games kde_pim"
 
 nvim_config=$(choose_nvim_config)
 setups+=("$nvim_config")
@@ -110,10 +112,18 @@ for package in $packages; do
     esac
 done
 
+# Add fish setup to be last
+setups+=(fish)
+
 packages+=" opi fish neofetch kwrite htop btop neovim lynis gh eza bat fetchmsttfonts systemd-zram-service"
 
 # Remove extra whitespace
 packages=$(echo "$packages" | xargs)
+
+# Ask if you want to remove discover
+if whiptail --title "Remove discover" --yesno "Would you like to remove discover?" 0 0; then
+    remove_packages+=" discover"
+fi
 
 create_snapshot 0
 
@@ -133,9 +143,12 @@ else
 fi
 
 # Remove unncessary packages
-sudo zypper -vv remove -y --clean-deps discover kmail kontact kmines akregator kaddressbook korganizer kompare konversation kleopatra kmahjongg kpat kreversi ksudoku xscreensaver
-sudo zypper -vv remove -y --clean-deps patterns-kde-kde_pim patterns-games-games patterns-kde-kde_games
-sudo zypper -vv al -t pattern kde_games games kde_pim
+# shellcheck disable=SC2086
+sudo zypper -vv remove -y --clean-deps $remove_packages
+# shellcheck disable=SC2086
+sudo zypper -vv remove -y --clean-deps -t pattern $remove_patterns
+# shellcheck disable=SC2086
+sudo zypper -vv al -t pattern $remove_patterns
 sudo zypper -vv al discover6
 
 # Install packages
@@ -181,10 +194,6 @@ for app in "${setups[@]}"; do
             setup_hacknerd_fonts
             ;;
 
-        fish )
-            setup_fish
-            ;;
-
         nvchad )
             setup_nvchad
             ;;
@@ -203,6 +212,10 @@ for app in "${setups[@]}"; do
 
         flatpak )
             setup_flatpak
+            ;;
+
+        fish )
+            setup_fish
             ;;
     esac
 done

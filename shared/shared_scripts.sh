@@ -84,7 +84,7 @@ function setup_fish() {
 
     # Need to use a different config for debian based systems because it's called batcat and not bat on them
     if grep -iq debian /etc/os-release; then
-        cp -fv "../..config/config_debian.fish" "$HOME/.config/fish/config.fish"
+        cp -fv "../../config/config_debian.fish" "$HOME/.config/fish/config.fish"
     else
         cp -fv "../../config/config.fish" "$HOME/.config/fish/config.fish"
     fi
@@ -147,7 +147,12 @@ function setup_flatpak() {
         "com.github.unrud.VideoDownloader" "Video Downloader" ON \
         "org.gimp.GIMP" "GIMP" OFF \
         "org.kde.kdenlive" "Kdenlive" OFF \
+        "com.discordapp.Discord" "Discord" OFF \
+        "io.github.spacingbat3.webcord" "Webcord" OFF \
+        "de.shorsh.discord-screenaudio " "Discord-screenaudio" OFF \
         "dev.vencord.Vesktop" "Vesktop" OFF \
+        "io.gitlab.librewolf-community" "Librewolf" OFF \
+        "one.ablaze.floorp" "Floorp" OFF \
         "com.google.Chrome" "Google Chrome" OFF \
         "com.brave.Browser" "Brave browser" OFF \
         "net.mullvad.MullvadBrowser" "Mullavad Browser" OFF \

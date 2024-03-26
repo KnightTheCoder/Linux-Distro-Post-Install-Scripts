@@ -36,8 +36,9 @@ packages=$(echo "$packages"| tr "\n" " ")
 
 # Add defaults
 services=()
-setups=(hacknerd fish)
+setups=(hacknerd)
 usergroups=()
+remove_packages="akregator dragon elisa-player kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat kolourpaint qt5-qdbusviewer \"libreoffice*\""
 
 nvim_config=$(choose_nvim_config)
 setups+=("$nvim_config")
@@ -79,6 +80,9 @@ for package in $packages; do
     esac
 done
 
+# Add fish setup to be last
+setups+=(fish)
+
 # Add console apps
 packages+=" fish neofetch kwrite htop btop neovim lynis gh eza bat"
 
@@ -90,6 +94,11 @@ packages+=" curl cabextract xorg-x11-font-utils fontconfig"
 
 # Remove extra whitespace
 packages=$(echo "$packages" | xargs)
+
+# Ask if you want to remove discover
+if whiptail --title "Remove discover" --yesno "Would you like to remove discover?" 0 0; then
+    remove_packages+=" plasma-discover --exclude=flatpak"
+fi
 
 # Modify dnf config file
 # Set parallel downloads and default to yes, if it hasn't been set yet
@@ -110,7 +119,8 @@ sudo rpm -Uvh http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-re
 sudo dnf upgrade -y --refresh
 
 # Remove unneccessary packages
-sudo dnf remove -y akregator plasma-discover dragon elisa-player kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat kolourpaint qt5-qdbusviewer "libreoffice*" --exclude=flatpak
+# shellcheck disable=SC2086
+sudo dnf remove -y $remove_packages
 
 # Install codecs
 sudo dnf install -y gstreamer1-plugins-{bad-\*,good-\*,base} gstreamer1-plugin-openh264 gstreamer1-plugin-libav --exclude=gstreamer1-plugins-bad-free-devel lame* --exclude=lame-devel 
@@ -148,10 +158,6 @@ for app in "${setups[@]}"; do
             setup_hacknerd_fonts
             ;;
 
-        fish )
-            setup_fish
-            ;;
-
         nvchad )
             setup_nvchad
             ;;
@@ -175,6 +181,10 @@ for app in "${setups[@]}"; do
             fi
             
             setup_flatpak "org.libreoffice.LibreOffice"
+            ;;
+
+        fish )
+            setup_fish
             ;;
     esac
 done
