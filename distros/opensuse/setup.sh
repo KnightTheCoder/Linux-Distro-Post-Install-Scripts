@@ -61,7 +61,7 @@ packages=$(echo "$packages"| tr "\n" " ")
 opi=(codecs)
 patterns=(devel_basis)
 services=(zramswap.service)
-setups=(hacknerd fish)
+setups=(hacknerd)
 usergroups=()
 remove_packages="kmail kontact kmines akregator kaddressbook korganizer kompare konversation kleopatra kmahjongg kpat kreversi ksudoku xscreensaver"
 remove_patterns="kde_games games kde_pim"
@@ -111,6 +111,9 @@ for package in $packages; do
         * ) ;;
     esac
 done
+
+# Add fish setup to be last
+setups+=(fish)
 
 packages+=" opi fish neofetch kwrite htop btop neovim lynis gh eza bat fetchmsttfonts systemd-zram-service"
 

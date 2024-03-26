@@ -34,7 +34,7 @@ packages=$(echo "$packages"| tr "\n" " ")
 
 # Add defaults
 services=()
-setups=(hacknerd fish eza)
+setups=(hacknerd eza)
 usergroups=()
 remove_packages="elisa dragonplayer kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat kolourpaint thunderbird"
 
@@ -103,6 +103,9 @@ for package in $packages; do
         * ) ;;
     esac
 done
+
+# Add fish setup to be last
+setups+=(fish)
 
 # Add console apps
 packages+=" git build-essential fish neofetch kwrite htop btop neovim lynis gh bat curl wget gpg"

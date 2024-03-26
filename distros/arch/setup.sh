@@ -37,7 +37,7 @@ packages=$(echo "$packages"| tr "\n" " ")
 
 # Add defaults
 services=()
-setups=(hacknerd fish)
+setups=(hacknerd)
 usergroups=()
 aur=(ttf-ms-win11-auto)
 remove_packages="akregator kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat"
@@ -88,6 +88,9 @@ for package in $packages; do
         * ) ;;
     esac
 done
+
+# Add fish setup to be last
+setups+=(fish)
 
 # Add console apps
 packages+=" fish neofetch kwrite htop btop neovim lynis github-cli eza bat zram-generator wget curl ark filelight"
