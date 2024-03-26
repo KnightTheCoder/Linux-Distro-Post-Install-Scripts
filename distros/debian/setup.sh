@@ -81,6 +81,8 @@ for package in $packages; do
 
         nodejs )
             setups+=(npm)
+
+            packages+=" npm"
             ;;
 
         dotnet )
