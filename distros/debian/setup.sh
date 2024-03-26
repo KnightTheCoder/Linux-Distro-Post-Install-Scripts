@@ -57,6 +57,8 @@ for package in $packages; do
         lutris )
             setups+=(lutris)
 
+            packages+=" wine"
+
             # Remove package
             packages=${packages//"$package"/}
             ;;
@@ -155,7 +157,7 @@ for app in "${setups[@]}"; do
     case $app in
         lutris )
             wget -O 'lutris.deb' "https://github.com/lutris/lutris/releases/download/v0.5.16/lutris_0.5.16_all.deb"
-            sudo nala install ./lutris.deb
+            sudo apt install ./lutris.deb
             rm -v ./lutris.deb
             ;;
 
@@ -173,10 +175,6 @@ for app in "${setups[@]}"; do
 
         hacknerd )
             setup_hacknerd_fonts
-            ;;
-
-        fish )
-            setup_fish
             ;;
 
         nvchad )
@@ -215,6 +213,10 @@ for app in "${setups[@]}"; do
 
         flatpak )
             setup_flatpak
+            ;;
+            
+        fish )
+            setup_fish
             ;;
     esac
 done

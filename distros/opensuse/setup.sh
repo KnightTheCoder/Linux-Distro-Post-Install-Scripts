@@ -181,10 +181,6 @@ for app in "${setups[@]}"; do
             setup_hacknerd_fonts
             ;;
 
-        fish )
-            setup_fish
-            ;;
-
         nvchad )
             setup_nvchad
             ;;
@@ -203,6 +199,10 @@ for app in "${setups[@]}"; do
 
         flatpak )
             setup_flatpak
+            ;;
+
+        fish )
+            setup_fish
             ;;
     esac
 done

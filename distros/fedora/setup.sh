@@ -148,10 +148,6 @@ for app in "${setups[@]}"; do
             setup_hacknerd_fonts
             ;;
 
-        fish )
-            setup_fish
-            ;;
-
         nvchad )
             setup_nvchad
             ;;
@@ -175,6 +171,10 @@ for app in "${setups[@]}"; do
             fi
             
             setup_flatpak "org.libreoffice.LibreOffice"
+            ;;
+
+        fish )
+            setup_fish
             ;;
     esac
 done
