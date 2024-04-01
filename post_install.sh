@@ -131,7 +131,8 @@ if hostname=$(whiptail --title "Hostname" --inputbox "Type in your hostname\nLea
 fi
 
 # Check if lynis is installed and ask for audit 
-if [ -x "$(command -v lynis)" ] && whiptail --yesno "Would you like to run an audit?" 0 0; then
+# shellcheck disable=SC2235
+if ([ -x "$(command -v lynis)" ] || [ -x /usr/sbin/lynis ]) && whiptail --yesno "Would you like to run an audit?" 0 0; then
   sudo lynis audit system
 fi
 
