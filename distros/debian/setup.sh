@@ -130,6 +130,9 @@ if grep -iq "kde neon" /etc/os-release; then
     sudo apt install ./volian-nala.deb
 
     rm -v "volian-*.deb"
+elif grep -iq ID=debian /etc/os-release; then
+    # Add extra repositories to debian
+    deb http://deb.debian.org/debian/ bookworm main contrib non-free
 fi
 
 # Add 32 bit support if it's not available
