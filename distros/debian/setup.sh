@@ -48,7 +48,13 @@ for package in $packages; do
             # Remove package
             packages=${packages//"$package"/}
 
-            packages+=" qemu-kvm libvirt-clients libvirt-daemon-system bridge-utils virtinst libvirt-daemon virt-manager"
+            packages+=" libvirt-clients libvirt-daemon-system bridge-utils virtinst libvirt-daemon virt-manager"
+
+            if grep -iq ID=debian /etc/os-release; then
+                packages+=" qemu-system-x86"
+            else
+                packages+=" qemu-kvm"
+            fi
 
             services+=(libvirtd.service)
 
