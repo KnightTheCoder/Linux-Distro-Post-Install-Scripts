@@ -57,6 +57,14 @@ for package in $packages; do
 
         steam ) 
             packages+=" steam-devices"
+
+            # steam package has a different name for debian
+            if grep -iq ID=debian /etc/os-release; then
+                # Remove package
+                packages=${packages//"$package"/}
+
+                packages+=" steam-installer"
+            fi
             ;;
 
         lutris )
@@ -136,7 +144,7 @@ if grep -iq "kde neon" /etc/os-release; then
     rm -v "volian-*.deb"
 elif grep -iq ID=debian /etc/os-release; then
     # Add extra repositories to debian
-    deb http://deb.debian.org/debian/ bookworm main contrib non-free
+    printf "\ndeb http://deb.debian.org/debian/ bookworm main contrib non-free firmware" | sudo tee -a /etc/apt/sources.list
 fi
 
 # Add 32 bit support if it's not available
