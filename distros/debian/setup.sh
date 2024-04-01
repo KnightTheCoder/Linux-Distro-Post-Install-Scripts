@@ -144,7 +144,8 @@ if grep -iq "kde neon" /etc/os-release; then
     rm -v "volian-*.deb"
 elif grep -iq ID=debian /etc/os-release; then
     # Add extra repositories to debian
-    printf "\ndeb http://deb.debian.org/debian/ bookworm main contrib non-free firmware" | sudo tee -a /etc/apt/sources.list
+    sudo apt install software-properties-common -y
+    sudo apt-add-repository contrib non-free -y
 fi
 
 # Add 32 bit support if it's not available
