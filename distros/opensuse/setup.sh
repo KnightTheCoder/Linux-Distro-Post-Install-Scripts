@@ -33,7 +33,7 @@ packages=$(
     whiptail --title "Install List" --separate-output --checklist "Choose what to install/configure" 0 0 0 \
     "lutris" "Lutris" OFF \
     "goverlay mangohud gamemode" "Gaming overlay" OFF \
-    "steam steam-devices" "Steam" OFF \
+    "steam" "Steam" OFF \
     "haruna" "Haruna media player" ON \
     "celluloid" "Celluloid media player" ON \
     "vlc" "VLC media player" ON \
@@ -84,6 +84,10 @@ for package in $packages; do
             usergroups+=(libvirt)
             ;;
 
+        steam )
+            packages+=" steam-devices"
+            ;;
+
         vscode|dotnet )
             if [ "$package" == vscode ]; then
                 setups+=(vscode)
@@ -115,7 +119,7 @@ done
 # Add fish setup to be last
 setups+=(fish)
 
-packages+=" opi fish neofetch kwrite htop btop neovim lynis gh eza bat fetchmsttfonts systemd-zram-service"
+packages+=" opi fish neofetch kwrite htop btop neovim gh eza bat fetchmsttfonts systemd-zram-service"
 
 # Remove extra whitespace
 packages=$(echo "$packages" | xargs)

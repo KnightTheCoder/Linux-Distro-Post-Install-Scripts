@@ -11,7 +11,7 @@ packages=$(
     whiptail --title "Install List" --separate-output --checklist "Choose what to install/configure" 0 0 0 \
     "lutris" "Lutris" OFF \
     "goverlay mangohud gamemode" "Gaming overlay" OFF \
-    "steam steam-devices" "Steam" OFF \
+    "steam" "Steam" OFF \
     "haruna" "Haruna media player" ON \
     "celluloid" "Celluloid media player" ON \
     "vlc" "VLC media player" ON \
@@ -48,11 +48,29 @@ for package in $packages; do
             # Remove package
             packages=${packages//"$package"/}
 
-            packages+=" qemu-kvm libvirt-clients libvirt-daemon-system bridge-utils virtinst libvirt-daemon virt-manager"
+            packages+=" libvirt-clients libvirt-daemon-system bridge-utils virtinst libvirt-daemon virt-manager"
+
+            if grep -iq ID=debian /etc/os-release; then
+                packages+=" qemu-system-x86"
+            else
+                packages+=" qemu-kvm"
+            fi
 
             services+=(libvirtd.service)
 
             usergroups+=(libvirt)
+            ;;
+
+        steam ) 
+            # steam package has a different name for debian
+            if grep -iq ID=debian /etc/os-release; then
+                # Remove package
+                packages=${packages//"$package"/}
+
+                packages+=" steam-installer"
+            fi
+
+            packages+=" steam-devices"
             ;;
 
         lutris )
@@ -108,7 +126,7 @@ done
 setups+=(fish)
 
 # Add console apps
-packages+=" git build-essential fish neofetch kwrite htop btop neovim lynis gh bat curl wget gpg"
+packages+=" git build-essential fish neofetch kwrite htop btop neovim gh bat curl wget gpg"
 
 # Ms fonts installer and fontconfig
 packages+=" ttf-mscorefonts-installer fontconfig"
@@ -122,9 +140,6 @@ if whiptail --title "Remove discover" --yesno "Would you like to remove discover
 fi
 
 if grep -iq "kde neon" /etc/os-release; then
-    # Add 32 bit support to kde neon, mostly for steam to work
-    sudo dpkg --add-architecture i386
-
     # Download files for installing nala
     wget -O 'volian-keyring.deb' "https://gitlab.com/volian/volian-archive/uploads/d9473098bc12525687dc9aca43d50159/volian-archive-keyring_0.2.0_all.deb"
     sudo apt install ./volian-keyring.deb
@@ -133,6 +148,16 @@ if grep -iq "kde neon" /etc/os-release; then
     sudo apt install ./volian-nala.deb
 
     rm -v "volian-*.deb"
+elif grep -iq ID=debian /etc/os-release; then
+    # Add extra repositories to debian
+    sudo apt install software-properties-common -y
+    sudo apt-add-repository contrib non-free -y
+fi
+
+# Add 32 bit support if it's not available
+# shellcheck disable=SC2046
+if [ -z $(dpkg --print-foreign-architectures) ]; then
+    sudo dpkg --add-architecture i386
 fi
 
 sudo apt update
@@ -188,15 +213,7 @@ for app in "${setups[@]}"; do
         hacknerd )
             setup_hacknerd_fonts
             ;;
-
-        nvchad )
-            setup_nvchad
-            ;;
-
-        astrovim )
-            setup_astrovim
-            ;;
-
+            
         rust )
             setup_rust
             ;;
