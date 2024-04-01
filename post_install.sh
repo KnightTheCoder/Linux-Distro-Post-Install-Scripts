@@ -130,12 +130,6 @@ if hostname=$(whiptail --title "Hostname" --inputbox "Type in your hostname\nLea
     fi
 fi
 
-# Check if lynis is installed and ask for audit 
-# shellcheck disable=SC2235
-if ([ -x "$(command -v lynis)" ] || [ -x /usr/sbin/lynis ]) && whiptail --yesno "Would you like to run an audit?" 0 0; then
-  sudo lynis audit system
-fi
-
 echo -e "${YELLOW}Please reboot for flatpak's path and QEMU to work${NC}"
 echo -e "${YELLOW}Please run 'gh auth login' to start using GitHub CLI${NC}"
 echo -e "${GREEN}Post install complete, enjoy your new distro!${NC}"

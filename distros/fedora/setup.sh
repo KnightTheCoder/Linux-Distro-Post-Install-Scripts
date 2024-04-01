@@ -88,7 +88,7 @@ done
 setups+=(fish)
 
 # Add console apps
-packages+=" fish neofetch kwrite htop btop neovim lynis gh eza bat"
+packages+=" fish neofetch kwrite htop btop neovim gh eza bat"
 
 # Add latest dnf
 packages+=" dnf5 dnf5-plugins"

@@ -119,7 +119,7 @@ done
 # Add fish setup to be last
 setups+=(fish)
 
-packages+=" opi fish neofetch kwrite htop btop neovim lynis gh eza bat fetchmsttfonts systemd-zram-service"
+packages+=" opi fish neofetch kwrite htop btop neovim gh eza bat fetchmsttfonts systemd-zram-service"
 
 # Remove extra whitespace
 packages=$(echo "$packages" | xargs)

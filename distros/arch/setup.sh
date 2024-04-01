@@ -88,7 +88,7 @@ done
 setups+=(fish)
 
 # Add console apps
-packages+=" fish neofetch kwrite htop btop neovim lynis github-cli eza bat zram-generator wget curl ark filelight"
+packages+=" fish neofetch kwrite htop btop neovim github-cli eza bat zram-generator wget curl ark filelight"
 
 # Add development packages
 packages+=" git base-devel"

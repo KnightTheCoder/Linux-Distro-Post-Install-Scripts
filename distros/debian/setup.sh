@@ -126,7 +126,7 @@ done
 setups+=(fish)
 
 # Add console apps
-packages+=" git build-essential fish neofetch kwrite htop btop neovim lynis gh bat curl wget gpg"
+packages+=" git build-essential fish neofetch kwrite htop btop neovim gh bat curl wget gpg"
 
 # Ms fonts installer and fontconfig
 packages+=" ttf-mscorefonts-installer fontconfig"
