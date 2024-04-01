@@ -56,8 +56,6 @@ for package in $packages; do
             ;;
 
         steam ) 
-            packages+=" steam-devices"
-
             # steam package has a different name for debian
             if grep -iq ID=debian /etc/os-release; then
                 # Remove package
@@ -65,6 +63,8 @@ for package in $packages; do
 
                 packages+=" steam-installer"
             fi
+
+            packages+=" steam-devices"
             ;;
 
         lutris )
