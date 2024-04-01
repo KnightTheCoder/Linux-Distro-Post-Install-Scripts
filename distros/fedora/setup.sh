@@ -11,7 +11,7 @@ packages=$(
     whiptail --title "Install List" --separate-output --checklist "Choose what to install/configure" 0 0 0 \
     "lutris" "Lutris" OFF \
     "goverlay mangohud gamemode" "Gaming overlay" OFF \
-    "steam steam-devices" "Steam" OFF \
+    "steam" "Steam" OFF \
     "haruna" "Haruna media player" ON \
     "celluloid" "Celluloid media player" ON \
     "vlc" "VLC media player" ON \
@@ -55,6 +55,10 @@ for package in $packages; do
 
             # Remove package
             packages=${packages//"$package"/}
+            ;;
+
+        steam )
+            packages+=" steam-devices"
             ;;
 
         vscode )
