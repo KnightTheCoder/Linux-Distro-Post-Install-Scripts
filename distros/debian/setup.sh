@@ -122,9 +122,6 @@ if whiptail --title "Remove discover" --yesno "Would you like to remove discover
 fi
 
 if grep -iq "kde neon" /etc/os-release; then
-    # Add 32 bit support to kde neon, mostly for steam to work
-    sudo dpkg --add-architecture i386
-
     # Download files for installing nala
     wget -O 'volian-keyring.deb' "https://gitlab.com/volian/volian-archive/uploads/d9473098bc12525687dc9aca43d50159/volian-archive-keyring_0.2.0_all.deb"
     sudo apt install ./volian-keyring.deb
@@ -133,6 +130,12 @@ if grep -iq "kde neon" /etc/os-release; then
     sudo apt install ./volian-nala.deb
 
     rm -v "volian-*.deb"
+fi
+
+# Add 32 bit support if it's not available
+# shellcheck disable=SC2046
+if [ -z $(dpkg --print-foreign-architectures) ]; then
+    sudo dpkg --add-architecture i386
 fi
 
 sudo apt update
