@@ -36,7 +36,7 @@ packages=$(echo "$packages"| tr "\n" " ")
 services=()
 setups=(hacknerd eza)
 usergroups=()
-remove_packages="elisa dragonplayer kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat kolourpaint thunderbird"
+remove_packages="elisa dragonplayer akregator kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat kolourpaint thunderbird"
 
 nvim_config=$(choose_nvim_config)
 setups+=("$nvim_config")
