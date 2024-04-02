@@ -103,6 +103,14 @@ function choose_nvim_config() {
     )
 
     if [ -n "$nvim_config" ]; then
+        # Clean neovim config folder
+        rm -rf ~/.config/nvim
+
+        # Clean neovim folders
+        rm -rf ~/.local/share/nvim
+        rm -rf ~/.local/state/nvim
+        rm -rf ~/.cache/nvim 
+        
         echo "$nvim_config"
     fi
 }
@@ -112,14 +120,6 @@ function setup_nvchad() {
 }
 
 function setup_astrovim() {
-    # Clean neovim config folder
-    rm -rf ~/.config/nvim
-
-    # Clean neovim folders
-    rm -rf ~/.local/share/nvim
-    rm -rf ~/.local/state/nvim
-    rm -rf ~/.cache/nvim 
-
     git clone --depth 1 https://github.com/AstroNvim/template ~/.config/nvim
     # remove template's git connection to set up your own later
     rm -rf ~/.config/nvim/.git
