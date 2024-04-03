@@ -36,7 +36,7 @@ packages=$(echo "$packages"| tr "\n" " ")
 
 # Add defaults
 services=()
-setups=(hacknerd)
+setups=(fish hacknerd)
 usergroups=()
 remove_packages="akregator dragon elisa-player kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat kolourpaint qt5-qdbusviewer \"libreoffice*\""
 
@@ -83,9 +83,6 @@ for package in $packages; do
         * ) ;;
     esac
 done
-
-# Add fish setup to be last
-setups+=(fish)
 
 # Add console apps
 packages+=" fish neofetch kwrite htop btop neovim gh eza bat"
