@@ -12,6 +12,7 @@ packages=$(
     "lutris" "Lutris" OFF \
     "goverlay mangohud gamemode" "Gaming overlay" OFF \
     "steam" "Steam" OFF \
+    "itch" "Itch desktop app" OFF \
     "heroic" "Heroic Games Launcher" OFF \
     "haruna" "Haruna media player" ON \
     "celluloid" "Celluloid media player" ON \
@@ -62,6 +63,13 @@ for package in $packages; do
 
         heroic )
             aur+=(heroic-games-launcher-bin)
+
+            # Remove package
+            packages=${packages//"$package"/}
+            ;;
+
+        itch )
+            setups+=("$package")
 
             # Remove package
             packages=${packages//"$package"/}
@@ -168,6 +176,10 @@ done
 # Run setups
 for app in "${setups[@]}"; do
     case $app in
+        itch )
+            setup_itch_app
+            ;;
+
         vscode )
             setup_vscode
             ;;

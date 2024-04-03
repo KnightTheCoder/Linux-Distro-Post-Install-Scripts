@@ -6,6 +6,20 @@ readonly GREEN='\033[0;32m'
 readonly YELLOW='\033[0;33m'
 readonly NC='\033[0m' # No Color
 
+# Install the itch desktop app
+function setup_itch_app() {
+    # Check if itch is installed
+    if [ -x "$HOME/.itch/itch" ]; then
+        echo -e "${YELLOW}Itch desktop app is already installed!${NC}"
+        return
+    fi
+
+    wget -O itch-setup "https://itch.io/app/download?platform=linux"
+    chmod +x "./itch-setup"
+    ./itch-setup
+    rm -vf "./itch-setup"
+}
+
 # Install vscode extensions and copy keybindings
 function setup_vscode() {
     local extensions=(
