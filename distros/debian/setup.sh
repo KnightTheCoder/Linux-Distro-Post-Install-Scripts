@@ -91,7 +91,7 @@ for package in $packages; do
             ;;
 
         rustup )
-            setups+=(rust)
+            setups+=(fish rust)
 
             # Remove package
             packages=${packages//"$package"/}
@@ -122,8 +122,20 @@ for package in $packages; do
     esac
 done
 
-# Add fish setup to be last
-setups+=(fish)
+# Add fish setup to be last if it's not in the setups yet (because of rustup's dependency)
+fish_found=false
+for i in "${setups[@]}"
+do
+  if [[ $i == fish ]]
+  then
+    fish_found=true
+    break
+  fi
+done
+
+if ! $fish_found; then
+    setups+=(fish)
+fi
 
 # Add console apps
 packages+=" git build-essential fish neofetch kwrite htop btop neovim gh bat curl wget gpg"
