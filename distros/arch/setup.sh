@@ -12,6 +12,8 @@ packages=$(
     "lutris" "Lutris" OFF \
     "goverlay mangohud gamemode" "Gaming overlay" OFF \
     "steam" "Steam" OFF \
+    "itch" "Itch desktop app" OFF \
+    "heroic" "Heroic Games Launcher" OFF \
     "haruna" "Haruna media player" ON \
     "celluloid" "Celluloid media player" ON \
     "vlc" "VLC media player" ON \
@@ -54,6 +56,20 @@ for package in $packages; do
             services+=(libvirtd.service)
 
             usergroups+=(libvirt)
+
+            # Remove package
+            packages=${packages//"$package"/}
+            ;;
+
+        heroic )
+            aur+=(heroic-games-launcher-bin)
+
+            # Remove package
+            packages=${packages//"$package"/}
+            ;;
+
+        itch )
+            setups+=("$package")
 
             # Remove package
             packages=${packages//"$package"/}
@@ -137,6 +153,7 @@ else
     git clone https://aur.archlinux.org/yay-bin.git
     cd yay-bin || exit
     makepkg -si
+    cd ..
     rm -rf yay-bin
 fi
 
@@ -159,6 +176,10 @@ done
 # Run setups
 for app in "${setups[@]}"; do
     case $app in
+        itch )
+            setup_itch_app
+            ;;
+
         vscode )
             setup_vscode
             ;;

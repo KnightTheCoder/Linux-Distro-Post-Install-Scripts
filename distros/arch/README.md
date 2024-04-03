@@ -9,7 +9,6 @@ This script is only intended for Arch linux with KDE desktop, it may not work as
 * Installs yay
 * Removes unnecessary games and packages (Intended for KDE Plasma)
 * Adds the following command line utilities: fish, neofetch, htop, btop, neovim
-* Add lynis for auditing your system
 * Copies fish config
 * Installs NvChad or Astrovim for neovim
 * Downloads and installs Microsoft and hack nerd fonts

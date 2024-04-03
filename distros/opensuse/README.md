@@ -11,7 +11,6 @@ This script is only intended for OpenSUSE Tumbleweed with KDE desktop, it may no
 * Includes additional codecs (packman) and installs opi for using the Open Build Service (OBS)
 * Removes unnecessary games and packages (Intended for KDE Plasma)
 * Adds the following command line utilities: fish, neofetch, htop, btop, neovim
-* Add lynis for auditing your system
 * Copies fish config
 * Installs NvChad or Astrovim for neovim
 * Downloads and installs Microsoft and hack nerd fonts
