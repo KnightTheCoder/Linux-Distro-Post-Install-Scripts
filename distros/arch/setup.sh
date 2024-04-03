@@ -12,6 +12,7 @@ packages=$(
     "lutris" "Lutris" OFF \
     "goverlay mangohud gamemode" "Gaming overlay" OFF \
     "steam" "Steam" OFF \
+    "heroic" "Heroic Games Launcher" OFF \
     "haruna" "Haruna media player" ON \
     "celluloid" "Celluloid media player" ON \
     "vlc" "VLC media player" ON \
@@ -54,6 +55,13 @@ for package in $packages; do
             services+=(libvirtd.service)
 
             usergroups+=(libvirt)
+
+            # Remove package
+            packages=${packages//"$package"/}
+            ;;
+
+        heroic )
+            aur+=(heroic-games-launcher-bin)
 
             # Remove package
             packages=${packages//"$package"/}

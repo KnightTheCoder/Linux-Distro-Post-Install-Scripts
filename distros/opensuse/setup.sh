@@ -34,6 +34,7 @@ packages=$(
     "lutris" "Lutris" OFF \
     "goverlay mangohud gamemode" "Gaming overlay" OFF \
     "steam" "Steam" OFF \
+    "heroic" "Heroic Games Launcher" OFF \
     "haruna" "Haruna media player" ON \
     "celluloid" "Celluloid media player" ON \
     "vlc" "VLC media player" ON \
@@ -86,6 +87,13 @@ for package in $packages; do
 
         steam )
             packages+=" steam-devices"
+            ;;
+
+        heroic )
+            opi+=(heroic-games-launcher)
+
+            # Remove package
+            packages=${packages//"$package"/}
             ;;
 
         vscode|dotnet )

@@ -144,6 +144,7 @@ function setup_flatpak() {
         "com.github.tchx84.Flatseal" "Flatseal" ON \
         "com.valvesoftware.Steam" "Steam" OFF \
         "io.itch.itch" "Itch desktop app" OFF \
+        "com.heroicgameslauncher.hgl" "Heroic Games Launcher" OFF \
         "net.davidotek.pupgui2" "ProtonUp-QT" OFF \
         "com.obsproject.Studio" "OBS Studio" OFF \
         "com.dec05eba.gpu_screen_recorder" "GPU screen recoder" OFF \
@@ -152,8 +153,8 @@ function setup_flatpak() {
         "org.kde.kdenlive" "Kdenlive" OFF \
         "com.discordapp.Discord" "Discord" OFF \
         "io.github.spacingbat3.webcord" "Webcord" OFF \
-        "de.shorsh.discord-screenaudio " "Discord-screenaudio" OFF \
         "dev.vencord.Vesktop" "Vesktop" OFF \
+        "de.shorsh.discord-screenaudio " "Discord-screenaudio" OFF \
         "io.gitlab.librewolf-community" "Librewolf" OFF \
         "one.ablaze.floorp" "Floorp" OFF \
         "com.google.Chrome" "Google Chrome" OFF \

@@ -12,6 +12,7 @@ packages=$(
     "lutris" "Lutris" OFF \
     "goverlay mangohud gamemode" "Gaming overlay" OFF \
     "steam" "Steam" OFF \
+    "heroic" "Heroic Games Launcher" OFF \
     "haruna" "Haruna media player" ON \
     "celluloid" "Celluloid media player" ON \
     "vlc" "VLC media player" ON \
@@ -59,6 +60,13 @@ for package in $packages; do
 
         steam )
             packages+=" steam-devices"
+            ;;
+
+        heroic )
+            setups+=(heroic)
+
+            # Remove package
+            packages=${packages//"$package"/}
             ;;
 
         vscode )
@@ -153,6 +161,11 @@ for app in "${setups[@]}"; do
             sudo dnf install -y code
 
             setup_vscode
+            ;;
+
+        heroic )
+            sudo dnf copr enable atim/heroic-games-launcher
+            sudo dnf install heroic-games-launcher-bin
             ;;
 
         hacknerd )
