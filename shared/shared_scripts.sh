@@ -59,6 +59,7 @@ function setup_vscode() {
         "vue.volar"
         "zignd.html-css-class-completion"
         "ms-azuretools.vscode-docker"
+        "ritwickdey.LiveServer"
     )
 
     # Install extensions
