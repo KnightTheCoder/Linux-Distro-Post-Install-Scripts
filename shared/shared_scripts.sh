@@ -6,6 +6,20 @@ readonly GREEN='\033[0;32m'
 readonly YELLOW='\033[0;33m'
 readonly NC='\033[0m' # No Color
 
+# Install the itch desktop app
+function setup_itch_app() {
+    # Check if itch is installed
+    if [ -x "$HOME/.itch/itch" ]; then
+        echo -e "${YELLOW}Itch desktop app is already installed!${NC}"
+        return
+    fi
+
+    wget -O itch-setup "https://itch.io/app/download?platform=linux"
+    chmod +x "./itch-setup"
+    ./itch-setup
+    rm -vf "./itch-setup"
+}
+
 # Install vscode extensions and copy keybindings
 function setup_vscode() {
     local extensions=(
@@ -103,6 +117,14 @@ function choose_nvim_config() {
     )
 
     if [ -n "$nvim_config" ]; then
+        # Clean neovim config folder
+        rm -rf ~/.config/nvim
+
+        # Clean neovim folders
+        rm -rf ~/.local/share/nvim
+        rm -rf ~/.local/state/nvim
+        rm -rf ~/.cache/nvim 
+        
         echo "$nvim_config"
     fi
 }
@@ -112,15 +134,10 @@ function setup_nvchad() {
 }
 
 function setup_astrovim() {
-    # Clean neovim config folder
-    rm -rf ~/.config/nvim
-
-    # Clean neovim folders
-    rm -rf ~/.local/share/nvim
-    rm -rf ~/.local/state/nvim
-    rm -rf ~/.cache/nvim 
-
-    git clone --depth 1 https://github.com/AstroNvim/AstroNvim "$HOME/.config/nvim" && nvim
+    git clone --depth 1 https://github.com/AstroNvim/template ~/.config/nvim
+    # remove template's git connection to set up your own later
+    rm -rf ~/.config/nvim/.git
+    nvim
 }
 
 function setup_npm() {
@@ -141,6 +158,7 @@ function setup_flatpak() {
         "com.github.tchx84.Flatseal" "Flatseal" ON \
         "com.valvesoftware.Steam" "Steam" OFF \
         "io.itch.itch" "Itch desktop app" OFF \
+        "com.heroicgameslauncher.hgl" "Heroic Games Launcher" OFF \
         "net.davidotek.pupgui2" "ProtonUp-QT" OFF \
         "com.obsproject.Studio" "OBS Studio" OFF \
         "com.dec05eba.gpu_screen_recorder" "GPU screen recoder" OFF \
@@ -149,8 +167,8 @@ function setup_flatpak() {
         "org.kde.kdenlive" "Kdenlive" OFF \
         "com.discordapp.Discord" "Discord" OFF \
         "io.github.spacingbat3.webcord" "Webcord" OFF \
-        "de.shorsh.discord-screenaudio " "Discord-screenaudio" OFF \
         "dev.vencord.Vesktop" "Vesktop" OFF \
+        "de.shorsh.discord-screenaudio " "Discord-screenaudio" OFF \
         "io.gitlab.librewolf-community" "Librewolf" OFF \
         "one.ablaze.floorp" "Floorp" OFF \
         "com.google.Chrome" "Google Chrome" OFF \

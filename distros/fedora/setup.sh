@@ -12,6 +12,8 @@ packages=$(
     "lutris" "Lutris" OFF \
     "goverlay mangohud gamemode" "Gaming overlay" OFF \
     "steam" "Steam" OFF \
+    "itch" "Itch desktop app" OFF \
+    "heroic" "Heroic Games Launcher" OFF \
     "haruna" "Haruna media player" ON \
     "celluloid" "Celluloid media player" ON \
     "vlc" "VLC media player" ON \
@@ -36,7 +38,7 @@ packages=$(echo "$packages"| tr "\n" " ")
 
 # Add defaults
 services=()
-setups=(hacknerd)
+setups=(fish hacknerd)
 usergroups=()
 remove_packages="akregator dragon elisa-player kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat kolourpaint qt5-qdbusviewer \"libreoffice*\""
 
@@ -61,6 +63,20 @@ for package in $packages; do
             packages+=" steam-devices"
             ;;
 
+        heroic )
+            setups+=(heroic)
+
+            # Remove package
+            packages=${packages//"$package"/}
+            ;;
+
+        itch )
+            setups+=("$package")
+
+            # Remove package
+            packages=${packages//"$package"/}
+            ;;
+
         vscode )
             setups+=(vscode)
 
@@ -83,9 +99,6 @@ for package in $packages; do
         * ) ;;
     esac
 done
-
-# Add fish setup to be last
-setups+=(fish)
 
 # Add console apps
 packages+=" fish neofetch kwrite htop btop neovim gh eza bat"
@@ -156,6 +169,15 @@ for app in "${setups[@]}"; do
             sudo dnf install -y code
 
             setup_vscode
+            ;;
+
+        heroic )
+            sudo dnf copr enable atim/heroic-games-launcher
+            sudo dnf install heroic-games-launcher-bin
+            ;;
+
+        itch )
+            setup_itch_app
             ;;
 
         hacknerd )

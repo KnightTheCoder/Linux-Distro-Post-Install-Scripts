@@ -12,6 +12,8 @@ packages=$(
     "lutris" "Lutris" OFF \
     "goverlay mangohud gamemode" "Gaming overlay" OFF \
     "steam" "Steam" OFF \
+    "itch" "Itch desktop app" OFF \
+    "heroic" "Heroic Games Launcher" OFF \
     "haruna" "Haruna media player" ON \
     "celluloid" "Celluloid media player" ON \
     "vlc" "VLC media player" ON \
@@ -36,7 +38,7 @@ packages=$(echo "$packages"| tr "\n" " ")
 services=()
 setups=(hacknerd eza)
 usergroups=()
-remove_packages="elisa dragonplayer kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat kolourpaint thunderbird"
+remove_packages="elisa dragonplayer akregator kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat kolourpaint thunderbird"
 
 nvim_config=$(choose_nvim_config)
 setups+=("$nvim_config")
@@ -82,6 +84,20 @@ for package in $packages; do
             packages=${packages//"$package"/}
             ;;
 
+        heroic )
+            setups+=(heroic)
+
+            # Remove package
+            packages=${packages//"$package"/}
+            ;;
+
+        itch )
+            setups+=("$package")
+
+            # Remove package
+            packages=${packages//"$package"/}
+            ;;
+
         vscode )
             setups+=(vscode)
             packages+=" apt-transport-https"
@@ -91,7 +107,7 @@ for package in $packages; do
             ;;
 
         rustup )
-            setups+=(rust)
+            setups+=(fish rust)
 
             # Remove package
             packages=${packages//"$package"/}
@@ -122,8 +138,20 @@ for package in $packages; do
     esac
 done
 
-# Add fish setup to be last
-setups+=(fish)
+# Add fish setup to be last if it's not in the setups yet (because of rustup's dependency)
+fish_found=false
+for i in "${setups[@]}"
+do
+  if [[ $i == fish ]]
+  then
+    fish_found=true
+    break
+  fi
+done
+
+if ! $fish_found; then
+    setups+=(fish)
+fi
 
 # Add console apps
 packages+=" git build-essential fish neofetch kwrite htop btop neovim gh bat curl wget gpg"
@@ -196,6 +224,20 @@ for app in "${setups[@]}"; do
             wget -O 'lutris.deb' "https://github.com/lutris/lutris/releases/download/v0.5.16/lutris_0.5.16_all.deb"
             sudo apt install -y ./lutris.deb
             rm -v ./lutris.deb
+            ;;
+
+        
+        heroic )
+            wget -O heroic.deb https://github.com/Heroic-Games-Launcher/HeroicGamesLauncher/releases/download/v2.14.0/heroic_2.14.0_amd64.deb
+            sudo dpkg -i heroic.deb
+            rm heroic.deb
+
+            # Remove package
+            packages=${packages//"$package"/}
+            ;;
+
+        itch )
+            setup_itch_app
             ;;
 
         vscode )
