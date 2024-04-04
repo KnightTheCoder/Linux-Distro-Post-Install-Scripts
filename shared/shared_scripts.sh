@@ -58,6 +58,7 @@ function setup_vscode() {
         "visualstudioexptteam.vscodeintellicode"
         "vue.volar"
         "zignd.html-css-class-completion"
+        "ms-azuretools.vscode-docker"
     )
 
     # Install extensions
