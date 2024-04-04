@@ -174,16 +174,6 @@ yay -S "${aur[@]}" --needed
 # Setup zram
 printf "[zram0]\n zram-size = ram / 2\n compression-algorithm = zstd\n swap-priority = 100\n fs-type = swap\n" | sudo tee /etc/systemd/zram-generator.conf
 
-# Start services
-for serv in "${services[@]}"; do
-    sudo systemctl enable --now "$serv"
-done
-
-# Add user to groups
-for group in "${usergroups[@]}"; do
-    sudo usermod -a -G "$group" "$USER"
-done
-
 # Run setups
 for app in "${setups[@]}"; do
     case $app in
@@ -223,4 +213,14 @@ for app in "${setups[@]}"; do
             setup_fish
             ;;
     esac
+done
+
+# Start services
+for serv in "${services[@]}"; do
+    sudo systemctl enable --now "$serv"
+done
+
+# Add user to groups
+for group in "${usergroups[@]}"; do
+    sudo usermod -a -G "$group" "$USER"
 done

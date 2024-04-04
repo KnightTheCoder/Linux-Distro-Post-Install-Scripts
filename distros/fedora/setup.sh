@@ -164,16 +164,6 @@ sudo dnf install -y $packages
 # Install msfonts
 sudo rpm -i https://downloads.sourceforge.net/project/mscorefonts2/rpms/msttcore-fonts-installer-2.6-1.noarch.rpm
 
-# Start services
-for serv in "${services[@]}"; do
-    sudo systemctl enable --now "$serv"
-done
-
-# Add user to groups
-for group in "${usergroups[@]}"; do
-    sudo usermod -a -G "$group" "$USER"
-done
-
 # Run setups
 for app in "${setups[@]}"; do
     case $app in
@@ -252,4 +242,14 @@ for app in "${setups[@]}"; do
             setup_fish
             ;;
     esac
+done
+
+# Start services
+for serv in "${services[@]}"; do
+    sudo systemctl enable --now "$serv"
+done
+
+# Add user to groups
+for group in "${usergroups[@]}"; do
+    sudo usermod -a -G "$group" "$USER"
 done
