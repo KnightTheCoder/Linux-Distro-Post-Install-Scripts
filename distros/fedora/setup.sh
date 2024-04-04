@@ -27,6 +27,10 @@ packages=$(
     "nodejs" "Nodejs" OFF \
     "dotnet" ".NET sdk" OFF \
     "rustup" "Rust" OFF \
+    "docker" "Docker engine" OFF \
+    "docker-desktop" "Docker desktop" OFF \
+    "podman" "Podman" OFF \
+    "distrobox" "Distrobox" OFF \
     "flatpak" "Flatpak" ON \
     "qemu" "QEMU/KVM" OFF \
     "openrgb" "OpenRGB" OFF \
@@ -55,7 +59,6 @@ for package in $packages; do
 
             usergroups+=(libvirt)
 
-            # Remove package
             packages=${packages//"$package"/}
             ;;
 
@@ -66,21 +69,18 @@ for package in $packages; do
         heroic )
             setups+=(heroic)
 
-            # Remove package
             packages=${packages//"$package"/}
             ;;
 
         itch )
             setups+=("$package")
 
-            # Remove package
             packages=${packages//"$package"/}
             ;;
 
         vscode )
             setups+=(vscode)
 
-            # Remove package
             packages=${packages//"$package"/}
             ;;
 
@@ -90,6 +90,21 @@ for package in $packages; do
 
         nodejs )
             setups+=(npm)
+            ;;
+
+        docker )
+            packages=${packages/"$package"/}
+
+            setups+=(docker)
+            services+=(docker.service)
+            usergroups+=(docker)
+            ;;
+
+        docker-desktop )
+            packages=${packages/"$package"/}
+
+            setups+=(docker-desktop)
+            packages+=" gnome-terminal"
             ;;
 
         flatpak )
@@ -198,6 +213,30 @@ for app in "${setups[@]}"; do
 
         npm )
             setup_npm
+            ;;
+
+        docker )
+            sudo dnf remove docker \
+                  docker-client \
+                  docker-client-latest \
+                  docker-common \
+                  docker-latest \
+                  docker-latest-logrotate \
+                  docker-logrotate \
+                  docker-selinux \
+                  docker-engine-selinux \
+                  docker-engine
+
+            sudo dnf -y install dnf-plugins-core
+            sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+
+            sudo dnf install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+            ;;
+
+        docker-desktop )
+            wget -O docker-desktop.rpm "https://desktop.docker.com/linux/main/amd64/139021/docker-desktop-4.28.0-x86_64.rpm?utm_source=docker&utm_medium=webreferral&utm_campaign=docs-driven-download-linux-amd64"
+            sudo dnf install docker-desktop.rpm
+            rm -v docker-desktop.rpm
             ;;
 
         flatpak )

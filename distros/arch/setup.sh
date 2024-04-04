@@ -28,6 +28,10 @@ packages=$(
     "nodejs" "Nodejs" OFF \
     "dotnet-sdk" ".NET sdk" OFF \
     "rustup" "Rust" OFF \
+    "docker" "Docker engine" OFF \
+    "docker-desktop" "Docker desktop" OFF \
+    "podman" "Podman" OFF \
+    "distrobox" "Distrobox" OFF \
     "flatpak" "Flatpak" ON \
     "qemu" "QEMU/KVM" OFF \
     "openrgb" "OpenRGB" OFF \
@@ -57,21 +61,18 @@ for package in $packages; do
 
             usergroups+=(libvirt)
 
-            # Remove package
             packages=${packages//"$package"/}
             ;;
 
         heroic )
             aur+=(heroic-games-launcher-bin)
 
-            # Remove package
             packages=${packages//"$package"/}
             ;;
 
         itch )
             setups+=("$package")
 
-            # Remove package
             packages=${packages//"$package"/}
             ;;
 
@@ -79,7 +80,6 @@ for package in $packages; do
             if [ "$package" == vscode ]; then
                 aur+=(visual-studio-code-bin)
 
-                # Remove package
                 packages=${packages//"$package"/}
             fi
 
@@ -94,6 +94,17 @@ for package in $packages; do
             packages+=" npm"
 
             setups+=(npm)
+            ;;
+
+        docker )
+            services+=(docker.service)
+            usergroups+=(docker)
+            ;;
+
+        docker-desktop )
+            aur+=(docker-desktop)
+
+            packages=${packages//"$package"/}
             ;;
 
         * ) ;;
