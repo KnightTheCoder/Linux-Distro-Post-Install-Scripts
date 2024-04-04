@@ -177,8 +177,8 @@ for app in "${setups[@]}"; do
             ;;
 
         heroic )
-            sudo dnf copr enable atim/heroic-games-launcher
-            sudo dnf install heroic-games-launcher-bin
+            sudo dnf copr enable atim/heroic-games-launcher -y
+            sudo dnf -y install heroic-games-launcher-bin
             ;;
 
         itch )
@@ -218,14 +218,14 @@ for app in "${setups[@]}"; do
                   docker-engine
 
             sudo dnf -y install dnf-plugins-core
-            sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+            sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo -y
 
             sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
             ;;
 
         docker-desktop )
             wget -O docker-desktop.rpm "https://desktop.docker.com/linux/main/amd64/139021/docker-desktop-4.28.0-x86_64.rpm?utm_source=docker&utm_medium=webreferral&utm_campaign=docs-driven-download-linux-amd64"
-            sudo dnf install docker-desktop.rpm
+            sudo dnf -y install docker-desktop.rpm
             rm -v docker-desktop.rpm
             ;;
 
