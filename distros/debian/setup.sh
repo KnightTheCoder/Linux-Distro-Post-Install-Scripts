@@ -131,6 +131,7 @@ for package in $packages; do
         docker )
             packages=${packages/"$package"/}
 
+            packages+=" ca-certificates"
             setups+=(docker)
             services+=(docker.service)
             usergroups+=(docker)
@@ -284,7 +285,6 @@ for app in "${setups[@]}"; do
 
             # Add Docker's official GPG key:
             sudo apt-get update
-            sudo apt-get install ca-certificates curl
             sudo install -m 0755 -d /etc/apt/keyrings
             sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
             sudo chmod a+r /etc/apt/keyrings/docker.asc
@@ -303,13 +303,13 @@ for app in "${setups[@]}"; do
             fi
             sudo apt-get update
 
-            sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+            sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
             ;;
 
         docker-desktop )
             wget -O docker-desktop.deb "https://desktop.docker.com/linux/main/amd64/139021/docker-desktop-4.28.0-amd64.deb?utm_source=docker&utm_medium=webreferral&utm_campaign=docs-driven-download-linux-amd64"
             sudo apt-get update
-            sudo apt-get install ./docker-desktop.deb
+            sudo apt-get install -y ./docker-desktop.deb
             rm -v docker.desktop.deb
             ;;
 
