@@ -14,4 +14,5 @@ This script is only intended for Debian/UBuntu with KDE desktop, KDE neon and Li
 * Configures flatpak and installs my most used apps
 * Installs QEMU/KVM
 * Installs the GitHub CLI
+* Installs docker, podman and distrobox for containers
 * Optionally sets hostname

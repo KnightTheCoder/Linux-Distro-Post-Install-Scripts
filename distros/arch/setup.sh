@@ -28,6 +28,10 @@ packages=$(
     "nodejs" "Nodejs" OFF \
     "dotnet-sdk" ".NET sdk" OFF \
     "rustup" "Rust" OFF \
+    "docker" "Docker engine" OFF \
+    "docker-desktop" "Docker desktop" OFF \
+    "podman" "Podman" OFF \
+    "distrobox" "Distrobox" OFF \
     "flatpak" "Flatpak" ON \
     "qemu" "QEMU/KVM" OFF \
     "openrgb" "OpenRGB" OFF \
@@ -57,21 +61,18 @@ for package in $packages; do
 
             usergroups+=(libvirt)
 
-            # Remove package
             packages=${packages//"$package"/}
             ;;
 
         heroic )
             aur+=(heroic-games-launcher-bin)
 
-            # Remove package
             packages=${packages//"$package"/}
             ;;
 
         itch )
             setups+=("$package")
 
-            # Remove package
             packages=${packages//"$package"/}
             ;;
 
@@ -79,7 +80,6 @@ for package in $packages; do
             if [ "$package" == vscode ]; then
                 aur+=(visual-studio-code-bin)
 
-                # Remove package
                 packages=${packages//"$package"/}
             fi
 
@@ -94,6 +94,18 @@ for package in $packages; do
             packages+=" npm"
 
             setups+=(npm)
+            ;;
+
+        docker )
+            packages+=" docker-compose"
+            services+=(docker.service)
+            usergroups+=(docker)
+            ;;
+
+        docker-desktop )
+            aur+=(docker-desktop)
+
+            packages=${packages//"$package"/}
             ;;
 
         * ) ;;
@@ -163,16 +175,6 @@ yay -S "${aur[@]}" --needed
 # Setup zram
 printf "[zram0]\n zram-size = ram / 2\n compression-algorithm = zstd\n swap-priority = 100\n fs-type = swap\n" | sudo tee /etc/systemd/zram-generator.conf
 
-# Start services
-for serv in "${services[@]}"; do
-    sudo systemctl enable --now "$serv"
-done
-
-# Add user to groups
-for group in "${usergroups[@]}"; do
-    sudo usermod -a -G "$group" "$USER"
-done
-
 # Run setups
 for app in "${setups[@]}"; do
     case $app in
@@ -212,4 +214,14 @@ for app in "${setups[@]}"; do
             setup_fish
             ;;
     esac
+done
+
+# Start services
+for serv in "${services[@]}"; do
+    sudo systemctl enable --now "$serv"
+done
+
+# Add user to groups
+for group in "${usergroups[@]}"; do
+    sudo usermod -a -G "$group" "$USER"
 done

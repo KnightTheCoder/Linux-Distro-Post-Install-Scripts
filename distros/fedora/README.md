@@ -15,4 +15,5 @@ This script is only intended for Fedora with KDE desktop, it may not work as int
 * Configures flatpak and installs my most used apps
 * Installs QEMU/KVM
 * Installs the GitHub CLI
+* Installs docker, podman and distrobox for containers
 * Optionally sets hostname

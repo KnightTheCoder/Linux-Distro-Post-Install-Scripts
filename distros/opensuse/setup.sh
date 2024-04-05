@@ -47,9 +47,12 @@ packages=$(
     "gimp" "GIMP" OFF \
     "kdenlive" "Kdenlive" OFF \
     "vscode" "Visual Studio Code" OFF \
-    "nodejs20" "Nodejs" OFF \
+    "nodejs" "Nodejs" OFF \
     "dotnet" ".NET sdk" OFF \
     "rustup" "Rust" OFF \
+    "docker" "Docker engine" OFF \
+    "podman" "Podman" OFF \
+    "distrobox" "Distrobox" OFF \
     "flatpak" "Flatpak" ON \
     "qemu" "QEMU/KVM" OFF \
     "OpenRGB" "OpenRGB" OFF \
@@ -93,14 +96,12 @@ for package in $packages; do
         heroic )
             opi+=(heroic-games-launcher)
 
-            # Remove package
             packages=${packages//"$package"/}
             ;;
 
         itch )
             setups+=("$package")
 
-            # Remove package
             packages=${packages//"$package"/}
             ;;
 
@@ -111,7 +112,6 @@ for package in $packages; do
 
             opi+=("$package")
 
-            # Remove package
             packages=${packages//"$package"/}
             ;;
 
@@ -119,8 +119,18 @@ for package in $packages; do
             setups+=(rust)
             ;;
 
-        nodejs20 )
+        nodejs )
+            packages=${packages//"$package"/}
+
+            packages+=" nodejs20"
+
             setups+=(npm)
+            ;;
+
+        docker )
+            packages+=" docker-compose docker-compose-switch"
+            services+=(docker.service)
+            usergroups+=(docker)
             ;;
 
         flatpak )
@@ -193,16 +203,6 @@ for repo in $repos; do
     esac
 done
 
-# Start services
-for serv in "${services[@]}"; do
-    sudo systemctl enable --now "$serv"
-done
-
-# Add user to groups
-for group in "${usergroups[@]}"; do
-    sudo usermod -a -G "$group" "$USER"
-done
-
 # Run setups
 for app in "${setups[@]}"; do
     case $app in
@@ -242,6 +242,16 @@ for app in "${setups[@]}"; do
             setup_fish
             ;;
     esac
+done
+
+# Start services
+for serv in "${services[@]}"; do
+    sudo systemctl enable --now "$serv"
+done
+
+# Add user to groups
+for group in "${usergroups[@]}"; do
+    sudo usermod -a -G "$group" "$USER"
 done
 
 create_snapshot 1

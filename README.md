@@ -18,6 +18,8 @@
 * Copies fish config
 * Installs NvChad or Astrovim for neovim
 * Installs the GitHub CLI
+* Installs docker, podman and distrobox for containers
+* Optionally sets hostname
 
 ## How to run
 
