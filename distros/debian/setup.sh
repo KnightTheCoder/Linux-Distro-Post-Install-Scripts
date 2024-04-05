@@ -275,8 +275,9 @@ for app in "${setups[@]}"; do
 
             sudo apt-get update
             sudo install -m 0755 -d /etc/apt/keyrings
-
+           
             if grep -iq ID=debian /etc/os-release; then
+                # Debian
                 # Add Docker's official GPG key:
                 sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
                 sudo chmod a+r /etc/apt/keyrings/docker.asc
@@ -287,17 +288,20 @@ for app in "${setups[@]}"; do
                 $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
                 sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
             else
+                # Ubuntu based
                 # Add Docker's official GPG key:
                 sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
                 sudo chmod a+r /etc/apt/keyrings/docker.asc
 
                 # Add the repository to Apt sources:
                 if grep -iq ID=linuxmint /etc/os-release; then
+                    # Linux Mint
                     echo \
                     "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
                     $(. /etc/os-release && echo "$UBUNTU_CODENAME") stable" | \
                     sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
                 else
+                    # Ubuntu
                     echo \
                     "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
                     $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
@@ -306,7 +310,6 @@ for app in "${setups[@]}"; do
             fi
 
             sudo apt-get update
-
             sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
             ;;
 
