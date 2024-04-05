@@ -97,6 +97,7 @@ for package in $packages; do
             ;;
 
         docker )
+            packages+=" docker-compose"
             services+=(docker.service)
             usergroups+=(docker)
             ;;
