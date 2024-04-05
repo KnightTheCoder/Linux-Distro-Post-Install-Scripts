@@ -276,7 +276,7 @@ for app in "${setups[@]}"; do
             sudo apt-get update
             sudo install -m 0755 -d /etc/apt/keyrings
 
-            if grep -iq ID=debian /etc/os-rekease; then
+            if grep -iq ID=debian /etc/os-release; then
                 # Add Docker's official GPG key:
                 sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
                 sudo chmod a+r /etc/apt/keyrings/docker.asc
