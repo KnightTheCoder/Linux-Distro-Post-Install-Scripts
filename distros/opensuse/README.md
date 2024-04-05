@@ -17,4 +17,5 @@ This script is only intended for OpenSUSE Tumbleweed with KDE desktop, it may no
 * Configures flatpak and installs my most used apps
 * Experimental option to install QEMU/KVM
 * Installs the GitHub CLI
+* Installs docker, podman and distrobox for containers
 * Optionally sets hostname
