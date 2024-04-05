@@ -26,6 +26,10 @@ packages=$(
     "nodejs" "Nodejs" OFF \
     "dotnet" ".NET sdk" OFF \
     "rustup" "Rust" OFF \
+    "docker" "Docker engine" OFF \
+    "docker-desktop" "Docker desktop" OFF \
+    "podman" "Podman" OFF \
+    "distrobox" "Distrobox" OFF \
     "flatpak" "Flatpak" ON \
     "qemu" "QEMU/KVM" OFF \
     3>&1 1>&2 2>&3
@@ -80,21 +84,18 @@ for package in $packages; do
 
             packages+=" wine"
 
-            # Remove package
             packages=${packages//"$package"/}
             ;;
 
         heroic )
             setups+=(heroic)
 
-            # Remove package
             packages=${packages//"$package"/}
             ;;
 
         itch )
             setups+=("$package")
 
-            # Remove package
             packages=${packages//"$package"/}
             ;;
 
@@ -102,14 +103,12 @@ for package in $packages; do
             setups+=(vscode)
             packages+=" apt-transport-https"
 
-            # Remove package
             packages=${packages//"$package"/}
             ;;
 
         rustup )
-            setups+=(fish rust)
+            setups+=(rust)
 
-            # Remove package
             packages=${packages//"$package"/}
             ;;
 
@@ -120,7 +119,6 @@ for package in $packages; do
             ;;
 
         dotnet )
-            # Remove package
             packages=${packages//"$package"/}
 
             if grep -iq "ID=debian" /etc/os-release; then
@@ -128,6 +126,28 @@ for package in $packages; do
             else
                 packages+=" dotnet-sdk-8.0"
             fi
+            ;;
+
+        docker )
+            packages=${packages/"$package"/}
+
+            packages+=" ca-certificates"
+            setups+=(docker)
+            services+=(docker.service)
+            usergroups+=(docker)
+            ;;
+
+        docker-desktop )
+            packages=${packages/"$package"/}
+
+            setups+=(docker-desktop)
+            packages+=" gnome-terminal"
+            ;;
+
+        distrobox )
+            packages=${packages//"$package"/}
+
+            setups+=(distrobox)
             ;;
 
         flatpak )
@@ -138,20 +158,8 @@ for package in $packages; do
     esac
 done
 
-# Add fish setup to be last if it's not in the setups yet (because of rustup's dependency)
-fish_found=false
-for i in "${setups[@]}"
-do
-  if [[ $i == fish ]]
-  then
-    fish_found=true
-    break
-  fi
-done
-
-if ! $fish_found; then
-    setups+=(fish)
-fi
+# Add fish setup to be last
+setups+=(fish)
 
 # Add console apps
 packages+=" git build-essential fish neofetch kwrite htop btop neovim gh bat curl wget gpg"
@@ -207,16 +215,6 @@ sudo nala install -y $packages
 # Build font cache for ms fonts
 sudo fc-cache -f -v
 
-# Start services
-for serv in "${services[@]}"; do
-    sudo systemctl enable --now "$serv"
-done
-
-# Add user to groups
-for group in "${usergroups[@]}"; do
-    sudo usermod -a -G "$group" "$USER"
-done
-
 # Run setups
 for app in "${setups[@]}"; do
     case $app in
@@ -230,9 +228,8 @@ for app in "${setups[@]}"; do
         heroic )
             wget -O heroic.deb https://github.com/Heroic-Games-Launcher/HeroicGamesLauncher/releases/download/v2.14.0/heroic_2.14.0_amd64.deb
             sudo dpkg -i heroic.deb
-            rm heroic.deb
+            rm -v heroic.deb
 
-            # Remove package
             packages=${packages//"$package"/}
             ;;
 
@@ -272,14 +269,71 @@ for app in "${setups[@]}"; do
             sudo nala update && sudo nala install -y dotnet-sdk-8.0
             ;;
 
-        eza )
-            sudo mkdir -p /etc/apt/keyrings
-            wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | sudo gpg --dearmor -o /etc/apt/keyrings/gierens.gpg
-            echo "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de stable main" | sudo tee /etc/apt/sources.list.d/gierens.list
-            sudo chmod 644 /etc/apt/keyrings/gierens.gpg /etc/apt/sources.list.d/gierens.list
+        docker )
+            # Remove old packages
+            for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do sudo apt-get remove $pkg; done
 
-            sudo nala update
-            sudo nala install -y eza
+            sudo apt-get update
+            sudo install -m 0755 -d /etc/apt/keyrings
+           
+            if grep -iq ID=debian /etc/os-release; then
+                # Debian
+                # Add Docker's official GPG key:
+                sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
+                sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+                # Add the repository to Apt sources:
+                echo \
+                "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
+                $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+                sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+            else
+                # Ubuntu based
+                # Add Docker's official GPG key:
+                sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+                sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+                # Add the repository to Apt sources:
+                if grep -iq ID=linuxmint /etc/os-release; then
+                    # Linux Mint
+                    echo \
+                    "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+                    $(. /etc/os-release && echo "$UBUNTU_CODENAME") stable" | \
+                    sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+                else
+                    # Ubuntu
+                    echo \
+                    "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+                    $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+                    sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+                fi
+            fi
+
+            sudo apt-get update
+            sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+            ;;
+
+        docker-desktop )
+            wget -O docker-desktop.deb "https://desktop.docker.com/linux/main/amd64/139021/docker-desktop-4.28.0-amd64.deb?utm_source=docker&utm_medium=webreferral&utm_campaign=docs-driven-download-linux-amd64"
+            sudo apt-get update
+            sudo apt-get install -y ./docker-desktop.deb
+            rm -v docker.desktop.deb
+            ;;
+
+        distrobox )
+            curl -s https://raw.githubusercontent.com/89luca89/distrobox/main/install | sudo sh
+            ;;
+
+        eza )
+            if [ ! -x /usr/bin/eza ]; then
+                sudo mkdir -p /etc/apt/keyrings
+                wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | sudo gpg --dearmor -o /etc/apt/keyrings/gierens.gpg
+                echo "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de stable main" | sudo tee /etc/apt/sources.list.d/gierens.list
+                sudo chmod 644 /etc/apt/keyrings/gierens.gpg /etc/apt/sources.list.d/gierens.list
+
+                sudo nala update
+                sudo nala install -y eza
+            fi
             ;;
 
         flatpak )
@@ -290,4 +344,14 @@ for app in "${setups[@]}"; do
             setup_fish
             ;;
     esac
+done
+
+# Start services
+for serv in "${services[@]}"; do
+    sudo systemctl enable --now "$serv"
+done
+
+# Add user to groups
+for group in "${usergroups[@]}"; do
+    sudo usermod -a -G "$group" "$USER"
 done
