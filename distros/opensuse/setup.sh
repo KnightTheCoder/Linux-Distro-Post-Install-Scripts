@@ -47,6 +47,7 @@ packages=$(
     "gimp" "GIMP" OFF \
     "kdenlive" "Kdenlive" OFF \
     "vscode" "Visual Studio Code" OFF \
+    "vscodium" "VSCodium" OFF \
     "nodejs" "Nodejs" OFF \
     "dotnet" ".NET sdk" OFF \
     "rustup" "Rust" OFF \
@@ -105,12 +106,22 @@ for package in $packages; do
             packages=${packages//"$package"/}
             ;;
 
-        vscode|dotnet )
-            if [ "$package" == vscode ]; then
-                setups+=(vscode)
-            fi
+        vscode )
+            setups+=(vscode)
 
-            opi+=("$package")
+            opi+=(vscode)
+
+            packages=${packages//"$package"/}
+            ;;
+
+        vscodium )
+            setups+=(vscodium)
+
+            packages=${packages//"$package"/}
+            ;;
+
+        dotnet )
+            opi+=(dotnet)
 
             packages=${packages//"$package"/}
             ;;
@@ -212,6 +223,14 @@ for app in "${setups[@]}"; do
 
         vscode )
             setup_vscode
+            ;;
+
+        vscodium )
+            sudo rpmkeys --import https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/-/raw/master/pub.gpg
+
+            printf "[gitlab.com_paulcarroty_vscodium_repo]\nname=gitlab.com_paulcarroty_vscodium_repo\nbaseurl=https://download.vscodium.com/rpms/\nenabled=1\ngpgcheck=1\nrepo_gpgcheck=1\ngpgkey=https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/-/raw/master/pub.gpg\nmetadata_expire=1h" | sudo tee -a /etc/zypp/repos.d/vscodium.repo
+
+            sudo zypper in -y codium
             ;;
 
         hacknerd )

@@ -23,6 +23,7 @@ packages=$(
     "gimp" "GIMP" OFF \
     "kdenlive" "Kdenlive" OFF \
     "vscode" "Visual Studio Code" OFF \
+    "vscodium" "VSCodium" OFF \
     "nodejs" "Nodejs" OFF \
     "dotnet" ".NET sdk" OFF \
     "rustup" "Rust" OFF \
@@ -102,6 +103,12 @@ for package in $packages; do
         vscode )
             setups+=(vscode)
             packages+=" apt-transport-https"
+
+            packages=${packages//"$package"/}
+            ;;
+
+        vscodium )
+            setups+=(vscodium)
 
             packages=${packages//"$package"/}
             ;;
@@ -249,6 +256,17 @@ for app in "${setups[@]}"; do
             setup_vscode
             ;;
 
+        vscodium )
+            wget -qO - https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg \
+                | gpg --dearmor \
+                | sudo dd of=/usr/share/keyrings/vscodium-archive-keyring.gpg
+
+            echo 'deb [ signed-by=/usr/share/keyrings/vscodium-archive-keyring.gpg ] https://download.vscodium.com/debs vscodium main' \
+                | sudo tee /etc/apt/sources.list.d/vscodium.list
+            
+            sudo nala update && sudo nala install codium -y
+            ;;
+
         hacknerd )
             setup_hacknerd_fonts
             ;;
@@ -309,8 +327,8 @@ for app in "${setups[@]}"; do
                 fi
             fi
 
-            sudo apt-get update
-            sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+            sudo nala update
+            sudo nala install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
             ;;
 
         docker-desktop )

@@ -25,6 +25,7 @@ packages=$(
     "gimp" "GIMP" OFF \
     "kdenlive" "Kdenlive" OFF \
     "vscode" "Visual Studio Code" OFF \
+    "vscodium" "VSCodium" OFF \
     "nodejs" "Nodejs" OFF \
     "dotnet-sdk" ".NET sdk" OFF \
     "rustup" "Rust" OFF \
@@ -76,14 +77,22 @@ for package in $packages; do
             packages=${packages//"$package"/}
             ;;
 
-        vscode|flatpak )
-            if [ "$package" == vscode ]; then
-                aur+=(visual-studio-code-bin)
+        vscode )
+            aur+=(visual-studio-code-bin)
 
-                packages=${packages//"$package"/}
-            fi
+            packages=${packages//"$package"/}
 
-            setups+=("$package")
+            setups+=(vscode)
+            ;;
+
+        flatpak )
+            setups+=(flatpak)
+            ;;
+
+        vscodium )
+            aur+=(vscodium-bin)
+
+            packages=${packages//"$package"/}
             ;;
 
         rustup )
