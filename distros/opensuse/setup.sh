@@ -185,9 +185,9 @@ fi
 
 # Remove unncessary packages
 # shellcheck disable=SC2086
-sudo zypper -vv remove -y --clean-deps $remove_packages
+sudo zypper remove --details -y --clean-deps $remove_packages
 # shellcheck disable=SC2086
-sudo zypper -vv remove -y --clean-deps -t pattern $remove_patterns
+sudo zypper remove --details -y --clean-deps -t pattern $remove_patterns
 # shellcheck disable=SC2086
 sudo zypper -vv al -t pattern $remove_patterns
 sudo zypper -vv al discover6
@@ -195,10 +195,10 @@ sudo zypper -vv al discover6
 # Install packages
 # Don't use quotes, zypper won't recognize the packages
 # shellcheck disable=SC2086
-sudo zypper -vv install -y $packages
+sudo zypper install --details -y $packages
 
 # Install patterns
-sudo zypper -vv install -yt pattern "${patterns[@]}"
+sudo zypper install --details -yt pattern "${patterns[@]}"
 
 # Install opi packages
 opi -nm "${opi[@]}"
