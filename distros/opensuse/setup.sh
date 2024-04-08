@@ -133,7 +133,7 @@ for package in $packages; do
         nodejs )
             packages=${packages//"$package"/}
 
-            packages+=" nodejs20"
+            packages+=" nodejs-default"
 
             setups+=(npm)
             ;;
