@@ -303,6 +303,8 @@ for app in "${setups[@]}"; do
                 sudo chmod a+r /etc/apt/keyrings/docker.asc
 
                 # Add the repository to Apt sources:
+
+                # shellcheck disable=SC1091
                 echo \
                 "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
                 $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
@@ -316,12 +318,16 @@ for app in "${setups[@]}"; do
                 # Add the repository to Apt sources:
                 if grep -iq ID=linuxmint /etc/os-release; then
                     # Linux Mint
+
+                    # shellcheck disable=SC1091
                     echo \
                     "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
                     $(. /etc/os-release && echo "$UBUNTU_CODENAME") stable" | \
                     sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
                 else
                     # Ubuntu
+
+                    # shellcheck disable=SC1091
                     echo \
                     "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
                     $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
