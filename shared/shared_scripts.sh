@@ -153,6 +153,9 @@ function setup_npm() {
 }
 
 function setup_rust() {
+    # Create fish directory for the script to run
+    mkdir -p "$HOME/.config/fish/conf.d"
+
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 }
 
