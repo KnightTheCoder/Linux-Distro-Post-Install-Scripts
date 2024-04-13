@@ -6,6 +6,16 @@
 * Debian
 * Arch linux
 
+Tested distros:
+* OpenSUSE Tumbleweed
+* Fedora
+* Debian
+* Ubuntu
+* Linux Mint
+* ZorinOS
+* Arch Linux
+* EndeavourOS
+
 ## Features
 * Choose the apps and configurations you need
 * Updates the system
