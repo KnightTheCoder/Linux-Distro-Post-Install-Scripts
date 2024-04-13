@@ -253,7 +253,7 @@ for app in "${setups[@]}"; do
             sudo nala update
             sudo nala install -y code
 
-            setup_vscode
+            setup_vscode code
             ;;
 
         vscodium )
@@ -265,6 +265,8 @@ for app in "${setups[@]}"; do
                 | sudo tee /etc/apt/sources.list.d/vscodium.list
             
             sudo nala update && sudo nala install codium -y
+
+            setup_vscode codium
             ;;
 
         hacknerd )

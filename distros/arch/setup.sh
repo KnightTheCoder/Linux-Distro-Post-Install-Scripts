@@ -85,14 +85,16 @@ for package in $packages; do
             setups+=(vscode)
             ;;
 
-        flatpak )
-            setups+=(flatpak)
-            ;;
-
         vscodium )
             aur+=(vscodium-bin)
 
             packages=${packages//"$package"/}
+            
+            setups+=(vscodium)
+            ;;
+
+        flatpak )
+            setups+=(flatpak)
             ;;
 
         rustup )
@@ -192,7 +194,11 @@ for app in "${setups[@]}"; do
             ;;
 
         vscode )
-            setup_vscode
+            setup_vscode code
+            ;;
+
+        vscodium )
+            setup_vscode codium
             ;;
 
         hacknerd )

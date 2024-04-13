@@ -116,6 +116,7 @@ for package in $packages; do
 
         vscodium )
             opi+=(vscodium)
+            setups+=(vscodium)
 
             packages=${packages//"$package"/}
             ;;
@@ -222,7 +223,11 @@ for app in "${setups[@]}"; do
             ;;
 
         vscode )
-            setup_vscode
+            setup_vscode code
+            ;;
+
+        vscodium )
+            setup_vscode codium
             ;;
 
         hacknerd )
