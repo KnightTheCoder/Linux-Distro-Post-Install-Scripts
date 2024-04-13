@@ -177,6 +177,7 @@ function setup_flatpak() {
         "com.github.unrud.VideoDownloader" "Video Downloader" ON \
         "org.gimp.GIMP" "GIMP" OFF \
         "org.kde.kdenlive" "Kdenlive" OFF \
+        "org.keepassxc.KeePassXC" "KeePassXC" OFF \
         "com.discordapp.Discord" "Discord" OFF \
         "io.github.spacingbat3.webcord" "Webcord" OFF \
         "dev.vencord.Vesktop" "Vesktop" OFF \

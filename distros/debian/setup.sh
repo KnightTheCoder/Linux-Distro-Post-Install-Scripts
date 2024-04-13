@@ -22,6 +22,7 @@ packages=$(
     "transmission" "Transmission bittorrent client" OFF \
     "gimp" "GIMP" OFF \
     "kdenlive" "Kdenlive" OFF \
+    "keepass2" "KeePass" OFF \
     "vscode" "Visual Studio Code" OFF \
     "vscodium" "VSCodium" OFF \
     "nodejs" "Nodejs" OFF \
