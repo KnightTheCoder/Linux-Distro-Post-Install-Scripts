@@ -47,7 +47,7 @@ if [ ! -x "/usr/bin/whiptail" ]; then
   echo -e "${RED}whiptail is not installed! Please install newt to proceed!${NC}"
 
   case $package_manager in
-    "zypper") sudo zypper -vv install -y newt
+    "zypper") sudo zypper install --details -y newt
         ;;
     "dnf") sudo dnf install -y newt
         ;;
