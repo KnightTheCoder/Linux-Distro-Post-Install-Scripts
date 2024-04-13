@@ -25,7 +25,7 @@ function setup_vscode() {
     code_editor=$1 # code or codium
 
     if [ -z "$code_editor" ] || [ "$code_editor" == code ]; then
-        code_editor="code --force"
+        code_editor="code"
     fi
 
     local extensions=(
@@ -70,7 +70,7 @@ function setup_vscode() {
 
     # Install extensions
     for ext in "${extensions[@]}"; do
-        $code_editor --install-extension "$ext"
+        $code_editor --force --install-extension "$ext"
     done
 
     # Copy key bindings
