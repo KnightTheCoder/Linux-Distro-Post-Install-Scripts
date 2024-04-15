@@ -128,6 +128,7 @@ function setup_zsh() {
     # Add zsh-abbr for fish-like abbreviations
     git clone https://github.com/olets/zsh-abbr.git "$HOME/.zprezto/modules/zsh-abbr"
 
+    # Add to the 40th line
     sed -i "40i \'autosuggessions\' \\\n\'syntax-highlighting\' \\\n\'zsh-abbr\' \\\n" "$HOME/.zshrc"
 
     printf "abbr cat=bat\nabbr ls=eza" | tee -a "$HOME/.config/zsh-abbr/user-abbreviations"
@@ -182,10 +183,10 @@ function choose_nvim_config() {
 function choose_shells() {
     shells=$(
         whiptail --title "Shells" --separate-output --checklist "Select the shells you'd like to install" 0 0 0 \
-        "fish" "Fish shell" ON \
-        "zsh" "zsh shell" OFF \
-        "starship" "Starship prompt" \
-        3>&1 1>&2 2>&3
+            "fish" "Fish shell" ON \
+            "zsh" "zsh shell" OFF \
+            "starship" "Starship prompt" ON \
+            3>&1 1>&2 2>&3
     )
 
     echo "$shells"
