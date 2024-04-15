@@ -37,6 +37,15 @@ packages=$(
     3>&1 1>&2 2>&3
 )
 
+shells=$(
+    whiptail --title "Shells" --separate-output --checklist "Select the shells you'd like to install" 0 0 0 \
+    "fish" "Fish shell" ON \
+    "zsh" "zsh shell" OFF \
+    3>&1 1>&2 2>&3
+)
+
+packages+=" ${shells[*]}"
+
 # Remove new lines
 packages=$(echo "$packages"| tr "\n" " ")
 
@@ -52,6 +61,14 @@ setups+=("$nvim_config")
 # Add packages to the correct categories
 for package in $packages; do
     case $package in
+        fish )
+            setups+=(fish)
+            ;;
+
+        zsh )
+            setups+=(zsh)
+            ;;
+
         qemu )
             # Remove package
             packages=${packages//"$package"/}
@@ -369,6 +386,10 @@ for app in "${setups[@]}"; do
             
         fish )
             setup_fish
+            ;;
+
+        zsh )
+            setup_zsh
             ;;
     esac
 done

@@ -102,14 +102,24 @@ function setup_fish() {
         curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
     fi
 
+    fish "../../shared/setup.fish"
+
     echo -e "${GREEN}Copying fish config...${NC}"
 
     # Need to use a different config for debian based systems because it's called batcat and not bat on them
     if grep -iq debian /etc/os-release; then
-        cp -fv "../../config/config_debian.fish" "$HOME/.config/fish/config.fish"
+        cp -fv "../../config/fish/config_debian.fish" "$HOME/.config/fish/config.fish"
     else
-        cp -fv "../../config/config.fish" "$HOME/.config/fish/config.fish"
+        cp -fv "../../config/fish/config.fish" "$HOME/.config/fish/config.fish"
     fi
+}
+
+function setup_zsh() {
+    git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
+    
+    zsh "../../shared/setup.zsh"
+
+    chsh -s /bin/zsh
 }
 
 function choose_nvim_config() {
