@@ -35,7 +35,7 @@ Tested distros:
 
 Download scripts ```wget -O "$(xdg-user-dir DOWNLOAD)/post-install-scripts.zip" "https://github.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/archive/refs/heads/master.zip"```
 
-Navigate and unzip ```cd "$(xdg-user-dir DOWNLOAD)" && unzip post-install-scripts.zip && cd post-install-scripts```
+Navigate and unzip ```cd "$(xdg-user-dir DOWNLOAD)" && unzip post-install-scripts.zip && cd Linux-Distro-Post-Install-Scripts-master```
 
 Make executable ```chmod +x ./post_install.sh```
 
