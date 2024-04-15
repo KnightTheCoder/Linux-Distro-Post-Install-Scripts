@@ -129,7 +129,7 @@ function setup_zsh() {
     git clone https://github.com/olets/zsh-abbr.git "$HOME/.zprezto/modules/zsh-abbr"
 
     # Add to the 40th line
-    sed -i "40i 'autosuggessions' \\" "$HOME/.zpreztorc"
+    sed -i "40i 'autosuggestions' \\" "$HOME/.zpreztorc"
     sed -i "41i 'syntax-highlighting' \\" "$HOME/.zpreztorc"
     sed -i "42i 'zsh-abbr' \\" "$HOME/.zpreztorc"
 
