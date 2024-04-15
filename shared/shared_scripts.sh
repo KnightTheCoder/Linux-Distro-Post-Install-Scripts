@@ -115,11 +115,22 @@ function setup_fish() {
 }
 
 function setup_zsh() {
+    if [ -d "$HOME/.prezto" ]; then
+        echo "${GREEN}prezto already setup${NC}"
+        return
+    fi
+
+    # Add prezto as plugin manager
     git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
     
     zsh "../../shared/setup.zsh"
 
-    printf "\nalias cat=bat\nalias ls=eza" | tee -a "$HOME/.zshrc"
+    # Add zsh-abbr for fish-like abbreviations
+    git clone https://github.com/olets/zsh-abbr.git "$HOME/.zprezto/modules/zsh-abbr"
+
+    sed -i "40i \'autosuggessions\' \\\n\'syntax-highlighting\' \\\n\'zsh-abbr\' \\\n" "$HOME/.zshrc"
+
+    printf "abbr cat=bat\nabbr ls=eza" | tee -a "$HOME/.config/zsh-abbr/user-abbreviations"
 
     chsh -s /bin/zsh
 }
@@ -173,6 +184,7 @@ function choose_shells() {
         whiptail --title "Shells" --separate-output --checklist "Select the shells you'd like to install" 0 0 0 \
         "fish" "Fish shell" ON \
         "zsh" "zsh shell" OFF \
+        "starship" "Starship prompt" \
         3>&1 1>&2 2>&3
     )
 

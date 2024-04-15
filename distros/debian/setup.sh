@@ -66,6 +66,12 @@ for package in $packages; do
             setups+=(zsh)
             ;;
 
+        starship )
+            setups+=(starship)
+
+            packages=${packages//"$package"/}
+            ;;
+
         qemu )
             # Remove package
             packages=${packages//"$package"/}
@@ -378,6 +384,10 @@ for app in "${setups[@]}"; do
 
         zsh )
             setup_zsh
+            ;;
+
+        starship )
+            setup_starship
             ;;
     esac
 done

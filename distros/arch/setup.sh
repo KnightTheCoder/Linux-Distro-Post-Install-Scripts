@@ -70,6 +70,10 @@ for package in $packages; do
             setups+=(zsh)
             ;;
 
+        starship )
+            setups+=(starship)
+            ;;
+
         qemu )
             packages+=" qemu virt-manager virt-viewer dnsmasq vde2 bridge-utils openbsd-netcat dmidecode"
 
@@ -237,6 +241,10 @@ for app in "${setups[@]}"; do
 
         zsh )
             setup_zsh
+            ;;
+
+        starship )
+            setup_starship
             ;;
     esac
 done

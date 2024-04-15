@@ -68,6 +68,10 @@ for package in $packages; do
             setups+=(zsh)
             ;;
 
+        starship )
+            setups+=(starship)
+            ;;
+
         qemu )
             packages+=" @virtualization"
 
@@ -267,6 +271,10 @@ for app in "${setups[@]}"; do
 
         zsh )
             setup_zsh
+            ;;
+
+        starship )
+            setup_starship
             ;;
     esac
 done

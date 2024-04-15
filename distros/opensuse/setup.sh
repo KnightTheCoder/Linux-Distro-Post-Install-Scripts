@@ -93,6 +93,10 @@ for package in $packages; do
             setups+=(zsh)
             ;;
 
+        starship )
+            setups+=(starship)
+            ;;
+
         qemu )
             patterns+=(kvm_tools)
             patterns+=(kvm_server)
@@ -270,6 +274,10 @@ for app in "${setups[@]}"; do
 
         zsh )
             setup_zsh
+            ;;
+
+        starship )
+            setup_starship
             ;;
     esac
 done
