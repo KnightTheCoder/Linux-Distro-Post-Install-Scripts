@@ -33,6 +33,10 @@ Tested distros:
 
 ## How to run
 
+Download scripts ```wget -O "$HOME/Downloads/post-install-scripts.zip" "https://github.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/archive/refs/heads/master.zip"```
+
+Navigate and unzip ```cd "$HOME/Downloads" && unzip post-install-scripts.zip && cd post-install-scripts```
+
 Make executable ```chmod +x ./post_install.sh```
 
 Run ```./post_install.sh ```
