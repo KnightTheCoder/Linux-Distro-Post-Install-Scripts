@@ -129,11 +129,14 @@ function setup_zsh() {
     git clone https://github.com/olets/zsh-abbr.git "$HOME/.zprezto/modules/zsh-abbr"
 
     # Add to the 40th line
-    sed -i "40i \'autosuggessions\' \\\n\'syntax-highlighting\' \\\n\'zsh-abbr\' \\\n" "$HOME/.zshrc"
+    sed -i "40i \'autosuggessions\' \\ \
+        \'syntax-highlighting\' \\ \
+        \'zsh-abbr\' \\" "$HOME/.zpreztorc"
 
-    printf "abbr cat=bat\nabbr ls=eza" | tee -a "$HOME/.config/zsh-abbr/user-abbreviations"
+    touch "$HOME/.config/zsh-abbr/user-abbreviations"
+    printf "abbr cat=bat\nabbr ls=eza" | tee "$HOME/.config/zsh-abbr/user-abbreviations"
 
-    chsh -s /bin/zsh
+    sudo chsh -s /bin/zsh
 }
 
 function setup_starship() {
