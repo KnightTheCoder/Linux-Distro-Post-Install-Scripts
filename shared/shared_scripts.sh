@@ -126,7 +126,7 @@ function setup_zsh() {
     zsh "../../shared/setup.zsh"
 
     # Add zsh-abbr for fish-like abbreviations
-    git clone https://github.com/olets/zsh-abbr.git "$HOME/.zprezto/modules/zsh-abbr"
+    git clone --depth 1 -b main https://github.com/olets/zsh-abbr.git "$HOME/.zprezto/modules/zsh-abbr"
 
     # Add to the 40th line
     sed -i "40i 'autosuggestions' \\\\" "$HOME/.zpreztorc"
