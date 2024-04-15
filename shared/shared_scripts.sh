@@ -146,7 +146,6 @@ function setup_starship() {
 
     if [ -x "$(command -v bash)" ] && ! grep -iq starship "$HOME/.bashrc"; then
         printf "\neval \"\$(starship init bash)\"" | tee -a "$HOME/.bashrc"
-
     fi
 
     if [ -x "$(command -v fish)" ] && ! grep -iq starship "$HOME/.config/fish/config.fish"; then
