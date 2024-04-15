@@ -24,7 +24,6 @@ Tested distros:
 * Installs Visual Studio Code extensions and copies the keybindings
 * Installs gaming launchers such as Steam, lutris, itch desktop app
 * Installs wine and Protonup-Qt to run windows games
-* Downloads and installs Microsoft and hack nerd fonts
 * Copies fish config
 * Installs NvChad or Astrovim for neovim
 * Installs the GitHub CLI
