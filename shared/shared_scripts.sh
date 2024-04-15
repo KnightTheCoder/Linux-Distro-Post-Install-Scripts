@@ -116,7 +116,7 @@ function setup_fish() {
 
 function setup_zsh() {
     if [ -d "$HOME/.prezto" ]; then
-        echo "${GREEN}prezto already setup${NC}"
+        echo -e "${GREEN}prezto already setup${NC}"
         return
     fi
 
