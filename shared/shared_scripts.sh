@@ -119,6 +119,8 @@ function setup_zsh() {
     
     zsh "../../shared/setup.zsh"
 
+    printf "alias -g cat=bat\nalias -g ls=eza" | tee -a "$HOME/.zshrc"
+
     chsh -s /bin/zsh
 }
 
