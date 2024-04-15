@@ -129,12 +129,11 @@ function setup_zsh() {
     git clone https://github.com/olets/zsh-abbr.git "$HOME/.zprezto/modules/zsh-abbr"
 
     # Add to the 40th line
-    sed -i "40i \'autosuggessions\ \\' \
-        \'syntax-highlighting\ \\' \
-        \'zsh-abbr\' \\" \
-        "$HOME/.zpreztorc"
+    sed -i "40i 'autosuggessions' \\" "$HOME/.zpreztorc"
+    sed -i "41i 'syntax-highlighting' \\" "$HOME/.zpreztorc"
+    sed -i "42i 'zsh-abbr' \\" "$HOME/.zpreztorc"
 
-    touch "$HOME/.config/zsh-abbr/user-abbreviations"
+    mkdir -p "$HOME/.config/zsh-abbr"
     printf "abbr cat=bat\nabbr ls=eza" | tee "$HOME/.config/zsh-abbr/user-abbreviations"
 
     sudo chsh -s /bin/zsh
@@ -157,6 +156,8 @@ function setup_starship() {
     if [ -x "$(command -v zsh)" ] && ! grep -iq starship "$HOME/.zshrc"; then
         printf "\neval \"\$(starship init zsh)\"" | tee -a "$HOME/.zshrc"
     fi
+
+    starship preset tokyo-night -o ~/.config/starship.toml
 }
 
 function choose_nvim_config() {
