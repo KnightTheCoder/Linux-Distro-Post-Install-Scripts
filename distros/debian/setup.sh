@@ -238,7 +238,7 @@ sudo fc-cache -f -v
 for app in "${setups[@]}"; do
     case $app in
         lutris )
-            wget -O 'lutris.deb' "https://github.com/lutris/lutris/releases/download/v0.5.16/lutris_0.5.16_all.deb"
+            wget -O 'lutris.deb' "https://github.com/lutris/lutris/releases/download/v0.5.17/lutris_0.5.17_all.deb"
             sudo apt install -y ./lutris.deb
             rm -v ./lutris.deb
             ;;

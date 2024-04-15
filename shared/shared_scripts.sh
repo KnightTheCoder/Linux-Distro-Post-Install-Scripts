@@ -121,7 +121,7 @@ function setup_zsh() {
     fi
 
     # Add prezto as plugin manager
-    git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
+    git clone --depth 1 -b master --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
     
     zsh "../../shared/setup.zsh"
 
@@ -134,7 +134,7 @@ function setup_zsh() {
     sed -i "42i 'zsh-abbr' \\" "$HOME/.zpreztorc"
 
     mkdir -p "$HOME/.config/zsh-abbr"
-    printf "abbr cat=bat\nabbr ls=eza" | tee "$HOME/.config/zsh-abbr/user-abbreviations"
+    printf "abbr cat=bat\nabbr ls=eza" > "$HOME/.config/zsh-abbr/user-abbreviations"
 
     sudo chsh -s /bin/zsh
 }
