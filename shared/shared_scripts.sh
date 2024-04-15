@@ -165,7 +165,8 @@ function choose_nvim_config() {
         return
     fi
 
-    nvim_config=$(whiptail --menu "Choose a neovim configuration (choose nvchad if unsure)" 0 0 0 \
+    nvim_config=$(whiptail --notags --menu "Choose a neovim configuration (choose nvchad if unsure)" 0 0 0 \
+        "" "Default" \
         "nvchad" "NVChad" \
         "astrovim" "Astrovim" \
         3>&1 1>&2 2>&3
