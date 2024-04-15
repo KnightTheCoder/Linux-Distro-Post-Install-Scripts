@@ -23,7 +23,9 @@ packages=$(
     "qbittorrent" "Qbittorrent bittorrent client" OFF \
     "gimp" "GIMP" OFF \
     "kdenlive" "Kdenlive" OFF \
+    "keepassxc" "KeePassXC" OFF \
     "vscode" "Visual Studio Code" OFF \
+    "vscodium" "VSCodium" OFF \
     "nodejs" "Nodejs" OFF \
     "dotnet" ".NET sdk" OFF \
     "rustup" "Rust" OFF \
@@ -36,6 +38,12 @@ packages=$(
     "openrgb" "OpenRGB" OFF \
     3>&1 1>&2 2>&3
 )
+
+packages+=" fish neofetch kwrite htop btop neovim gh eza bat dnf5 dnf5-plugins curl cabextract xorg-x11-font-utils fontconfig"
+
+shells=$(choose_shells)
+
+packages+=" $shells"
 
 # Remove new lines
 packages=$(echo "$packages"| tr "\n" " ")
@@ -52,6 +60,18 @@ setups+=("$nvim_config")
 # Add packages to the correct categories
 for package in $packages; do
     case $package in
+        fish )
+            setups+=(fish)
+            ;;
+
+        zsh )
+            setups+=(zsh)
+            ;;
+
+        starship )
+            setups+=(starship)
+            ;;
+
         qemu )
             packages+=" @virtualization"
 
@@ -80,6 +100,12 @@ for package in $packages; do
 
         vscode )
             setups+=(vscode)
+
+            packages=${packages//"$package"/}
+            ;;
+
+        vscodium )
+            setups+=(vscodium)
 
             packages=${packages//"$package"/}
             ;;
@@ -114,15 +140,6 @@ for package in $packages; do
         * ) ;;
     esac
 done
-
-# Add console apps
-packages+=" fish neofetch kwrite htop btop neovim gh eza bat"
-
-# Add latest dnf
-packages+=" dnf5 dnf5-plugins"
-
-# Dependencies for ms fonts
-packages+=" curl cabextract xorg-x11-font-utils fontconfig"
 
 # Remove extra whitespace
 packages=$(echo "$packages" | xargs)
@@ -173,7 +190,17 @@ for app in "${setups[@]}"; do
             sudo dnf check-update --refresh
             sudo dnf install -y code
 
-            setup_vscode
+            setup_vscode code
+            ;;
+
+        vscodium )
+            sudo rpmkeys --import https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/-/raw/master/pub.gpg
+
+            printf "[gitlab.com_paulcarroty_vscodium_repo]\nname=download.vscodium.com\nbaseurl=https://download.vscodium.com/rpms/\nenabled=1\ngpgcheck=1\nrepo_gpgcheck=1\ngpgkey=https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/-/raw/master/pub.gpg\nmetadata_expire=1h" | sudo tee -a /etc/yum.repos.d/vscodium.repo
+
+            sudo dnf install codium -y
+
+            setup_vscode codium
             ;;
 
         heroic )
@@ -240,6 +267,14 @@ for app in "${setups[@]}"; do
 
         fish )
             setup_fish
+            ;;
+
+        zsh )
+            setup_zsh
+            ;;
+
+        starship )
+            setup_starship
             ;;
     esac
 done

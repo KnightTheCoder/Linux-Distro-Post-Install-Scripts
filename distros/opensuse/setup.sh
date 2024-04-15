@@ -46,7 +46,9 @@ packages=$(
     "qbittorrent" "Qbittorrent bittorrent client" OFF \
     "gimp" "GIMP" OFF \
     "kdenlive" "Kdenlive" OFF \
+    "keepassxc" "KeePassXC" OFF \
     "vscode" "Visual Studio Code" OFF \
+    "vscodium" "VSCodium" OFF \
     "nodejs" "Nodejs" OFF \
     "dotnet" ".NET sdk" OFF \
     "rustup" "Rust" OFF \
@@ -58,6 +60,12 @@ packages=$(
     "OpenRGB" "OpenRGB" OFF \
     3>&1 1>&2 2>&3
 )
+
+packages+=" opi neofetch kwrite htop btop neovim gh eza bat fetchmsttfonts systemd-zram-service"
+
+shells=$(choose_shells)
+
+packages+=" $shells"
 
 # Remove new lines
 packages=$(echo "$packages"| tr "\n" " ")
@@ -77,6 +85,18 @@ setups+=("$nvim_config")
 # Add packages to the correct categories
 for package in $packages; do
     case $package in
+        fish )
+            setups+=(fish)
+            ;;
+
+        zsh )
+            setups+=(zsh)
+            ;;
+
+        starship )
+            setups+=(starship)
+            ;;
+
         qemu )
             patterns+=(kvm_tools)
             patterns+=(kvm_server)
@@ -105,12 +125,23 @@ for package in $packages; do
             packages=${packages//"$package"/}
             ;;
 
-        vscode|dotnet )
-            if [ "$package" == vscode ]; then
-                setups+=(vscode)
-            fi
+        vscode )
+            setups+=(vscode)
 
-            opi+=("$package")
+            opi+=(vscode)
+
+            packages=${packages//"$package"/}
+            ;;
+
+        vscodium )
+            opi+=(vscodium)
+            setups+=(vscodium)
+
+            packages=${packages//"$package"/}
+            ;;
+
+        dotnet )
+            opi+=(dotnet)
 
             packages=${packages//"$package"/}
             ;;
@@ -122,7 +153,7 @@ for package in $packages; do
         nodejs )
             packages=${packages//"$package"/}
 
-            packages+=" nodejs20"
+            packages+=" nodejs-default"
 
             setups+=(npm)
             ;;
@@ -141,11 +172,6 @@ for package in $packages; do
         * ) ;;
     esac
 done
-
-# Add fish setup to be last
-setups+=(fish)
-
-packages+=" opi fish neofetch kwrite htop btop neovim gh eza bat fetchmsttfonts systemd-zram-service"
 
 # Remove extra whitespace
 packages=$(echo "$packages" | xargs)
@@ -174,9 +200,9 @@ fi
 
 # Remove unncessary packages
 # shellcheck disable=SC2086
-sudo zypper -vv remove -y --clean-deps $remove_packages
+sudo zypper remove --details -y --clean-deps $remove_packages
 # shellcheck disable=SC2086
-sudo zypper -vv remove -y --clean-deps -t pattern $remove_patterns
+sudo zypper remove --details -y --clean-deps -t pattern $remove_patterns
 # shellcheck disable=SC2086
 sudo zypper -vv al -t pattern $remove_patterns
 sudo zypper -vv al discover6
@@ -184,10 +210,10 @@ sudo zypper -vv al discover6
 # Install packages
 # Don't use quotes, zypper won't recognize the packages
 # shellcheck disable=SC2086
-sudo zypper -vv install -y $packages
+sudo zypper install --details -y $packages
 
 # Install patterns
-sudo zypper -vv install -yt pattern "${patterns[@]}"
+sudo zypper install --details -yt pattern "${patterns[@]}"
 
 # Install opi packages
 opi -nm "${opi[@]}"
@@ -211,7 +237,11 @@ for app in "${setups[@]}"; do
             ;;
 
         vscode )
-            setup_vscode
+            setup_vscode code
+            ;;
+
+        vscodium )
+            setup_vscode codium
             ;;
 
         hacknerd )
@@ -240,6 +270,14 @@ for app in "${setups[@]}"; do
 
         fish )
             setup_fish
+            ;;
+
+        zsh )
+            setup_zsh
+            ;;
+
+        starship )
+            setup_starship
             ;;
     esac
 done

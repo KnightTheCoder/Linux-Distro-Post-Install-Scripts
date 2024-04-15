@@ -22,6 +22,12 @@ function setup_itch_app() {
 
 # Install vscode extensions and copy keybindings
 function setup_vscode() {
+    code_editor=$1 # code or codium
+
+    if [ -z "$code_editor" ] || [ "$code_editor" == code ]; then
+        code_editor="code"
+    fi
+
     local extensions=(
         "adpyke.codesnap"
         "adriano-markovic.c-cpp-makefile-project"
@@ -64,7 +70,7 @@ function setup_vscode() {
 
     # Install extensions
     for ext in "${extensions[@]}"; do
-        code --force --install-extension "$ext"
+        $code_editor --force --install-extension "$ext"
     done
 
     # Copy key bindings
@@ -96,14 +102,61 @@ function setup_fish() {
         curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
     fi
 
+    fish "../../shared/setup.fish"
+
     echo -e "${GREEN}Copying fish config...${NC}"
 
     # Need to use a different config for debian based systems because it's called batcat and not bat on them
     if grep -iq debian /etc/os-release; then
-        cp -fv "../../config/config_debian.fish" "$HOME/.config/fish/config.fish"
+        cp -fv "../../config/fish/config_debian.fish" "$HOME/.config/fish/config.fish"
     else
-        cp -fv "../../config/config.fish" "$HOME/.config/fish/config.fish"
+        cp -fv "../../config/fish/config.fish" "$HOME/.config/fish/config.fish"
     fi
+}
+
+function setup_zsh() {
+    if [ -d "$HOME/.prezto" ]; then
+        echo -e "${GREEN}prezto already setup${NC}"
+        return
+    fi
+
+    # Add prezto as plugin manager
+    git clone --depth 1 -b master --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
+    
+    zsh "../../shared/setup.zsh"
+
+    # Add zsh-abbr for fish-like abbreviations
+    git clone --depth 1 -b main https://github.com/olets/zsh-abbr.git "$HOME/.zprezto/modules/zsh-abbr"
+
+    # Add to the 40th line
+    sed -i "40i 'autosuggestions' \\\\" "$HOME/.zpreztorc"
+    sed -i "41i 'syntax-highlighting' \\\\" "$HOME/.zpreztorc"
+    sed -i "42i 'zsh-abbr' \\\\" "$HOME/.zpreztorc"
+
+    mkdir -p "$HOME/.config/zsh-abbr"
+    printf "abbr cat=bat\nabbr ls=eza" > "$HOME/.config/zsh-abbr/user-abbreviations"
+
+    sudo chsh -s /bin/zsh
+}
+
+function setup_starship() {
+    if [ ! -x "$(command -v starship)" ]; then
+        curl -sS https://starship.rs/install.sh | sh
+    fi
+
+    if [ -x "$(command -v bash)" ] && ! grep -iq starship "$HOME/.bashrc"; then
+        printf "\neval \"\$(starship init bash)\"" | tee -a "$HOME/.bashrc"
+    fi
+
+    if [ -x "$(command -v fish)" ] && ! grep -iq starship "$HOME/.config/fish/config.fish"; then
+        printf "\nstarship init fish | source" | tee -a "$HOME/.config/fish/config.fish"
+    fi
+
+    if [ -x "$(command -v zsh)" ] && ! grep -iq starship "$HOME/.zshrc"; then
+        printf "\neval \"\$(starship init zsh)\"" | tee -a "$HOME/.zshrc"
+    fi
+
+    starship preset tokyo-night -o ~/.config/starship.toml
 }
 
 function choose_nvim_config() {
@@ -112,7 +165,8 @@ function choose_nvim_config() {
         return
     fi
 
-    nvim_config=$(whiptail --menu "Choose a neovim configuration (choose nvchad if unsure)" 0 0 0 \
+    nvim_config=$(whiptail --notags --menu "Choose a neovim configuration (choose nvchad if unsure)" 0 0 0 \
+        "" "Default" \
         "nvchad" "NVChad" \
         "astrovim" "Astrovim" \
         3>&1 1>&2 2>&3
@@ -131,6 +185,18 @@ function choose_nvim_config() {
     fi
 }
 
+function choose_shells() {
+    shells=$(
+        whiptail --title "Shells" --separate-output --checklist "Select the shells you'd like to install" 0 0 0 \
+            "fish" "Fish shell" ON \
+            "zsh" "zsh shell" OFF \
+            "starship" "Starship prompt" ON \
+            3>&1 1>&2 2>&3
+    )
+
+    echo "$shells"
+}
+
 function setup_nvchad() {
     git clone https://github.com/NvChad/NvChad "$HOME/.config/nvim" --depth 1 && nvim
 }
@@ -147,6 +213,9 @@ function setup_npm() {
 }
 
 function setup_rust() {
+    # Create fish directory for the script to run
+    mkdir -p "$HOME/.config/fish/conf.d"
+
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 }
 
@@ -168,6 +237,7 @@ function setup_flatpak() {
         "com.github.unrud.VideoDownloader" "Video Downloader" ON \
         "org.gimp.GIMP" "GIMP" OFF \
         "org.kde.kdenlive" "Kdenlive" OFF \
+        "org.keepassxc.KeePassXC" "KeePassXC" OFF \
         "com.discordapp.Discord" "Discord" OFF \
         "io.github.spacingbat3.webcord" "Webcord" OFF \
         "dev.vencord.Vesktop" "Vesktop" OFF \

@@ -22,7 +22,9 @@ packages=$(
     "transmission" "Transmission bittorrent client" OFF \
     "gimp" "GIMP" OFF \
     "kdenlive" "Kdenlive" OFF \
+    "keepass2" "KeePass" OFF \
     "vscode" "Visual Studio Code" OFF \
+    "vscodium" "VSCodium" OFF \
     "nodejs" "Nodejs" OFF \
     "dotnet" ".NET sdk" OFF \
     "rustup" "Rust" OFF \
@@ -34,6 +36,12 @@ packages=$(
     "qemu" "QEMU/KVM" OFF \
     3>&1 1>&2 2>&3
 )
+
+packages+=" git build-essential fish neofetch kwrite htop btop neovim gh bat curl wget gpg ttf-mscorefonts-installer fontconfig"
+
+shells=$(choose_shells)
+
+packages+=" $shells"
 
 # Remove new lines
 packages=$(echo "$packages"| tr "\n" " ")
@@ -50,6 +58,20 @@ setups+=("$nvim_config")
 # Add packages to the correct categories
 for package in $packages; do
     case $package in
+        fish )
+            setups+=(fish)
+            ;;
+
+        zsh )
+            setups+=(zsh)
+            ;;
+
+        starship )
+            setups+=(starship)
+
+            packages=${packages//"$package"/}
+            ;;
+
         qemu )
             # Remove package
             packages=${packages//"$package"/}
@@ -106,6 +128,12 @@ for package in $packages; do
             packages=${packages//"$package"/}
             ;;
 
+        vscodium )
+            setups+=(vscodium)
+
+            packages=${packages//"$package"/}
+            ;;
+
         rustup )
             setups+=(rust)
 
@@ -157,15 +185,6 @@ for package in $packages; do
         * ) ;;
     esac
 done
-
-# Add fish setup to be last
-setups+=(fish)
-
-# Add console apps
-packages+=" git build-essential fish neofetch kwrite htop btop neovim gh bat curl wget gpg"
-
-# Ms fonts installer and fontconfig
-packages+=" ttf-mscorefonts-installer fontconfig"
 
 # Remove extra whitespace
 packages=$(echo "$packages" | xargs)
@@ -219,7 +238,7 @@ sudo fc-cache -f -v
 for app in "${setups[@]}"; do
     case $app in
         lutris )
-            wget -O 'lutris.deb' "https://github.com/lutris/lutris/releases/download/v0.5.16/lutris_0.5.16_all.deb"
+            wget -O 'lutris.deb' "https://github.com/lutris/lutris/releases/download/v0.5.17/lutris_0.5.17_all.deb"
             sudo apt install -y ./lutris.deb
             rm -v ./lutris.deb
             ;;
@@ -246,7 +265,20 @@ for app in "${setups[@]}"; do
             sudo nala update
             sudo nala install -y code
 
-            setup_vscode
+            setup_vscode code
+            ;;
+
+        vscodium )
+            wget -qO - https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg \
+                | gpg --dearmor \
+                | sudo dd of=/usr/share/keyrings/vscodium-archive-keyring.gpg
+
+            echo 'deb [ signed-by=/usr/share/keyrings/vscodium-archive-keyring.gpg ] https://download.vscodium.com/debs vscodium main' \
+                | sudo tee /etc/apt/sources.list.d/vscodium.list
+            
+            sudo nala update && sudo nala install codium -y
+
+            setup_vscode codium
             ;;
 
         hacknerd )
@@ -283,6 +315,8 @@ for app in "${setups[@]}"; do
                 sudo chmod a+r /etc/apt/keyrings/docker.asc
 
                 # Add the repository to Apt sources:
+
+                # shellcheck disable=SC1091
                 echo \
                 "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
                 $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
@@ -296,12 +330,16 @@ for app in "${setups[@]}"; do
                 # Add the repository to Apt sources:
                 if grep -iq ID=linuxmint /etc/os-release; then
                     # Linux Mint
+
+                    # shellcheck disable=SC1091
                     echo \
                     "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
                     $(. /etc/os-release && echo "$UBUNTU_CODENAME") stable" | \
                     sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
                 else
                     # Ubuntu
+
+                    # shellcheck disable=SC1091
                     echo \
                     "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
                     $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
@@ -309,8 +347,8 @@ for app in "${setups[@]}"; do
                 fi
             fi
 
-            sudo apt-get update
-            sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+            sudo nala update
+            sudo nala install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
             ;;
 
         docker-desktop )
@@ -342,6 +380,14 @@ for app in "${setups[@]}"; do
             
         fish )
             setup_fish
+            ;;
+
+        zsh )
+            setup_zsh
+            ;;
+
+        starship )
+            setup_starship
             ;;
     esac
 done
