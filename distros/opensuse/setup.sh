@@ -61,16 +61,11 @@ packages=$(
     3>&1 1>&2 2>&3
 )
 
-shells=$(
-    whiptail --title "Shells" --separate-output --checklist "Select the shells you'd like to install" 0 0 0 \
-    "fish" "Fish shell" ON \
-    "zsh" "zsh shell" OFF \
-    3>&1 1>&2 2>&3
-)
-
 packages+=" opi neofetch kwrite htop btop neovim gh eza bat fetchmsttfonts systemd-zram-service"
 
-packages+=" ${shells[*]}"
+shells=$(choose_shells)
+
+packages+=" $shells"
 
 # Remove new lines
 packages=$(echo "$packages"| tr "\n" " ")

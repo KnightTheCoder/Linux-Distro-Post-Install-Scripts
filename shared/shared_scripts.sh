@@ -119,9 +119,28 @@ function setup_zsh() {
     
     zsh "../../shared/setup.zsh"
 
-    printf "alias -g cat=bat\nalias -g ls=eza" | tee -a "$HOME/.zshrc"
+    printf "\nalias cat=bat\nalias ls=eza" | tee -a "$HOME/.zshrc"
 
     chsh -s /bin/zsh
+}
+
+function setup_starship() {
+    if [ ! -x "$(command -v starship)" ]; then
+        curl -sS https://starship.rs/install.sh | sh
+    fi
+
+    if [ -x "$(command -v bash)" ]; then
+        printf "\neval \"\$(starship init bash)\"" | tee -a "$HOME/.bashrc"
+
+    fi
+
+    if [ -x "$(command -v fish)" ]; then
+        printf "\nstarship init fish | source" | tee -a "$HOME/.config/fish/config.fish"
+    fi
+
+    if [ -x "$(command -v zsh)" ]; then
+        printf "\neval \"\$(starship init zsh)\"" | tee -a "$HOME/.zshrc"
+    fi
 }
 
 function choose_nvim_config() {
@@ -147,6 +166,17 @@ function choose_nvim_config() {
         
         echo "$nvim_config"
     fi
+}
+
+function choose_shells() {
+    shells=$(
+        whiptail --title "Shells" --separate-output --checklist "Select the shells you'd like to install" 0 0 0 \
+        "fish" "Fish shell" ON \
+        "zsh" "zsh shell" OFF \
+        3>&1 1>&2 2>&3
+    )
+
+    echo "$shells"
 }
 
 function setup_nvchad() {
