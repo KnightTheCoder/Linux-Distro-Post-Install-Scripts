@@ -24,7 +24,9 @@ packages=$(
     "qbittorrent" "Qbittorrent bittorrent client" OFF \
     "gimp" "GIMP" OFF \
     "kdenlive" "Kdenlive" OFF \
+    "keepassxc" "KeePassXC" OFF \
     "vscode" "Visual Studio Code" OFF \
+    "vscodium" "VSCodium" OFF \
     "nodejs" "Nodejs" OFF \
     "dotnet-sdk" ".NET sdk" OFF \
     "rustup" "Rust" OFF \
@@ -37,6 +39,12 @@ packages=$(
     "openrgb" "OpenRGB" OFF \
     3>&1 1>&2 2>&3
 )
+
+packages+=" fish neofetch kwrite htop btop neovim github-cli eza bat zram-generator wget curl ark filelight git base-devel"
+
+shells=$(choose_shells)
+
+packages+=" $shells"
 
 # Remove new lines
 packages=$(echo "$packages"| tr "\n" " ")
@@ -54,6 +62,18 @@ setups+=("$nvim_config")
 # Add packages to the correct categories
 for package in $packages; do
     case $package in
+        fish )
+            setups+=(fish)
+            ;;
+
+        zsh )
+            setups+=(zsh)
+            ;;
+
+        starship )
+            setups+=(starship)
+            ;;
+
         qemu )
             packages+=" qemu virt-manager virt-viewer dnsmasq vde2 bridge-utils openbsd-netcat dmidecode"
 
@@ -76,14 +96,24 @@ for package in $packages; do
             packages=${packages//"$package"/}
             ;;
 
-        vscode|flatpak )
-            if [ "$package" == vscode ]; then
-                aur+=(visual-studio-code-bin)
+        vscode )
+            aur+=(visual-studio-code-bin)
 
-                packages=${packages//"$package"/}
-            fi
+            packages=${packages//"$package"/}
 
-            setups+=("$package")
+            setups+=(vscode)
+            ;;
+
+        vscodium )
+            aur+=(vscodium-bin)
+
+            packages=${packages//"$package"/}
+            
+            setups+=(vscodium)
+            ;;
+
+        flatpak )
+            setups+=(flatpak)
             ;;
 
         rustup )
@@ -111,15 +141,6 @@ for package in $packages; do
         * ) ;;
     esac
 done
-
-# Add fish setup to be last
-setups+=(fish)
-
-# Add console apps
-packages+=" fish neofetch kwrite htop btop neovim github-cli eza bat zram-generator wget curl ark filelight"
-
-# Add development packages
-packages+=" git base-devel"
 
 # Remove extra whitespace
 packages=$(echo "$packages" | xargs)
@@ -183,7 +204,11 @@ for app in "${setups[@]}"; do
             ;;
 
         vscode )
-            setup_vscode
+            setup_vscode code
+            ;;
+
+        vscodium )
+            setup_vscode codium
             ;;
 
         hacknerd )
@@ -212,6 +237,14 @@ for app in "${setups[@]}"; do
 
         fish )
             setup_fish
+            ;;
+
+        zsh )
+            setup_zsh
+            ;;
+
+        starship )
+            setup_starship
             ;;
     esac
 done
