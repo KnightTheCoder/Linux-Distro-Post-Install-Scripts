@@ -33,9 +33,9 @@ Tested distros:
 
 ## How to run
 
-Download scripts ```wget -O "$HOME/Downloads/post-install-scripts.zip" "https://github.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/archive/refs/heads/master.zip"```
+Download scripts ```wget -O "$(xdg-user-dir DOWNLOAD)/post-install-scripts.zip" "https://github.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/archive/refs/heads/master.zip"```
 
-Navigate and unzip ```cd "$HOME/Downloads" && unzip post-install-scripts.zip && cd post-install-scripts```
+Navigate and unzip ```cd "$(xdg-user-dir DOWNLOAD)" && unzip post-install-scripts.zip && cd post-install-scripts```
 
 Make executable ```chmod +x ./post_install.sh```
 
