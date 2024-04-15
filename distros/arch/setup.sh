@@ -47,6 +47,8 @@ shells=$(
     3>&1 1>&2 2>&3
 )
 
+packages+=" fish neofetch kwrite htop btop neovim github-cli eza bat zram-generator wget curl ark filelight git base-devel"
+
 packages+=" ${shells[*]}"
 
 # Remove new lines
@@ -140,15 +142,6 @@ for package in $packages; do
         * ) ;;
     esac
 done
-
-# Add fish setup to be last
-setups+=(fish)
-
-# Add console apps
-packages+=" fish neofetch kwrite htop btop neovim github-cli eza bat zram-generator wget curl ark filelight"
-
-# Add development packages
-packages+=" git base-devel"
 
 # Remove extra whitespace
 packages=$(echo "$packages" | xargs)

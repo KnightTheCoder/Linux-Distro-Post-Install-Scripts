@@ -68,6 +68,8 @@ shells=$(
     3>&1 1>&2 2>&3
 )
 
+packages+=" opi neofetch kwrite htop btop neovim gh eza bat fetchmsttfonts systemd-zram-service"
+
 packages+=" ${shells[*]}"
 
 # Remove new lines
@@ -171,11 +173,6 @@ for package in $packages; do
         * ) ;;
     esac
 done
-
-# Add fish setup to be last
-setups+=(fish)
-
-packages+=" opi fish neofetch kwrite htop btop neovim gh eza bat fetchmsttfonts systemd-zram-service"
 
 # Remove extra whitespace
 packages=$(echo "$packages" | xargs)

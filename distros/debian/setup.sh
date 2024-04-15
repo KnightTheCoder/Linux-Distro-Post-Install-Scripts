@@ -44,6 +44,8 @@ shells=$(
     3>&1 1>&2 2>&3
 )
 
+packages+=" git build-essential fish neofetch kwrite htop btop neovim gh bat curl wget gpg ttf-mscorefonts-installer fontconfig"
+
 packages+=" ${shells[*]}"
 
 # Remove new lines
@@ -182,15 +184,6 @@ for package in $packages; do
         * ) ;;
     esac
 done
-
-# Add fish setup to be last
-setups+=(fish)
-
-# Add console apps
-packages+=" git build-essential fish neofetch kwrite htop btop neovim gh bat curl wget gpg"
-
-# Ms fonts installer and fontconfig
-packages+=" ttf-mscorefonts-installer fontconfig"
 
 # Remove extra whitespace
 packages=$(echo "$packages" | xargs)

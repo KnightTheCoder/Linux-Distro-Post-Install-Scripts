@@ -46,6 +46,8 @@ shells=$(
     3>&1 1>&2 2>&3
 )
 
+packages+=" fish neofetch kwrite htop btop neovim gh eza bat dnf5 dnf5-plugins curl cabextract xorg-x11-font-utils fontconfig"
+
 packages+=" ${shells[*]}"
 
 # Remove new lines
@@ -139,15 +141,6 @@ for package in $packages; do
         * ) ;;
     esac
 done
-
-# Add console apps
-packages+=" fish neofetch kwrite htop btop neovim gh eza bat"
-
-# Add latest dnf
-packages+=" dnf5 dnf5-plugins"
-
-# Dependencies for ms fonts
-packages+=" curl cabextract xorg-x11-font-utils fontconfig"
 
 # Remove extra whitespace
 packages=$(echo "$packages" | xargs)
