@@ -35,7 +35,7 @@ function get_package_manager() {
   fi
 }
 
-if [ $EUID -eq 0 ]; then
+if [ "$EUID" == 0 ]; then
   echo -e "${RED}Please run without root!${NC}"
   exit 1
 fi
