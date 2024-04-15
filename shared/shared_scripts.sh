@@ -144,16 +144,16 @@ function setup_starship() {
         curl -sS https://starship.rs/install.sh | sh
     fi
 
-    if [ -x "$(command -v bash)" ]; then
+    if [ -x "$(command -v bash)" ] && ! grep -iq starship "$HOME/.bashrc"; then
         printf "\neval \"\$(starship init bash)\"" | tee -a "$HOME/.bashrc"
 
     fi
 
-    if [ -x "$(command -v fish)" ]; then
+    if [ -x "$(command -v fish)" ] && ! grep -iq starship "$HOME/.config/fish/config.fish"; then
         printf "\nstarship init fish | source" | tee -a "$HOME/.config/fish/config.fish"
     fi
 
-    if [ -x "$(command -v zsh)" ]; then
+    if [ -x "$(command -v zsh)" ] && ! grep -iq starship "$HOME/.zshrc"; then
         printf "\neval \"\$(starship init zsh)\"" | tee -a "$HOME/.zshrc"
     fi
 }
