@@ -187,13 +187,12 @@ function choose_nvim_config() {
 function choose_shells() {
     shells=$(
         whiptail --title "Shells" --separate-output --checklist "Select the shells you'd like to install" 0 0 0 \
-            "starship" "Starship prompt" ON \
             "zsh" "zsh shell" OFF \
             "fish" "Fish shell" ON \
             3>&1 1>&2 2>&3
     )
 
-    echo "$shells"
+    echo "starship $shells"
 }
 
 function setup_nvchad() {
