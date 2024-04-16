@@ -187,8 +187,8 @@ function choose_nvim_config() {
 function choose_shells() {
     shells=$(
         whiptail --title "Shells" --separate-output --checklist "Select the shells you'd like to install" 0 0 0 \
-            "zsh" "zsh shell" OFF \
             "fish" "Fish shell" ON \
+            "zsh" "zsh shell" OFF \
             3>&1 1>&2 2>&3
     )
 
