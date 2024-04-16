@@ -75,7 +75,6 @@ for package in $packages; do
             ;;
 
         starship )
-            setups+=(starship-install)
             setups+=(starship)
 
             packages=${packages//"$package"/}
