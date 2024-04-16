@@ -43,7 +43,7 @@ packages+=" fish neofetch kwrite htop btop neovim gh eza bat dnf5 dnf5-plugins c
 
 shells=$(choose_shells)
 
-packages+=" $shells"
+packages+=" starship-install $shells"
 
 # Remove new lines
 packages=$(echo "$packages"| tr "\n" " ")
@@ -68,9 +68,15 @@ for package in $packages; do
             setups+=(zsh)
             ;;
 
-        starship )
-            setups+=(starship)
+        starship-install )
             setups+=(starship-install)
+
+            packages=${packages//"$package"/}
+            ;;
+
+        starship )
+            setups+=(starship-install)
+            setups+=(starship)
 
             packages=${packages//"$package"/}
             ;;

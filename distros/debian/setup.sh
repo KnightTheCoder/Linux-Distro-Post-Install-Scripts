@@ -41,7 +41,7 @@ packages+=" git build-essential fish neofetch kwrite htop btop neovim gh bat cur
 
 shells=$(choose_shells)
 
-packages+=" $shells"
+packages+=" starship-install $shells"
 
 # Remove new lines
 packages=$(echo "$packages"| tr "\n" " ")
@@ -66,9 +66,14 @@ for package in $packages; do
             setups+=(zsh)
             ;;
 
+        starship-install )
+            setups+=(starship-install)
+
+            packages=${packages//"$package"/}
+            ;;
+
         starship )
             setups+=(starship)
-            setups+=(tarship-install)
 
             packages=${packages//"$package"/}
             ;;
