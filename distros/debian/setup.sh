@@ -41,7 +41,7 @@ packages+=" git build-essential neofetch kwrite htop btop neovim gh bat curl wge
 
 shells=$(choose_shells)
 
-if [[ $shells == "*starship*" ]]; then
+if [[ $shells == *"starship"* ]]; then
     shells="starship-install $shells"
 fi
 
