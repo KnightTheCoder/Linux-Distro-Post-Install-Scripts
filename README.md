@@ -52,7 +52,7 @@ bash ./post_install.sh
 
 ### Experimental
 
-Download scripts
+#### Download scripts
 ```console
 wget -O "$(xdg-user-dir DOWNLOAD)/post-install-scripts.zip" "https://github.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/archive/refs/heads/maintanence.zip"
 ```
