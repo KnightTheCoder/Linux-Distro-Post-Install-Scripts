@@ -1,10 +1,10 @@
 # Post install script for Linux
 
 ## Supported distros
-* OpenSUSE
-* Fedora
-* Debian
-* Arch linux
+* [OpenSUSE][1]
+* [Fedora][2]
+* [Debian][3]
+* [Arch linux][4]
 
 Tested distros:
 * OpenSUSE Tumbleweed
@@ -72,3 +72,8 @@ bash ./post_install.sh
 ```console
 bash ./post_install.sh --copy-firefox-policy
 ```
+
+[1]: distros/opensuse#readme
+[2]: distros/fedora#readme
+[3]: distros/debian#readme
+[4]: distros/arch#readme
