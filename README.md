@@ -48,3 +48,5 @@ Download scripts ```wget -O "$(xdg-user-dir DOWNLOAD)/post-install-scripts.zip" 
 Navigate and unzip ```cd "$(xdg-user-dir DOWNLOAD)" && unzip post-install-scripts.zip && cd Linux-Distro-Post-Install-Scripts-maintanence```
 
 Run ```bash ./post_install.sh ```
+
+### Add --copy-firefox-policy to copy the firefox policy
