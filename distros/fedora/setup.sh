@@ -43,7 +43,7 @@ packages+=" fish neofetch kwrite htop btop neovim gh eza bat dnf5 dnf5-plugins c
 
 shells=$(choose_shells)
 
-if [[ $shells == "starship" ]]; then
+if [[ $shells == "*starship*" ]]; then
     shells="starship-install $shells"
 fi
 

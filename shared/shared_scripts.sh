@@ -138,26 +138,26 @@ function setup_zsh() {
     sudo chsh -s /bin/zsh
 }
 
-setup_starship_install() {
-     if [ ! -x "$(command -v starship)" ]; then
+function setup_starship_install() {
+     if [[ ! -x "$(command -v starship)" ]]; then
         curl -sS https://starship.rs/install.sh | sh
     fi
 }
 
 function setup_starship() {
-    if [ ! -x "$(command -v starship)" ]; then
+    if [[ ! -x "$(command -v starship)" ]]; then
         return
     fi
 
-    if [ -x "$(command -v bash)" ] && ! grep -iq starship "$HOME/.bashrc"; then
+    if [[ -x "$(command -v bash)" ]] && ! grep -iq starship "$HOME/.bashrc"; then
         printf "\neval \"\$(starship init bash)\"" | tee -a "$HOME/.bashrc"
     fi
 
-    if [ -x "$(command -v fish)" ] && ! grep -iq starship "$HOME/.config/fish/config.fish"; then
+    if [[ -x "$(command -v fish)" ]] && ! grep -iq starship "$HOME/.config/fish/config.fish"; then
         printf "\nstarship init fish | source" | tee -a "$HOME/.config/fish/config.fish"
     fi
 
-    if [ -x "$(command -v zsh)" ] && ! grep -iq starship "$HOME/.zshrc"; then
+    if [[ -x "$(command -v zsh)" ]] && ! grep -iq starship "$HOME/.zshrc"; then
         printf "\neval \"\$(starship init zsh)\"" | tee -a "$HOME/.zshrc"
     fi
 
