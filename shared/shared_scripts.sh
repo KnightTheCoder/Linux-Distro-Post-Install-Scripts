@@ -35,7 +35,7 @@ function setup_vscode() {
         "bradlc.vscode-tailwindcss"
         "christian-kohler.path-intellisense"
         "codezombiech.gitignore"
-        "csstools.postcss"
+        "vunguyentuan.vscode-postcss"
         "dannyconnell.split-html-attributes"
         "dbaeumer.vscode-eslint"
         "eamodio.gitlens"
