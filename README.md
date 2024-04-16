@@ -35,19 +35,40 @@ Tested distros:
 
 ### Stable
 
-Download scripts ```wget -O "$(xdg-user-dir DOWNLOAD)/post-install-scripts.zip" "https://github.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/archive/refs/heads/master.zip"```
+#### Download scripts
+```console
+wget -O "$(xdg-user-dir DOWNLOAD)/post-install-scripts.zip" "https://github.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/archive/refs/heads/master.zip"
+```
 
-Navigate and unzip ```cd "$(xdg-user-dir DOWNLOAD)" && unzip post-install-scripts.zip && cd Linux-Distro-Post-Install-Scripts-master```
+#### Navigate and unzip
+```console
+cd "$(xdg-user-dir DOWNLOAD)" && unzip post-install-scripts.zip && cd Linux-Distro-Post-Install-Scripts-master
+```
 
-Run ```bash ./post_install.sh```
+#### Run
+```console
+bash ./post_install.sh
+```
 
 ### Experimental
 
-Download scripts ```wget -O "$(xdg-user-dir DOWNLOAD)/post-install-scripts.zip" "https://github.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/archive/refs/heads/maintanence.zip"```
+Download scripts
+```console
+wget -O "$(xdg-user-dir DOWNLOAD)/post-install-scripts.zip" "https://github.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/archive/refs/heads/maintanence.zip"
+```
 
-Navigate and unzip ```cd "$(xdg-user-dir DOWNLOAD)" && unzip post-install-scripts.zip && cd Linux-Distro-Post-Install-Scripts-maintanence```
+#### Navigate and unzip
+```console
+cd "$(xdg-user-dir DOWNLOAD)" && unzip post-install-scripts.zip && cd Linux-Distro-Post-Install-Scripts-maintanence
+```
 
-Run ```bash ./post_install.sh```
+#### Run
+```console
+bash ./post_install.sh
+```
 
 ### To copy the firefox policy
-Run with ```bash ./post_install.sh --copy-firefox-policy```
+#### Run with
+```console
+bash ./post_install.sh --copy-firefox-policy
+```
