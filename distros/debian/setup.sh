@@ -37,7 +37,7 @@ packages=$(
     3>&1 1>&2 2>&3
 )
 
-packages+=" git build-essential fish neofetch kwrite htop btop neovim gh bat curl wget gpg ttf-mscorefonts-installer fontconfig"
+packages+=" git build-essential neofetch kwrite htop btop neovim gh bat curl wget gpg ttf-mscorefonts-installer fontconfig"
 
 shells=$(choose_shells)
 
