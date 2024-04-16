@@ -70,6 +70,8 @@ for package in $packages; do
 
         starship )
             setups+=(starship)
+
+            packages=${packages//"$package"/}
             ;;
 
         qemu )
