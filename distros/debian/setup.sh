@@ -402,7 +402,7 @@ for app in "${setups[@]}"; do
             setup_zsh
             ;;
 
-        tarship-install )
+        starship-install )
             setup_starship_install
             ;;
 
