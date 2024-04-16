@@ -70,6 +70,7 @@ for package in $packages; do
 
         starship )
             setups+=(starship)
+            setups+=(starship-install)
 
             packages=${packages//"$package"/}
             ;;
@@ -279,6 +280,10 @@ for app in "${setups[@]}"; do
 
         zsh )
             setup_zsh
+            ;;
+
+        tarship-install )
+            setup_starship_install
             ;;
 
         starship )

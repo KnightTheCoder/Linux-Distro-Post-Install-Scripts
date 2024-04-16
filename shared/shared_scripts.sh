@@ -138,9 +138,15 @@ function setup_zsh() {
     sudo chsh -s /bin/zsh
 }
 
+setup_starship_install() {
+     if [ ! -x "$(command -v starship)" ]; then
+        curl -sS https://starship.rs/install.sh | sh
+    fi
+}
+
 function setup_starship() {
     if [ ! -x "$(command -v starship)" ]; then
-        curl -sS https://starship.rs/install.sh | sh
+        return
     fi
 
     if [ -x "$(command -v bash)" ] && ! grep -iq starship "$HOME/.bashrc"; then
