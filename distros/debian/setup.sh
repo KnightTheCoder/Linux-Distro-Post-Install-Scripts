@@ -41,7 +41,11 @@ packages+=" git build-essential fish neofetch kwrite htop btop neovim gh bat cur
 
 shells=$(choose_shells)
 
-packages+=" starship-install $shells"
+if [[ $shells == "starship" ]]; then
+    shells="starship-install $shells"
+fi
+
+packages+=" $shells"
 
 # Remove new lines
 packages=$(echo "$packages"| tr "\n" " ")

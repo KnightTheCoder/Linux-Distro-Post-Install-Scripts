@@ -43,7 +43,11 @@ packages+=" fish neofetch kwrite htop btop neovim gh eza bat dnf5 dnf5-plugins c
 
 shells=$(choose_shells)
 
-packages+=" starship-install $shells"
+if [[ $shells == "starship" ]]; then
+    shells="starship-install $shells"
+fi
+
+packages+=" $shells"
 
 # Remove new lines
 packages=$(echo "$packages"| tr "\n" " ")
