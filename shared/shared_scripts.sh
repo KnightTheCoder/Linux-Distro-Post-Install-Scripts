@@ -35,7 +35,7 @@ function setup_vscode() {
         "bradlc.vscode-tailwindcss"
         "christian-kohler.path-intellisense"
         "codezombiech.gitignore"
-        "csstools.postcss"
+        "vunguyentuan.vscode-postcss"
         "dannyconnell.split-html-attributes"
         "dbaeumer.vscode-eslint"
         "eamodio.gitlens"
@@ -98,11 +98,10 @@ function setup_fish() {
     if [ -d "$HOME/.local/share/omf" ]; then
         echo -e "${YELLOW}oh my fish is already installed!${NC}"
     else
-        echo -e "${YELLOW}Please run 'omf install bobthefish' and exit from fish once it's done so the install can continue${NC}"
+        echo -e "${YELLOW}Please run 'exit' to exit from fish and install the bobthefish theme${NC}"
         curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
+        fish "../../shared/setup.fish"
     fi
-
-    fish "../../shared/setup.fish"
 
     echo -e "${GREEN}Copying fish config...${NC}"
 
@@ -139,20 +138,26 @@ function setup_zsh() {
     sudo chsh -s /bin/zsh
 }
 
-function setup_starship() {
-    if [ ! -x "$(command -v starship)" ]; then
+function setup_starship_install() {
+     if [[ ! -x "$(command -v starship)" ]]; then
         curl -sS https://starship.rs/install.sh | sh
     fi
+}
 
-    if [ -x "$(command -v bash)" ] && ! grep -iq starship "$HOME/.bashrc"; then
+function setup_starship() {
+    if [[ ! -x "$(command -v starship)" ]]; then
+        return
+    fi
+
+    if [[ -x "$(command -v bash)" ]] && ! grep -iq starship "$HOME/.bashrc"; then
         printf "\neval \"\$(starship init bash)\"" | tee -a "$HOME/.bashrc"
     fi
 
-    if [ -x "$(command -v fish)" ] && ! grep -iq starship "$HOME/.config/fish/config.fish"; then
+    if [[ -x "$(command -v fish)" ]] && ! grep -iq starship "$HOME/.config/fish/config.fish"; then
         printf "\nstarship init fish | source" | tee -a "$HOME/.config/fish/config.fish"
     fi
 
-    if [ -x "$(command -v zsh)" ] && ! grep -iq starship "$HOME/.zshrc"; then
+    if [[ -x "$(command -v zsh)" ]] && ! grep -iq starship "$HOME/.zshrc"; then
         printf "\neval \"\$(starship init zsh)\"" | tee -a "$HOME/.zshrc"
     fi
 

@@ -1,0 +1,38 @@
+{
+    "policies": {
+        "AppAutoUpdate":false,
+        "DisableAppUpdate":true,
+        "DisableTelemetry":true,
+        "DisableFirefoxStudies":true,
+        "Extensions":{
+            "Install":[
+                "https://addons.mozilla.org/firefox/downloads/file/4261710/ublock_origin-1.57.2.xpi",
+                "https://addons.mozilla.org/firefox/downloads/file/4232703/privacy_badger17-2024.2.6.xpi",
+                "https://addons.mozilla.org/firefox/downloads/file/4262820/canvasblocker-1.10.1.xpi",
+                "https://addons.mozilla.org/firefox/downloads/file/4098688/user_agent_string_switcher-0.5.0.xpi",
+                "https://addons.mozilla.org/firefox/downloads/file/4251866/localcdn_fork_of_decentraleyes-2.6.65.xpi",
+                "https://addons.mozilla.org/firefox/downloads/file/4250017/enhancer_for_youtube-2.0.123.xpi",
+                "https://addons.mozilla.org/firefox/downloads/file/4262984/darkreader-4.9.83.xpi"
+            ]
+        },
+        "EnableTrackingProtection":{
+            "Value":true,
+            "CryptoMining":true,
+            "Fingerprinting":true
+        },
+        "OfferToSaveLogins":false,
+        "Permissions":{
+            "Notifications":{
+                "BlockNewRequests":true
+            },
+            "Autoplay":{
+                "Default":"block-audio-video"
+            }
+        },
+        "PictureInPicture":{
+            "Enabled":false
+        },
+        "PromptForDownloadLocation":true,
+        "DisableFormHistory":true
+    }
+}

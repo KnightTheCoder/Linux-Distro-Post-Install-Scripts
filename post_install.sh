@@ -35,7 +35,7 @@ function get_package_manager() {
   fi
 }
 
-if [ $EUID -eq 0 ]; then
+if [ "$EUID" == 0 ]; then
   echo -e "${RED}Please run without root!${NC}"
   exit 1
 fi
@@ -100,6 +100,11 @@ if [ "$correct" != "0" ]; then
 fi
 
 echo -e "${GREEN}Your chosen distro is $(resolve_distro "$chosen_distro")${NC}"
+
+if [[ $1 == "--copy-firefox-policy" ]]; then
+  sudo mkdir -pv "/etc/firefox/policies"
+  sudo cp -fv "config/policies.json" "/etc/firefox/policies"
+fi
 
 echo -e "${GREEN}Checking package manager and distro combination...${NC}"
 if [[ $chosen_distro = "1" && $package_manager = "zypper" ]]; then

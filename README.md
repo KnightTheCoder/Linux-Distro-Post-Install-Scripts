@@ -1,10 +1,10 @@
 # Post install script for Linux
 
 ## Supported distros
-* OpenSUSE
-* Fedora
-* Debian
-* Arch linux
+* [OpenSUSE][1]
+* [Fedora][2]
+* [Debian][3]
+* [Arch linux][4]
 
 Tested distros:
 * OpenSUSE Tumbleweed
@@ -33,6 +33,47 @@ Tested distros:
 
 ## How to run
 
-Make executable ```chmod +x ./post_install.sh```
+### Stable
 
-Run ```./post_install.sh ```
+#### Download scripts
+```console
+wget -O "$(xdg-user-dir DOWNLOAD)/post-install-scripts.zip" "https://github.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/archive/refs/heads/master.zip"
+```
+
+#### Navigate and unzip
+```console
+cd "$(xdg-user-dir DOWNLOAD)" && unzip post-install-scripts.zip && cd Linux-Distro-Post-Install-Scripts-master
+```
+
+#### Run
+```console
+bash ./post_install.sh
+```
+
+### Experimental
+
+#### Download scripts
+```console
+wget -O "$(xdg-user-dir DOWNLOAD)/post-install-scripts.zip" "https://github.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/archive/refs/heads/maintanence.zip"
+```
+
+#### Navigate and unzip
+```console
+cd "$(xdg-user-dir DOWNLOAD)" && unzip post-install-scripts.zip && cd Linux-Distro-Post-Install-Scripts-maintanence
+```
+
+#### Run
+```console
+bash ./post_install.sh
+```
+
+### To copy the firefox policy
+#### Run with
+```console
+bash ./post_install.sh --copy-firefox-policy
+```
+
+[1]: distros/opensuse#readme
+[2]: distros/fedora#readme
+[3]: distros/debian#readme
+[4]: distros/arch#readme

@@ -37,9 +37,13 @@ packages=$(
     3>&1 1>&2 2>&3
 )
 
-packages+=" git build-essential fish neofetch kwrite htop btop neovim gh bat curl wget gpg ttf-mscorefonts-installer fontconfig"
+packages+=" git build-essential neofetch kwrite htop btop neovim gh bat curl wget gpg ttf-mscorefonts-installer fontconfig"
 
 shells=$(choose_shells)
+
+if [[ $shells == *"starship"* ]]; then
+    shells="starship-install $shells"
+fi
 
 packages+=" $shells"
 
@@ -64,6 +68,12 @@ for package in $packages; do
 
         zsh )
             setups+=(zsh)
+            ;;
+
+        starship-install )
+            setups+=(starship-install)
+
+            packages=${packages//"$package"/}
             ;;
 
         starship )
@@ -234,6 +244,12 @@ sudo nala install -y $packages
 # Build font cache for ms fonts
 sudo fc-cache -f -v
 
+# Add user to groups
+for group in "${usergroups[@]}"; do
+    sudo groupadd "$group"
+    sudo usermod -a -G "$group" "$USER"
+done
+
 # Run setups
 for app in "${setups[@]}"; do
     case $app in
@@ -386,6 +402,10 @@ for app in "${setups[@]}"; do
             setup_zsh
             ;;
 
+        starship-install )
+            setup_starship_install
+            ;;
+
         starship )
             setup_starship
             ;;
@@ -395,9 +415,4 @@ done
 # Start services
 for serv in "${services[@]}"; do
     sudo systemctl enable --now "$serv"
-done
-
-# Add user to groups
-for group in "${usergroups[@]}"; do
-    sudo usermod -a -G "$group" "$USER"
 done
