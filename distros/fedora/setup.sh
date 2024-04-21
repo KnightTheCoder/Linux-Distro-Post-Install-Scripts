@@ -43,6 +43,10 @@ packages+=" fish neofetch kwrite htop btop neovim gh eza bat dnf5 dnf5-plugins c
 
 shells=$(choose_shells)
 
+if [[ $shells == *"starship"* ]]; then
+    shells="starship-install $shells"
+fi
+
 packages+=" $shells"
 
 # Remove new lines
@@ -68,8 +72,16 @@ for package in $packages; do
             setups+=(zsh)
             ;;
 
+        starship-install )
+            setups+=(starship-install)
+
+            packages=${packages//"$package"/}
+            ;;
+
         starship )
             setups+=(starship)
+
+            packages=${packages//"$package"/}
             ;;
 
         qemu )
@@ -181,6 +193,12 @@ sudo dnf install -y $packages
 # Install msfonts
 sudo rpm -i https://downloads.sourceforge.net/project/mscorefonts2/rpms/msttcore-fonts-installer-2.6-1.noarch.rpm
 
+# Add user to groups
+for group in "${usergroups[@]}"; do
+    sudo groupadd "$group"
+    sudo usermod -a -G "$group" "$USER"
+done
+
 # Run setups
 for app in "${setups[@]}"; do
     case $app in
@@ -273,6 +291,10 @@ for app in "${setups[@]}"; do
             setup_zsh
             ;;
 
+        starship-install )
+            setup_starship_install
+            ;;
+
         starship )
             setup_starship
             ;;
@@ -282,9 +304,4 @@ done
 # Start services
 for serv in "${services[@]}"; do
     sudo systemctl enable --now "$serv"
-done
-
-# Add user to groups
-for group in "${usergroups[@]}"; do
-    sudo usermod -a -G "$group" "$USER"
 done

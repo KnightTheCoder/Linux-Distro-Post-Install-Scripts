@@ -229,6 +229,12 @@ for repo in $repos; do
     esac
 done
 
+# Add user to groups
+for group in "${usergroups[@]}"; do
+    sudo groupadd "$group"
+    sudo usermod -a -G "$group" "$USER"
+done
+
 # Run setups
 for app in "${setups[@]}"; do
     case $app in
@@ -285,11 +291,6 @@ done
 # Start services
 for serv in "${services[@]}"; do
     sudo systemctl enable --now "$serv"
-done
-
-# Add user to groups
-for group in "${usergroups[@]}"; do
-    sudo usermod -a -G "$group" "$USER"
 done
 
 create_snapshot 1
