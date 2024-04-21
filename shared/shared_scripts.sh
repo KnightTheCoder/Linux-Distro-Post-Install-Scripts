@@ -133,7 +133,12 @@ function setup_zsh() {
     sed -i "42i 'zsh-abbr' \\\\" "$HOME/.zpreztorc"
 
     mkdir -p "$HOME/.config/zsh-abbr"
-    printf "abbr cat=bat\nabbr ls=eza" > "$HOME/.config/zsh-abbr/user-abbreviations"
+
+    bat_fullname=bat
+    if grep -iq debian /etc/os-release; then
+        bat_fullname=batcat
+    fi
+    printf "abbr cat=%s\nabbr ls=eza" $bat_fullname > "$HOME/.config/zsh-abbr/user-abbreviations"
 
     sudo chsh -s /bin/zsh
 }
