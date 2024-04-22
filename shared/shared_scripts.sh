@@ -230,9 +230,10 @@ function setup_rust() {
 }
 
 function setup_xampp() {
-    wget -o xampp-linux-installer.run https://sourceforge.net/projects/xampp/files/XAMPP%20Linux/8.2.12/xampp-linux-x64-8.2.12-0-installer.run/download
+    wget -O xampp-linux-installer.run https://sourceforge.net/projects/xampp/files/XAMPP%20Linux/8.2.12/xampp-linux-x64-8.2.12-0-installer.run/download
     chmod +x ./xampp-linux-installer.run
     sudo ./xampp-linux-installer.run
+    rm -rv ./xampp-linux-installer.run
 }
 
 function setup_flatpak() {
