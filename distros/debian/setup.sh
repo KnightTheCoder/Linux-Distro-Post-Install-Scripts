@@ -28,6 +28,7 @@ packages=$(
     "nodejs" "Nodejs" OFF \
     "dotnet" ".NET sdk" OFF \
     "rustup" "Rust" OFF \
+    "golang" "Golang" OFF \
     "docker" "Docker engine" OFF \
     "docker-desktop" "Docker desktop" OFF \
     "podman" "Podman" OFF \
@@ -163,6 +164,14 @@ for package in $packages; do
                 setups+=(dotnet)
             else
                 packages+=" dotnet-sdk-8.0"
+            fi
+            ;;
+
+        golang )
+            if grep -iq ubuntu /etc/os-release; then
+                packages=${packages/"$package"/}
+
+                packages+=" golang-go"
             fi
             ;;
 

@@ -30,6 +30,7 @@ packages=$(
     "nodejs" "Nodejs" OFF \
     "dotnet-sdk" ".NET sdk" OFF \
     "rustup" "Rust" OFF \
+    "go" "Golang" OFF \
     "docker" "Docker engine" OFF \
     "docker-desktop" "Docker desktop" OFF \
     "podman" "Podman" OFF \

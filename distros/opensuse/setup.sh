@@ -52,6 +52,7 @@ packages=$(
     "nodejs" "Nodejs" OFF \
     "dotnet" ".NET sdk" OFF \
     "rustup" "Rust" OFF \
+    "go" "Golang" OFF \
     "docker" "Docker engine" OFF \
     "podman" "Podman" OFF \
     "distrobox" "Distrobox" OFF \
@@ -156,6 +157,12 @@ for package in $packages; do
             packages+=" nodejs-default"
 
             setups+=(npm)
+            ;;
+
+        go )
+            packages=${packages//"$package"/}
+
+            packages+=" go go-doc"
             ;;
 
         docker )

@@ -258,6 +258,7 @@ function setup_flatpak() {
         "com.brave.Browser" "Brave browser" OFF \
         "net.mullvad.MullvadBrowser" "Mullavad Browser" OFF \
         "org.libreoffice.LibreOffice" "Libreoffice" OFF \
+        "org.onlyoffice.desktopeditors" "ONLYOFFICE Desktop Editors" OFF \
         "org.qbittorrent.qBittorrent" "qbittorrent bittorrent client" OFF \
         "com.transmissionbt.Transmission" "Transmission bittorrent client" OFF \
         3>&1 1>&2 2>&3
