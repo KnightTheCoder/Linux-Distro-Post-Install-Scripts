@@ -10,7 +10,7 @@ whiptail --title "Arch linux" --msgbox "Welcome to the arch linux script!" 0 0
 packages=$(
     whiptail --title "Install List" --separate-output --checklist "Choose what to install/configure" 0 0 0 \
     "lutris" "Lutris" OFF \
-    "goverlay mangohud gamemode" "Gaming overlay" OFF \
+    "gaming-overlay" "Gaming overlay" OFF \
     "steam" "Steam" OFF \
     "itch" "Itch desktop app" OFF \
     "heroic" "Heroic Games Launcher" OFF \
@@ -75,6 +75,12 @@ for package in $packages; do
             setups+=(starship)
             ;;
 
+        gaming-overlay)
+            packages=${packages//"$package"/}
+
+            packages+=" goverlay mangohud gamemode"
+            ;;
+
         qemu )
             packages+=" qemu virt-manager virt-viewer dnsmasq vde2 bridge-utils openbsd-netcat dmidecode"
 
@@ -113,10 +119,6 @@ for package in $packages; do
             setups+=(vscodium)
             ;;
 
-        flatpak )
-            setups+=(flatpak)
-            ;;
-
         rustup )
             setups+=(rust)
             ;;
@@ -137,6 +139,10 @@ for package in $packages; do
             aur+=(docker-desktop)
 
             packages=${packages//"$package"/}
+            ;;
+
+        flatpak )
+            setups+=(flatpak)
             ;;
 
         * ) ;;

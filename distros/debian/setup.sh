@@ -10,7 +10,7 @@ whiptail --title "Debian/Ubuntu" --msgbox "Welcome to the debian/ubuntu script!"
 packages=$(
     whiptail --title "Install List" --separate-output --checklist "Choose what to install/configure" 0 0 0 \
     "lutris" "Lutris" OFF \
-    "goverlay mangohud gamemode" "Gaming overlay" OFF \
+    "gaming-overlay" "Gaming overlay" OFF \
     "steam" "Steam" OFF \
     "itch" "Itch desktop app" OFF \
     "heroic" "Heroic Games Launcher" OFF \
@@ -83,6 +83,12 @@ for package in $packages; do
             packages=${packages//"$package"/}
             ;;
 
+        gaming-overlay)
+            packages=${packages//"$package"/}
+
+            packages+=" goverlay mangohud gamemode"
+            ;;
+
         qemu )
             # Remove package
             packages=${packages//"$package"/}
@@ -145,6 +151,16 @@ for package in $packages; do
             packages=${packages//"$package"/}
             ;;
 
+        dotnet )
+            packages=${packages//"$package"/}
+
+            if grep -iq "ID=debian" /etc/os-release; then
+                setups+=(dotnet)
+            else
+                packages+=" dotnet-sdk-8.0"
+            fi
+            ;;
+
         rustup )
             setups+=(rust)
 
@@ -155,16 +171,6 @@ for package in $packages; do
             setups+=(npm)
 
             packages+=" npm"
-            ;;
-
-        dotnet )
-            packages=${packages//"$package"/}
-
-            if grep -iq "ID=debian" /etc/os-release; then
-                setups+=(dotnet)
-            else
-                packages+=" dotnet-sdk-8.0"
-            fi
             ;;
 
         golang )

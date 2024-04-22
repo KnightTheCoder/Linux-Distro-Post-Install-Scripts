@@ -10,7 +10,7 @@ whiptail --title "Fedora" --msgbox "Welcome to the fedora script!" 0 0
 packages=$(
     whiptail --title "Install List" --separate-output --checklist "Choose what to install/configure" 0 0 0 \
     "lutris" "Lutris" OFF \
-    "goverlay mangohud gamemode" "Gaming overlay" OFF \
+    "gaming-overlay" "Gaming overlay" OFF \
     "steam" "Steam" OFF \
     "itch" "Itch desktop app" OFF \
     "heroic" "Heroic Games Launcher" OFF \
@@ -83,6 +83,12 @@ for package in $packages; do
             setups+=(starship)
 
             packages=${packages//"$package"/}
+            ;;
+
+        gaming-overlay)
+            packages=${packages//"$package"/}
+
+            packages+=" goverlay mangohud gamemode"
             ;;
 
         qemu )

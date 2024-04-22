@@ -32,7 +32,7 @@ whiptail --title "OpenSUSE" --msgbox "Welcome to the OpenSUSE script!" 0 0
 packages=$(
     whiptail --title "Install List" --separate-output --checklist "Choose what to install/configure" 0 0 0 \
     "lutris" "Lutris" OFF \
-    "goverlay mangohud gamemode" "Gaming overlay" OFF \
+    "gaming-overlay" "Gaming overlay" OFF \
     "steam" "Steam" OFF \
     "itch" "Itch desktop app" OFF \
     "heroic" "Heroic Games Launcher" OFF \
@@ -52,7 +52,7 @@ packages=$(
     "nodejs" "Nodejs" OFF \
     "dotnet" ".NET sdk" OFF \
     "rustup" "Rust" OFF \
-    "go" "Golang" OFF \
+    "golang" "Golang" OFF \
     "docker" "Docker engine" OFF \
     "podman" "Podman" OFF \
     "distrobox" "Distrobox" OFF \
@@ -96,6 +96,12 @@ for package in $packages; do
 
         starship )
             setups+=(starship)
+            ;;
+        
+        gaming-overlay)
+            packages=${packages//"$package"/}
+
+            packages+=" goverlay mangohud gamemode"
             ;;
 
         qemu )
@@ -159,7 +165,7 @@ for package in $packages; do
             setups+=(npm)
             ;;
 
-        go )
+        golang )
             packages=${packages//"$package"/}
 
             packages+=" go go-doc"
