@@ -30,6 +30,7 @@ packages=$(
     "dotnet" ".NET sdk" OFF \
     "rustup" "Rust" OFF \
     "golang" "Golang" OFF \
+    "xampp" "XAMPP" OFF \
     "docker" "Docker engine" OFF \
     "docker-desktop" "Docker desktop" OFF \
     "podman" "Podman" OFF \
@@ -135,6 +136,12 @@ for package in $packages; do
 
         nodejs )
             setups+=(npm)
+            ;;
+
+        xampp )
+            packages=${packages//"$package"/}
+
+            setups+=(xampp)
             ;;
 
         docker )
@@ -255,6 +262,10 @@ for app in "${setups[@]}"; do
 
         npm )
             setup_npm
+            ;;
+
+        xampp )
+            setup_xampp
             ;;
 
         docker )

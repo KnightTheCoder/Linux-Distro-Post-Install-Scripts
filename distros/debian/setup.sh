@@ -29,6 +29,7 @@ packages=$(
     "dotnet" ".NET sdk" OFF \
     "rustup" "Rust" OFF \
     "golang" "Golang" OFF \
+    "xampp" "XAMPP" OFF \
     "docker" "Docker engine" OFF \
     "docker-desktop" "Docker desktop" OFF \
     "podman" "Podman" OFF \
@@ -181,6 +182,12 @@ for package in $packages; do
             fi
             ;;
 
+        xampp )
+            packages=${packages//"$package"/}
+
+            setups+=(xampp)
+            ;;
+
         docker )
             packages=${packages/"$package"/}
 
@@ -330,6 +337,10 @@ for app in "${setups[@]}"; do
             rm packages-microsoft-prod.deb
 
             sudo nala update && sudo nala install -y dotnet-sdk-8.0
+            ;;
+
+        xampp )
+            setup_xampp
             ;;
 
         docker )

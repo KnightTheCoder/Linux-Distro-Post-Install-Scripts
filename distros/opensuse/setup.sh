@@ -53,6 +53,7 @@ packages=$(
     "dotnet" ".NET sdk" OFF \
     "rustup" "Rust" OFF \
     "golang" "Golang" OFF \
+    "xampp" "XAMPP" OFF \
     "docker" "Docker engine" OFF \
     "podman" "Podman" OFF \
     "distrobox" "Distrobox" OFF \
@@ -171,6 +172,12 @@ for package in $packages; do
             packages+=" go go-doc"
             ;;
 
+        xampp )
+            packages=${packages//"$package"/}
+
+            setups+=(xampp)
+            ;;
+
         docker )
             packages+=" docker-compose docker-compose-switch"
             services+=(docker.service)
@@ -281,6 +288,10 @@ for app in "${setups[@]}"; do
 
         npm )
             setup_npm
+            ;;
+
+        xampp )
+            setup_xampp
             ;;
 
         flatpak )
