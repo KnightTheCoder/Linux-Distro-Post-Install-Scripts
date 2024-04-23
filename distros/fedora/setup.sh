@@ -58,7 +58,7 @@ packages=$(echo "$packages"| tr "\n" " ")
 services=()
 setups=(fish hacknerd)
 usergroups=()
-remove_packages="akregator dragon elisa-player kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat kolourpaint qt5-qdbusviewer \"libreoffice*\""
+remove_packages="akregator dragon elisa-player kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat kolourpaint qt5-qdbusviewer"
 
 nvim_config=$(choose_nvim_config)
 setups+=("$nvim_config")
@@ -298,7 +298,7 @@ for app in "${setups[@]}"; do
                 sudo flatpak remote-delete fedora
             fi
             
-            setup_flatpak "org.libreoffice.LibreOffice"
+            setup_flatpak
             ;;
 
         fish )
