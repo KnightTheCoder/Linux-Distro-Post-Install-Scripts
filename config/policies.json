@@ -15,6 +15,12 @@
                 "https://addons.mozilla.org/firefox/downloads/file/4262984/darkreader-4.9.83.xpi"
             ]
         },
+        "Cookies":{
+            "Default":true,
+            "AcceptThirdParty":"never",
+            "RejectTracker":true,
+            "Behavior":"reject-tracker-and-partition-foreign"
+        },
         "EnableTrackingProtection":{
             "Value":true,
             "CryptoMining":true,
