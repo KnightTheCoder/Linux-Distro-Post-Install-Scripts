@@ -198,7 +198,7 @@ sudo dnf upgrade -y --refresh
 sudo dnf remove -y $remove_packages
 
 # Install codecs
-sudo dnf install -y gstreamer1-plugins-{bad-\*,good-\*,base} gstreamer1-plugin-openh264 gstreamer1-plugin-libav --exclude=gstreamer1-plugins-bad-free-devel lame* --exclude=lame-devel 
+sudo dnf group install -y Multimedia
 
 # Install packages
 # shellcheck disable=SC2086
