@@ -13,12 +13,6 @@
                 "https://addons.mozilla.org/firefox/downloads/file/4251866/localcdn_fork_of_decentraleyes-2.6.65.xpi"
             ]
         },
-        "Cookies":{
-            "Default":true,
-            "AcceptThirdParty":"never",
-            "RejectTracker":true,
-            "Behavior":"reject-tracker-and-partition-foreign"
-        },
         "EnableTrackingProtection":{
             "Value":true,
             "CryptoMining":true,
