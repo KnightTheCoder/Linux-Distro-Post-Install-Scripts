@@ -286,8 +286,6 @@ for app in "${setups[@]}"; do
             wget -O heroic.deb https://github.com/Heroic-Games-Launcher/HeroicGamesLauncher/releases/download/v2.14.0/heroic_2.14.0_amd64.deb
             sudo dpkg -i heroic.deb
             rm -v heroic.deb
-
-            packages=${packages//"$package"/}
             ;;
 
         itch )
@@ -334,7 +332,7 @@ for app in "${setups[@]}"; do
         dotnet )
             wget https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
             sudo dpkg -i packages-microsoft-prod.deb
-            rm packages-microsoft-prod.deb
+            rm -v packages-microsoft-prod.deb
 
             sudo nala update && sudo nala install -y dotnet-sdk-8.0
             ;;
@@ -413,6 +411,8 @@ for app in "${setups[@]}"; do
 
                 sudo nala update
                 sudo nala install -y eza
+            else
+                echo -e "${YELLOW}eza is already installed!${NC}"
             fi
             ;;
 
