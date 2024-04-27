@@ -198,7 +198,7 @@ sudo dnf upgrade -y --refresh
 sudo dnf remove -y $remove_packages
 
 # Install codecs
-sudo dnf group install -y Multimedia
+sudo dnf group install -y Multimedia --allowerasing
 
 # Install packages
 # shellcheck disable=SC2086

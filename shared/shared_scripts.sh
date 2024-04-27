@@ -114,7 +114,7 @@ function setup_fish() {
 }
 
 function setup_zsh() {
-    if [ -d "$HOME/.prezto" ]; then
+    if [ -d "$HOME/.zprezto" ]; then
         echo -e "${GREEN}prezto already setup${NC}"
         return
     fi
@@ -151,6 +151,7 @@ function setup_starship_install() {
 
 function setup_starship() {
     if [[ ! -x "$(command -v starship)" ]]; then
+        echo -e "${GREEN}Starship is already setup${NC}"
         return
     fi
 
