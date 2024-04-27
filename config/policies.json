@@ -36,6 +36,7 @@
         },
         "PromptForDownloadLocation": true,
         "AutofillAddressEnabled": false,
-        "AutofillCreditCardEnabled": false
+        "AutofillCreditCardEnabled": false,
+        "NoDefaultBookmarks": true
     }
 }
