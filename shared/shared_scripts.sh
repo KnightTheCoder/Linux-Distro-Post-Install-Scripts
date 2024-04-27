@@ -140,7 +140,7 @@ function setup_zsh() {
     fi
     printf "abbr cat=%s\nabbr ls=eza" $bat_fullname > "$HOME/.config/zsh-abbr/user-abbreviations"
 
-    sudo chsh -s /bin/zsh
+    chsh -s /bin/zsh
 }
 
 function setup_starship_install() {
