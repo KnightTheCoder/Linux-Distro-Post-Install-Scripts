@@ -114,7 +114,7 @@ function setup_fish() {
 }
 
 function setup_zsh() {
-    if [ -d "$HOME/.prezto" ]; then
+    if [ -d "$HOME/.zprezto" ]; then
         echo -e "${GREEN}prezto already setup${NC}"
         return
     fi
@@ -133,9 +133,14 @@ function setup_zsh() {
     sed -i "42i 'zsh-abbr' \\\\" "$HOME/.zpreztorc"
 
     mkdir -p "$HOME/.config/zsh-abbr"
-    printf "abbr cat=bat\nabbr ls=eza" > "$HOME/.config/zsh-abbr/user-abbreviations"
 
-    sudo chsh -s /bin/zsh
+    bat_fullname=bat
+    if grep -iq debian /etc/os-release; then
+        bat_fullname=batcat
+    fi
+    printf "abbr cat=%s\nabbr ls=eza" $bat_fullname > "$HOME/.config/zsh-abbr/user-abbreviations"
+
+    chsh -s /bin/zsh
 }
 
 function setup_starship_install() {
@@ -146,6 +151,7 @@ function setup_starship_install() {
 
 function setup_starship() {
     if [[ ! -x "$(command -v starship)" ]]; then
+        echo -e "${GREEN}Starship is already setup${NC}"
         return
     fi
 
@@ -224,6 +230,13 @@ function setup_rust() {
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 }
 
+function setup_xampp() {
+    wget -O xampp-linux-installer.run https://sourceforge.net/projects/xampp/files/XAMPP%20Linux/8.2.12/xampp-linux-x64-8.2.12-0-installer.run/download
+    chmod +x ./xampp-linux-installer.run
+    sudo ./xampp-linux-installer.run
+    rm -rv ./xampp-linux-installer.run
+}
+
 function setup_flatpak() {
     local extra_apps=("$@")
 
@@ -253,6 +266,7 @@ function setup_flatpak() {
         "com.brave.Browser" "Brave browser" OFF \
         "net.mullvad.MullvadBrowser" "Mullavad Browser" OFF \
         "org.libreoffice.LibreOffice" "Libreoffice" OFF \
+        "org.onlyoffice.desktopeditors" "ONLYOFFICE Desktop Editors" OFF \
         "org.qbittorrent.qBittorrent" "qbittorrent bittorrent client" OFF \
         "com.transmissionbt.Transmission" "Transmission bittorrent client" OFF \
         3>&1 1>&2 2>&3

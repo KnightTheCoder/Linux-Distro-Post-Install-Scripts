@@ -32,7 +32,7 @@ whiptail --title "OpenSUSE" --msgbox "Welcome to the OpenSUSE script!" 0 0
 packages=$(
     whiptail --title "Install List" --separate-output --checklist "Choose what to install/configure" 0 0 0 \
     "lutris" "Lutris" OFF \
-    "goverlay mangohud gamemode" "Gaming overlay" OFF \
+    "gaming-overlay" "Gaming overlay" OFF \
     "steam" "Steam" OFF \
     "itch" "Itch desktop app" OFF \
     "heroic" "Heroic Games Launcher" OFF \
@@ -52,6 +52,8 @@ packages=$(
     "nodejs" "Nodejs" OFF \
     "dotnet" ".NET sdk" OFF \
     "rustup" "Rust" OFF \
+    "golang" "Golang" OFF \
+    "xampp" "XAMPP" OFF \
     "docker" "Docker engine" OFF \
     "podman" "Podman" OFF \
     "distrobox" "Distrobox" OFF \
@@ -95,6 +97,12 @@ for package in $packages; do
 
         starship )
             setups+=(starship)
+            ;;
+        
+        gaming-overlay)
+            packages=${packages//"$package"/}
+
+            packages+=" goverlay mangohud gamemode"
             ;;
 
         qemu )
@@ -156,6 +164,18 @@ for package in $packages; do
             packages+=" nodejs-default"
 
             setups+=(npm)
+            ;;
+
+        golang )
+            packages=${packages//"$package"/}
+
+            packages+=" go go-doc"
+            ;;
+
+        xampp )
+            packages=${packages//"$package"/}
+
+            setups+=(xampp)
             ;;
 
         docker )
@@ -268,6 +288,10 @@ for app in "${setups[@]}"; do
 
         npm )
             setup_npm
+            ;;
+
+        xampp )
+            setup_xampp
             ;;
 
         flatpak )

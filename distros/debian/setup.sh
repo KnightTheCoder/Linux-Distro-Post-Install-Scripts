@@ -10,7 +10,7 @@ whiptail --title "Debian/Ubuntu" --msgbox "Welcome to the debian/ubuntu script!"
 packages=$(
     whiptail --title "Install List" --separate-output --checklist "Choose what to install/configure" 0 0 0 \
     "lutris" "Lutris" OFF \
-    "goverlay mangohud gamemode" "Gaming overlay" OFF \
+    "gaming-overlay" "Gaming overlay" OFF \
     "steam" "Steam" OFF \
     "itch" "Itch desktop app" OFF \
     "heroic" "Heroic Games Launcher" OFF \
@@ -28,6 +28,8 @@ packages=$(
     "nodejs" "Nodejs" OFF \
     "dotnet" ".NET sdk" OFF \
     "rustup" "Rust" OFF \
+    "golang" "Golang" OFF \
+    "xampp" "XAMPP" OFF \
     "docker" "Docker engine" OFF \
     "docker-desktop" "Docker desktop" OFF \
     "podman" "Podman" OFF \
@@ -80,6 +82,12 @@ for package in $packages; do
             setups+=(starship)
 
             packages=${packages//"$package"/}
+            ;;
+
+        gaming-overlay)
+            packages=${packages//"$package"/}
+
+            packages+=" goverlay mangohud gamemode"
             ;;
 
         qemu )
@@ -144,6 +152,16 @@ for package in $packages; do
             packages=${packages//"$package"/}
             ;;
 
+        dotnet )
+            packages=${packages//"$package"/}
+
+            if grep -iq "ID=debian" /etc/os-release; then
+                setups+=(dotnet)
+            else
+                packages+=" dotnet-sdk-8.0"
+            fi
+            ;;
+
         rustup )
             setups+=(rust)
 
@@ -156,14 +174,18 @@ for package in $packages; do
             packages+=" npm"
             ;;
 
-        dotnet )
+        golang )
+            if grep -iq ubuntu /etc/os-release; then
+                packages=${packages/"$package"/}
+
+                packages+=" golang-go"
+            fi
+            ;;
+
+        xampp )
             packages=${packages//"$package"/}
 
-            if grep -iq "ID=debian" /etc/os-release; then
-                setups+=(dotnet)
-            else
-                packages+=" dotnet-sdk-8.0"
-            fi
+            setups+=(xampp)
             ;;
 
         docker )
@@ -264,8 +286,6 @@ for app in "${setups[@]}"; do
             wget -O heroic.deb https://github.com/Heroic-Games-Launcher/HeroicGamesLauncher/releases/download/v2.14.0/heroic_2.14.0_amd64.deb
             sudo dpkg -i heroic.deb
             rm -v heroic.deb
-
-            packages=${packages//"$package"/}
             ;;
 
         itch )
@@ -312,9 +332,13 @@ for app in "${setups[@]}"; do
         dotnet )
             wget https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
             sudo dpkg -i packages-microsoft-prod.deb
-            rm packages-microsoft-prod.deb
+            rm -v packages-microsoft-prod.deb
 
             sudo nala update && sudo nala install -y dotnet-sdk-8.0
+            ;;
+
+        xampp )
+            setup_xampp
             ;;
 
         docker )
@@ -387,6 +411,8 @@ for app in "${setups[@]}"; do
 
                 sudo nala update
                 sudo nala install -y eza
+            else
+                echo -e "${YELLOW}eza is already installed!${NC}"
             fi
             ;;
 
