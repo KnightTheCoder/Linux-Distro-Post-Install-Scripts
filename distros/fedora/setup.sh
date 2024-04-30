@@ -10,7 +10,7 @@ whiptail --title "Fedora" --msgbox "Welcome to the fedora script!" 0 0
 packages=$(
     whiptail --title "Install List" --separate-output --checklist "Choose what to install/configure" 0 0 0 \
     "lutris" "Lutris" OFF \
-    "goverlay mangohud gamemode" "Gaming overlay" OFF \
+    "gaming-overlay" "Gaming overlay" OFF \
     "steam" "Steam" OFF \
     "itch" "Itch desktop app" OFF \
     "heroic" "Heroic Games Launcher" OFF \
@@ -29,6 +29,8 @@ packages=$(
     "nodejs" "Nodejs" OFF \
     "dotnet" ".NET sdk" OFF \
     "rustup" "Rust" OFF \
+    "golang" "Golang" OFF \
+    "xampp" "XAMPP" OFF \
     "docker" "Docker engine" OFF \
     "docker-desktop" "Docker desktop" OFF \
     "podman" "Podman" OFF \
@@ -56,7 +58,7 @@ packages=$(echo "$packages"| tr "\n" " ")
 services=()
 setups=(fish hacknerd)
 usergroups=()
-remove_packages="akregator dragon elisa-player kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat kolourpaint qt5-qdbusviewer \"libreoffice*\""
+remove_packages="akregator dragon elisa-player kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat kolourpaint qt5-qdbusviewer"
 
 nvim_config=$(choose_nvim_config)
 setups+=("$nvim_config")
@@ -82,6 +84,12 @@ for package in $packages; do
             setups+=(starship)
 
             packages=${packages//"$package"/}
+            ;;
+
+        gaming-overlay)
+            packages=${packages//"$package"/}
+
+            packages+=" goverlay mangohud gamemode"
             ;;
 
         qemu )
@@ -128,6 +136,12 @@ for package in $packages; do
 
         nodejs )
             setups+=(npm)
+            ;;
+
+        xampp )
+            packages=${packages//"$package"/}
+
+            setups+=(xampp)
             ;;
 
         docker )
@@ -184,7 +198,7 @@ sudo dnf upgrade -y --refresh
 sudo dnf remove -y $remove_packages
 
 # Install codecs
-sudo dnf install -y gstreamer1-plugins-{bad-\*,good-\*,base} gstreamer1-plugin-openh264 gstreamer1-plugin-libav --exclude=gstreamer1-plugins-bad-free-devel lame* --exclude=lame-devel 
+sudo dnf group install -y Multimedia --allowerasing
 
 # Install packages
 # shellcheck disable=SC2086
@@ -250,6 +264,10 @@ for app in "${setups[@]}"; do
             setup_npm
             ;;
 
+        xampp )
+            setup_xampp
+            ;;
+
         docker )
             sudo dnf remove -y docker \
                   docker-client \
@@ -280,7 +298,7 @@ for app in "${setups[@]}"; do
                 sudo flatpak remote-delete fedora
             fi
             
-            setup_flatpak "org.libreoffice.LibreOffice"
+            setup_flatpak
             ;;
 
         fish )
