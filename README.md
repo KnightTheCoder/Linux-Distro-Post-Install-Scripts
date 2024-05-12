@@ -13,6 +13,7 @@ Tested distros:
 * Ubuntu
 * Linux Mint
 * ZorinOS
+* Pop!_OS
 * Arch Linux
 * EndeavourOS
 
