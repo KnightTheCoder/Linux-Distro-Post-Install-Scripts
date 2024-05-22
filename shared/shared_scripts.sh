@@ -60,8 +60,6 @@ function setup_vscode() {
         "ultram4rine.vscode-choosealicense"
         "usernamehw.errorlens"
         "vadimcn.vscode-lldb"
-        "visualstudioexptteam.intellicode-api-usage-examples"
-        "visualstudioexptteam.vscodeintellicode"
         "vue.volar"
         "zignd.html-css-class-completion"
         "ms-azuretools.vscode-docker"
