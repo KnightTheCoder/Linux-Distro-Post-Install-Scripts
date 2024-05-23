@@ -14,6 +14,7 @@ Tested distros:
 * Linux Mint
 * ZorinOS
 * Pop!_OS
+* MX Linux
 * Arch Linux
 * EndeavourOS
 
