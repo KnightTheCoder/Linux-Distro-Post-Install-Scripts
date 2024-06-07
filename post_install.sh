@@ -103,7 +103,7 @@ echo -e "${GREEN}Your chosen distro is $(resolve_distro "$chosen_distro")${NC}"
 
 if [[ $1 == "--copy-firefox-policy" ]]; then
   sudo mkdir -pv "/etc/firefox/policies"
-  sudo cp -fv "config/policies.json" "/etc/firefox/policies"
+  sudo cp -fv "config/firefox/policies.json" "/etc/firefox/policies"
 fi
 
 echo -e "${GREEN}Checking package manager and distro combination...${NC}"
