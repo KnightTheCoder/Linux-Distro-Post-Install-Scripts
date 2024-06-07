@@ -6,39 +6,16 @@
     "prettier.tabWidth": 4,
     "svelte.enable-ts-plugin": true,
     "workbench.iconTheme": "material-icon-theme",
-    "[svelte]": {
-        "editor.defaultFormatter": "svelte.svelte-vscode"
-    },
     "svelte.plugin.svelte.format.config.singleQuote": true,
     "git.autofetch": true,
     "git.enableSmartCommit": true,
     "git.confirmSync": false,
-    "[javascript]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
     "splitHTMLAttributes.tabSize": 4,
     "splitHTMLAttributes.closingBracketOnNewLine": true,
-    "C_Cpp.intelliSenseEngineFallback": "enabled",
-    "C_Cpp.workspaceSymbols": "All",
     "explorer.confirmDelete": false,
-    "[json]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "[typescript]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
     "prettier.trailingComma": "none",
-    "[jsonc]": {
-        "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
-    },
     "css.lint.unknownAtRules": "ignore",
     "eslint.format.enable": true,
-    "[html]": {
-        "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
-    },
-    "[markdown]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
     "telemetry.telemetryLevel": "off",
     "gitlens.telemetry.enabled": false,
     "terminal.integrated.fontFamily": "'Hack Nerd Font Mono'",
@@ -49,6 +26,5 @@
     "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
     "emmet.includeLanguages": {
         "javascript": "javascriptreact"
-    },
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
 }
