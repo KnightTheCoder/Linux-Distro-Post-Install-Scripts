@@ -22,7 +22,7 @@ function setup_itch_app() {
 
 # Install vscode extensions and copy keybindings
 function setup_vscode() {
-    code_editor=$1 # code or codium
+    local code_editor=$1 # code or codium
 
     if [ -z "$code_editor" ] || [ "$code_editor" == code ]; then
         code_editor="code"
@@ -71,11 +71,16 @@ function setup_vscode() {
         $code_editor --force --install-extension "$ext"
     done
 
+    local code_folder="Code"
+    if [[ $code_editor = "codium" ]]; then
+        code_folder="VSCodium"
+    fi
+
     # Copy key bindings
-    cp -fv "../../config/vscode/keybindings.json" "$HOME/.config/Code/User"
+    cp -fv "../../config/vscode/keybindings.json" "$HOME/.config/${code_folder}/User"
 
     # Copy settings
-    cp -fv "../../config/vscode/settings.json" "$HOME/.config/Code/User"
+    cp -fv "../../config/vscode/settings.json" "$HOME/.config/${code_folder}/User"
 }
 
 function setup_hacknerd_fonts() {
