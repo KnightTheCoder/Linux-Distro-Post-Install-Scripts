@@ -1,0 +1,30 @@
+{
+    "workbench.colorTheme": "GitHub Dark Default",
+    "window.titleBarStyle": "custom",
+    "prettier.singleAttributePerLine": true,
+    "prettier.singleQuote": true,
+    "prettier.tabWidth": 4,
+    "svelte.enable-ts-plugin": true,
+    "workbench.iconTheme": "material-icon-theme",
+    "svelte.plugin.svelte.format.config.singleQuote": true,
+    "git.autofetch": true,
+    "git.enableSmartCommit": true,
+    "git.confirmSync": false,
+    "splitHTMLAttributes.tabSize": 4,
+    "splitHTMLAttributes.closingBracketOnNewLine": true,
+    "explorer.confirmDelete": false,
+    "prettier.trailingComma": "none",
+    "css.lint.unknownAtRules": "ignore",
+    "eslint.format.enable": true,
+    "telemetry.telemetryLevel": "off",
+    "gitlens.telemetry.enabled": false,
+    "terminal.integrated.fontFamily": "'Hack Nerd Font Mono'",
+    "terminal.integrated.cursorStyle": "line",
+    "terminal.integrated.cursorStyleInactive": "line",
+    "terminal.integrated.cursorBlinking": true,
+    "terminal.integrated.defaultProfile.linux": "fish",
+    "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
+    "emmet.includeLanguages": {
+        "javascript": "javascriptreact"
+    }
+}
