@@ -72,10 +72,10 @@ function setup_vscode() {
     done
 
     # Copy key bindings
-    cp -fv "../../config/keybindings.json" "$HOME/.config/Code/User"
+    cp -fv "../../config/vscode/keybindings.json" "$HOME/.config/Code/User"
 
     # Copy settings
-    cp -fv "../../config/settings.json" "$HOME/.config/Code/User"
+    cp -fv "../../config/vscode/settings.json" "$HOME/.config/Code/User"
 }
 
 function setup_hacknerd_fonts() {
