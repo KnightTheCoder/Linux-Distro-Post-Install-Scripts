@@ -225,7 +225,6 @@ sudo zypper remove --details -y --clean-deps $remove_packages
 sudo zypper remove --details -y --clean-deps -t pattern $remove_patterns
 # shellcheck disable=SC2086
 sudo zypper -vv al -t pattern $remove_patterns
-sudo zypper -vv al discover6
 
 # Install packages
 # Don't use quotes, zypper won't recognize the packages
