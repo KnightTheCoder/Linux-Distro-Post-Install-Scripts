@@ -61,9 +61,13 @@ function setup_vscode() {
         "usernamehw.errorlens"
         "vadimcn.vscode-lldb"
         "vue.volar"
+        "burkeholland.simple-react-snippets"
+        "Angular.ng-template"
         "zignd.html-css-class-completion"
         "ms-azuretools.vscode-docker"
         "ritwickdey.LiveServer"
+        "WallabyJs.quokka-vscode"
+        "YoavBls.pretty-ts-errors"
     )
 
     # Install extensions
