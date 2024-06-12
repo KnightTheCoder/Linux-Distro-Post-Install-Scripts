@@ -68,6 +68,7 @@ function setup_vscode() {
         "ritwickdey.LiveServer"
         "WallabyJs.quokka-vscode"
         "YoavBls.pretty-ts-errors"
+        "nrwl.angular-console"
     )
 
     # Install extensions
