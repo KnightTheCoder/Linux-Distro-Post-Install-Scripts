@@ -54,7 +54,7 @@ packages=$(echo "$packages"| tr "\n" " ")
 # Add defaults
 services=()
 setups=(hacknerd)
-usergroups=()
+usergroups=(disk)
 aur=(ttf-ms-win11-auto)
 remove_packages="akregator kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat"
 
