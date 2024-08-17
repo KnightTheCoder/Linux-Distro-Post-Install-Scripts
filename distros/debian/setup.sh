@@ -5,10 +5,8 @@ cd "$(dirname "$0")" || exit
 # shellcheck source=.../../shared/shared_scripts.sh
 source "../../shared/shared_scripts.sh"
 
-whiptail --title "Debian/Ubuntu" --msgbox "Welcome to the debian/ubuntu script!" 0 0
-
 packages=$(
-    whiptail --title "Install List" --separate-output --checklist "Choose what to install/configure" 0 0 0 \
+    whiptail --title "Debian/Ubuntu app installer" --separate-output --checklist "Choose which apps to install" 0 0 0 \
     "lutris" "Lutris" OFF \
     "gaming-overlay" "Gaming overlay" OFF \
     "steam" "Steam" OFF \
@@ -39,7 +37,18 @@ packages=$(
     3>&1 1>&2 2>&3
 )
 
-packages+=" git build-essential neofetch kwrite htop btop neovim gh bat curl wget gpg ttf-mscorefonts-installer fontconfig"
+cli_packages=$(
+    whiptail --title "CLI install" --separate-output --checklist "Select cli applications to install" 0 0 0 \
+    "neofetch" "neofetch" ON \
+    "htop" "htop" ON \
+    "btop" "btop++" ON \
+    "gh" "github cli" OFF \
+    3>&1 1>&2 2>&3
+)
+
+packages+=" $cli_packages"
+
+packages+=" git build-essential kwrite neovim bat curl wget gpg ttf-mscorefonts-installer fontconfig"
 
 shells=$(choose_shells)
 

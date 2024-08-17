@@ -5,10 +5,8 @@ cd "$(dirname "$0")" || exit
 # shellcheck source=.../../shared/shared_scripts.sh
 source "../../shared/shared_scripts.sh"
 
-whiptail --title "Arch linux" --msgbox "Welcome to the arch linux script!" 0 0
-
 packages=$(
-    whiptail --title "Install List" --separate-output --checklist "Choose what to install/configure" 0 0 0 \
+    whiptail --title "Arch linux app installer" --separate-output --checklist "Choose which apps to install" 0 0 0 \
     "lutris" "Lutris" OFF \
     "gaming-overlay" "Gaming overlay" OFF \
     "steam" "Steam" OFF \
@@ -42,7 +40,18 @@ packages=$(
     3>&1 1>&2 2>&3
 )
 
-packages+=" neofetch kwrite htop btop neovim github-cli eza bat zram-generator wget curl ark filelight git base-devel"
+cli_packages=$(
+    whiptail --title "CLI install" --separate-output --checklist "Select cli applications to install" 0 0 0 \
+    "neofetch" "neofetch" ON \
+    "htop" "htop" ON \
+    "btop" "btop++" ON \
+    "github-cli" "github cli" OFF \
+    3>&1 1>&2 2>&3
+)
+
+packages+=" $cli_packages"
+
+packages+=" kwrite neovim eza bat zram-generator wget curl ark filelight git base-devel"
 
 shells=$(choose_shells)
 
