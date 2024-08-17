@@ -41,7 +41,7 @@ packages=$(
     3>&1 1>&2 2>&3
 )
 
-packages+=" fish neofetch kwrite htop btop neovim gh eza bat dnf5 dnf5-plugins curl cabextract xorg-x11-font-utils fontconfig"
+packages+=" neofetch kwrite htop btop neovim gh eza bat dnf5 dnf5-plugins curl cabextract xorg-x11-font-utils fontconfig"
 
 shells=$(choose_shells)
 

@@ -42,7 +42,7 @@ packages=$(
     3>&1 1>&2 2>&3
 )
 
-packages+=" fish neofetch kwrite htop btop neovim github-cli eza bat zram-generator wget curl ark filelight git base-devel"
+packages+=" neofetch kwrite htop btop neovim github-cli eza bat zram-generator wget curl ark filelight git base-devel"
 
 shells=$(choose_shells)
 
