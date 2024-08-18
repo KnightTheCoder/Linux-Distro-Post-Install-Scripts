@@ -404,7 +404,7 @@ for app in "${setups[@]}"; do
             wget -O docker-desktop.deb "https://desktop.docker.com/linux/main/amd64/139021/docker-desktop-4.28.0-amd64.deb?utm_source=docker&utm_medium=webreferral&utm_campaign=docs-driven-download-linux-amd64"
             sudo apt-get update
             sudo apt-get install -y ./docker-desktop.deb
-            rm -v docker.desktop.deb
+            rm -v docker-desktop.deb
             ;;
 
         distrobox )
