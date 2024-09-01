@@ -173,7 +173,6 @@ if whiptail --title "Remove discover" --yesno "Would you like to remove discover
     remove_packages+=" discover"
 fi
 
-# TODO: fix config duplication
 # Add multilib for steam to work
 if grep -iqzoP "\n\[multilib\]\nInclude = /etc/pacman.d/mirrorlist\n" /etc/pacman.conf; then
     echo -e "${YELLOW}multilib is already included${NC}"
@@ -181,7 +180,6 @@ else
     printf "\n[multilib]\nInclude = /etc/pacman.d/mirrorlist\n" | sudo tee -a /etc/pacman.conf
 fi
 
-# TODO: fix config duplication
 # Modify packman config file
 # Set parallel downloads, if it hasn't been set yet
 if grep -iq "ParallelDownloads = 100" /etc/pacman.conf && grep -iq "Color" /etc/pacman.conf && grep -iq "ILoveCandy" /etc/pacman.conf; then
