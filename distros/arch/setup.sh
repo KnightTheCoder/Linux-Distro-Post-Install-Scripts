@@ -189,7 +189,7 @@ else
 fi
 
 # Update repos and install new keyrings
-sudo pacman -Syy archlinux-keyring --noconfirm
+sudo pacman -Syy archlinux-keyring --noconfirm --needed
 
 # Update system
 sudo pacman -Syu --noconfirm
