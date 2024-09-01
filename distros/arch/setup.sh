@@ -51,7 +51,7 @@ cli_packages=$(
 
 packages+=" $cli_packages"
 
-packages+=" kwrite neovim eza bat zram-generator wget curl ark filelight git base-devel archlinux-keyring"
+packages+=" kwrite neovim eza bat zram-generator wget curl ark filelight git base-devel"
 
 shells=$(choose_shells)
 
@@ -189,6 +189,9 @@ if grep -iq "ParallelDownloads = 100" /etc/pacman.conf && grep -iq "Color" /etc/
 else
     printf "\n[options]\nParallelDownloads = 100\nColor\nILoveCandy\n" | sudo tee -a /etc/pacman.conf
 fi
+
+# Update repos and install new keyrings
+sudo pacman -Syy archlinux-keyring --noconfirm
 
 # Update system
 sudo pacman -Syu --noconfirm
