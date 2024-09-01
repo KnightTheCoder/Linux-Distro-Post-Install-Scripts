@@ -116,6 +116,10 @@ if [[ $1 == "--copy-firefox-policy" ]]; then
   extensions=()
 
   for extension_set in $extension_sets; do
+  
+    sudo mkdir -pv "/etc/firefox/policies"
+    sudo cp -fv "config/firefox/policies.json" "/etc/firefox/policies"
+
     case $extension_set in
       basic )
         extensions+=("https://addons.mozilla.org/firefox/downloads/file/4261710/ublock_origin-1.57.2.xpi")
@@ -146,9 +150,6 @@ if [[ $1 == "--copy-firefox-policy" ]]; then
   done
 
   firefox "${extensions[@]}"
-
-  sudo mkdir -pv "/etc/firefox/policies"
-  sudo cp -fv "config/firefox/policies.json" "/etc/firefox/policies"
 fi
 
 echo -e "${GREEN}Checking package manager and distro combination...${NC}"
