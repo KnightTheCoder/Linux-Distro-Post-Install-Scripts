@@ -102,6 +102,51 @@ fi
 echo -e "${GREEN}Your chosen distro is $(resolve_distro "$chosen_distro")${NC}"
 
 if [[ $1 == "--copy-firefox-policy" ]]; then
+  extension_sets=$(
+    whiptail --title "Firefox extension sets" --separate-output --checklist "Choose what set of extensions to install" 0 0 0 \
+    "basic" "Basic privacy" ON \
+    "youtube" "Youtube" OFF \
+    "steam" "Steam" OFF \
+    "reader" "Dark reader" OFF \
+    3>&1 1>&2 2>&3
+  )
+
+  # Remove new lines
+  extension_sets=$(echo "$extension_sets"| tr "\n" " ")
+  extensions=()
+
+  for extension_set in $extension_sets; do
+    case $extension_set in
+      basic )
+        extensions+=("https://addons.mozilla.org/firefox/downloads/file/4261710/ublock_origin-1.57.2.xpi")
+        extensions+=("https://addons.mozilla.org/firefox/downloads/file/4232703/privacy_badger17-2024.2.6.xpi")
+        extensions+=("https://addons.mozilla.org/firefox/downloads/file/4262820/canvasblocker-1.10.1.xpi")
+        extensions+=("https://addons.mozilla.org/firefox/downloads/file/4098688/user_agent_string_switcher-0.5.0.xpi")
+        extensions+=("https://addons.mozilla.org/firefox/downloads/file/4251866/localcdn_fork_of_decentraleyes-2.6.65.xpi")
+        extensions+=("https://addons.mozilla.org/firefox/downloads/file/4064884/clearurls-1.26.1.xpi")
+        extensions+=("https://addons.mozilla.org/firefox/downloads/file/3920533/skip_redirect-2.3.6.xpi")
+        ;;
+
+      youtube )
+        extensions+=("https://addons.mozilla.org/firefox/downloads/file/4325319/enhancer_for_youtube-2.0.126.xpi")
+        extensions+=("https://addons.mozilla.org/firefox/downloads/file/4307344/dearrow-1.6.4.xpi")
+        extensions+=("https://addons.mozilla.org/firefox/downloads/file/4342747/return_youtube_dislikes-3.0.0.17.xpi")
+        extensions+=("https://addons.mozilla.org/firefox/downloads/file/4308094/sponsorblock-5.7.xpi")
+        ;;
+
+      steam )
+        extensions+=("https://addons.mozilla.org/firefox/downloads/file/4264122/augmented_steam-3.1.1.xpi")
+        extensions+=("https://addons.mozilla.org/firefox/downloads/file/4195217/protondb_for_steam-2.1.0.xpi")
+        ;;
+
+      reader )
+        extensions+=("https://addons.mozilla.org/firefox/downloads/file/4341235/darkreader-4.9.89.xpi")
+        ;;
+    esac
+  done
+
+  firefox "${extensions[@]}"
+
   sudo mkdir -pv "/etc/firefox/policies"
   sudo cp -fv "config/firefox/policies.json" "/etc/firefox/policies"
 fi
