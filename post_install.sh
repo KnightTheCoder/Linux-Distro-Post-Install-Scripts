@@ -129,7 +129,7 @@ if [[ $1 == "--copy-firefox-policy" ]]; then
 
       steam )
         extensions+=("https://addons.mozilla.org/en-US/firefox/addon/augmented-steam/")
-        extensions+=("https://addons.mozilla.org/en-CA/firefox/addon/protondb-for-steam/")
+        extensions+=("https://addons.mozilla.org/en-US/firefox/addon/protondb-for-steam/")
         ;;
 
       utilities )
