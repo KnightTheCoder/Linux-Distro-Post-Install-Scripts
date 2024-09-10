@@ -114,10 +114,10 @@ if [[ $1 == "--copy-firefox-policy" ]]; then
   extension_sets=$(echo "$extension_sets"| tr "\n" " ")
   extensions=()
 
+  sudo mkdir -pv "/etc/firefox/policies"
+  sudo cp -fv "config/firefox/policies.json" "/etc/firefox/policies"
+
   for extension_set in $extension_sets; do
-  
-    sudo mkdir -pv "/etc/firefox/policies"
-    sudo cp -fv "config/firefox/policies.json" "/etc/firefox/policies"
 
     case $extension_set in
       youtube )
