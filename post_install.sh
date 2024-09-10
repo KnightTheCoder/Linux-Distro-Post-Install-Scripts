@@ -103,7 +103,7 @@ echo -e "${GREEN}Your chosen distro is $(resolve_distro "$chosen_distro")${NC}"
 
 if [[ $1 == "--copy-firefox-policy" ]]; then
   extension_sets=$(
-    whiptail --title "Firefox extension sets" --separate-output --checklist "Choose what set of extensions to install" 0 0 0 \
+    whiptail --title "Firefox extension sets" --separate-output --checklist "Choose what set of extensions to install\nWill open the extension's page to install manually\nClose to progress install" 0 0 0 \
     "youtube" "Youtube" OFF \
     "steam" "Steam" OFF \
     "utilities" "Utilities" OFF \
