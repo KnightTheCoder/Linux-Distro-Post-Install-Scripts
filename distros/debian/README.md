@@ -7,3 +7,4 @@ This script is only intended for Debian/UBuntu with KDE desktop, KDE neon and Li
 * Updates the system
 * Installs nala
 * Enables 32 bit support, contrib and non-free repos
+* Installs the latest lutris from github (.deb file)
