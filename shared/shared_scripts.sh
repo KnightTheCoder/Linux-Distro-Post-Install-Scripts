@@ -6,6 +6,52 @@ readonly GREEN='\033[0;32m'
 readonly YELLOW='\033[0;33m'
 readonly NC='\033[0m' # No Color
 
+# Copy policies and install extensions for firefox
+function setup_firefox() {
+    extension_sets=$(
+    whiptail --title "Firefox extension sets" --separate-output --checklist "Choose what set of extensions to install\nWill open the extension's page to install manually\nClose to progress install" 0 0 0 \
+    "youtube" "Youtube" OFF \
+    "steam" "Steam" OFF \
+    "utilities" "Utilities" OFF \
+    3>&1 1>&2 2>&3
+  )
+
+  # Remove new lines
+  extension_sets=$(echo "$extension_sets"| tr "\n" " ")
+  extensions=()
+
+  if [ -f "/etc/firefox/policies/policies.json" ]; then
+    sudo mkdir -pv "/etc/firefox/policies"
+    sudo cp -fv "../config/firefox/policies.json" "/etc/firefox/policies"
+  fi
+
+  for extension_set in $extension_sets; do
+
+    case $extension_set in
+      youtube )
+        extensions+=("https://addons.mozilla.org/en-US/firefox/addon/enhancer-for-youtube/")
+        extensions+=("https://addons.mozilla.org/en-US/firefox/addon/dearrow/")
+        extensions+=("https://addons.mozilla.org/en-US/firefox/addon/return-youtube-dislikes/")
+        extensions+=("https://addons.mozilla.org/en-US/firefox/addon/sponsorblock/")
+        ;;
+
+      steam )
+        extensions+=("https://addons.mozilla.org/en-US/firefox/addon/augmented-steam/")
+        extensions+=("https://addons.mozilla.org/en-US/firefox/addon/protondb-for-steam/")
+        ;;
+
+      utilities )
+        extensions+=("https://addons.mozilla.org/en-US/firefox/addon/darkreader/")
+        extensions+=("https://addons.mozilla.org/en-US/firefox/addon/save-webp-as-png-or-jpeg/")
+        ;;
+    esac
+  done
+
+  if [ ${#extensions[@]} -ne 0 ]; then
+    firefox "${extensions[@]}"
+  fi
+}
+
 # Install the itch desktop app
 function setup_itch_app() {
     # Check if itch is installed

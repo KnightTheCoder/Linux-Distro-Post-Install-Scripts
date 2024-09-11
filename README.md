@@ -64,9 +64,9 @@ You only need to configure apps and configuration files once when changing the p
 ## Firefox policy (optional)
 A firefox policy is included for increased security.
 
-Can be found at ``/config/firefox/policies.json``
+Can be found at ``config/firefox/policies.json``
 
-Manually edit to customize, then copy to ``/etc/firefox/`` for it to work
+Manually edit to customize, then copy to ``/etc/firefox/policies/`` for it to work
 
 ### Included policy has the following changes
 - Disable telemetry
