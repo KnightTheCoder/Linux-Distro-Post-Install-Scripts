@@ -40,7 +40,9 @@ Tested distros:
 
 ## Motivation
 This project's motivation is to quickly setup a system with the same configuration/software across multiple distros.
+
 The scripts are meant to be reproducable and allow you to get to using your new system/virtual machine rather than try to replicate your already existing setup.
+
 You only need to configure apps and configuration files once when changing the project to suit your own needs and be able to use it afterwards.
 
 ## Steps the script runs:
@@ -61,8 +63,10 @@ You only need to configure apps and configuration files once when changing the p
 
 ## Firefox policy (optional)
 A firefox policy is included for increased security.
-Can be found at /config/firefox/policies.json
-manually edit to customize, then copy to /etc/firefox for it to work
+
+Can be found at ``/config/firefox/policies.json``
+
+manually edit to customize, then copy to ``/etc/firefox/`` for it to work
 
 ### Included policy has the following changes
 - Disable telemetry
