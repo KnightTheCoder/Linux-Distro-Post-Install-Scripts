@@ -45,6 +45,7 @@ function setup_firefox() {
         extensions+=("https://addons.mozilla.org/en-US/firefox/addon/save-webp-as-png-or-jpeg/")
         ;;
     esac
+    
   done
 
   if [ ${#extensions[@]} -ne 0 ]; then
