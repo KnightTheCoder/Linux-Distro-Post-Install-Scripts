@@ -139,7 +139,7 @@ if [[ $1 == "--copy-firefox-policy" ]]; then
     esac
   done
 
-  if [ ${#extensions[@]} ]; then
+  if [ ${#extensions[@]} -ne 0 ]; then
     firefox "${extensions[@]}"
   fi
 
