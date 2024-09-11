@@ -45,7 +45,7 @@ You only need to configure apps and configuration files once when changing the p
 
 ## Steps the script runs:
 - Find package manager
--  Check for whiptail and install it if it's not found
+- Check for whiptail and install it if it's not found
 - Find Distro, ask if distro is correct, if distro and package manager don't match stop script
 - Start distro specific script
 - Select programs/tools to install
@@ -58,6 +58,53 @@ You only need to configure apps and configuration files once when changing the p
 - Run setups for selected apps
 - Start listed services
 - Ask for hostname (optional)
+
+## Firefox policy (optional)
+A firefox policy is included for increased security.
+Can be found at /config/firefox/policies.json
+manually edit to customize, then copy to /etc/firefox for it to work
+
+### Included policy has the following changes
+- Disable telemetry
+- Disable firefox studies
+- Disable pocket
+- Disable form history
+- Disable feedback commands
+- Enable all tracking protection
+- Don't offer to save logins
+- Block requests for notifications
+- Block audio and video autoplay
+- Disable picture in picture
+- Always ask for download location
+- Disable autofill address
+- Disable autofill creditcard
+- No default bookmarks (only works if you copied the policies.json before opening firefox for the first time)
+
+### Installs basic extensions for privacy (can be removed anytime)
+- [uBlock Origin][5]
+- [Privacy Badger][6]
+- [CanvasBlocker][7]
+- [User-Agent Switcher and Manager][8]
+- [LocalCDN][9]
+- [ClearURLs][10]
+- [Skip Redirect][11]
+
+### Optional extensions
+
+#### Youtube
+- [Enhancer for YouTube][12]
+- [DeArrow][13]
+- [Return YouTube Dislike][14]
+- [SponsorBlock][15]
+
+#### Steam
+- [Augmented Steam][16]
+- [ProtonDB for Steam][17]
+
+#### Utilities
+- [Dark Reader][18]
+- [Save webP as PNG or JPEG (Converter)][19]
+
 
 # Project breakdown
 
@@ -151,3 +198,22 @@ bash ./post_install.sh --copy-firefox-policy
 [2]: distros/fedora#readme
 [3]: distros/debian#readme
 [4]: distros/arch#readme
+
+[5]: https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/
+[6]: https://addons.mozilla.org/en-US/firefox/addon/privacy-badger17/
+[7]: https://addons.mozilla.org/en-US/firefox/addon/canvasblocker/
+[8]: https://addons.mozilla.org/en-US/firefox/addon/user-agent-string-switcher/
+[9]: https://addons.mozilla.org/en-US/firefox/addon/localcdn-fork-of-decentraleyes/
+[10]: https://addons.mozilla.org/en-US/firefox/addon/clearurls/
+[11]: https://addons.mozilla.org/en-US/firefox/addon/skip-redirect/
+
+[12]: https://addons.mozilla.org/en-US/firefox/addon/enhancer-for-youtube/
+[13]: https://addons.mozilla.org/en-US/firefox/addon/dearrow/
+[14]: https://addons.mozilla.org/en-US/firefox/addon/return-youtube-dislikes/
+[15]: https://addons.mozilla.org/en-US/firefox/addon/sponsorblock/
+
+[16]: https://addons.mozilla.org/en-US/firefox/addon/augmented-steam/
+[17]: https://addons.mozilla.org/en-US/firefox/addon/protondb-for-steam/
+
+[18]: https://addons.mozilla.org/en-US/firefox/addon/darkreader/
+[19]: https://addons.mozilla.org/en-US/firefox/addon/save-webp-as-png-or-jpeg/
