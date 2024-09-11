@@ -106,9 +106,9 @@ manually edit to customize, then copy to /etc/firefox for it to work
 - [Save webP as PNG or JPEG (Converter)][19]
 
 
-# Project breakdown
+## Project breakdown
 
-## Project structure:
+### Project structure:
 ```bash
 .
 ├── config
