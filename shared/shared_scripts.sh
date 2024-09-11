@@ -22,7 +22,7 @@ function setup_firefox() {
 
   if [ ! -f "/etc/firefox/policies/policies.json" ]; then
     sudo mkdir -pv "/etc/firefox/policies"
-    sudo cp -fv "../config/firefox/policies.json" "/etc/firefox/policies"
+    sudo cp -fv "config/firefox/policies.json" "/etc/firefox/policies"
   fi
 
   for extension_set in $extension_sets; do
