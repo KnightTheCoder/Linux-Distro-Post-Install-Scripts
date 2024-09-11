@@ -66,7 +66,7 @@ A firefox policy is included for increased security.
 
 Can be found at ``/config/firefox/policies.json``
 
-manually edit to customize, then copy to ``/etc/firefox/`` for it to work
+Manually edit to customize, then copy to ``/etc/firefox/`` for it to work
 
 ### Included policy has the following changes
 - Disable telemetry
