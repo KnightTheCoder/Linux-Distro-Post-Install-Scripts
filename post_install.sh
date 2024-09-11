@@ -139,7 +139,10 @@ if [[ $1 == "--copy-firefox-policy" ]]; then
     esac
   done
 
-  firefox "${extensions[@]}"
+  if [ ${#extensions[@]} ]; then
+    firefox "${extensions[@]}"
+  fi
+
 fi
 
 echo -e "${GREEN}Checking package manager and distro combination...${NC}"
