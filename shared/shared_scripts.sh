@@ -141,7 +141,7 @@ function setup_hacknerd_fonts() {
         return
     fi
 
-    wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/Hack.zip
+    wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/Hack.zip
     unzip ./Hack.zip -d Hack
     mkdir -p "$HOME/.local/share/fonts/hacknerdfonts"
     cp -fv ./Hack/*.ttf "$HOME/.local/share/fonts/hacknerdfonts"
