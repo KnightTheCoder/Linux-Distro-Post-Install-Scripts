@@ -289,7 +289,6 @@ for app in "${setups[@]}"; do
             sudo apt install -y ./lutris.deb
             rm -v ./lutris.deb
             ;;
-
         
         heroic )
             wget -O heroic.deb https://github.com/Heroic-Games-Launcher/HeroicGamesLauncher/releases/download/v2.14.0/heroic_2.14.0_amd64.deb

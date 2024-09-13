@@ -34,9 +34,10 @@ Tested distros:
 * Optionally sets hostname
 
 ## Requirements
-- systemd (recommended but not required for some parts of the scripts)
-- bash
-- whiptail (optional, the script will install it if not found)
+- wget (to download the project)
+- unzip (to unzip the project)
+- bash (to run the project)
+- systemd (recommended for the script to start services)
 
 ## Motivation
 This project's motivation is to quickly setup a system with the same configuration/software across multiple distros.
