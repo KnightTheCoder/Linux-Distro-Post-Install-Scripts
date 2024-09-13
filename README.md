@@ -34,9 +34,9 @@ Tested distros:
 * Optionally sets hostname
 
 ## Requirements
-- wget (to download the project)
-- unzip (to unzip the project)
-- bash (to run the project)
+- wget (to download the scripts)
+- unzip (to unzip the scripts)
+- bash (to run the scripts)
 - systemd (recommended for the script to start services)
 
 ## Motivation
