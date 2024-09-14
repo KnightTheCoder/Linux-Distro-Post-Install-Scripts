@@ -1,11 +1,20 @@
 #!/usr/bin/env bash
 
-branch="master"
+read -p "Stable(default) or Experimental(e)?: " script_branch
 
-if [ "$1" == "experimental" ]; then
+read -p "Copy firefox policies?(y/n)" firefox_policy
+
+branch="master"
+additional_arguments=""
+
+if [ "${script_branch}" == "e" ]; then
     branch="maintanence"
+fi
+
+if [ "${firefox_policy}" ]; then
+    additional_arguments="--copy-firefox-policy"
 fi
 
 wget -O "$(xdg-user-dir DOWNLOAD)/post-install-scripts.zip" "https://github.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/archive/refs/heads/${branch}.zip"
 cd "$(xdg-user-dir DOWNLOAD)" && unzip post-install-scripts.zip && cd Linux-Distro-Post-Install-Scripts-${branch}
-bash ./post_install.sh --copy-firefox-policy
+bash ./post_install.sh ${additional_arguments}
