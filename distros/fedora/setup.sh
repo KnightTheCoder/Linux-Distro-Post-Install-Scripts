@@ -95,6 +95,10 @@ for package in $packages; do
             packages=${packages//"$package"/}
             ;;
 
+        btop )
+            packages+=" rocm-smi"
+            ;;
+
         gaming-overlay)
             packages=${packages//"$package"/}
 
