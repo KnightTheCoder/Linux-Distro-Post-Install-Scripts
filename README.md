@@ -162,7 +162,10 @@ example: using the distro's package manager and approprioate package names, repo
 Shared scripts between all distro setups, these include shell setup and program specific setups like installing hack nerd fonts, setting up scripts with plugin managers, neovim configurations, flatpaks, etc.
 
 ## How to run
+
+```console
 curl -sS https://raw.githubusercontent.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/maintanence/install.sh | bash
+```
 
 <!-- ### Stable
 
