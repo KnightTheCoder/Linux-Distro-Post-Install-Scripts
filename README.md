@@ -142,11 +142,6 @@ Manually edit to customize, then copy to ``/etc/firefox/policies/`` for it to wo
 │   └── opensuse
 │       ├── README.md
 │       └── setup.sh
-├── installers
-│   ├── install_experimental_firefox.sh
-│   ├── install_experimental.sh
-│   ├── install_firefox.sh
-│   └── install.sh
 ├── LICENSE
 ├── post_install.sh
 ├── README.md
@@ -171,24 +166,45 @@ This directory contains all the installers for the different branches and whethe
 
 ## How to run
 
+
 ### Stable
+
+#### Download scripts
 ```console
-curl -sS https://raw.githubusercontent.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/maintanence/installers/install.sh | bash
+wget -O "$(xdg-user-dir DOWNLOAD)/post-install-scripts.zip" "https://github.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/archive/refs/heads/master.zip"
 ```
 
-#### With firefox policy
+#### Navigate and unzip
 ```console
-curl -sS https://raw.githubusercontent.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/maintanence/installers/install_firefox.sh | bash
+cd "$(xdg-user-dir DOWNLOAD)" && unzip -f post-install-scripts.zip && cd Linux-Distro-Post-Install-Scripts-master
+```
+
+#### Run
+```console
+bash ./post_install.sh
 ```
 
 ### Experimental
+
+#### Download scripts
 ```console
-curl -sS https://raw.githubusercontent.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/maintanence/installers/install_experimental.sh | bash
+wget -O "$(xdg-user-dir DOWNLOAD)/post-install-scripts.zip" "https://github.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/archive/refs/heads/maintanence.zip"
 ```
 
-#### With firefox policy
+#### Navigate and unzip
 ```console
-curl -sS https://raw.githubusercontent.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/maintanence/installers/install_experimental_firefox.sh | bash
+cd "$(xdg-user-dir DOWNLOAD)" && unzip -f post-install-scripts.zip && cd Linux-Distro-Post-Install-Scripts-maintanence
+```
+
+#### Run
+```console
+bash ./post_install.sh
+```
+
+### To copy the firefox policy
+#### Run with
+```console
+bash ./post_install.sh --copy-firefox-policy
 ```
 
 [1]: distros/opensuse#readme
