@@ -164,6 +164,12 @@ Shared scripts between all distro setups, these include shell setup and program 
 ## How to run
 
 ### Stable
+curl -sS https://raw.githubusercontent.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/maintanence/install.sh | bash
+
+### Experimental
+bash $(curl -sS https://raw.githubusercontent.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/maintanence/install.sh) experimental
+
+<!-- ### Stable
 
 #### Download scripts
 ```console
@@ -201,7 +207,7 @@ bash ./post_install.sh
 #### Run with
 ```console
 bash ./post_install.sh --copy-firefox-policy
-```
+``` -->
 
 [1]: distros/opensuse#readme
 [2]: distros/fedora#readme
