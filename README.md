@@ -169,35 +169,21 @@ This directory contains all the installers for the different branches and whethe
 
 ### Stable
 
-#### Download scripts
 ```console
 wget -O "$(xdg-user-dir DOWNLOAD)/post-install-scripts.zip" "https://github.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/archive/refs/heads/master.zip"
-```
 
-#### Navigate and unzip
-```console
 cd "$(xdg-user-dir DOWNLOAD)" && unzip -o post-install-scripts.zip && cd Linux-Distro-Post-Install-Scripts-master
-```
 
-#### Run
-```console
 bash ./post_install.sh
 ```
 
 ### Experimental
 
-#### Download scripts
 ```console
 wget -O "$(xdg-user-dir DOWNLOAD)/post-install-scripts.zip" "https://github.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/archive/reos/heads/maintanence.zip"
-```
 
-#### Navigate and unzip
-```console
 cd "$(xdg-user-dir DOWNLOAD)" && unzip -o post-install-scripts.zip && cd Linux-Distro-Post-Install-Scripts-maintanence
-```
 
-#### Run
-```console
 bash ./post_install.sh
 ```
 
