@@ -176,7 +176,7 @@ wget -O "$(xdg-user-dir DOWNLOAD)/post-install-scripts.zip" "https://github.com/
 
 #### Navigate and unzip
 ```console
-cd "$(xdg-user-dir DOWNLOAD)" && unzip -f post-install-scripts.zip && cd Linux-Distro-Post-Install-Scripts-master
+cd "$(xdg-user-dir DOWNLOAD)" && unzip -o post-install-scripts.zip && cd Linux-Distro-Post-Install-Scripts-master
 ```
 
 #### Run
@@ -188,12 +188,12 @@ bash ./post_install.sh
 
 #### Download scripts
 ```console
-wget -O "$(xdg-user-dir DOWNLOAD)/post-install-scripts.zip" "https://github.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/archive/refs/heads/maintanence.zip"
+wget -O "$(xdg-user-dir DOWNLOAD)/post-install-scripts.zip" "https://github.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/archive/reos/heads/maintanence.zip"
 ```
 
 #### Navigate and unzip
 ```console
-cd "$(xdg-user-dir DOWNLOAD)" && unzip -f post-install-scripts.zip && cd Linux-Distro-Post-Install-Scripts-maintanence
+cd "$(xdg-user-dir DOWNLOAD)" && unzip -o post-install-scripts.zip && cd Linux-Distro-Post-Install-Scripts-maintanence
 ```
 
 #### Run
