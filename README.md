@@ -142,6 +142,11 @@ Manually edit to customize, then copy to ``/etc/firefox/policies/`` for it to wo
 │   └── opensuse
 │       ├── README.md
 │       └── setup.sh
+├── installers
+│   ├── install_experimental_firefox.sh
+│   ├── install_experimental.sh
+│   ├── install_firefox.sh
+│   └── install.sh
 ├── LICENSE
 ├── post_install.sh
 ├── README.md
@@ -160,6 +165,9 @@ example: using the distro's package manager and approprioate package names, repo
 
 ### Shared:
 Shared scripts between all distro setups, these include shell setup and program specific setups like installing hack nerd fonts, setting up scripts with plugin managers, neovim configurations, flatpaks, etc.
+
+### Installers:
+This directory contains all the installers for the different branches and whether to copy firefox policies
 
 ## How to run
 
@@ -182,46 +190,6 @@ curl -sS https://raw.githubusercontent.com/KnightTheCoder/Linux-Distro-Post-Inst
 ```console
 curl -sS https://raw.githubusercontent.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/maintanence/installers/install_experimental_firefox.sh | bash
 ```
-
-<!-- ### Stable
-
-#### Download scripts
-```console
-wget -O "$(xdg-user-dir DOWNLOAD)/post-install-scripts.zip" "https://github.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/archive/refs/heads/master.zip"
-```
-
-#### Navigate and unzip
-```console
-cd "$(xdg-user-dir DOWNLOAD)" && unzip post-install-scripts.zip && cd Linux-Distro-Post-Install-Scripts-master
-```
-
-#### Run
-```console
-bash ./post_install.sh
-```
-
-### Experimental
-
-#### Download scripts
-```console
-wget -O "$(xdg-user-dir DOWNLOAD)/post-install-scripts.zip" "https://github.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/archive/refs/heads/maintanence.zip"
-```
-
-#### Navigate and unzip
-```console
-cd "$(xdg-user-dir DOWNLOAD)" && unzip post-install-scripts.zip && cd Linux-Distro-Post-Install-Scripts-maintanence
-```
-
-#### Run
-```console
-bash ./post_install.sh
-```
-
-### To copy the firefox policy
-#### Run with
-```console
-bash ./post_install.sh --copy-firefox-policy
-``` -->
 
 [1]: distros/opensuse#readme
 [2]: distros/fedora#readme
