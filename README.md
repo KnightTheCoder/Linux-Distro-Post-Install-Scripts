@@ -163,8 +163,24 @@ Shared scripts between all distro setups, these include shell setup and program 
 
 ## How to run
 
+### Stable
 ```console
-curl -sS https://raw.githubusercontent.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/maintanence/install.sh | bash
+curl -sS https://raw.githubusercontent.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/maintanence/installers/install.sh | bash
+```
+
+#### With firefox policy
+```console
+curl -sS https://raw.githubusercontent.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/maintanence/installers/install_firefox.sh | bash
+```
+
+### Experimental
+```console
+curl -sS https://raw.githubusercontent.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/maintanence/installers/install_experimental.sh | bash
+```
+
+#### With firefox policy
+```console
+curl -sS https://raw.githubusercontent.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/maintanence/installers/install_experimental_firefox.sh | bash
 ```
 
 <!-- ### Stable
