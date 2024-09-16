@@ -161,9 +161,6 @@ example: using the distro's package manager and approprioate package names, repo
 ### Shared:
 Shared scripts between all distro setups, these include shell setup and program specific setups like installing hack nerd fonts, setting up scripts with plugin managers, neovim configurations, flatpaks, etc.
 
-### Installers:
-This directory contains all the installers for the different branches and whether to copy firefox policies
-
 ## How to run
 
 

@@ -9,12 +9,12 @@ readonly NC='\033[0m' # No Color
 # Copy policies and install extensions for firefox
 function setup_firefox() {
     extension_sets=$(
-    whiptail --title "Firefox extension sets" --separate-output --checklist "Choose what set of extensions to install\nWill open the extension's page to install manually\nClose to progress install" 0 0 0 \
-    "youtube" "Youtube" OFF \
-    "steam" "Steam" OFF \
-    "utilities" "Utilities" OFF \
-    3>&1 1>&2 2>&3
-  )
+        whiptail --title "Firefox extension sets" --separate-output --checklist "Choose what set of extensions to install\nWill open the extension's page to install manually\nClose to progress install" 0 0 0 \
+        "youtube" "Youtube" OFF \
+        "steam" "Steam" OFF \
+        "utilities" "Utilities" OFF \
+        3>&1 1>&2 2>&3
+    )
 
   # Remove new lines
   extension_sets=$(echo "$extension_sets"| tr "\n" " ")
