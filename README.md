@@ -158,11 +158,11 @@ Pre-made configuration files, these are meant to be copied and not changed
 Distro specific setups that will execute the specific steps for them:
 example: using the distro's package manager and approprioate package names, repos
 
-### Shared:
+### Shared
 Shared scripts between all distro setups, these include shell setup and program specific setups like installing hack nerd fonts, setting up scripts with plugin managers, neovim configurations, flatpaks, etc.
 
-## How to run
 
+## How to run
 
 ### Stable
 
