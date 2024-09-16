@@ -3,6 +3,9 @@
 # About
 This script is only intended for Arch linux with KDE desktop, it may not work as intended with other desktops
 
+# Disclaimer
+Upgrade the system and restart before running the script, as the microsoft fonts need the latest kernel installed
+
 # Features
 * Installs archlinux-keyring to update outdated certificates (when using an outdated iso)
 * Updates the system

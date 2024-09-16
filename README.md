@@ -17,6 +17,7 @@ Tested distros:
 * MX Linux
 * Arch Linux
 * EndeavourOS
+* Manjaro
 
 ## Features
 * Choose the apps and configurations you need
@@ -34,10 +35,10 @@ Tested distros:
 * Optionally sets hostname
 
 ## Requirements
-- wget (to download the scripts)
-- unzip (to unzip the scripts)
-- bash (to run the scripts)
-- systemd (recommended for the script to start services)
+* wget (to download the scripts)
+* unzip (to unzip the scripts)
+* bash (to run the scripts)
+* systemd (recommended for the script to start services)
 
 ## Motivation
 This project's motivation is to quickly setup a system with the same configuration/software across multiple distros.
@@ -47,20 +48,20 @@ The scripts are meant to be reproducable and allow you to get to using your new 
 You only need to configure apps and configuration files once when changing the project to suit your own needs and be able to use it afterwards.
 
 ## Steps the script runs:
-- Find package manager
-- Check for whiptail and install it if it's not found
-- Find Distro, ask if distro is correct, if distro and package manager don't match stop script
-- Start distro specific script
-- Select programs/tools to install
-- Add list of recommended packages (bat, eza, git, etc.)
-- Select shells to setup
-- Select neovim configuration
-- Break down programs/tools into setup steps (packages, services, usergroups, setups, etc.)
-- Distro specific setup (add repos, install codecs, etc.)
-- Add user to usergroups listed before
-- Run setups for selected apps
-- Start listed services
-- Ask for hostname (optional)
+* Find package manager
+* Check for whiptail and install it if it's not found
+* Find Distro, ask if distro is correct, if distro and package manager don't match stop script
+* Start distro specific script
+* Select programs/tools to install
+* Add list of recommended packages (bat, eza, git, etc.)
+* Select shells to setup
+* Select neovim configuration
+* Break down programs/tools into setup steps (packages, services, usergroups, setups, etc.)
+* Distro specific setup (add repos, install codecs, etc.)
+* Add user to usergroups listed before
+* Run setups for selected apps
+* Start listed services
+* Ask for hostname (optional)
 
 ## Project location
 By using the provided commands the scripts will be downloaded and unzipped in your language's Downloads folder
@@ -74,45 +75,45 @@ Can be found at ``config/firefox/policies.json``
 Manually edit to customize, then copy to ``/etc/firefox/policies/`` for it to work
 
 ### Included policy has the following changes
-- Disable telemetry
-- Disable firefox studies
-- Disable pocket
-- Disable form history
-- Disable feedback commands
-- Enable all tracking protection
-- Don't offer to save logins
-- Block requests for notifications
-- Block audio and video autoplay
-- Disable picture in picture
-- Always ask for download location
-- Disable autofill address
-- Disable autofill creditcard
-- No default bookmarks (only works if you copied the policies.json before opening firefox for the first time)
+* Disable telemetry
+* Disable firefox studies
+* Disable pocket
+* Disable form history
+* Disable feedback commands
+* Enable all tracking protection
+* Don't offer to save logins
+* Block requests for notifications
+* Block audio and video autoplay
+* Disable picture in picture
+* Always ask for download location
+* Disable autofill address
+* Disable autofill creditcard
+* No default bookmarks (only works if you copied the policies.json before opening firefox for the first time)
 
 ### Installs basic extensions for privacy (can be removed anytime)
-- [uBlock Origin][5]
-- [Privacy Badger][6]
-- [CanvasBlocker][7]
-- [User-Agent Switcher and Manager][8]
-- [LocalCDN][9]
-- [ClearURLs][10]
-- [Skip Redirect][11]
+* [uBlock Origin][5]
+* [Privacy Badger][6]
+* [CanvasBlocker][7]
+* [User-Agent Switcher and Manager][8]
+* [LocalCDN][9]
+* [ClearURLs][10]
+* [Skip Redirect][11]
 
 ### Optional extensions
 
 #### Youtube
-- [Enhancer for YouTube][12]
-- [DeArrow][13]
-- [Return YouTube Dislike][14]
-- [SponsorBlock][15]
+* [Enhancer for YouTube][12]
+* [DeArrow][13]
+* [Return YouTube Dislike][14]
+* [SponsorBlock][15]
 
 #### Steam
-- [Augmented Steam][16]
-- [ProtonDB for Steam][17]
+* [Augmented Steam][16]
+* [ProtonDB for Steam][17]
 
 #### Utilities
-- [Dark Reader][18]
-- [Save webP as PNG or JPEG (Converter)][19]
+* [Dark Reader][18]
+* [Save webP as PNG or JPEG (Converter)][19]
 
 
 ## Project breakdown
