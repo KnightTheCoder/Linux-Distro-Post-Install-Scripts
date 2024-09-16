@@ -174,7 +174,7 @@ if whiptail --title "Remove discover" --yesno "Would you like to remove discover
 fi
 
 # Add multilib for steam to work
-if grep -iqzoP "\n\[multilib\]\nInclude = /etc/pacman.d/mirrorlist\n" /etc/pacman.conf; then
+if grep -iqzoP "\n\[multilib\]\n" /etc/pacman.conf; then
     echo -e "${YELLOW}multilib is already included${NC}"
 else
     printf "\n[multilib]\nInclude = /etc/pacman.d/mirrorlist\n" | sudo tee -a /etc/pacman.conf
