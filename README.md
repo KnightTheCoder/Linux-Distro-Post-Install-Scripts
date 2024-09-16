@@ -117,7 +117,7 @@ Manually edit to customize, then copy to ``/etc/firefox/policies/`` for it to wo
 
 ## Project breakdown
 
-### Project structure:
+### Project structure
 ```bash
 .
 ├── config
