@@ -207,7 +207,7 @@ function setup_zsh() {
     fi
     printf "abbr cat=%s\nabbr ls=eza" $bat_fullname > "$HOME/.config/zsh-abbr/user-abbreviations"
 
-    echo "${GREEN}Changing login shell for ${USER}..."
+    echo "${GREEN}Changing login shell for ${USER}...${NC}"
     chsh -s /bin/zsh
 }
 
