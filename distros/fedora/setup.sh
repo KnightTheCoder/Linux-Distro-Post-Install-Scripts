@@ -87,14 +87,12 @@ for package in $packages; do
         starship-install )
             setups+=(starship-install)
 
-            # packages=${packages//"$package"/}
             packages=$(remove_package "$packages" "$package")
             ;;
 
         starship )
             setups+=(starship)
 
-            # packages=${packages//"$package"/}
             packages=$(remove_package "$packages" "$package")
             ;;
 
@@ -103,7 +101,6 @@ for package in $packages; do
             ;;
 
         gaming-overlay)
-            # packages=${packages//"$package"/}
             packages=$(remove_package "$packages" "$package")
 
             packages+=" goverlay mangohud gamemode"
@@ -116,7 +113,6 @@ for package in $packages; do
 
             usergroups+=(libvirt)
 
-            # packages=${packages//"$package"/}
             packages=$(remove_package "$packages" "$package")
             ;;
 
@@ -127,28 +123,24 @@ for package in $packages; do
         heroic )
             setups+=(heroic)
 
-            # packages=${packages//"$package"/}
             packages=$(remove_package "$packages" "$package")
             ;;
 
         itch )
             setups+=("$package")
 
-            # packages=${packages//"$package"/}
             packages=$(remove_package "$packages" "$package")
             ;;
 
         vscode )
             setups+=(vscode)
 
-            # packages=${packages//"$package"/}
             packages=$(remove_package "$packages" "$package")
             ;;
 
         vscodium )
             setups+=(vscodium)
 
-            # packages=${packages//"$package"/}
             packages=$(remove_package "$packages" "$package")
             ;;
 
@@ -161,14 +153,12 @@ for package in $packages; do
             ;;
 
         java )
-            # packages=${packages//"$package"/}
             packages=$(remove_package "$packages" "$package")
 
             packages+=" java-latest-openjdk"
             ;;
 
         xampp )
-            # packages=${packages//"$package"/}
             packages=$(remove_package "$packages" "$package")
 
             setups+=(xampp)

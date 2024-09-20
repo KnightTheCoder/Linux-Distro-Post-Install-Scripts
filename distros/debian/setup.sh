@@ -85,19 +85,16 @@ for package in $packages; do
         starship-install )
             setups+=(starship-install)
 
-            # packages=${packages//"$package"/}
             packages=$(remove_package "$packages" "$package")
             ;;
 
         starship )
             setups+=(starship)
 
-            # packages=${packages//"$package"/}
             packages=$(remove_package "$packages" "$package")
             ;;
 
         gaming-overlay)
-            # packages=${packages//"$package"/}
             packages=$(remove_package "$packages" "$package")
 
             packages+=" goverlay mangohud gamemode"
@@ -105,7 +102,6 @@ for package in $packages; do
 
         qemu )
             # Remove package
-            # packages=${packages//"$package"/}
             packages=$(remove_package "$packages" "$package")
 
             packages+=" libvirt-clients libvirt-daemon-system bridge-utils virtinst libvirt-daemon virt-manager"
@@ -125,7 +121,6 @@ for package in $packages; do
             # steam package has a different name for debian
             if grep -iq ID=debian /etc/os-release; then
                 # Remove package
-                # packages=${packages//"$package"/}
             packages=$(remove_package "$packages" "$package")
 
                 packages+=" steam-installer"
@@ -139,21 +134,18 @@ for package in $packages; do
 
             packages+=" wine"
 
-            # packages=${packages//"$package"/}
             packages=$(remove_package "$packages" "$package")
             ;;
 
         heroic )
             setups+=(heroic)
 
-            # packages=${packages//"$package"/}
             packages=$(remove_package "$packages" "$package")
             ;;
 
         itch )
             setups+=("$package")
 
-            # packages=${packages//"$package"/}
             packages=$(remove_package "$packages" "$package")
             ;;
 
@@ -161,19 +153,16 @@ for package in $packages; do
             setups+=(vscode)
             packages+=" apt-transport-https"
 
-            # packages=${packages//"$package"/}
             packages=$(remove_package "$packages" "$package")
             ;;
 
         vscodium )
             setups+=(vscodium)
 
-            # packages=${packages//"$package"/}
             packages=$(remove_package "$packages" "$package")
             ;;
 
         dotnet )
-            # packages=${packages//"$package"/}
             packages=$(remove_package "$packages" "$package")
 
             if grep -iq "ID=debian" /etc/os-release; then
@@ -186,7 +175,6 @@ for package in $packages; do
         rustup )
             setups+=(rust)
 
-            # packages=${packages//"$package"/}
             packages=$(remove_package "$packages" "$package")
             ;;
 
@@ -205,14 +193,12 @@ for package in $packages; do
             ;;
 
         java )
-            # packages=${packages//"$package"/}
             packages=$(remove_package "$packages" "$package")
 
             packages+=" default-jdk"
             ;;
 
         xampp )
-            # packages=${packages//"$package"/}
             packages=$(remove_package "$packages" "$package")
 
             setups+=(xampp)
@@ -235,7 +221,6 @@ for package in $packages; do
             ;;
 
         distrobox )
-            # packages=${packages//"$package"/}
             packages=$(remove_package "$packages" "$package")
 
             setups+=(distrobox)

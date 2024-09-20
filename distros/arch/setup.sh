@@ -87,7 +87,6 @@ for package in $packages; do
             ;;
 
         gaming-overlay)
-            # packages=${packages//"$package"/}
             packages=$(remove_package "$packages" "$package")
 
             packages+=" goverlay mangohud gamemode"
@@ -100,28 +99,24 @@ for package in $packages; do
 
             usergroups+=(libvirt)
 
-            # packages=${packages//"$package"/}
             packages=$(remove_package "$packages" "$package")
             ;;
 
         heroic )
             aur+=(heroic-games-launcher-bin)
 
-            # packages=${packages//"$package"/}
             packages=$(remove_package "$packages" "$package")
             ;;
 
         itch )
             setups+=("$package")
 
-            # packages=${packages//"$package"/}
             packages=$(remove_package "$packages" "$package")
             ;;
 
         vscode )
             aur+=(visual-studio-code-bin)
 
-            # packages=${packages//"$package"/}
             packages=$(remove_package "$packages" "$package")
 
             setups+=(vscode)
@@ -130,7 +125,6 @@ for package in $packages; do
         vscodium )
             aur+=(vscodium-bin)
 
-            # packages=${packages//"$package"/}
             packages=$(remove_package "$packages" "$package")
             
             setups+=(vscodium)
@@ -147,14 +141,12 @@ for package in $packages; do
             ;;
 
         java )
-            # packages=${packages//"$package"/}
             packages=$(remove_package "$packages" "$package")
 
             packages+=" jdk-openjdk"
             ;;
 
         xampp )
-            # packages=${packages//"$package"/}
             packages=$(remove_package "$packages" "$package")
 
             setups+=(xampp)
@@ -169,7 +161,6 @@ for package in $packages; do
         docker-desktop )
             aur+=(docker-desktop)
 
-            # packages=${packages//"$package"/}
             packages=$(remove_package "$packages" "$package")
             ;;
 

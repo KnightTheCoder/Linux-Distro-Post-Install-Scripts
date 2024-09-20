@@ -110,7 +110,6 @@ for package in $packages; do
             ;;
         
         gaming-overlay)
-            # packages=${packages//"$package"/}
             packages=$(remove_package "$packages" "$package")
 
             packages+=" goverlay mangohud gamemode"
@@ -135,14 +134,12 @@ for package in $packages; do
         heroic )
             opi+=(heroic-games-launcher)
 
-            # packages=${packages//"$package"/}
             packages=$(remove_package "$packages" "$package")
             ;;
 
         itch )
             setups+=("$package")
 
-            # packages=${packages//"$package"/}
             packages=$(remove_package "$packages" "$package")
             ;;
 
@@ -151,7 +148,6 @@ for package in $packages; do
 
             opi+=(vscode)
 
-            # packages=${packages//"$package"/}
             packages=$(remove_package "$packages" "$package")
             ;;
 
@@ -159,14 +155,12 @@ for package in $packages; do
             opi+=(vscodium)
             setups+=(vscodium)
 
-            # packages=${packages//"$package"/}
             packages=$(remove_package "$packages" "$package")
             ;;
 
         dotnet )
             opi+=(dotnet)
 
-            # packages=${packages//"$package"/}
             packages=$(remove_package "$packages" "$package")
             ;;
 
@@ -175,7 +169,6 @@ for package in $packages; do
             ;;
 
         nodejs )
-            # packages=${packages//"$package"/}
             packages=$(remove_package "$packages" "$package")
 
             packages+=" nodejs-default"
@@ -184,21 +177,18 @@ for package in $packages; do
             ;;
 
         golang )
-            # packages=${packages//"$package"/}
             packages=$(remove_package "$packages" "$package")
 
             packages+=" go go-doc"
             ;;
 
         java )
-            # packages=${packages//"$package"/}
             packages=$(remove_package "$packages" "$package")
 
             packages+=" java-22-openjdk-devel"
             ;;
 
         xampp )
-            # packages=${packages//"$package"/}
             packages=$(remove_package "$packages" "$package")
 
             setups+=(xampp)
