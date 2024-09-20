@@ -6,6 +6,15 @@ readonly GREEN='\033[0;32m'
 readonly YELLOW='\033[0;33m'
 readonly NC='\033[0m' # No Color
 
+function remove_package() {
+    package_list="$1"
+    package="$2"
+
+    result_package_list=${package_list//"$package"/}
+
+    echo "$result_package_list"
+}
+
 # Copy policies and install extensions for firefox
 function setup_firefox() {
     extension_sets=$(

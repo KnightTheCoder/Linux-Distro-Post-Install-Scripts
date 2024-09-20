@@ -29,6 +29,7 @@ packages=$(
     "dotnet-sdk" ".NET sdk" OFF \
     "rustup" "Rust" OFF \
     "go" "Golang" OFF \
+    "java" "Java 22 openjdk" OFF \
     "xampp" "XAMPP" OFF \
     "docker" "Docker engine" OFF \
     "docker-desktop" "Docker desktop" OFF \
@@ -65,7 +66,7 @@ services=()
 setups=(hacknerd)
 usergroups=()
 aur=(ttf-ms-win11-auto)
-remove_packages="akregator kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat"
+packages_to_remove="akregator kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat"
 
 nvim_config=$(choose_nvim_config)
 setups+=("$nvim_config")
@@ -86,7 +87,8 @@ for package in $packages; do
             ;;
 
         gaming-overlay)
-            packages=${packages//"$package"/}
+            # packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
 
             packages+=" goverlay mangohud gamemode"
             ;;
@@ -98,25 +100,29 @@ for package in $packages; do
 
             usergroups+=(libvirt)
 
-            packages=${packages//"$package"/}
+            # packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
             ;;
 
         heroic )
             aur+=(heroic-games-launcher-bin)
 
-            packages=${packages//"$package"/}
+            # packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
             ;;
 
         itch )
             setups+=("$package")
 
-            packages=${packages//"$package"/}
+            # packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
             ;;
 
         vscode )
             aur+=(visual-studio-code-bin)
 
-            packages=${packages//"$package"/}
+            # packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
 
             setups+=(vscode)
             ;;
@@ -124,7 +130,8 @@ for package in $packages; do
         vscodium )
             aur+=(vscodium-bin)
 
-            packages=${packages//"$package"/}
+            # packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
             
             setups+=(vscodium)
             ;;
@@ -139,8 +146,16 @@ for package in $packages; do
             setups+=(npm)
             ;;
 
+        java )
+            # packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
+
+            packages+=" jdk-openjdk"
+            ;;
+
         xampp )
-            packages=${packages//"$package"/}
+            # packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
 
             setups+=(xampp)
             ;;
@@ -154,7 +169,8 @@ for package in $packages; do
         docker-desktop )
             aur+=(docker-desktop)
 
-            packages=${packages//"$package"/}
+            # packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
             ;;
 
         flatpak )
@@ -170,7 +186,7 @@ packages=$(echo "$packages" | xargs)
 
 # Ask if you want to remove discover
 if whiptail --title "Remove discover" --yesno "Would you like to remove discover?" 0 0; then
-    remove_packages+=" discover"
+    packages_to_remove+=" discover"
 fi
 
 # Add multilib for steam to work
@@ -197,7 +213,7 @@ sudo pacman -Syu --noconfirm
 # TODO: list correct packages to remove
 # Remove unneccessary packages
 # shellcheck disable=SC2086
-sudo pacman -Rns $remove_packages
+sudo pacman -Rns $packages_to_remove
 
 # Install packages
 # shellcheck disable=SC2086

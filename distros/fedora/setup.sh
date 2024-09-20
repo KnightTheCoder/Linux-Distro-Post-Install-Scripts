@@ -28,6 +28,7 @@ packages=$(
     "dotnet" ".NET sdk" OFF \
     "rustup" "Rust" OFF \
     "golang" "Golang" OFF \
+    "java" "Java 22  openjdk" OFF \
     "xampp" "XAMPP" OFF \
     "docker" "Docker engine" OFF \
     "docker-desktop" "Docker desktop" OFF \
@@ -67,7 +68,7 @@ packages=$(echo "$packages"| tr "\n" " ")
 services=()
 setups=(fish hacknerd)
 usergroups=()
-remove_packages="akregator dragon elisa-player kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat kolourpaint qt5-qdbusviewer"
+packages_to_remove="akregator dragon elisa-player kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat kolourpaint qt5-qdbusviewer"
 
 nvim_config=$(choose_nvim_config)
 setups+=("$nvim_config")
@@ -86,13 +87,15 @@ for package in $packages; do
         starship-install )
             setups+=(starship-install)
 
-            packages=${packages//"$package"/}
+            # packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
             ;;
 
         starship )
             setups+=(starship)
 
-            packages=${packages//"$package"/}
+            # packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
             ;;
 
         btop )
@@ -100,7 +103,8 @@ for package in $packages; do
             ;;
 
         gaming-overlay)
-            packages=${packages//"$package"/}
+            # packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
 
             packages+=" goverlay mangohud gamemode"
             ;;
@@ -112,7 +116,8 @@ for package in $packages; do
 
             usergroups+=(libvirt)
 
-            packages=${packages//"$package"/}
+            # packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
             ;;
 
         steam )
@@ -122,25 +127,29 @@ for package in $packages; do
         heroic )
             setups+=(heroic)
 
-            packages=${packages//"$package"/}
+            # packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
             ;;
 
         itch )
             setups+=("$package")
 
-            packages=${packages//"$package"/}
+            # packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
             ;;
 
         vscode )
             setups+=(vscode)
 
-            packages=${packages//"$package"/}
+            # packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
             ;;
 
         vscodium )
             setups+=(vscodium)
 
-            packages=${packages//"$package"/}
+            # packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
             ;;
 
         rustup )
@@ -151,8 +160,16 @@ for package in $packages; do
             setups+=(npm)
             ;;
 
+        java )
+            # packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
+
+            packages+=" java-latest-openjdk"
+            ;;
+
         xampp )
-            packages=${packages//"$package"/}
+            # packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
 
             setups+=(xampp)
             ;;
@@ -185,7 +202,7 @@ packages=$(echo "$packages" | xargs)
 
 # Ask if you want to remove discover
 if whiptail --title "Remove discover" --yesno "Would you like to remove discover?" 0 0; then
-    remove_packages+=" plasma-discover --exclude=flatpak"
+    packages_to_remove+=" plasma-discover --exclude=flatpak"
 fi
 
 # Modify dnf config file
@@ -208,7 +225,7 @@ sudo dnf upgrade -y --refresh
 
 # Remove unneccessary packages
 # shellcheck disable=SC2086
-sudo dnf remove -y $remove_packages
+sudo dnf remove -y $packages_to_remove
 
 # Install codecs
 sudo dnf group install -y Multimedia --allowerasing

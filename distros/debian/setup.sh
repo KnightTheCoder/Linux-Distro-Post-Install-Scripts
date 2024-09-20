@@ -27,6 +27,7 @@ packages=$(
     "dotnet" ".NET sdk" OFF \
     "rustup" "Rust" OFF \
     "golang" "Golang" OFF \
+    "java" "Java 17 openjdk" OFF \
     "xampp" "XAMPP" OFF \
     "docker" "Docker engine" OFF \
     "docker-desktop" "Docker desktop" OFF \
@@ -65,7 +66,7 @@ packages=$(echo "$packages"| tr "\n" " ")
 services=()
 setups=(hacknerd eza)
 usergroups=()
-remove_packages="elisa dragonplayer akregator kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat kolourpaint thunderbird"
+packages_to_remove="elisa dragonplayer akregator kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat kolourpaint thunderbird"
 
 nvim_config=$(choose_nvim_config)
 setups+=("$nvim_config")
@@ -84,24 +85,28 @@ for package in $packages; do
         starship-install )
             setups+=(starship-install)
 
-            packages=${packages//"$package"/}
+            # packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
             ;;
 
         starship )
             setups+=(starship)
 
-            packages=${packages//"$package"/}
+            # packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
             ;;
 
         gaming-overlay)
-            packages=${packages//"$package"/}
+            # packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
 
             packages+=" goverlay mangohud gamemode"
             ;;
 
         qemu )
             # Remove package
-            packages=${packages//"$package"/}
+            # packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
 
             packages+=" libvirt-clients libvirt-daemon-system bridge-utils virtinst libvirt-daemon virt-manager"
 
@@ -120,7 +125,8 @@ for package in $packages; do
             # steam package has a different name for debian
             if grep -iq ID=debian /etc/os-release; then
                 # Remove package
-                packages=${packages//"$package"/}
+                # packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
 
                 packages+=" steam-installer"
             fi
@@ -133,36 +139,42 @@ for package in $packages; do
 
             packages+=" wine"
 
-            packages=${packages//"$package"/}
+            # packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
             ;;
 
         heroic )
             setups+=(heroic)
 
-            packages=${packages//"$package"/}
+            # packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
             ;;
 
         itch )
             setups+=("$package")
 
-            packages=${packages//"$package"/}
+            # packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
             ;;
 
         vscode )
             setups+=(vscode)
             packages+=" apt-transport-https"
 
-            packages=${packages//"$package"/}
+            # packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
             ;;
 
         vscodium )
             setups+=(vscodium)
 
-            packages=${packages//"$package"/}
+            # packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
             ;;
 
         dotnet )
-            packages=${packages//"$package"/}
+            # packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
 
             if grep -iq "ID=debian" /etc/os-release; then
                 setups+=(dotnet)
@@ -174,7 +186,8 @@ for package in $packages; do
         rustup )
             setups+=(rust)
 
-            packages=${packages//"$package"/}
+            # packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
             ;;
 
         nodejs )
@@ -191,8 +204,16 @@ for package in $packages; do
             fi
             ;;
 
+        java )
+            # packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
+
+            packages+=" openjdk-17-jdk"
+            ;;
+
         xampp )
-            packages=${packages//"$package"/}
+            # packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
 
             setups+=(xampp)
             ;;
@@ -214,7 +235,8 @@ for package in $packages; do
             ;;
 
         distrobox )
-            packages=${packages//"$package"/}
+            # packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
 
             setups+=(distrobox)
             ;;
@@ -232,7 +254,7 @@ packages=$(echo "$packages" | xargs)
 
 # Ask if you want to remove discover
 if whiptail --title "Remove discover" --yesno "Would you like to remove discover?" 0 0; then
-    remove_packages+=" plasma-discover"
+    packages_to_remove+=" plasma-discover"
 fi
 
 if grep -iq "kde neon" /etc/os-release; then
@@ -266,7 +288,7 @@ sudo nala upgrade -y
 
 # Remove unnecessary packages
 # shellcheck disable=SC2086
-sudo nala remove -y $remove_packages
+sudo nala remove -y $packages_to_remove
 
 # Install packages
 # shellcheck disable=SC2086
