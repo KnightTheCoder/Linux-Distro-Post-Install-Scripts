@@ -27,7 +27,7 @@ packages=$(
     "dotnet" ".NET sdk" OFF \
     "rustup" "Rust" OFF \
     "golang" "Golang" OFF \
-    "java" "Java 17 openjdk" OFF \
+    "java" "Java openjdk" OFF \
     "xampp" "XAMPP" OFF \
     "docker" "Docker engine" OFF \
     "docker-desktop" "Docker desktop" OFF \
@@ -208,7 +208,7 @@ for package in $packages; do
             # packages=${packages//"$package"/}
             packages=$(remove_package "$packages" "$package")
 
-            packages+=" openjdk-17-jdk"
+            packages+=" default-jdk"
             ;;
 
         xampp )
