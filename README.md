@@ -10,6 +10,7 @@
 
 Tested distros:
 * OpenSUSE Tumbleweed
+* OpenSUSE Leap
 * Fedora
 * Debian
 * Ubuntu
