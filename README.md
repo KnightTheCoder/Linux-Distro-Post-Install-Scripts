@@ -38,7 +38,9 @@ Tested distros:
 
 > [!NOTE]
 > Step 1: Download scripts (will be downloaded to your downloads directory)
+
 > Step 2: Navigate to the downloaded scripts and unzip them
+
 > Step 3: Run the script
 
 ### Stable
