@@ -55,7 +55,7 @@ Tested distros:
 * MX Linux
 * Arch Linux
 * EndeavourOS
-* Manjaro
+* Manjaro Linux
 
 > Written in Bash and whiptail <br />
 > <img src="https://skillicons.dev/icons?i=bash" />
@@ -66,7 +66,7 @@ Tested distros:
 
 > [!IMPORTANT]
 > If you're using a very old iso, update the system and restart before running the script <br />
-> Recommended on archlinux and OpenSUSE Tumbleweed
+> Recommended on Arch Linux and OpenSUSE Tumbleweed
 
 ## 🛠 Requirements
 * wget (to download the scripts)
@@ -162,9 +162,9 @@ By using the provided commands the scripts will be downloaded and unzipped in yo
 ## 🌐 Firefox policy (optional)
 A firefox policy is included for increased security.
 
-Can be found at ``config/firefox/policies.json``
-
-Manually edit to customize, then copy to ``/etc/firefox/policies/`` for it to work
+> [!NOTE]
+> Can be found at ``config/firefox/policies.json`` <br />
+> Manually edit to customize, then copy to ``/etc/firefox/policies/`` for it to work
 
 ### 📖 Included policy has the following changes
 * Disable telemetry
