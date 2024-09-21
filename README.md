@@ -1,10 +1,15 @@
 # Welcome to Linux Distro Post Install Scripts! 👋
 
 ![Stargazers](https://img.shields.io/github/stars/KnightTheCoder/Linux-Distro-Post-Install-Scripts?style=for-the-badge)
-![GitHub License](https://img.shields.io/github/license/KnightTheCoder/Linux-Distro-Post-Install-Scripts?color=blue&style=for-the-badge)
+[![GitHub License][license-shield]][license-url]
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/KnightTheCoder/Linux-Distro-Post-Install-Scripts?color=blue&style=for-the-badge)
 ![GitHub last commit](https://img.shields.io/github/last-commit/KnightTheCoder/Linux-Distro-Post-Install-Scripts?color=blue&style=for-the-badge)
-![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/KnightTheCoder/Linux-Distro-Post-Install-Scripts?color=green&style=for-the-badge)
+[![GitHub Issues][issue-shield]][issue-url]
+
+[license-shield]: https://img.shields.io/github/license/KnightTheCoder/Linux-Distro-Post-Install-Scripts?color=blue&style=for-the-badge
+[license-url]:https://github.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/blob/maintanence/LICENSE
+[issue-shield]: https://img.shields.io/github/issues/KnightTheCoder/Linux-Distro-Post-Install-Scripts?color=green&style=for-the-badge
+[issue-url]: https://github.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/issues
 
 <h2 align="center">Post install script</h2>
 <p align="center">A collection of scripts for getting a new system up and running easily</p>
