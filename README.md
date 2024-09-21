@@ -111,7 +111,7 @@ The scripts are meant to be reproducable and allow you to get to using your new 
 
 You only need to configure apps and configuration files once when changing the project to suit your own needs and be able to use it afterwards.
 
-## Steps the script runs:
+## 📃 Steps the script runs:
 * Find package manager
 * Check for whiptail and install it if it's not found
 * Find Distro, ask if distro is correct, if distro and package manager don't match stop script
@@ -127,7 +127,7 @@ You only need to configure apps and configuration files once when changing the p
 * Start listed services
 * Ask for hostname (optional)
 
-## 📥 Project location
+## 💻 Project location
 By using the provided commands the scripts will be downloaded and unzipped in your language's Downloads folder
 
 (run ``xdg-user-dir DOWNLOAD`` to find out the location of yours)
@@ -139,7 +139,7 @@ Can be found at ``config/firefox/policies.json``
 
 Manually edit to customize, then copy to ``/etc/firefox/policies/`` for it to work
 
-### Included policy has the following changes
+### 📖 Included policy has the following changes
 * Disable telemetry
 * Disable firefox studies
 * Disable pocket
@@ -155,7 +155,7 @@ Manually edit to customize, then copy to ``/etc/firefox/policies/`` for it to wo
 * Disable autofill creditcard
 * No default bookmarks (only works if you copied the policies.json before opening firefox for the first time)
 
-### Installs basic extensions for privacy (can be removed anytime)
+### 📦 Installs basic extensions for privacy (can be removed anytime)
 * [uBlock Origin][5]
 * [Privacy Badger][6]
 * [CanvasBlocker][7]
@@ -181,7 +181,7 @@ Manually edit to customize, then copy to ``/etc/firefox/policies/`` for it to wo
 * [Save webP as PNG or JPEG (Converter)][19]
 
 
-## Project breakdown
+## 📂 Project breakdown
 
 ### Project structure
 ```bash
