@@ -6,6 +6,62 @@ readonly GREEN='\033[0;32m'
 readonly YELLOW='\033[0;33m'
 readonly NC='\033[0m' # No Color
 
+function remove_package() {
+    package_list="$1"
+    package="$2"
+
+    result_package_list=${package_list//"$package"/}
+
+    echo "$result_package_list"
+}
+
+# Copy policies and install extensions for firefox
+function setup_firefox() {
+    extension_sets=$(
+        whiptail --title "Firefox extension sets" --separate-output --checklist "Choose what set of extensions to install\nWill open the extension's page to install manually\nClose to progress install" 0 0 0 \
+        "youtube" "Youtube" OFF \
+        "steam" "Steam" OFF \
+        "utilities" "Utilities" OFF \
+        3>&1 1>&2 2>&3
+    )
+
+  # Remove new lines
+  extension_sets=$(echo "$extension_sets"| tr "\n" " ")
+  extensions=()
+
+  if [ ! -f "/etc/firefox/policies/policies.json" ]; then
+    sudo mkdir -pv "/etc/firefox/policies"
+    sudo cp -fv "config/firefox/policies.json" "/etc/firefox/policies"
+  fi
+
+  for extension_set in $extension_sets; do
+
+    case $extension_set in
+      youtube )
+        extensions+=("https://addons.mozilla.org/en-US/firefox/addon/enhancer-for-youtube/")
+        extensions+=("https://addons.mozilla.org/en-US/firefox/addon/dearrow/")
+        extensions+=("https://addons.mozilla.org/en-US/firefox/addon/return-youtube-dislikes/")
+        extensions+=("https://addons.mozilla.org/en-US/firefox/addon/sponsorblock/")
+        ;;
+
+      steam )
+        extensions+=("https://addons.mozilla.org/en-US/firefox/addon/augmented-steam/")
+        extensions+=("https://addons.mozilla.org/en-US/firefox/addon/protondb-for-steam/")
+        ;;
+
+      utilities )
+        extensions+=("https://addons.mozilla.org/en-US/firefox/addon/darkreader/")
+        extensions+=("https://addons.mozilla.org/en-US/firefox/addon/save-webp-as-png-or-jpeg/")
+        ;;
+    esac
+    
+  done
+
+  if [ ${#extensions[@]} -ne 0 ]; then
+    firefox "${extensions[@]}"
+  fi
+}
+
 # Install the itch desktop app
 function setup_itch_app() {
     # Check if itch is installed
@@ -22,7 +78,7 @@ function setup_itch_app() {
 
 # Install vscode extensions and copy keybindings
 function setup_vscode() {
-    code_editor=$1 # code or codium
+    local code_editor=$1 # code or codium
 
     if [ -z "$code_editor" ] || [ "$code_editor" == code ]; then
         code_editor="code"
@@ -61,9 +117,14 @@ function setup_vscode() {
         "usernamehw.errorlens"
         "vadimcn.vscode-lldb"
         "vue.volar"
+        "burkeholland.simple-react-snippets"
+        "Angular.ng-template"
         "zignd.html-css-class-completion"
         "ms-azuretools.vscode-docker"
         "ritwickdey.LiveServer"
+        "WallabyJs.quokka-vscode"
+        "YoavBls.pretty-ts-errors"
+        "nrwl.angular-console"
     )
 
     # Install extensions
@@ -71,11 +132,16 @@ function setup_vscode() {
         $code_editor --force --install-extension "$ext"
     done
 
+    local code_folder="Code"
+    if [[ $code_editor = "codium" ]]; then
+        code_folder="VSCodium"
+    fi
+
     # Copy key bindings
-    cp -fv "../../config/vscode/keybindings.json" "$HOME/.config/Code/User"
+    cp -fv "../../config/vscode/keybindings.json" "$HOME/.config/${code_folder}/User"
 
     # Copy settings
-    cp -fv "../../config/vscode/settings.json" "$HOME/.config/Code/User"
+    cp -fv "../../config/vscode/settings.json" "$HOME/.config/${code_folder}/User"
 }
 
 function setup_hacknerd_fonts() {
@@ -84,7 +150,7 @@ function setup_hacknerd_fonts() {
         return
     fi
 
-    wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/Hack.zip
+    wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/Hack.zip
     unzip ./Hack.zip -d Hack
     mkdir -p "$HOME/.local/share/fonts/hacknerdfonts"
     cp -fv ./Hack/*.ttf "$HOME/.local/share/fonts/hacknerdfonts"
@@ -141,6 +207,7 @@ function setup_zsh() {
     fi
     printf "abbr cat=%s\nabbr ls=eza" $bat_fullname > "$HOME/.config/zsh-abbr/user-abbreviations"
 
+    echo -e "${GREEN}Changing login shell for ${USER}...${NC}"
     chsh -s /bin/zsh
 }
 
