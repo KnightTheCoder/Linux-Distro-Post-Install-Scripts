@@ -37,11 +37,9 @@ Tested distros:
 ## How to run
 
 > [!NOTE]
-> Step 1: Download scripts (will be downloaded to your downloads directory)
-
-> Step 2: Navigate to the downloaded scripts and unzip them
-
-> Step 3: Run the script
+> Step 1: Download scripts (will be downloaded to your downloads directory) <br />
+> Step 2: Navigate to the downloaded scripts and unzip them <br />
+> Step 3: Run the script <br />
 
 ### Stable
 
