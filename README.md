@@ -1,5 +1,7 @@
 # Post install script for Linux
 
+![preview](images/preview.png)
+
 ## Supported distros
 * [OpenSUSE][1]
 * [Fedora][2]
