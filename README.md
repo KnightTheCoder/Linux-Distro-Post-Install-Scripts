@@ -19,6 +19,54 @@ Tested distros:
 * EndeavourOS
 * Manjaro
 
+> 100% Written in Bash
+
+> [!NOTE]
+> Only tested with x86 architecture!
+
+> [!IMPORTANT]
+> Update the system and restart, if you're using a very old iso
+> Recommended on archlinux and OpenSUSE Tumbleweed
+
+## Requirements
+* wget (to download the scripts)
+* unzip (to unzip the scripts)
+* bash (to run the scripts)
+* systemd (needed to start services)
+
+## How to run
+
+> [!NOTE]
+> Step 1: Download scripts (will be downloaded to your downloads directory)
+> Step 2: Navigate to the downloaded scripts and unzip them
+> Step 3: Run the script
+
+### Stable
+
+```console
+wget -O "$(xdg-user-dir DOWNLOAD)/post-install-scripts.zip" "https://github.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/archive/refs/heads/master.zip"
+
+cd "$(xdg-user-dir DOWNLOAD)" && unzip -o post-install-scripts.zip && cd Linux-Distro-Post-Install-Scripts-master
+
+bash ./post_install.sh
+```
+
+### Experimental
+
+```console
+wget -O "$(xdg-user-dir DOWNLOAD)/post-install-scripts.zip" "https://github.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/archive/reos/heads/maintanence.zip"
+
+cd "$(xdg-user-dir DOWNLOAD)" && unzip -o post-install-scripts.zip && cd Linux-Distro-Post-Install-Scripts-maintanence
+
+bash ./post_install.sh
+```
+
+### To copy the firefox policy
+#### Run with
+```console
+bash ./post_install.sh --copy-firefox-policy
+```
+
 ## Features
 * Choose the apps and configurations you need
 * Updates the system
@@ -32,16 +80,12 @@ Tested distros:
 * Installs NvChad or Astrovim for neovim
 * Installs the GitHub CLI
 * Installs docker, podman and distrobox for containers
+* Installs code editors: vscode, vscodium
+* Installs programming languages and development environments: gcc, nodejs, dotnet, rust, go, java, xampp                       
 * Optionally sets hostname
 
-## Requirements
-* wget (to download the scripts)
-* unzip (to unzip the scripts)
-* bash (to run the scripts)
-* systemd (recommended for the script to start services)
-
-## Motivation
-This project's motivation is to quickly setup a system with the same configuration/software across multiple distros.
+## Why use it?
+Post install script for linux aims to quickly setup a system with the same configuration/software across multiple distros.
 
 The scripts are meant to be reproducable and allow you to get to using your new system/virtual machine rather than try to replicate your already existing setup.
 
@@ -161,35 +205,6 @@ example: using the distro's package manager and approprioate package names, repo
 
 ### Shared
 Shared scripts between all distro setups, these include shell setup and program specific setups like installing hack nerd fonts, setting up scripts with plugin managers, neovim configurations, flatpaks, etc.
-
-
-## How to run
-
-### Stable
-
-```console
-wget -O "$(xdg-user-dir DOWNLOAD)/post-install-scripts.zip" "https://github.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/archive/refs/heads/master.zip"
-
-cd "$(xdg-user-dir DOWNLOAD)" && unzip -o post-install-scripts.zip && cd Linux-Distro-Post-Install-Scripts-master
-
-bash ./post_install.sh
-```
-
-### Experimental
-
-```console
-wget -O "$(xdg-user-dir DOWNLOAD)/post-install-scripts.zip" "https://github.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/archive/reos/heads/maintanence.zip"
-
-cd "$(xdg-user-dir DOWNLOAD)" && unzip -o post-install-scripts.zip && cd Linux-Distro-Post-Install-Scripts-maintanence
-
-bash ./post_install.sh
-```
-
-### To copy the firefox policy
-#### Run with
-```console
-bash ./post_install.sh --copy-firefox-policy
-```
 
 [1]: distros/opensuse#readme
 [2]: distros/fedora#readme
