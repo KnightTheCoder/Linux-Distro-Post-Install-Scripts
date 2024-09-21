@@ -118,6 +118,7 @@ You only need to configure apps and configuration files once when changing the p
 
 ## 📥 Project location
 By using the provided commands the scripts will be downloaded and unzipped in your language's Downloads folder
+
 (run ``xdg-user-dir DOWNLOAD`` to find out the location of yours)
 
 ## 🌐 Firefox policy (optional)
