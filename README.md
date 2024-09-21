@@ -160,7 +160,7 @@ By using the provided commands the scripts will be downloaded and unzipped in yo
 (run ``xdg-user-dir DOWNLOAD`` to find out the location of yours)
 
 ## 🌐 Firefox policy (optional)
-A firefox policy is included for increased security.
+A firefox policy is included for increased privacy.
 
 > [!NOTE]
 > Can be found at ``config/firefox/policies.json`` <br />
