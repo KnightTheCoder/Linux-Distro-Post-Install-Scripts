@@ -9,7 +9,7 @@
 [star-shield]: https://img.shields.io/github/stars/KnightTheCoder/Linux-Distro-Post-Install-Scripts?style=for-the-badge
 
 [license-shield]: https://img.shields.io/github/license/KnightTheCoder/Linux-Distro-Post-Install-Scripts?color=blue&style=for-the-badge
-[license-url]:https://github.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/blob/maintanence/LICENSE
+[license-url]: LICENSE
 
 [size-shield]: https://img.shields.io/github/languages/code-size/KnightTheCoder/Linux-Distro-Post-Install-Scripts?color=blue&style=for-the-badge
 
