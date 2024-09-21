@@ -199,6 +199,8 @@ Manually edit to customize, then copy to ``/etc/firefox/policies/`` for it to wo
 │   └── opensuse
 │       ├── README.md
 │       └── setup.sh
+├── images
+│   └── preview.png
 ├── LICENSE
 ├── post_install.sh
 ├── README.md
@@ -217,6 +219,9 @@ example: using the distro's package manager and approprioate package names, repo
 
 ### Shared
 Shared scripts between all distro setups, these include shell setup and program specific setups like installing hack nerd fonts, setting up scripts with plugin managers, neovim configurations, flatpaks, etc.
+
+### Images
+Images for the README page
 
 [1]: distros/opensuse#readme
 [2]: distros/fedora#readme
