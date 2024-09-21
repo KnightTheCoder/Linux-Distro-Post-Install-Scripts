@@ -25,7 +25,7 @@ Tested distros:
 > Only tested with x86 architecture!
 
 > [!IMPORTANT]
-> Update the system and restart, if you're using a very old iso
+> Update the system and restart, if you're using a very old iso <br />
 > Recommended on archlinux and OpenSUSE Tumbleweed
 
 ## Requirements
@@ -39,7 +39,7 @@ Tested distros:
 > [!NOTE]
 > Step 1: Download scripts (will be downloaded to your downloads directory) <br />
 > Step 2: Navigate to the downloaded scripts and unzip them <br />
-> Step 3: Run the script <br />
+> Step 3: Run the script
 
 ### Stable
 
