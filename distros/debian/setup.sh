@@ -5,10 +5,8 @@ cd "$(dirname "$0")" || exit
 # shellcheck source=.../../shared/shared_scripts.sh
 source "../../shared/shared_scripts.sh"
 
-whiptail --title "Debian/Ubuntu" --msgbox "Welcome to the debian/ubuntu script!" 0 0
-
 packages=$(
-    whiptail --title "Install List" --separate-output --checklist "Choose what to install/configure" 0 0 0 \
+    whiptail --title "Debian/Ubuntu app installer" --separate-output --checklist "Choose which apps to install" 0 0 0 \
     "lutris" "Lutris" OFF \
     "gaming-overlay" "Gaming overlay" OFF \
     "steam" "Steam" OFF \
@@ -29,6 +27,7 @@ packages=$(
     "dotnet" ".NET sdk" OFF \
     "rustup" "Rust" OFF \
     "golang" "Golang" OFF \
+    "java" "Java openjdk" OFF \
     "xampp" "XAMPP" OFF \
     "docker" "Docker engine" OFF \
     "docker-desktop" "Docker desktop" OFF \
@@ -39,7 +38,18 @@ packages=$(
     3>&1 1>&2 2>&3
 )
 
-packages+=" git build-essential neofetch kwrite htop btop neovim gh bat curl wget gpg ttf-mscorefonts-installer fontconfig"
+cli_packages=$(
+    whiptail --title "CLI install" --separate-output --checklist "Select cli applications to install" 0 0 0 \
+    "neofetch" "neofetch" ON \
+    "htop" "htop" ON \
+    "btop" "btop++" ON \
+    "gh" "github cli" OFF \
+    3>&1 1>&2 2>&3
+)
+
+packages+=" $cli_packages"
+
+packages+=" git build-essential kwrite neovim bat curl wget gpg ttf-mscorefonts-installer fontconfig"
 
 shells=$(choose_shells)
 
@@ -56,7 +66,7 @@ packages=$(echo "$packages"| tr "\n" " ")
 services=()
 setups=(hacknerd eza)
 usergroups=()
-remove_packages="elisa dragonplayer akregator kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat kolourpaint thunderbird"
+packages_to_remove="elisa dragonplayer akregator kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat kolourpaint thunderbird"
 
 nvim_config=$(choose_nvim_config)
 setups+=("$nvim_config")
@@ -75,24 +85,24 @@ for package in $packages; do
         starship-install )
             setups+=(starship-install)
 
-            packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
             ;;
 
         starship )
             setups+=(starship)
 
-            packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
             ;;
 
         gaming-overlay)
-            packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
 
             packages+=" goverlay mangohud gamemode"
             ;;
 
         qemu )
             # Remove package
-            packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
 
             packages+=" libvirt-clients libvirt-daemon-system bridge-utils virtinst libvirt-daemon virt-manager"
 
@@ -111,7 +121,7 @@ for package in $packages; do
             # steam package has a different name for debian
             if grep -iq ID=debian /etc/os-release; then
                 # Remove package
-                packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
 
                 packages+=" steam-installer"
             fi
@@ -124,36 +134,36 @@ for package in $packages; do
 
             packages+=" wine"
 
-            packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
             ;;
 
         heroic )
             setups+=(heroic)
 
-            packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
             ;;
 
         itch )
             setups+=("$package")
 
-            packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
             ;;
 
         vscode )
             setups+=(vscode)
             packages+=" apt-transport-https"
 
-            packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
             ;;
 
         vscodium )
             setups+=(vscodium)
 
-            packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
             ;;
 
         dotnet )
-            packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
 
             if grep -iq "ID=debian" /etc/os-release; then
                 setups+=(dotnet)
@@ -165,7 +175,7 @@ for package in $packages; do
         rustup )
             setups+=(rust)
 
-            packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
             ;;
 
         nodejs )
@@ -182,8 +192,14 @@ for package in $packages; do
             fi
             ;;
 
+        java )
+            packages=$(remove_package "$packages" "$package")
+
+            packages+=" default-jdk"
+            ;;
+
         xampp )
-            packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
 
             setups+=(xampp)
             ;;
@@ -205,7 +221,7 @@ for package in $packages; do
             ;;
 
         distrobox )
-            packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
 
             setups+=(distrobox)
             ;;
@@ -223,7 +239,7 @@ packages=$(echo "$packages" | xargs)
 
 # Ask if you want to remove discover
 if whiptail --title "Remove discover" --yesno "Would you like to remove discover?" 0 0; then
-    remove_packages+=" plasma-discover"
+    packages_to_remove+=" plasma-discover"
 fi
 
 if grep -iq "kde neon" /etc/os-release; then
@@ -257,7 +273,7 @@ sudo nala upgrade -y
 
 # Remove unnecessary packages
 # shellcheck disable=SC2086
-sudo nala remove -y $remove_packages
+sudo nala remove -y $packages_to_remove
 
 # Install packages
 # shellcheck disable=SC2086
@@ -280,7 +296,6 @@ for app in "${setups[@]}"; do
             sudo apt install -y ./lutris.deb
             rm -v ./lutris.deb
             ;;
-
         
         heroic )
             wget -O heroic.deb https://github.com/Heroic-Games-Launcher/HeroicGamesLauncher/releases/download/v2.14.0/heroic_2.14.0_amd64.deb
@@ -395,7 +410,7 @@ for app in "${setups[@]}"; do
             wget -O docker-desktop.deb "https://desktop.docker.com/linux/main/amd64/139021/docker-desktop-4.28.0-amd64.deb?utm_source=docker&utm_medium=webreferral&utm_campaign=docs-driven-download-linux-amd64"
             sudo apt-get update
             sudo apt-get install -y ./docker-desktop.deb
-            rm -v docker.desktop.deb
+            rm -v docker-desktop.deb
             ;;
 
         distrobox )

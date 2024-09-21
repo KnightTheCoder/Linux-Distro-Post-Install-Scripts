@@ -5,10 +5,8 @@ cd "$(dirname "$0")" || exit
 # shellcheck source=.../../shared/shared_scripts.sh
 source "../../shared/shared_scripts.sh"
 
-whiptail --title "Arch linux" --msgbox "Welcome to the arch linux script!" 0 0
-
 packages=$(
-    whiptail --title "Install List" --separate-output --checklist "Choose what to install/configure" 0 0 0 \
+    whiptail --title "Arch linux app installer" --separate-output --checklist "Choose which apps to install" 0 0 0 \
     "lutris" "Lutris" OFF \
     "gaming-overlay" "Gaming overlay" OFF \
     "steam" "Steam" OFF \
@@ -31,6 +29,7 @@ packages=$(
     "dotnet-sdk" ".NET sdk" OFF \
     "rustup" "Rust" OFF \
     "go" "Golang" OFF \
+    "java" "Java openjdk" OFF \
     "xampp" "XAMPP" OFF \
     "docker" "Docker engine" OFF \
     "docker-desktop" "Docker desktop" OFF \
@@ -42,7 +41,18 @@ packages=$(
     3>&1 1>&2 2>&3
 )
 
-packages+=" fish neofetch kwrite htop btop neovim github-cli eza bat zram-generator wget curl ark filelight git base-devel"
+cli_packages=$(
+    whiptail --title "CLI install" --separate-output --checklist "Select cli applications to install" 0 0 0 \
+    "neofetch" "neofetch" ON \
+    "htop" "htop" ON \
+    "btop" "btop++" ON \
+    "github-cli" "github cli" OFF \
+    3>&1 1>&2 2>&3
+)
+
+packages+=" $cli_packages"
+
+packages+=" kwrite neovim eza bat zram-generator wget curl ark filelight git base-devel"
 
 shells=$(choose_shells)
 
@@ -56,7 +66,7 @@ services=()
 setups=(hacknerd)
 usergroups=()
 aur=(ttf-ms-win11-auto)
-remove_packages="akregator kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat"
+packages_to_remove="akregator kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat"
 
 nvim_config=$(choose_nvim_config)
 setups+=("$nvim_config")
@@ -77,7 +87,7 @@ for package in $packages; do
             ;;
 
         gaming-overlay)
-            packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
 
             packages+=" goverlay mangohud gamemode"
             ;;
@@ -89,25 +99,25 @@ for package in $packages; do
 
             usergroups+=(libvirt)
 
-            packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
             ;;
 
         heroic )
             aur+=(heroic-games-launcher-bin)
 
-            packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
             ;;
 
         itch )
             setups+=("$package")
 
-            packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
             ;;
 
         vscode )
             aur+=(visual-studio-code-bin)
 
-            packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
 
             setups+=(vscode)
             ;;
@@ -115,7 +125,7 @@ for package in $packages; do
         vscodium )
             aur+=(vscodium-bin)
 
-            packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
             
             setups+=(vscodium)
             ;;
@@ -130,8 +140,14 @@ for package in $packages; do
             setups+=(npm)
             ;;
 
+        java )
+            packages=$(remove_package "$packages" "$package")
+
+            packages+=" jdk-openjdk"
+            ;;
+
         xampp )
-            packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
 
             setups+=(xampp)
             ;;
@@ -145,7 +161,7 @@ for package in $packages; do
         docker-desktop )
             aur+=(docker-desktop)
 
-            packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
             ;;
 
         flatpak )
@@ -161,18 +177,16 @@ packages=$(echo "$packages" | xargs)
 
 # Ask if you want to remove discover
 if whiptail --title "Remove discover" --yesno "Would you like to remove discover?" 0 0; then
-    remove_packages+=" discover"
+    packages_to_remove+=" discover"
 fi
 
-# TODO: fix config duplication
 # Add multilib for steam to work
-if grep -iqzoP "\n\[multilib\]\nInclude = /etc/pacman.d/mirrorlist\n" /etc/pacman.conf; then
+if grep -iqzoP "\n\[multilib\]\n" /etc/pacman.conf; then
     echo -e "${YELLOW}multilib is already included${NC}"
 else
     printf "\n[multilib]\nInclude = /etc/pacman.d/mirrorlist\n" | sudo tee -a /etc/pacman.conf
 fi
 
-# TODO: fix config duplication
 # Modify packman config file
 # Set parallel downloads, if it hasn't been set yet
 if grep -iq "ParallelDownloads = 100" /etc/pacman.conf && grep -iq "Color" /etc/pacman.conf && grep -iq "ILoveCandy" /etc/pacman.conf; then
@@ -181,13 +195,16 @@ else
     printf "\n[options]\nParallelDownloads = 100\nColor\nILoveCandy\n" | sudo tee -a /etc/pacman.conf
 fi
 
+# Update repos and install new keyrings
+sudo pacman -Syy archlinux-keyring --noconfirm --needed
+
 # Update system
 sudo pacman -Syu --noconfirm
 
 # TODO: list correct packages to remove
 # Remove unneccessary packages
 # shellcheck disable=SC2086
-sudo pacman -Rns $remove_packages
+sudo pacman -Rns $packages_to_remove
 
 # Install packages
 # shellcheck disable=SC2086

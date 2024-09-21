@@ -27,10 +27,8 @@ function create_snapshot() {
     fi
 }
 
-whiptail --title "OpenSUSE" --msgbox "Welcome to the OpenSUSE script!" 0 0
-
 packages=$(
-    whiptail --title "Install List" --separate-output --checklist "Choose what to install/configure" 0 0 0 \
+    whiptail --title "OpenSUSE app installer" --separate-output --checklist "Choose which apps to install" 0 0 0 \
     "lutris" "Lutris" OFF \
     "gaming-overlay" "Gaming overlay" OFF \
     "steam" "Steam" OFF \
@@ -53,6 +51,7 @@ packages=$(
     "dotnet" ".NET sdk" OFF \
     "rustup" "Rust" OFF \
     "golang" "Golang" OFF \
+    "java" "Java openjdk" OFF \
     "xampp" "XAMPP" OFF \
     "docker" "Docker engine" OFF \
     "podman" "Podman" OFF \
@@ -63,7 +62,18 @@ packages=$(
     3>&1 1>&2 2>&3
 )
 
-packages+=" opi neofetch kwrite htop btop neovim gh eza bat fetchmsttfonts systemd-zram-service"
+cli_packages=$(
+    whiptail --title "CLI install" --separate-output --checklist "Select cli applications to install" 0 0 0 \
+    "neofetch" "neofetch" ON \
+    "htop" "htop" ON \
+    "btop" "btop++" ON \
+    "gh" "github cli" OFF \
+    3>&1 1>&2 2>&3
+)
+
+packages+=" $cli_packages"
+
+packages+=" opi kwrite neovim eza bat fetchmsttfonts systemd-zram-service"
 
 shells=$(choose_shells)
 
@@ -78,8 +88,8 @@ patterns=(devel_basis)
 services=(zramswap.service)
 setups=(hacknerd)
 usergroups=()
-remove_packages="kmail kontact kmines akregator kaddressbook korganizer kompare konversation kleopatra kmahjongg kpat kreversi ksudoku xscreensaver"
-remove_patterns="kde_games games kde_pim"
+packages_to_remove="kmail kontact kmines akregator kaddressbook korganizer kompare konversation kleopatra kmahjongg kpat kreversi ksudoku xscreensaver"
+patterns_to_remove="kde_games games kde_pim"
 
 nvim_config=$(choose_nvim_config)
 setups+=("$nvim_config")
@@ -100,7 +110,7 @@ for package in $packages; do
             ;;
         
         gaming-overlay)
-            packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
 
             packages+=" goverlay mangohud gamemode"
             ;;
@@ -124,13 +134,13 @@ for package in $packages; do
         heroic )
             opi+=(heroic-games-launcher)
 
-            packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
             ;;
 
         itch )
             setups+=("$package")
 
-            packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
             ;;
 
         vscode )
@@ -138,20 +148,20 @@ for package in $packages; do
 
             opi+=(vscode)
 
-            packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
             ;;
 
         vscodium )
             opi+=(vscodium)
             setups+=(vscodium)
 
-            packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
             ;;
 
         dotnet )
             opi+=(dotnet)
 
-            packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
             ;;
 
         rustup )
@@ -159,7 +169,7 @@ for package in $packages; do
             ;;
 
         nodejs )
-            packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
 
             packages+=" nodejs-default"
 
@@ -167,13 +177,19 @@ for package in $packages; do
             ;;
 
         golang )
-            packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
 
             packages+=" go go-doc"
             ;;
 
+        java )
+            packages=$(remove_package "$packages" "$package")
+
+            packages+=" java-22-openjdk-devel"
+            ;;
+
         xampp )
-            packages=${packages//"$package"/}
+            packages=$(remove_package "$packages" "$package")
 
             setups+=(xampp)
             ;;
@@ -198,7 +214,7 @@ packages=$(echo "$packages" | xargs)
 
 # Ask if you want to remove discover
 if whiptail --title "Remove discover" --yesno "Would you like to remove discover?" 0 0; then
-    remove_packages+=" discover"
+    packages_to_remove+=" discover"
 fi
 
 create_snapshot 0
@@ -220,12 +236,11 @@ fi
 
 # Remove unncessary packages
 # shellcheck disable=SC2086
-sudo zypper remove --details -y --clean-deps $remove_packages
+sudo zypper remove --details -y --clean-deps $packages_to_remove
 # shellcheck disable=SC2086
-sudo zypper remove --details -y --clean-deps -t pattern $remove_patterns
+sudo zypper remove --details -y --clean-deps -t pattern $patterns_to_remove
 # shellcheck disable=SC2086
-sudo zypper -vv al -t pattern $remove_patterns
-sudo zypper -vv al discover6
+sudo zypper -vv al -t pattern $patterns_to_remove
 
 # Install packages
 # Don't use quotes, zypper won't recognize the packages
