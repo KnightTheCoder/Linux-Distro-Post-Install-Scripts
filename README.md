@@ -23,7 +23,7 @@ Tested distros:
 > <img src="https://skillicons.dev/icons?i=bash" />
 
 > [!NOTE]
-> Originally designed for OpenSUSE Tumbleweed KDE
+> Originally designed for OpenSUSE Tumbleweed KDE <br />
 > Only tested with the x86 architecture
 
 > [!IMPORTANT]
