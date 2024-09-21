@@ -19,7 +19,8 @@ Tested distros:
 * EndeavourOS
 * Manjaro
 
-> 100% Written in Bash
+> Written in Bash <br />
+> <img src="https://skillicons.dev/icons?i=bash" />
 
 > [!NOTE]
 > Only tested with x86 architecture!
@@ -34,7 +35,7 @@ Tested distros:
 * bash (to run the scripts)
 * systemd (needed to start services)
 
-## How to run
+## 💡 Usage
 
 > [!NOTE]
 > Step 1: Download scripts (will be downloaded to your downloads directory) <br />
@@ -67,7 +68,7 @@ bash ./post_install.sh
 bash ./post_install.sh --copy-firefox-policy
 ```
 
-## Features
+## 🛠 Features
 * Choose the apps and configurations you need
 * Updates the system
 * Sets up flatpak and install apps
