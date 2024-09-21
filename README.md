@@ -20,6 +20,19 @@
 [issue-url]: https://github.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/issues
 
 <h2 align="center">Post install script</h2>
+
+<p align="center">
+    <a href="#-requirements">Requirements</a>
+    ·
+    <a href="#-usage">Usage</a>
+    ·
+    <a href="#-features">Features</a>
+    ·
+    <a href="#-firefox-policy-optional">Firefox policy</a>
+    ·
+    <a href="#-project-breakdown">Project breakdown</a>
+</p>
+
 <p align="center">A collection of scripts for getting a new system up and running easily</p>
 
 ![preview](images/preview.png)
