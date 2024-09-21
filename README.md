@@ -7,7 +7,7 @@
 ![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/KnightTheCoder/Linux-Distro-Post-Install-Scripts?color=green&style=for-the-badge)
 
 <h2 align="center">Post install script</h2>
-<p align="center">A collection of scripts for getting a new system up and running fast</p>
+<p align="center">A collection of scripts for getting a new system up and running easily</p>
 
 ![preview](images/preview.png)
 
