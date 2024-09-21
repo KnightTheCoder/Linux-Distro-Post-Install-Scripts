@@ -1,13 +1,21 @@
 # Welcome to Linux Distro Post Install Scripts! 👋
 
-![Stargazers](https://img.shields.io/github/stars/KnightTheCoder/Linux-Distro-Post-Install-Scripts?style=for-the-badge)
+![Stargazers][star-shield]
 [![GitHub License][license-shield]][license-url]
-![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/KnightTheCoder/Linux-Distro-Post-Install-Scripts?color=blue&style=for-the-badge)
-![GitHub last commit](https://img.shields.io/github/last-commit/KnightTheCoder/Linux-Distro-Post-Install-Scripts?color=blue&style=for-the-badge)
+![GitHub code size in bytes][size-shield]
+[![GitHub last commit][commit-shield]][commit-url]
 [![GitHub Issues][issue-shield]][issue-url]
+
+[star-shield]: https://img.shields.io/github/stars/KnightTheCoder/Linux-Distro-Post-Install-Scripts?style=for-the-badge
 
 [license-shield]: https://img.shields.io/github/license/KnightTheCoder/Linux-Distro-Post-Install-Scripts?color=blue&style=for-the-badge
 [license-url]:https://github.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/blob/maintanence/LICENSE
+
+[size-shield]: https://img.shields.io/github/languages/code-size/KnightTheCoder/Linux-Distro-Post-Install-Scripts?color=blue&style=for-the-badge
+
+[commit-shield]: https://img.shields.io/github/last-commit/KnightTheCoder/Linux-Distro-Post-Install-Scripts?color=blue&style=for-the-badge
+[commit-url]: https://github.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/commits/maintanence/
+
 [issue-shield]: https://img.shields.io/github/issues/KnightTheCoder/Linux-Distro-Post-Install-Scripts?color=green&style=for-the-badge
 [issue-url]: https://github.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/issues
 
