@@ -1,4 +1,12 @@
-# Post install script for Linux
+# Welcome to Linux Distro Post Install Scripts!
+
+<h2 align="center">Post install script</h2>
+<p align="center">A collection of scripts for getting a new system up and running fast</p>
+
+![GitHub License](https://img.shields.io/github/license/KnightTheCoder/Linux-Distro-Post-Install-Scripts?color=blue)
+![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/KnightTheCoder/Linux-Distro-Post-Install-Scripts?color=green)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/KnightTheCoder/Linux-Distro-Post-Install-Scripts?color=blue)
+![GitHub last commit](https://img.shields.io/github/last-commit/KnightTheCoder/Linux-Distro-Post-Install-Scripts?color=blue)
 
 ![preview](images/preview.png)
 
