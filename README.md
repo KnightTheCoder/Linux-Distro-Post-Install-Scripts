@@ -19,17 +19,18 @@ Tested distros:
 * EndeavourOS
 * Manjaro
 
-> Written in Bash <br />
+> Written in Bash and whiptail <br />
 > <img src="https://skillicons.dev/icons?i=bash" />
 
 > [!NOTE]
-> Only tested with x86 architecture!
+> Originally designed for OpenSUSE Tumbleweed KDE
+> Only tested with the x86 architecture
 
 > [!IMPORTANT]
 > If you're using a very old iso, update the system and restart before running the script <br />
 > Recommended on archlinux and OpenSUSE Tumbleweed
 
-## Requirements
+## 🛠 Requirements
 * wget (to download the scripts)
 * unzip (to unzip the scripts)
 * bash (to run the scripts)
@@ -42,7 +43,8 @@ Tested distros:
 > Step 2: Navigate to the downloaded scripts and unzip them <br />
 > Step 3: Run the script
 
-### Stable
+<details>
+<summary>Stable</summary>
 
 ```console
 wget -O "$(xdg-user-dir DOWNLOAD)/post-install-scripts.zip" "https://github.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/archive/refs/heads/master.zip"
@@ -51,8 +53,10 @@ cd "$(xdg-user-dir DOWNLOAD)" && unzip -o post-install-scripts.zip && cd Linux-D
 
 bash ./post_install.sh
 ```
+</details>
 
-### Experimental
+<details>
+<summary>Experimental</summary>
 
 ```console
 wget -O "$(xdg-user-dir DOWNLOAD)/post-install-scripts.zip" "https://github.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/archive/reos/heads/maintanence.zip"
@@ -61,14 +65,18 @@ cd "$(xdg-user-dir DOWNLOAD)" && unzip -o post-install-scripts.zip && cd Linux-D
 
 bash ./post_install.sh
 ```
+</details>
 
-### To copy the firefox policy
+<details>
+<summary>To copy the firefox policy</summary>
+
 #### Run with
 ```console
 bash ./post_install.sh --copy-firefox-policy
 ```
+</details>
 
-## 🛠 Features
+## ✨ Features
 * Choose the apps and configurations you need
 * Updates the system
 * Sets up flatpak and install apps
@@ -85,7 +93,7 @@ bash ./post_install.sh --copy-firefox-policy
 * Installs programming languages and development environments: gcc, nodejs, dotnet, rust, go, java, xampp                       
 * Optionally sets hostname
 
-## Why use it?
+## ❓ Why use it?
 Post install script for linux aims to quickly setup a system with the same configuration/software across multiple distros.
 
 The scripts are meant to be reproducable and allow you to get to using your new system/virtual machine rather than try to replicate your already existing setup.
@@ -108,11 +116,11 @@ You only need to configure apps and configuration files once when changing the p
 * Start listed services
 * Ask for hostname (optional)
 
-## Project location
+## 📥 Project location
 By using the provided commands the scripts will be downloaded and unzipped in your language's Downloads folder
 (run ``xdg-user-dir DOWNLOAD`` to find out the location of yours)
 
-## Firefox policy (optional)
+## 🌐 Firefox policy (optional)
 A firefox policy is included for increased security.
 
 Can be found at ``config/firefox/policies.json``
