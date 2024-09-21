@@ -25,7 +25,7 @@ Tested distros:
 > Only tested with x86 architecture!
 
 > [!IMPORTANT]
-> If you're using a very old iso, update the system and restart <br />
+> If you're using a very old iso, update the system and restart before running the script <br />
 > Recommended on archlinux and OpenSUSE Tumbleweed
 
 ## Requirements
