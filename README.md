@@ -1,4 +1,4 @@
-# Welcome to Linux Distro Post Install Scripts!
+# Welcome to Linux Distro Post Install Scripts! 👋
 
 <h2 align="center">Post install script</h2>
 <p align="center">A collection of scripts for getting a new system up and running fast</p>
