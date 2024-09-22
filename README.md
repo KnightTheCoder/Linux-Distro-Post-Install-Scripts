@@ -139,9 +139,22 @@ You only need to configure apps and configuration files once when changing the p
 ## 💻 Project location
 By using the provided commands the scripts will be downloaded and unzipped in your language's Downloads folder
 
-(run ``xdg-user-dir DOWNLOAD`` to find out the location of yours)
+> [!NOTE]
+> Run ``xdg-user-dir DOWNLOAD`` to find out the location of yours
 
-[1]: distros/opensuse#readme
-[2]: distros/fedora#readme
-[3]: distros/debian#readme
-[4]: distros/arch#readme
+## 🌐 Firefox policy
+A firefox policy is included for increased privacy.
+
+Increases privacy, removes telemetry and installs privacy extensions with some other optional options.
+
+Full policy list and changes: [here](docs#-firefox-policy)
+
+> [!NOTE]
+> The policy is applied automatically when running the script with the ``--copy-firefox-policy`` argument <br />
+> Can be found at ``config/firefox/policies.json`` <br />
+> Manually edit to customize, then copy to ``/etc/firefox/policies/`` for it to work
+
+[1]: distros/opensuse
+[2]: distros/fedora
+[3]: distros/debian
+[4]: distros/arch

@@ -1,4 +1,4 @@
-# Welcome to the Linux Post install documentation
+# Welcome to the Linux Post install documentation 👋
 
 ## 📃 Steps the script runs:
 * Find package manager
@@ -15,13 +15,6 @@
 * Run setups for selected apps
 * Start listed services
 * Ask for hostname (optional)
-
-## 🌐 Firefox policy (optional)
-A firefox policy is included for increased privacy.
-
-> [!NOTE]
-> Can be found at ``config/firefox/policies.json`` <br />
-> Manually edit to customize, then copy to ``/etc/firefox/policies/`` for it to work
 
 ### 📖 Included policy has the following changes
 * Disable telemetry
@@ -71,76 +64,6 @@ A firefox policy is included for increased privacy.
 * [LocalCDN][9]
 * [ClearURLs][10]
 * [Skip Redirect][11]
-
-### Optional extensions
-
-#### Youtube
-* [Enhancer for YouTube][12]
-* [DeArrow][13]
-* [Return YouTube Dislike][14]
-* [SponsorBlock][15]
-
-#### Steam
-* [Augmented Steam][16]
-* [ProtonDB for Steam][17]
-
-#### Utilities
-* [Dark Reader][18]
-* [Save webP as PNG or JPEG (Converter)][19]
-
-
-## 📂 Project breakdown
-
-### Project structure
-```bash
-.
-├── config
-│   ├── firefox
-│   │   └── policies.json
-│   ├── fish
-│   │   ├── config_debian.fish
-│   │   └── config.fish
-│   └── vscode
-│       ├── keybindings.json
-│       └── settings.json
-├── distros
-│   ├── arch
-│   │   ├── README.md
-│   │   └── setup.sh
-│   ├── debian
-│   │   ├── README.md
-│   │   └── setup.sh
-│   ├── fedora
-│   │   ├── README.md
-│   │   └── setup.sh
-│   └── opensuse
-│       ├── README.md
-│       └── setup.sh
-├── docs
-│   ├── images
-│   │   └── preview.png
-│   └── README.md
-├── LICENSE
-├── post_install.sh
-├── README.md
-└── shared
-    ├── setup.fish
-    ├── setup.zsh
-    └── shared_scripts.sh
-```
-
-### Config
-Pre-made configuration files, these are meant to be copied and not changed
-
-### Distros
-Distro specific setups that will execute the specific steps for them:
-example: using the distro's package manager and approprioate package names, repos
-
-### Shared
-Shared scripts between all distro setups, these include shell setup and program specific setups like installing hack nerd fonts, setting up scripts with plugin managers, neovim configurations, flatpaks, etc.
-
-### Docs
-Project documentation
 
 ### Optional extensions
 
