@@ -35,6 +35,9 @@
 
 ![preview](docs/images/preview.png)
 
+> [!NOTE]
+> Click on distros for distro specific features and information
+
 ## Supported distros
 * [OpenSUSE][1]
 * [Fedora][2]
