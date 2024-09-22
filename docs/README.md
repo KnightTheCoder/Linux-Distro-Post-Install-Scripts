@@ -116,8 +116,10 @@ A firefox policy is included for increased privacy.
 │   └── opensuse
 │       ├── README.md
 │       └── setup.sh
-├── images
-│   └── preview.png
+├── docs
+│   ├── images
+│   │   └── preview.png
+│   └── README.md
 ├── LICENSE
 ├── post_install.sh
 ├── README.md
