@@ -14,7 +14,7 @@
 [size-shield]: https://img.shields.io/github/languages/code-size/KnightTheCoder/Linux-Distro-Post-Install-Scripts?color=blue&style=for-the-badge
 
 [commit-shield]: https://img.shields.io/github/last-commit/KnightTheCoder/Linux-Distro-Post-Install-Scripts?color=blue&style=for-the-badge
-[commit-url]: https://github.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/activity
+[commit-url]: https://github.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/commits/master/
 
 [issue-shield]: https://img.shields.io/github/issues/KnightTheCoder/Linux-Distro-Post-Install-Scripts?color=green&style=for-the-badge
 [issue-url]: https://github.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/issues
