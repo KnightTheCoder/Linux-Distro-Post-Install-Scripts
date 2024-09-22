@@ -16,22 +16,6 @@
 * Start listed services
 * Ask for hostname (optional)
 
-### 📖 Included policy has the following changes
-* Disable telemetry
-* Disable firefox studies
-* Disable pocket
-* Disable form history
-* Disable feedback commands
-* Enable all tracking protection
-* Don't offer to save logins
-* Block requests for notifications
-* Block audio and video autoplay
-* Disable picture in picture
-* Always ask for download location
-* Disable autofill address
-* Disable autofill creditcard
-* No default bookmarks (only works if you copied the policies.json before opening firefox for the first time)
-
 ## 🌐 Firefox policy
 A firefox policy is included for increased privacy.
 
