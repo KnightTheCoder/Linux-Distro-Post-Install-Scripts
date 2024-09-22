@@ -145,22 +145,3 @@ By using the provided commands the scripts will be downloaded and unzipped in yo
 [2]: distros/fedora#readme
 [3]: distros/debian#readme
 [4]: distros/arch#readme
-
-[5]: https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/
-[6]: https://addons.mozilla.org/en-US/firefox/addon/privacy-badger17/
-[7]: https://addons.mozilla.org/en-US/firefox/addon/canvasblocker/
-[8]: https://addons.mozilla.org/en-US/firefox/addon/user-agent-string-switcher/
-[9]: https://addons.mozilla.org/en-US/firefox/addon/localcdn-fork-of-decentraleyes/
-[10]: https://addons.mozilla.org/en-US/firefox/addon/clearurls/
-[11]: https://addons.mozilla.org/en-US/firefox/addon/skip-redirect/
-
-[12]: https://addons.mozilla.org/en-US/firefox/addon/enhancer-for-youtube/
-[13]: https://addons.mozilla.org/en-US/firefox/addon/dearrow/
-[14]: https://addons.mozilla.org/en-US/firefox/addon/return-youtube-dislikes/
-[15]: https://addons.mozilla.org/en-US/firefox/addon/sponsorblock/
-
-[16]: https://addons.mozilla.org/en-US/firefox/addon/augmented-steam/
-[17]: https://addons.mozilla.org/en-US/firefox/addon/protondb-for-steam/
-
-[18]: https://addons.mozilla.org/en-US/firefox/addon/darkreader/
-[19]: https://addons.mozilla.org/en-US/firefox/addon/save-webp-as-png-or-jpeg/
