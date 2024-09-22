@@ -145,7 +145,7 @@ By using the provided commands the scripts will be downloaded and unzipped in yo
 ## 🌐 Firefox policy
 A firefox policy is included for increased privacy.
 
-Increases privacy, removes telemetry and installs privacy extensions with some other optional options.
+Increases privacy, removes telemetry and installs privacy extensions.
 
 Full policy list and changes: [here](docs#-firefox-policy)
 
