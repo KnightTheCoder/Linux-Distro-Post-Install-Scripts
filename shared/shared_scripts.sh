@@ -277,7 +277,7 @@ function choose_shells() {
 }
 
 function setup_nvchad() {
-    git clone https://github.com/NvChad/NvChad "$HOME/.config/nvim" --depth 1 && nvim
+    git clone https://github.com/NvChad/starter ~/.config/nvim && nvim
 }
 
 function setup_astrovim() {
