@@ -128,8 +128,6 @@ for package in $packages; do
 
             packages+=" VirtualBox"
 
-            groups+=("Development Tools")
-
             setups+=(virtualbox)
 
             usergroups+=(vboxusers)
