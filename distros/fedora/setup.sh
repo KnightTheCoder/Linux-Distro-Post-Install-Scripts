@@ -37,6 +37,7 @@ packages=$(
     "distrobox" "Distrobox" OFF \
     "flatpak" "Flatpak" ON \
     "qemu" "QEMU/KVM" OFF \
+    "virtualbox" "Oracle Virtualbox" OFF \
     "openrgb" "OpenRGB" OFF \
     3>&1 1>&2 2>&3
 )
@@ -52,7 +53,7 @@ cli_packages=$(
 
 packages+=" $cli_packages"
 
-packages+=" kwrite neovim eza bat dnf5 dnf5-plugins curl cabextract xorg-x11-font-utils fontconfig"
+packages+=" neovim eza bat dnf5 dnf5-plugins curl cabextract xorg-x11-font-utils fontconfig"
 
 shells=$(choose_shells)
 
@@ -69,6 +70,7 @@ packages=$(echo "$packages"| tr "\n" " ")
 services=()
 setups=(fish hacknerd)
 usergroups=()
+groups=("C Development Tools and Libraries" Multimedia)
 packages_to_remove="akregator dragon elisa-player kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat kolourpaint qt5-qdbusviewer"
 
 nvim_config=$(choose_nvim_config)
@@ -119,6 +121,18 @@ for package in $packages; do
             usergroups+=(libvirt)
 
             packages=$(remove_package "$packages" "$package")
+            ;;
+
+        virtualbox )
+            packages=$(remove_package "$packages" "$package")
+
+            packages+=" kernel-headers kernel-devel dkms"
+
+            groups+=("Development Tools")
+
+            setups+=(virtualbox)
+
+            usergroups+=(vboxusers)
             ;;
 
         steam )
@@ -222,8 +236,8 @@ sudo dnf upgrade -y --refresh
 # shellcheck disable=SC2086
 sudo dnf remove -y $packages_to_remove
 
-# Install codecs
-sudo dnf group install -y Multimedia --allowerasing
+# Install groups
+sudo dnf group install -y "${groups[@]}" --allowerasing
 
 # Install packages
 # shellcheck disable=SC2086
@@ -315,6 +329,16 @@ for app in "${setups[@]}"; do
             wget -O docker-desktop.rpm "https://desktop.docker.com/linux/main/amd64/139021/docker-desktop-4.28.0-x86_64.rpm?utm_source=docker&utm_medium=webreferral&utm_campaign=docs-driven-download-linux-amd64"
             sudo dnf -y install docker-desktop.rpm
             rm -v docker-desktop.rpm
+            ;;
+
+        virtualbox )
+                # shellcheck disable=SC2154
+                echo -e "[virtualbox]\nname=Fedora $releasever - $basearch - VirtualBox\nbaseurl=http://download.virtualbox.org/virtualbox/rpm/fedora/$releasever/$basearch\nenabled=1\ngpgcheck=1\nrepo_gpgcheck=1\ngpgkey=https://www.virtualbox.org/download/oracle_vbox_2016.asc\n" > /etc/yum.repos.d/virtualbox.repo
+
+                sudo dnf update
+                sudo dnf install VirtualBox-7.1
+
+                setup_virtualbox_extension
             ;;
 
         flatpak )

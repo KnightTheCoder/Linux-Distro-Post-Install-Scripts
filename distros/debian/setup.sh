@@ -51,7 +51,7 @@ cli_packages=$(
 
 packages+=" $cli_packages"
 
-packages+=" git build-essential kwrite neovim bat curl wget gpg ttf-mscorefonts-installer fontconfig"
+packages+=" git build-essential neovim bat curl wget gpg ttf-mscorefonts-installer fontconfig"
 
 shells=$(choose_shells)
 
