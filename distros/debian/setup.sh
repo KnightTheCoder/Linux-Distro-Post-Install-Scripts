@@ -440,7 +440,7 @@ for app in "${setups[@]}"; do
             vb_name="virtualbox"
 
             if grep -iq ID=debian /etc/os-release; then
-                vb_name="virtualbox-7.1"
+                vb_name="virtualbox-7.0"
             fi
 
             sudo nala install ${vb_name} -y
