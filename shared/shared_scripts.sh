@@ -306,9 +306,20 @@ function setup_xampp() {
 }
 
 function setup_virtualbox_extension() {
-    wget https://download.virtualbox.org/virtualbox/7.0.12/Oracle_VM_VirtualBox_Extension_Pack-7.0.12.vbox-extpack
-    sudo vboxmanage extpack install Oracle_VM_VirtualBox_Extension_Pack-7.0.12.vbox-extpack
-    rm -fv Oracle_VM_VirtualBox_Extension_Pack-7.0.12.vbox-extpack
+    manage="vboxmanage"
+    extension_link="https://download.virtualbox.org/virtualbox/7.1.0/Oracle_VirtualBox_Extension_Pack-7.1.0.vbox-extpack"
+
+    if grep -iq debian etc/os-release; then
+        extension_link="https://download.virtualbox.org/virtualbox/7.0.12/Oracle_VM_VirtualBox_Extension_Pack-7.0.12.vbox-extpack"
+    fi
+
+    if grep -iq opensuse etc/os-release; then
+        manage="VBoxManage"
+    fi
+
+    wget -o Oracle_VirtualBox_Extension_Pack.vbox-extpack "$extension_link"
+    sudo "${manage}" extpack install Oracle_VirtualBox_Extension_Pack.vbox-extpack
+    rm -fv Oracle_VirtualBox_Extension_Pack.vbox-extpack
 }
 
 function setup_flatpak() {
