@@ -307,10 +307,10 @@ function setup_xampp() {
 
 function setup_virtualbox_extension() {
     manage="vboxmanage"
-    extension_link="https://download.virtualbox.org/virtualbox/7.1.0/Oracle_VirtualBox_Extension_Pack-7.1.0.vbox-extpack"
+    extension_link="https://download.virtualbox.org/virtualbox/7.0.12/Oracle_VM_VirtualBox_Extension_Pack-7.0.12.vbox-extpack"
 
-    if grep -iq debian /etc/os-release; then
-        extension_link="https://download.virtualbox.org/virtualbox/7.0.12/Oracle_VM_VirtualBox_Extension_Pack-7.0.12.vbox-extpack"
+    if grep -iq arch /etc/os-release; then
+        extension_link="https://download.virtualbox.org/virtualbox/7.1.0/Oracle_VirtualBox_Extension_Pack-7.1.0.vbox-extpack"
     fi
 
     if grep -iq opensuse /etc/os-release; then
