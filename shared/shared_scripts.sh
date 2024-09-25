@@ -277,7 +277,7 @@ function choose_shells() {
 }
 
 function setup_nvchad() {
-    git clone https://github.com/NvChad/NvChad "$HOME/.config/nvim" --depth 1 && nvim
+    git clone https://github.com/NvChad/starter ~/.config/nvim && nvim
 }
 
 function setup_astrovim() {
@@ -303,6 +303,23 @@ function setup_xampp() {
     chmod +x ./xampp-linux-installer.run
     sudo ./xampp-linux-installer.run
     rm -rv ./xampp-linux-installer.run
+}
+
+function setup_virtualbox_extension() {
+    manage="vboxmanage"
+    extension_link="https://download.virtualbox.org/virtualbox/7.0.12/Oracle_VM_VirtualBox_Extension_Pack-7.0.12.vbox-extpack"
+
+    if grep -iq arch /etc/os-release; then
+        extension_link="https://download.virtualbox.org/virtualbox/7.1.0/Oracle_VirtualBox_Extension_Pack-7.1.0.vbox-extpack"
+    fi
+
+    if grep -iq opensuse /etc/os-release; then
+        manage="VBoxManage"
+    fi
+
+    wget "$extension_link"
+    sudo "${manage}" extpack install Oracle*.vbox-extpack
+    rm -fv Oracle*.vbox-extpack
 }
 
 function setup_flatpak() {

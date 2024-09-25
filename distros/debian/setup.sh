@@ -8,6 +8,7 @@ source "../../shared/shared_scripts.sh"
 packages=$(
     whiptail --title "Debian/Ubuntu app installer" --separate-output --checklist "Choose which apps to install" 0 0 0 \
     "lutris" "Lutris" OFF \
+    "wine" "Wine" OFF \
     "gaming-overlay" "Gaming overlay" OFF \
     "steam" "Steam" OFF \
     "itch" "Itch desktop app" OFF \
@@ -35,6 +36,7 @@ packages=$(
     "distrobox" "Distrobox" OFF \
     "flatpak" "Flatpak" ON \
     "qemu" "QEMU/KVM" OFF \
+    "virtualbox" "Oracle Virtualbox" OFF \
     3>&1 1>&2 2>&3
 )
 
@@ -49,7 +51,7 @@ cli_packages=$(
 
 packages+=" $cli_packages"
 
-packages+=" git build-essential kwrite neovim bat curl wget gpg ttf-mscorefonts-installer fontconfig"
+packages+=" git build-essential neovim bat curl wget gpg ttf-mscorefonts-installer fontconfig p7zip p7zip-rar unrar rar"
 
 shells=$(choose_shells)
 
@@ -83,15 +85,15 @@ for package in $packages; do
             ;;
 
         starship-install )
-            setups+=(starship-install)
-
             packages=$(remove_package "$packages" "$package")
+            
+            setups+=(starship-install)
             ;;
 
         starship )
-            setups+=(starship)
-
             packages=$(remove_package "$packages" "$package")
+            
+            setups+=(starship)
             ;;
 
         gaming-overlay)
@@ -100,8 +102,11 @@ for package in $packages; do
             packages+=" goverlay mangohud gamemode"
             ;;
 
+        wine )
+            packages+=" wine32 winetricks"
+            ;;
+
         qemu )
-            # Remove package
             packages=$(remove_package "$packages" "$package")
 
             packages+=" libvirt-clients libvirt-daemon-system bridge-utils virtinst libvirt-daemon virt-manager"
@@ -117,11 +122,20 @@ for package in $packages; do
             usergroups+=(libvirt)
             ;;
 
+        virtualbox )
+            packages=$(remove_package "$packages" "$package")
+
+            packages+=" dkms build-essential linux-headers-$(uname -r) curl wget apt-transport-https gnupg2"
+
+            setups+=(virtualbox)
+
+            usergroups+=(vboxusers)
+            ;;
+
         steam ) 
             # steam package has a different name for debian
             if grep -iq ID=debian /etc/os-release; then
-                # Remove package
-            packages=$(remove_package "$packages" "$package")
+                packages=$(remove_package "$packages" "$package")
 
                 packages+=" steam-installer"
             fi
@@ -130,36 +144,36 @@ for package in $packages; do
             ;;
 
         lutris )
+            packages=$(remove_package "$packages" "$package")
+
             setups+=(lutris)
 
             packages+=" wine"
-
-            packages=$(remove_package "$packages" "$package")
             ;;
 
         heroic )
-            setups+=(heroic)
-
             packages=$(remove_package "$packages" "$package")
+
+            setups+=(heroic)
             ;;
 
         itch )
-            setups+=("$package")
-
             packages=$(remove_package "$packages" "$package")
+            
+            setups+=("$package")
             ;;
 
         vscode )
+            packages=$(remove_package "$packages" "$package")
+
             setups+=(vscode)
             packages+=" apt-transport-https"
-
-            packages=$(remove_package "$packages" "$package")
             ;;
 
         vscodium )
-            setups+=(vscodium)
-
             packages=$(remove_package "$packages" "$package")
+
+            setups+=(vscodium)
             ;;
 
         dotnet )
@@ -173,9 +187,9 @@ for package in $packages; do
             ;;
 
         rustup )
-            setups+=(rust)
-
             packages=$(remove_package "$packages" "$package")
+
+            setups+=(rust)
             ;;
 
         nodejs )
@@ -186,7 +200,7 @@ for package in $packages; do
 
         golang )
             if grep -iq ubuntu /etc/os-release; then
-                packages=${packages/"$package"/}
+                packages=$(remove_package "$packages" "$package")
 
                 packages+=" golang-go"
             fi
@@ -214,7 +228,7 @@ for package in $packages; do
             ;;
 
         docker-desktop )
-            packages=${packages/"$package"/}
+            packages=$(remove_package "$packages" "$package")
 
             setups+=(docker-desktop)
             packages+=" gnome-terminal"
@@ -308,10 +322,13 @@ for app in "${setups[@]}"; do
             ;;
 
         vscode )
-            wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
-            sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
+            if [ ! -e /etc/apt/keyrings/packages.microsoft.gpg ]; then
+                wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+                sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
+                rm -fv packages.microsoft.gpg
+            fi
+
             sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
-            rm -f packages.microsoft.gpg
 
             sudo nala update
             sudo nala install -y code
@@ -320,9 +337,11 @@ for app in "${setups[@]}"; do
             ;;
 
         vscodium )
-            wget -qO - https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg \
-                | gpg --dearmor \
-                | sudo dd of=/usr/share/keyrings/vscodium-archive-keyring.gpg
+            if [ ! -e /usr/share/keyrings/vscodium-archive-keyring.gpg ]; then
+                wget -qO - https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg \
+                    | gpg --dearmor \
+                    | sudo dd of=/usr/share/keyrings/vscodium-archive-keyring.gpg
+            fi
 
             echo 'deb [ signed-by=/usr/share/keyrings/vscodium-archive-keyring.gpg ] https://download.vscodium.com/debs vscodium main' \
                 | sudo tee /etc/apt/sources.list.d/vscodium.list
@@ -357,16 +376,17 @@ for app in "${setups[@]}"; do
             ;;
 
         docker )
-            # Remove old packages
-            for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do sudo apt-get remove $pkg; done
-
             sudo apt-get update
             sudo install -m 0755 -d /etc/apt/keyrings
            
             if grep -iq ID=debian /etc/os-release; then
                 # Debian
+
                 # Add Docker's official GPG key:
-                sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
+                if [ ! -e /etc/apt/keyrings/docker.asc ]; then
+                    sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
+                fi
+
                 sudo chmod a+r /etc/apt/keyrings/docker.asc
 
                 # Add the repository to Apt sources:
@@ -378,8 +398,12 @@ for app in "${setups[@]}"; do
                 sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
             else
                 # Ubuntu based
+
                 # Add Docker's official GPG key:
-                sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+                if [ ! -e /etc/apt/keyrings/docker.asc ]; then
+                    sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+                fi
+
                 sudo chmod a+r /etc/apt/keyrings/docker.asc
 
                 # Add the repository to Apt sources:
@@ -417,10 +441,32 @@ for app in "${setups[@]}"; do
             curl -s https://raw.githubusercontent.com/89luca89/distrobox/main/install | sudo sh
             ;;
 
+        virtualbox )
+            if [ ! -e /etc/apt/trusted.gpg.d/vbox.gpg ]; then
+                curl -fsSL https://www.virtualbox.org/download/oracle_vbox_2016.asc|sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/vbox.gpg
+            fi
+
+            echo deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/vbox.gpg] http://download.virtualbox.org/virtualbox/debian jammy contrib | sudo tee /etc/apt/sources.list.d/virtualbox.list
+            
+            sudo nala update
+
+            vb_name="virtualbox"
+
+            if grep -iq ID=debian /etc/os-release; then
+                vb_name="virtualbox-7.0"
+            fi
+
+            sudo nala install ${vb_name} -y
+
+            setup_virtualbox_extension
+            ;;
+
         eza )
             if [ ! -x /usr/bin/eza ]; then
                 sudo mkdir -p /etc/apt/keyrings
+
                 wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | sudo gpg --dearmor -o /etc/apt/keyrings/gierens.gpg
+
                 echo "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de stable main" | sudo tee /etc/apt/sources.list.d/gierens.list
                 sudo chmod 644 /etc/apt/keyrings/gierens.gpg /etc/apt/sources.list.d/gierens.list
 
