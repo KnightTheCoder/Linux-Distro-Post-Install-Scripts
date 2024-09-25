@@ -126,7 +126,7 @@ for package in $packages; do
         virtualbox )
             packages=$(remove_package "$packages" "$package")
 
-            packages+=" kernel-headers kernel-devel dkms"
+            packages+=" VirtualBox"
 
             groups+=("Development Tools")
 
@@ -332,12 +332,6 @@ for app in "${setups[@]}"; do
             ;;
 
         virtualbox )
-                # shellcheck disable=SC2154
-                echo -e "[virtualbox]\nname=Fedora $releasever - $basearch - VirtualBox\nbaseurl=http://download.virtualbox.org/virtualbox/rpm/fedora/$releasever/$basearch\nenabled=1\ngpgcheck=1\nrepo_gpgcheck=1\ngpgkey=https://www.virtualbox.org/download/oracle_vbox_2016.asc\n" > /etc/yum.repos.d/virtualbox.repo
-
-                sudo dnf update
-                sudo dnf install VirtualBox-7.1
-
                 setup_virtualbox_extension
             ;;
 
