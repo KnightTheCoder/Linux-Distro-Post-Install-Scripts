@@ -8,6 +8,7 @@ source "../../shared/shared_scripts.sh"
 packages=$(
     whiptail --title "Arch linux app installer" --separate-output --checklist "Choose which apps to install" 0 0 0 \
     "lutris" "Lutris" OFF \
+    "wine" "wine" OFF \
     "gaming-overlay" "Gaming overlay" OFF \
     "steam" "Steam" OFF \
     "itch" "Itch desktop app" OFF \
@@ -90,6 +91,10 @@ for package in $packages; do
             packages=$(remove_package "$packages" "$package")
 
             packages+=" goverlay mangohud gamemode"
+            ;;
+
+        wine )
+            packages+=" winetricks"
             ;;
 
         qemu )
