@@ -10,6 +10,6 @@
 # ✨ Features
 * Installs archlinux-keyring to update outdated certificates (when using an outdated iso)
 * Updates the system
-* Configures pacman to use multilib (for 32 bit programs, example: steam) and parallel downloads (set to 100)
+* Configures pacman to use multilib (for 32 bit programs, example: steam) and parallel downloads (set to 20)
 * Set color and ILoveCandy for visuals
 * Installs yay
