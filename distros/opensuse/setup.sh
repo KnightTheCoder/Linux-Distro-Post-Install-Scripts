@@ -75,7 +75,7 @@ cli_packages=$(
 
 packages+=" $cli_packages"
 
-packages+=" opi neovim eza bat fetchmsttfonts systemd-zram-service"
+packages+=" opi neovim eza bat fetchmsttfonts systemd-zram-service p7zip p7zip-full unrar"
 
 shells=$(choose_shells)
 

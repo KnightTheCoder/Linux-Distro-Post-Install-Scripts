@@ -53,7 +53,7 @@ cli_packages=$(
 
 packages+=" $cli_packages"
 
-packages+=" neovim eza bat dnf5 dnf5-plugins curl cabextract xorg-x11-font-utils fontconfig"
+packages+=" neovim eza bat dnf5 dnf5-plugins curl cabextract xorg-x11-font-utils fontconfig p7zip p7zip-plugins unrar"
 
 shells=$(choose_shells)
 

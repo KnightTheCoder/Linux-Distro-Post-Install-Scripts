@@ -54,7 +54,7 @@ cli_packages=$(
 
 packages+=" $cli_packages"
 
-packages+=" neovim eza bat zram-generator wget curl ark filelight git base-devel"
+packages+=" neovim eza bat zram-generator wget curl ark filelight git base-devel p7zip unrar"
 
 shells=$(choose_shells)
 
