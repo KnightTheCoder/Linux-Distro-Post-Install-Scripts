@@ -8,6 +8,7 @@ source "../../shared/shared_scripts.sh"
 packages=$(
     whiptail --title "Arch linux app installer" --separate-output --checklist "Choose which apps to install" 0 0 0 \
     "lutris" "Lutris" OFF \
+    "wine" "Wine" OFF \
     "gaming-overlay" "Gaming overlay" OFF \
     "steam" "Steam" OFF \
     "itch" "Itch desktop app" OFF \
@@ -37,6 +38,7 @@ packages=$(
     "distrobox" "Distrobox" OFF \
     "flatpak" "Flatpak" ON \
     "qemu" "QEMU/KVM" OFF \
+    "virtualbox" "Oracle Virtualbox" OFF \
     "openrgb" "OpenRGB" OFF \
     3>&1 1>&2 2>&3
 )
@@ -52,7 +54,7 @@ cli_packages=$(
 
 packages+=" $cli_packages"
 
-packages+=" kwrite neovim eza bat zram-generator wget curl ark filelight git base-devel"
+packages+=" neovim eza bat zram-generator wget curl ark filelight git base-devel p7zip unrar rar"
 
 shells=$(choose_shells)
 
@@ -92,40 +94,48 @@ for package in $packages; do
             packages+=" goverlay mangohud gamemode"
             ;;
 
+        wine )
+            packages+=" winetricks"
+            ;;
+
         qemu )
-            packages+=" qemu virt-manager virt-viewer dnsmasq vde2 bridge-utils openbsd-netcat dmidecode"
+            packages+=" virt-manager virt-viewer dnsmasq vde2 bridge-utils openbsd-netcat dmidecode"
 
             services+=(libvirtd.service)
 
             usergroups+=(libvirt)
+            ;;
 
-            packages=$(remove_package "$packages" "$package")
+        virtualbox )
+            setups+=(virtualbox)
+
+            usergroups+=(vboxusers)
             ;;
 
         heroic )
-            aur+=(heroic-games-launcher-bin)
-
             packages=$(remove_package "$packages" "$package")
+
+            aur+=(heroic-games-launcher-bin)
             ;;
 
         itch )
-            setups+=("$package")
-
             packages=$(remove_package "$packages" "$package")
+
+            setups+=("$package")
             ;;
 
         vscode )
-            aur+=(visual-studio-code-bin)
-
             packages=$(remove_package "$packages" "$package")
+
+            aur+=(visual-studio-code-bin)
 
             setups+=(vscode)
             ;;
 
         vscodium )
-            aur+=(vscodium-bin)
-
             packages=$(remove_package "$packages" "$package")
+
+            aur+=(vscodium-bin)
             
             setups+=(vscodium)
             ;;
@@ -159,9 +169,9 @@ for package in $packages; do
             ;;
 
         docker-desktop )
-            aur+=(docker-desktop)
-
             packages=$(remove_package "$packages" "$package")
+
+            aur+=(docker-desktop)
             ;;
 
         flatpak )
@@ -189,10 +199,10 @@ fi
 
 # Modify packman config file
 # Set parallel downloads, if it hasn't been set yet
-if grep -iq "ParallelDownloads = 100" /etc/pacman.conf && grep -iq "Color" /etc/pacman.conf && grep -iq "ILoveCandy" /etc/pacman.conf; then
+if grep -iq "ParallelDownloads = 20" /etc/pacman.conf && grep -iq "Color" /etc/pacman.conf && grep -iq "ILoveCandy" /etc/pacman.conf; then
     echo -e "${YELLOW}Config was already modified!${NC}"
 else
-    printf "\n[options]\nParallelDownloads = 100\nColor\nILoveCandy\n" | sudo tee -a /etc/pacman.conf
+    printf "\n[options]\nParallelDownloads = 20\nColor\nILoveCandy\n" | sudo tee -a /etc/pacman.conf
 fi
 
 # Update repos and install new keyrings
@@ -270,6 +280,10 @@ for app in "${setups[@]}"; do
 
         xampp )
             setup_xampp
+            ;;
+
+        virtualbox )
+            setup_virtualbox_extension
             ;;
 
         flatpak )

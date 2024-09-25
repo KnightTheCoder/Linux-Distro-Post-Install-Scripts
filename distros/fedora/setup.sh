@@ -8,6 +8,7 @@ source "../../shared/shared_scripts.sh"
 packages=$(
     whiptail --title "Fedora app installer" --separate-output --checklist "Choose which apps to install" 0 0 0 \
     "lutris" "Lutris" OFF \
+    "wine" "Wine" OFF \
     "gaming-overlay" "Gaming overlay" OFF \
     "steam" "Steam" OFF \
     "itch" "Itch desktop app" OFF \
@@ -36,6 +37,7 @@ packages=$(
     "distrobox" "Distrobox" OFF \
     "flatpak" "Flatpak" ON \
     "qemu" "QEMU/KVM" OFF \
+    "VirtualBox" "Oracle Virtualbox" OFF \
     "openrgb" "OpenRGB" OFF \
     3>&1 1>&2 2>&3
 )
@@ -51,7 +53,7 @@ cli_packages=$(
 
 packages+=" $cli_packages"
 
-packages+=" kwrite neovim eza bat dnf5 dnf5-plugins curl cabextract xorg-x11-font-utils fontconfig"
+packages+=" neovim eza bat dnf5 dnf5-plugins curl cabextract xorg-x11-font-utils fontconfig p7zip p7zip-plugins unrar"
 
 shells=$(choose_shells)
 
@@ -68,6 +70,7 @@ packages=$(echo "$packages"| tr "\n" " ")
 services=()
 setups=(fish hacknerd)
 usergroups=()
+groups=("C Development Tools and Libraries" Multimedia)
 packages_to_remove="akregator dragon elisa-player kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat kolourpaint qt5-qdbusviewer"
 
 nvim_config=$(choose_nvim_config)
@@ -85,15 +88,15 @@ for package in $packages; do
             ;;
 
         starship-install )
-            setups+=(starship-install)
-
             packages=$(remove_package "$packages" "$package")
+
+            setups+=(starship-install)
             ;;
 
         starship )
-            setups+=(starship)
-
             packages=$(remove_package "$packages" "$package")
+
+            setups+=(starship)
             ;;
 
         btop )
@@ -106,14 +109,24 @@ for package in $packages; do
             packages+=" goverlay mangohud gamemode"
             ;;
 
+        wine )
+            packages+=" wine-mono winetricks"
+            ;;
+
         qemu )
+            packages=$(remove_package "$packages" "$package")
+
             packages+=" @virtualization"
 
             services+=(libvirtd.service)
 
             usergroups+=(libvirt)
+            ;;
 
-            packages=$(remove_package "$packages" "$package")
+        VirtualBox )
+            setups+=(virtualbox)
+
+            usergroups+=(vboxusers)
             ;;
 
         steam )
@@ -121,27 +134,27 @@ for package in $packages; do
             ;;
 
         heroic )
-            setups+=(heroic)
-
             packages=$(remove_package "$packages" "$package")
+
+            setups+=(heroic)
             ;;
 
         itch )
-            setups+=("$package")
-
             packages=$(remove_package "$packages" "$package")
+
+            setups+=("$package")
             ;;
 
         vscode )
-            setups+=(vscode)
-
             packages=$(remove_package "$packages" "$package")
+            
+            setups+=(vscode)
             ;;
 
         vscodium )
-            setups+=(vscodium)
-
             packages=$(remove_package "$packages" "$package")
+
+            setups+=(vscodium)
             ;;
 
         rustup )
@@ -173,7 +186,7 @@ for package in $packages; do
             ;;
 
         docker-desktop )
-            packages=${packages/"$package"/}
+            packages=$(remove_package "$packages" "$package")
 
             setups+=(docker-desktop)
             packages+=" gnome-terminal"
@@ -217,8 +230,8 @@ sudo dnf upgrade -y --refresh
 # shellcheck disable=SC2086
 sudo dnf remove -y $packages_to_remove
 
-# Install codecs
-sudo dnf group install -y Multimedia --allowerasing
+# Install groups
+sudo dnf group install -y "${groups[@]}" --allowerasing
 
 # Install packages
 # shellcheck disable=SC2086
@@ -289,17 +302,6 @@ for app in "${setups[@]}"; do
             ;;
 
         docker )
-            sudo dnf remove -y docker \
-                  docker-client \
-                  docker-client-latest \
-                  docker-common \
-                  docker-latest \
-                  docker-latest-logrotate \
-                  docker-logrotate \
-                  docker-selinux \
-                  docker-engine-selinux \
-                  docker-engine
-
             sudo dnf -y install dnf-plugins-core
             sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo -y
 
@@ -310,6 +312,10 @@ for app in "${setups[@]}"; do
             wget -O docker-desktop.rpm "https://desktop.docker.com/linux/main/amd64/139021/docker-desktop-4.28.0-x86_64.rpm?utm_source=docker&utm_medium=webreferral&utm_campaign=docs-driven-download-linux-amd64"
             sudo dnf -y install docker-desktop.rpm
             rm -v docker-desktop.rpm
+            ;;
+
+        virtualbox )
+                setup_virtualbox_extension
             ;;
 
         flatpak )

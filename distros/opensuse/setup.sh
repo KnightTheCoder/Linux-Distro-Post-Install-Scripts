@@ -30,6 +30,7 @@ function create_snapshot() {
 packages=$(
     whiptail --title "OpenSUSE app installer" --separate-output --checklist "Choose which apps to install" 0 0 0 \
     "lutris" "Lutris" OFF \
+    "wine" "Wine" OFF \
     "gaming-overlay" "Gaming overlay" OFF \
     "steam" "Steam" OFF \
     "itch" "Itch desktop app" OFF \
@@ -58,6 +59,7 @@ packages=$(
     "distrobox" "Distrobox" OFF \
     "flatpak" "Flatpak" ON \
     "qemu" "QEMU/KVM" OFF \
+    "virtualbox" "Oracle Virtualbox" OFF \
     "OpenRGB" "OpenRGB" OFF \
     3>&1 1>&2 2>&3
 )
@@ -73,7 +75,7 @@ cli_packages=$(
 
 packages+=" $cli_packages"
 
-packages+=" opi kwrite neovim eza bat fetchmsttfonts systemd-zram-service"
+packages+=" opi neovim eza bat fetchmsttfonts systemd-zram-service p7zip p7zip-full unrar"
 
 shells=$(choose_shells)
 
@@ -115,6 +117,10 @@ for package in $packages; do
             packages+=" goverlay mangohud gamemode"
             ;;
 
+        wine )
+            packages+=" wine-mono winetricks"
+            ;;
+
         qemu )
             patterns+=(kvm_tools)
             patterns+=(kvm_server)
@@ -127,41 +133,47 @@ for package in $packages; do
             usergroups+=(libvirt)
             ;;
 
+        virtualbox )
+            setups+=(virtualbox)
+
+            usergroups+=(vboxusers)
+            ;;
+
         steam )
             packages+=" steam-devices"
             ;;
 
         heroic )
-            opi+=(heroic-games-launcher)
-
             packages=$(remove_package "$packages" "$package")
+
+            opi+=(heroic-games-launcher)
             ;;
 
         itch )
-            setups+=("$package")
-
             packages=$(remove_package "$packages" "$package")
+
+            setups+=("$package")
             ;;
 
         vscode )
+            packages=$(remove_package "$packages" "$package")
+
             setups+=(vscode)
 
             opi+=(vscode)
-
-            packages=$(remove_package "$packages" "$package")
             ;;
 
         vscodium )
+            packages=$(remove_package "$packages" "$package")
+
             opi+=(vscodium)
             setups+=(vscodium)
-
-            packages=$(remove_package "$packages" "$package")
             ;;
 
         dotnet )
-            opi+=(dotnet)
-
             packages=$(remove_package "$packages" "$package")
+            
+            opi+=(dotnet)
             ;;
 
         rustup )
@@ -307,6 +319,10 @@ for app in "${setups[@]}"; do
 
         xampp )
             setup_xampp
+            ;;
+
+        virtualbox )
+            setup_virtualbox_extension
             ;;
 
         flatpak )
