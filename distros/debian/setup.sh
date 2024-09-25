@@ -436,7 +436,14 @@ for app in "${setups[@]}"; do
             echo deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/vbox.gpg] http://download.virtualbox.org/virtualbox/debian jammy contrib | sudo tee /etc/apt/sources.list.d/virtualbox.list
             
             sudo nala update
-            sudo nala install virtualbox -y
+
+            vb_name="virtualbox"
+
+            if grep -iq ID=debian /etc/os-release; then
+                vb_name="virtualbox-7.1"
+            fi
+
+            sudo nala install ${vb_name} -y
 
             setup_virtualbox_extension
             ;;
