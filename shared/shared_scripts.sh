@@ -305,6 +305,12 @@ function setup_xampp() {
     rm -rv ./xampp-linux-installer.run
 }
 
+function setup_virtualbox_extension() {
+    wget https://download.virtualbox.org/virtualbox/7.0.12/Oracle_VM_VirtualBox_Extension_Pack-7.0.12.vbox-extpack
+    sudo vboxmanage extpack install Oracle_VM_VirtualBox_Extension_Pack-7.0.12.vbox-extpack
+    rm -fv Oracle_VM_VirtualBox_Extension_Pack-7.0.12.vbox-extpack
+}
+
 function setup_flatpak() {
     local extra_apps=("$@")
 

@@ -8,7 +8,7 @@ source "../../shared/shared_scripts.sh"
 packages=$(
     whiptail --title "Debian/Ubuntu app installer" --separate-output --checklist "Choose which apps to install" 0 0 0 \
     "lutris" "Lutris" OFF \
-    "wine" "wine" OFF \
+    "wine" "Wine" OFF \
     "gaming-overlay" "Gaming overlay" OFF \
     "steam" "Steam" OFF \
     "itch" "Itch desktop app" OFF \
@@ -36,6 +36,7 @@ packages=$(
     "distrobox" "Distrobox" OFF \
     "flatpak" "Flatpak" ON \
     "qemu" "QEMU/KVM" OFF \
+    "virtualbox" "Oracle Virtualbox" OFF \
     3>&1 1>&2 2>&3
 )
 
@@ -84,15 +85,15 @@ for package in $packages; do
             ;;
 
         starship-install )
-            setups+=(starship-install)
-
             packages=$(remove_package "$packages" "$package")
+            
+            setups+=(starship-install)
             ;;
 
         starship )
-            setups+=(starship)
-
             packages=$(remove_package "$packages" "$package")
+            
+            setups+=(starship)
             ;;
 
         gaming-overlay)
@@ -106,7 +107,6 @@ for package in $packages; do
             ;;
 
         qemu )
-            # Remove package
             packages=$(remove_package "$packages" "$package")
 
             packages+=" libvirt-clients libvirt-daemon-system bridge-utils virtinst libvirt-daemon virt-manager"
@@ -122,11 +122,20 @@ for package in $packages; do
             usergroups+=(libvirt)
             ;;
 
+        virtualbox )
+            packages=$(remove_package "$packages" "$package")
+
+            packages+=" dkms build-essential linux-headers-$(uname -r) curl wget apt-transport-https gnupg2"
+
+            setups+=(virtualbox)
+
+            usergroups+=(vboxusers)
+            ;;
+
         steam ) 
             # steam package has a different name for debian
             if grep -iq ID=debian /etc/os-release; then
-                # Remove package
-            packages=$(remove_package "$packages" "$package")
+                packages=$(remove_package "$packages" "$package")
 
                 packages+=" steam-installer"
             fi
@@ -135,36 +144,36 @@ for package in $packages; do
             ;;
 
         lutris )
+            packages=$(remove_package "$packages" "$package")
+
             setups+=(lutris)
 
             packages+=" wine"
-
-            packages=$(remove_package "$packages" "$package")
             ;;
 
         heroic )
-            setups+=(heroic)
-
             packages=$(remove_package "$packages" "$package")
+
+            setups+=(heroic)
             ;;
 
         itch )
-            setups+=("$package")
-
             packages=$(remove_package "$packages" "$package")
+            
+            setups+=("$package")
             ;;
 
         vscode )
+            packages=$(remove_package "$packages" "$package")
+
             setups+=(vscode)
             packages+=" apt-transport-https"
-
-            packages=$(remove_package "$packages" "$package")
             ;;
 
         vscodium )
-            setups+=(vscodium)
-
             packages=$(remove_package "$packages" "$package")
+
+            setups+=(vscodium)
             ;;
 
         dotnet )
@@ -178,9 +187,9 @@ for package in $packages; do
             ;;
 
         rustup )
-            setups+=(rust)
-
             packages=$(remove_package "$packages" "$package")
+
+            setups+=(rust)
             ;;
 
         nodejs )
@@ -191,7 +200,7 @@ for package in $packages; do
 
         golang )
             if grep -iq ubuntu /etc/os-release; then
-                packages=${packages/"$package"/}
+                packages=$(remove_package "$packages" "$package")
 
                 packages+=" golang-go"
             fi
@@ -210,7 +219,7 @@ for package in $packages; do
             ;;
 
         docker )
-            packages=${packages/"$package"/}
+            packages=$(remove_package "$packages" "$package")
 
             packages+=" ca-certificates"
             setups+=(docker)
@@ -219,7 +228,7 @@ for package in $packages; do
             ;;
 
         docker-desktop )
-            packages=${packages/"$package"/}
+            packages=$(remove_package "$packages" "$package")
 
             setups+=(docker-desktop)
             packages+=" gnome-terminal"
@@ -420,6 +429,16 @@ for app in "${setups[@]}"; do
 
         distrobox )
             curl -s https://raw.githubusercontent.com/89luca89/distrobox/main/install | sudo sh
+            ;;
+
+        virtualbox )
+            curl -fsSL https://www.virtualbox.org/download/oracle_vbox_2016.asc|sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/vbox.gpg
+            echo deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/vbox.gpg] http://download.virtualbox.org/virtualbox/debian jammy contrib | sudo tee /etc/apt/sources.list.d/virtualbox.list
+            
+            sudo nala update
+            sudo nala install virtualbox -y
+
+            setup_virtualbox_extension
             ;;
 
         eza )

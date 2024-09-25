@@ -30,7 +30,7 @@ function create_snapshot() {
 packages=$(
     whiptail --title "OpenSUSE app installer" --separate-output --checklist "Choose which apps to install" 0 0 0 \
     "lutris" "Lutris" OFF \
-    "wine" "wine" OFF \
+    "wine" "Wine" OFF \
     "gaming-overlay" "Gaming overlay" OFF \
     "steam" "Steam" OFF \
     "itch" "Itch desktop app" OFF \
