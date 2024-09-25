@@ -102,7 +102,7 @@ for package in $packages; do
             ;;
 
         wine )
-            packages+=" winetricks"
+            packages+=" wine32 winetricks"
             ;;
 
         qemu )
