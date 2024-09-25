@@ -322,10 +322,13 @@ for app in "${setups[@]}"; do
             ;;
 
         vscode )
-            wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
-            sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
+            if [ ! -e /etc/apt/keyrings/packages.microsoft.gpg ]; then
+                wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+                sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
+                rm -fv packages.microsoft.gpg
+            fi
+
             sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
-            rm -f packages.microsoft.gpg
 
             sudo nala update
             sudo nala install -y code
@@ -334,9 +337,11 @@ for app in "${setups[@]}"; do
             ;;
 
         vscodium )
-            wget -qO - https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg \
-                | gpg --dearmor \
-                | sudo dd of=/usr/share/keyrings/vscodium-archive-keyring.gpg
+            if [ ! -e /usr/share/keyrings/vscodium-archive-keyring.gpg ]; then
+                wget -qO - https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg \
+                    | gpg --dearmor \
+                    | sudo dd of=/usr/share/keyrings/vscodium-archive-keyring.gpg
+            fi
 
             echo 'deb [ signed-by=/usr/share/keyrings/vscodium-archive-keyring.gpg ] https://download.vscodium.com/debs vscodium main' \
                 | sudo tee /etc/apt/sources.list.d/vscodium.list
@@ -371,16 +376,17 @@ for app in "${setups[@]}"; do
             ;;
 
         docker )
-            # Remove old packages
-            for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do sudo apt-get remove $pkg; done
-
             sudo apt-get update
             sudo install -m 0755 -d /etc/apt/keyrings
            
             if grep -iq ID=debian /etc/os-release; then
                 # Debian
+
                 # Add Docker's official GPG key:
-                sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
+                if [ ! -e /etc/apt/keyrings/docker.asc ]; then
+                    sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
+                fi
+
                 sudo chmod a+r /etc/apt/keyrings/docker.asc
 
                 # Add the repository to Apt sources:
@@ -392,8 +398,12 @@ for app in "${setups[@]}"; do
                 sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
             else
                 # Ubuntu based
+
                 # Add Docker's official GPG key:
-                sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+                if [ ! -e /etc/apt/keyrings/docker.asc ]; then
+                    sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+                fi
+
                 sudo chmod a+r /etc/apt/keyrings/docker.asc
 
                 # Add the repository to Apt sources:
@@ -455,9 +465,7 @@ for app in "${setups[@]}"; do
             if [ ! -x /usr/bin/eza ]; then
                 sudo mkdir -p /etc/apt/keyrings
 
-                if [ ! -e /etc/apt/keyrings/gierens.gpg ]; then
-                    wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | sudo gpg --dearmor -o /etc/apt/keyrings/gierens.gpg
-                fi
+                wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | sudo gpg --dearmor -o /etc/apt/keyrings/gierens.gpg
 
                 echo "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de stable main" | sudo tee /etc/apt/sources.list.d/gierens.list
                 sudo chmod 644 /etc/apt/keyrings/gierens.gpg /etc/apt/sources.list.d/gierens.list
