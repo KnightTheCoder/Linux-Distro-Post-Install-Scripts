@@ -317,9 +317,9 @@ function setup_virtualbox_extension() {
         manage="VBoxManage"
     fi
 
-    wget -O Oracle_VirtualBox_Extension_Pack.vbox-extpack "$extension_link"
-    sudo "${manage}" extpack install Oracle_VirtualBox_Extension_Pack.vbox-extpack
-    rm -fv Oracle_VirtualBox_Extension_Pack.vbox-extpack
+    wget "$extension_link"
+    sudo "${manage}" extpack install Oracle*.vbox-extpack
+    rm -fv Oracle*.vbox-extpack
 }
 
 function setup_flatpak() {
