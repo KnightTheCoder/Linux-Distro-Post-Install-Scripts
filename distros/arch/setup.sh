@@ -282,6 +282,10 @@ for app in "${setups[@]}"; do
             setup_xampp
             ;;
 
+        virtualbox )
+            setup_virtualbox_extension
+            ;;
+
         flatpak )
             setup_flatpak
             ;;
