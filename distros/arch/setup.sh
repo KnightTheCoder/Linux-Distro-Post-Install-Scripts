@@ -38,6 +38,7 @@ packages=$(
     "distrobox" "Distrobox" OFF \
     "flatpak" "Flatpak" ON \
     "qemu" "QEMU/KVM" OFF \
+    "virtualbox" "Oracle Virtualbox" OFF \
     "openrgb" "OpenRGB" OFF \
     3>&1 1>&2 2>&3
 )
@@ -98,39 +99,43 @@ for package in $packages; do
             ;;
 
         qemu )
-            packages+=" qemu virt-manager virt-viewer dnsmasq vde2 bridge-utils openbsd-netcat dmidecode"
+            packages+=" virt-manager virt-viewer dnsmasq vde2 bridge-utils openbsd-netcat dmidecode"
 
             services+=(libvirtd.service)
 
             usergroups+=(libvirt)
+            ;;
 
-            packages=$(remove_package "$packages" "$package")
+        virtualbox )
+            setups+=(virtualbox)
+
+            usergroups+=(vboxusers)
             ;;
 
         heroic )
-            aur+=(heroic-games-launcher-bin)
-
             packages=$(remove_package "$packages" "$package")
+
+            aur+=(heroic-games-launcher-bin)
             ;;
 
         itch )
-            setups+=("$package")
-
             packages=$(remove_package "$packages" "$package")
+
+            setups+=("$package")
             ;;
 
         vscode )
-            aur+=(visual-studio-code-bin)
-
             packages=$(remove_package "$packages" "$package")
+
+            aur+=(visual-studio-code-bin)
 
             setups+=(vscode)
             ;;
 
         vscodium )
-            aur+=(vscodium-bin)
-
             packages=$(remove_package "$packages" "$package")
+
+            aur+=(vscodium-bin)
             
             setups+=(vscodium)
             ;;
@@ -164,9 +169,9 @@ for package in $packages; do
             ;;
 
         docker-desktop )
-            aur+=(docker-desktop)
-
             packages=$(remove_package "$packages" "$package")
+
+            aur+=(docker-desktop)
             ;;
 
         flatpak )

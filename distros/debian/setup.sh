@@ -219,7 +219,7 @@ for package in $packages; do
             ;;
 
         docker )
-            packages=$(remove_package "$packages" "$package")
+            packages=${packages/"$package"/}
 
             packages+=" ca-certificates"
             setups+=(docker)

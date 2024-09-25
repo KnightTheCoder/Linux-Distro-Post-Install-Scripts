@@ -59,6 +59,7 @@ packages=$(
     "distrobox" "Distrobox" OFF \
     "flatpak" "Flatpak" ON \
     "qemu" "QEMU/KVM" OFF \
+    "virtualbox" "Oracle Virtualbox" OFF \
     "OpenRGB" "OpenRGB" OFF \
     3>&1 1>&2 2>&3
 )
@@ -132,41 +133,47 @@ for package in $packages; do
             usergroups+=(libvirt)
             ;;
 
+        virtualbox )
+            setups+=(virtualbox)
+
+            usergroups+=(vboxusers)
+            ;;
+
         steam )
             packages+=" steam-devices"
             ;;
 
         heroic )
-            opi+=(heroic-games-launcher)
-
             packages=$(remove_package "$packages" "$package")
+
+            opi+=(heroic-games-launcher)
             ;;
 
         itch )
-            setups+=("$package")
-
             packages=$(remove_package "$packages" "$package")
+
+            setups+=("$package")
             ;;
 
         vscode )
+            packages=$(remove_package "$packages" "$package")
+
             setups+=(vscode)
 
             opi+=(vscode)
-
-            packages=$(remove_package "$packages" "$package")
             ;;
 
         vscodium )
+            packages=$(remove_package "$packages" "$package")
+
             opi+=(vscodium)
             setups+=(vscodium)
-
-            packages=$(remove_package "$packages" "$package")
             ;;
 
         dotnet )
-            opi+=(dotnet)
-
             packages=$(remove_package "$packages" "$package")
+            
+            opi+=(dotnet)
             ;;
 
         rustup )
@@ -312,6 +319,10 @@ for app in "${setups[@]}"; do
 
         xampp )
             setup_xampp
+            ;;
+
+        virtualbox )
+            setup_virtualbox_extension
             ;;
 
         flatpak )

@@ -37,7 +37,7 @@ packages=$(
     "distrobox" "Distrobox" OFF \
     "flatpak" "Flatpak" ON \
     "qemu" "QEMU/KVM" OFF \
-    "virtualbox" "Oracle Virtualbox" OFF \
+    "VirtualBox" "Oracle Virtualbox" OFF \
     "openrgb" "OpenRGB" OFF \
     3>&1 1>&2 2>&3
 )
@@ -88,15 +88,15 @@ for package in $packages; do
             ;;
 
         starship-install )
-            setups+=(starship-install)
-
             packages=$(remove_package "$packages" "$package")
+
+            setups+=(starship-install)
             ;;
 
         starship )
-            setups+=(starship)
-
             packages=$(remove_package "$packages" "$package")
+
+            setups+=(starship)
             ;;
 
         btop )
@@ -114,20 +114,16 @@ for package in $packages; do
             ;;
 
         qemu )
+            packages=$(remove_package "$packages" "$package")
+
             packages+=" @virtualization"
 
             services+=(libvirtd.service)
 
             usergroups+=(libvirt)
-
-            packages=$(remove_package "$packages" "$package")
             ;;
 
-        virtualbox )
-            packages=$(remove_package "$packages" "$package")
-
-            packages+=" VirtualBox"
-
+        VirtualBox )
             setups+=(virtualbox)
 
             usergroups+=(vboxusers)
@@ -138,27 +134,27 @@ for package in $packages; do
             ;;
 
         heroic )
-            setups+=(heroic)
-
             packages=$(remove_package "$packages" "$package")
+
+            setups+=(heroic)
             ;;
 
         itch )
-            setups+=("$package")
-
             packages=$(remove_package "$packages" "$package")
+
+            setups+=("$package")
             ;;
 
         vscode )
-            setups+=(vscode)
-
             packages=$(remove_package "$packages" "$package")
+            
+            setups+=(vscode)
             ;;
 
         vscodium )
-            setups+=(vscodium)
-
             packages=$(remove_package "$packages" "$package")
+
+            setups+=(vscodium)
             ;;
 
         rustup )
@@ -190,7 +186,7 @@ for package in $packages; do
             ;;
 
         docker-desktop )
-            packages=${packages/"$package"/}
+            packages=$(remove_package "$packages" "$package")
 
             setups+=(docker-desktop)
             packages+=" gnome-terminal"
