@@ -79,7 +79,7 @@ for package in $packages; do
         bash )
             packages+=" gawk"
 
-            aur+=(blesh)
+            setups+=(bash)
             ;;
 
         fish )
@@ -294,6 +294,10 @@ for app in "${setups[@]}"; do
 
         flatpak )
             setup_flatpak
+            ;;
+
+        bash )
+            setup_bash
             ;;
 
         fish )
