@@ -194,8 +194,6 @@ function setup_bash() {
 
 # Install oh my fish and copy fish config
 function setup_fish() {
-    
-
     if [ -d "$HOME/.local/share/omf" ]; then
         echo -e "${YELLOW}oh my fish is already installed${NC}"
     else
@@ -258,7 +256,9 @@ function setup_starship_install() {
 }
 
 function setup_starship() {
-    if [[ ! -x "$(command -v starship)" ]]; then
+    starship_config=~/.config/starship.toml
+
+    if [[ ! -d "$starship_config" ]]; then
         echo -e "${YELLOW}Starship is already setup${NC}"
         return
     fi
@@ -305,13 +305,13 @@ function setup_starship() {
         fi
     fi
 
-    starship preset tokyo-night -o ~/.config/starship.toml
+    starship preset tokyo-night -o "${starship_config}"
 
-    starship_config=$(cat ~/.config/starship.toml)
+    starship_config=$(cat "${starship_config}")
 
     starship_config=${starship_config//${distro_icon}}
 
-    echo "$starship_config" > ~/.config/starship.toml
+    echo "$starship_config" > "${starship_config}"
 }
 
 function choose_nvim_config() {
