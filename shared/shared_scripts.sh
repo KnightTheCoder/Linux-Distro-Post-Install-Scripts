@@ -258,9 +258,9 @@ function setup_starship_install() {
 }
 
 function setup_starship() {
-    starship_config=~/.config/starship.toml
+    starship_config_file=~/.config/starship.toml
 
-    if [[ ! -d "$starship_config" ]]; then
+    if [[ ! -d "$starship_config_file" ]]; then
         echo -e "${YELLOW}Starship is already setup${NC}"
         return
     fi
@@ -307,13 +307,13 @@ function setup_starship() {
         fi
     fi
 
-    starship preset tokyo-night -o "${starship_config}"
+    starship preset tokyo-night -o "${starship_config_file}"
 
-    starship_config=$(cat "${starship_config}")
+    starship_config_content=$(cat "${starship_config_file}")
 
-    starship_config=${starship_config//${distro_icon}}
+    starship_config_content=${starship_config_content//${distro_icon}}
 
-    echo "$starship_config" > "${starship_config}"
+    echo "${starship_config_content}" > "${starship_config_file}"
 }
 
 function choose_nvim_config() {
