@@ -167,7 +167,14 @@ function setup_bash() {
 
     git clone --recursive --depth 1 --shallow-submodules https://github.com/akinomyoga/ble.sh.git
     make -C ble.sh install PREFIX=~/.local
-    echo 'source ~/.local/share/blesh/ble.sh' >> ~/.bashrc
+    # echo 'source ~/.local/share/blesh/ble.sh' >> ~/.bashrc
+
+    bat_fullname=bat
+    if grep -iq debian /etc/os-release; then
+        bat_fullname=batcat
+    fi
+
+    { echo 'source ~/.local/share/blesh/ble.sh'; echo "alias ls=\"eza\""; echo "alias cat=\"$bat_fullname\""; } >> ~/.bashrc
 }
 
 # Install oh my fish and copy fish config

@@ -16,6 +16,29 @@
 * Start listed services
 * Ask for hostname (optional)
 
+## Shell configurations
+
+### Bash
+* [blesh](https://github.com/akinomyoga/ble.sh)
+* cat is alias for bat
+* ls is alias for eza
+
+### Fish
+* [oh-my-fish](https://github.com/oh-my-fish/oh-my-fish)
+* cat is alias for bat
+* ls is alias for eza
+
+### Zsh
+* [prezto](https://github.com/sorin-ionescu/prezto)
+* Syntac highlighting
+* Autocompletion
+* Zsh abbreviation
+* cat is alias for bat
+* ls is alias for eza
+
+### Starship
+* [Tokyo Night preset](https://starship.rs/presets/tokyo-night)
+
 ## 🌐 Firefox policy
 A firefox policy is included for increased privacy.
 

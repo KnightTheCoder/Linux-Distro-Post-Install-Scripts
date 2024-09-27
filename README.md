@@ -124,7 +124,7 @@ bash ./post_install.sh --copy-firefox-policy
 * Installs gaming launchers such as Steam, lutris, itch desktop app
 * Adds the following command line utilities: neofetch, htop, btop, neovim, eza, bat
 * Installs wine and Protonup-Qt to run windows games
-* Sets up fish and zsh
+* Sets up bash, fish and zsh
 * Installs NvChad or Astrovim for neovim
 * Installs the GitHub CLI
 * Installs docker, podman and distrobox for containers
