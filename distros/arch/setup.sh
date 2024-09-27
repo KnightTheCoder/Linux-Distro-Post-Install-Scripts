@@ -196,6 +196,7 @@ if whiptail --title "Remove discover" --yesno "Would you like to remove discover
     packages_to_remove+=" discover"
 fi
 
+echo -e "${GREEN}Adding multilib repo...${NC}"
 # Add multilib for steam to work
 if grep -iqzoP "\n\[multilib\]\n" /etc/pacman.conf; then
     echo -e "${YELLOW}multilib is already included${NC}"
@@ -203,7 +204,8 @@ else
     printf "\n[multilib]\nInclude = /etc/pacman.d/mirrorlist\n" | sudo tee -a /etc/pacman.conf
 fi
 
-# Modify packman config file
+echo -e "${GREEN}Modifying pacman config...${NC}"
+# Modify pacman config file
 # Set parallel downloads, if it hasn't been set yet
 if grep -iq "ParallelDownloads = 20" /etc/pacman.conf && grep -iq "Color" /etc/pacman.conf && grep -iq "ILoveCandy" /etc/pacman.conf; then
     echo -e "${YELLOW}Config was already modified${NC}"
@@ -217,7 +219,6 @@ sudo pacman -Syy archlinux-keyring --noconfirm --needed
 # Update system
 sudo pacman -Syu --noconfirm
 
-# TODO: list correct packages to remove
 # Remove unneccessary packages
 # shellcheck disable=SC2086
 sudo pacman -Rns $packages_to_remove
@@ -240,9 +241,11 @@ fi
 # Install AUR packages
 yay -S "${aur[@]}" --needed
 
+echo -e "${GREEN}Setting up zram...${NC}"
 # Setup zram
 printf "[zram0]\n zram-size = ram / 2\n compression-algorithm = zstd\n swap-priority = 100\n fs-type = swap\n" | sudo tee /etc/systemd/zram-generator.conf
 
+echo -e "${GREEN}Adding user to groups...${NC}"
 # Add user to groups
 for group in "${usergroups[@]}"; do
     sudo groupadd "$group"
@@ -314,6 +317,7 @@ for app in "${setups[@]}"; do
     esac
 done
 
+echo -e "${GREEN}Starting services...${NC}"
 # Start services
 for serv in "${services[@]}"; do
     sudo systemctl enable --now "$serv"

@@ -31,9 +31,11 @@ function setup_firefox() {
   extension_sets=$(echo "$extension_sets"| tr "\n" " ")
   extensions=()
 
-  if [ ! -f "/etc/firefox/policies/policies.json" ]; then
-    sudo mkdir -pv "/etc/firefox/policies"
-    sudo cp -fv "config/firefox/policies.json" "/etc/firefox/policies"
+  firefox_policy_directory=/etc/firefox/policies
+
+  if [ ! -f "${firefox_policy_directory}/policies.json" ]; then
+    sudo mkdir -pv "${firefox_policy_directory}"
+    sudo cp -fv config/firefox/policies.json "${firefox_policy_directory}"
   fi
 
   for extension_set in $extension_sets; do
@@ -88,7 +90,7 @@ function setup_vscode() {
         code_editor="code"
     fi
 
-    echo -e "${GREEN}Installing extensions for ${code_editor}...${NC}"
+    echo -e "${GREEN}Installing extensions for VS${code_editor}...${NC}"
 
     local extensions=(
         "adpyke.codesnap"
@@ -151,7 +153,9 @@ function setup_vscode() {
 }
 
 function setup_hacknerd_fonts() {
-    if [ -d "$HOME/.local/share/fonts/hacknerdfonts" ]; then
+    hacknerdfont_directory="$HOME/.local/share/fonts/hacknerdfonts"
+
+    if [ -d "${hacknerdfont_directory}" ]; then
         echo -e "${YELLOW}Hack nerd fonts are already installed${NC}"
         return
     fi
@@ -160,8 +164,8 @@ function setup_hacknerd_fonts() {
 
     wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/Hack.zip
     unzip ./Hack.zip -d Hack
-    mkdir -p "$HOME/.local/share/fonts/hacknerdfonts"
-    cp -fv ./Hack/*.ttf "$HOME/.local/share/fonts/hacknerdfonts"
+    mkdir -p "${hacknerdfont_directory}"
+    cp -fv ./Hack/*.ttf "${hacknerdfont_directory}"
     fc-cache -fv
     # Delete all fonts in the directory after caching
     rm -rfv ./Hack Hack.zip
@@ -201,11 +205,14 @@ function setup_fish() {
 
     echo -e "${GREEN}Copying fish config...${NC}"
 
+    config_input=../../config/fish
+    config_output="$HOME/.config/fish/config.fish"
+
     # Need to use a different config for debian based systems because it's called batcat and not bat on them
     if grep -iq debian /etc/os-release; then
-        cp -fv "../../config/fish/config_debian.fish" "$HOME/.config/fish/config.fish"
+        cp -fv "${config_input}/config_debian.fish" "${config_output}"
     else
-        cp -fv "../../config/fish/config.fish" "$HOME/.config/fish/config.fish"
+        cp -fv "${config_input}/config.fish" "${config_output}"
     fi
 }
 
@@ -335,10 +342,12 @@ function setup_rust() {
 }
 
 function setup_xampp() {
-    wget -O xampp-linux-installer.run https://sourceforge.net/projects/xampp/files/XAMPP%20Linux/8.2.12/xampp-linux-x64-8.2.12-0-installer.run/download
-    chmod +x ./xampp-linux-installer.run
-    sudo ./xampp-linux-installer.run
-    rm -rv ./xampp-linux-installer.run
+    xampp_executable=xampp-linux-installer.run
+
+    wget -O "${xampp_executable}" https://sourceforge.net/projects/xampp/files/XAMPP%20Linux/8.2.12/xampp-linux-x64-8.2.12-0-installer.run/download
+    chmod +x "./${xampp_executable}"
+    sudo "./${xampp_executable}"
+    rm -rv "./${xampp_executable}"
 }
 
 function setup_virtualbox_extension() {

@@ -214,6 +214,7 @@ if whiptail --title "Remove discover" --yesno "Would you like to remove discover
     packages_to_remove+=" plasma-discover --exclude=flatpak"
 fi
 
+echo -e "${GREEN}Modifying dnf configuration...${NC}"
 # Modify dnf config file
 # Set parallel downloads and default to yes, if it hasn't been set yet
 if grep -iq "max_parallel_downloads=20" /etc/dnf/dnf.conf && grep -iq "defaultyes=True" /etc/dnf/dnf.conf; then
@@ -246,6 +247,7 @@ sudo dnf install -y $packages
 # Install msfonts
 sudo rpm -i https://downloads.sourceforge.net/project/mscorefonts2/rpms/msttcore-fonts-installer-2.6-1.noarch.rpm
 
+echo -e "${GREEN}Adding user to groups...${NC}"
 # Add user to groups
 for group in "${usergroups[@]}"; do
     sudo groupadd "$group"
@@ -355,6 +357,7 @@ for app in "${setups[@]}"; do
     esac
 done
 
+echo -e "${GREEN}Starting services...${NC}"
 # Start services
 for serv in "${services[@]}"; do
     sudo systemctl enable --now "$serv"

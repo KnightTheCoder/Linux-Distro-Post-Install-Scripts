@@ -243,6 +243,7 @@ sudo zypper refresh
 # Update system
 sudo zypper -vv dist-upgrade -y
 
+echo -e "${GREEN}Checking connection...${NC}"
 # Check internet after update
 if wget -q --spider http://google.com; then
     echo -e "${GREEN}Online${NC}"
@@ -271,6 +272,7 @@ sudo zypper install --details -yt pattern "${patterns[@]}"
 # Install opi packages
 opi -nm "${opi[@]}"
 
+echo -e "${GREEN}Refreshing new repos...${NC}"
 # Set new repos to refresh
 repos=$(sudo zypper lr)
 for repo in $repos; do
@@ -282,6 +284,7 @@ for repo in $repos; do
     esac
 done
 
+echo -e "${GREEN}Adding user to groups...${NC}"
 # Add user to groups
 for group in "${usergroups[@]}"; do
     sudo groupadd "$group"
@@ -353,6 +356,7 @@ for app in "${setups[@]}"; do
     esac
 done
 
+echo -e "${GREEN}Starting services...${NC}"
 # Start services
 for serv in "${services[@]}"; do
     sudo systemctl enable --now "$serv"
