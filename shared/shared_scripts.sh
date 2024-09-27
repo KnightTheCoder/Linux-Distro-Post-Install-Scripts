@@ -193,7 +193,7 @@ function setup_bash() {
 
 # Install oh my fish and copy fish config
 function setup_fish() {
-    echo -e "${GREEN}Installing oh my fish!...${NC}"
+    
 
     if [ -d "$HOME/.local/share/omf" ]; then
         echo -e "${YELLOW}oh my fish is already installed${NC}"
