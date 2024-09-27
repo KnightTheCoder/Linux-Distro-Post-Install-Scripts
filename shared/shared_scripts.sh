@@ -190,6 +190,8 @@ function setup_bash() {
     fi
 
     { echo 'source ~/.local/share/blesh/ble.sh'; echo "alias ls=\"eza\""; echo "alias cat=\"$bat_fullname\""; } >> ~/.bashrc
+
+    rm -rfv ./ble.sh
 }
 
 # Install oh my fish and copy fish config
