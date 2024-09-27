@@ -310,6 +310,8 @@ function setup_starship() {
     starship_config=$(cat ~/.config/starship.toml)
 
     starship_config=${starship_config//${distro_icon}}
+
+    echo "$starship_config" > ~/.config/starship.toml
 }
 
 function choose_nvim_config() {
