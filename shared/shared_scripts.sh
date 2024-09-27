@@ -260,7 +260,7 @@ function setup_starship_install() {
 function setup_starship() {
     starship_config_file=~/.config/starship.toml
 
-    if [[ ! -d "$starship_config_file" ]]; then
+    if [[ -d "$starship_config_file" ]]; then
         echo -e "${YELLOW}Starship is already setup${NC}"
         return
     fi
