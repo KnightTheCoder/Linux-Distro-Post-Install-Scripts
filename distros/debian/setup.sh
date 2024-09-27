@@ -479,7 +479,7 @@ for app in "${setups[@]}"; do
                 sudo nala update
                 sudo nala install -y eza
             else
-                echo -e "${YELLOW}eza is already installed!${NC}"
+                echo -e "${YELLOW}eza is already installed${NC}"
             fi
             ;;
 

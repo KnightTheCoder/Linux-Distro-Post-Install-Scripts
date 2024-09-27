@@ -66,7 +66,7 @@ function setup_firefox() {
 function setup_itch_app() {
     # Check if itch is installed
     if [ -x "$HOME/.itch/itch" ]; then
-        echo -e "${YELLOW}Itch desktop app is already installed!${NC}"
+        echo -e "${YELLOW}Itch desktop app is already installed${NC}"
         return
     fi
 
@@ -146,7 +146,7 @@ function setup_vscode() {
 
 function setup_hacknerd_fonts() {
     if [ -d "$HOME/.local/share/fonts/hacknerdfonts" ]; then
-        echo -e "${YELLOW}Hack nerd fonts already installed!${NC}"
+        echo -e "${YELLOW}Hack nerd fonts already installed${NC}"
         return
     fi
 
@@ -161,7 +161,7 @@ function setup_hacknerd_fonts() {
 
 function setup_bash() {
     if [ -d ~/.local/share/blesh ]; then
-        echo -e "${GREEN}blesh is already setup!${NC}"
+        echo -e "${YELLOW}blesh is already setup${NC}"
         return
     fi
 
@@ -174,7 +174,7 @@ function setup_bash() {
 function setup_fish() {
     echo -e "${GREEN}Installing oh my fish!...${NC}"
     if [ -d "$HOME/.local/share/omf" ]; then
-        echo -e "${YELLOW}oh my fish is already installed!${NC}"
+        echo -e "${YELLOW}oh my fish is already installed${NC}"
     else
         echo -e "${YELLOW}Please run 'exit' to exit from fish and install the bobthefish theme${NC}"
         curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
@@ -230,7 +230,7 @@ function setup_starship_install() {
 
 function setup_starship() {
     if [[ ! -x "$(command -v starship)" ]]; then
-        echo -e "${GREEN}Starship is already setup${NC}"
+        echo -e "${YELLOW}Starship is already setup${NC}"
         return
     fi
 
