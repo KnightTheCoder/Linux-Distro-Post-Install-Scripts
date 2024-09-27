@@ -82,7 +82,7 @@ Tested distros:
 > Step 2: Navigate to the downloaded scripts and unzip them <br />
 > Step 3: Run the script
 
-<details>
+<details open>
 <summary>Stable</summary>
 
 ```console
