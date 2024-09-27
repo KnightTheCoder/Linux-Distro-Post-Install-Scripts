@@ -17,6 +17,8 @@ function remove_package() {
 
 # Copy policies and install extensions for firefox
 function setup_firefox() {
+    echo -e "${GREEN}Setting up firefox...${NC}"
+
     extension_sets=$(
         whiptail --title "Firefox extension sets" --separate-output --checklist "Choose what set of extensions to install\nWill open the extension's page to install manually\nClose to progress install" 0 0 0 \
         "youtube" "Youtube" OFF \
@@ -64,6 +66,8 @@ function setup_firefox() {
 
 # Install the itch desktop app
 function setup_itch_app() {
+    echo -e "${GREEN}Installing itch desktop app...${NC}"
+
     # Check if itch is installed
     if [ -x "$HOME/.itch/itch" ]; then
         echo -e "${YELLOW}Itch desktop app is already installed${NC}"
@@ -83,6 +87,8 @@ function setup_vscode() {
     if [ -z "$code_editor" ] || [ "$code_editor" == code ]; then
         code_editor="code"
     fi
+
+    echo -e "${GREEN}Installing extensions for ${code_editor}...${NC}"
 
     local extensions=(
         "adpyke.codesnap"
@@ -146,9 +152,11 @@ function setup_vscode() {
 
 function setup_hacknerd_fonts() {
     if [ -d "$HOME/.local/share/fonts/hacknerdfonts" ]; then
-        echo -e "${YELLOW}Hack nerd fonts already installed${NC}"
+        echo -e "${YELLOW}Hack nerd fonts are already installed${NC}"
         return
     fi
+
+    echo -e "${GREEN}Installing hack nerd fonts...${NC}"
 
     wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/Hack.zip
     unzip ./Hack.zip -d Hack
@@ -165,6 +173,8 @@ function setup_bash() {
         return
     fi
 
+    echo -e "${GREEN}Installing blesh...${NC}"
+
     git clone --recursive --depth 1 --shallow-submodules https://github.com/akinomyoga/ble.sh.git
     make -C ble.sh install PREFIX=~/.local
     # echo 'source ~/.local/share/blesh/ble.sh' >> ~/.bashrc
@@ -180,6 +190,7 @@ function setup_bash() {
 # Install oh my fish and copy fish config
 function setup_fish() {
     echo -e "${GREEN}Installing oh my fish!...${NC}"
+
     if [ -d "$HOME/.local/share/omf" ]; then
         echo -e "${YELLOW}oh my fish is already installed${NC}"
     else
@@ -203,6 +214,8 @@ function setup_zsh() {
         echo -e "${GREEN}prezto already setup!  ${NC}"
         return
     fi
+
+    echo -e "${GREEN}Installing prezto...${NC}"
 
     # Add prezto as plugin manager
     git clone --depth 1 -b master --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
@@ -296,10 +309,14 @@ function choose_shells() {
 }
 
 function setup_nvchad() {
+    echo -e "${GREEN}Setting up NVchad...${NC}"
+
     git clone https://github.com/NvChad/starter ~/.config/nvim && nvim
 }
 
 function setup_astrovim() {
+    echo -e "${GREEN}Setting up astrovim...${NC}"
+
     git clone --depth 1 https://github.com/AstroNvim/template ~/.config/nvim
     # remove template's git connection to set up your own later
     rm -rf ~/.config/nvim/.git
@@ -325,6 +342,8 @@ function setup_xampp() {
 }
 
 function setup_virtualbox_extension() {
+    echo -e "${GREEN}Installing virtualbox extension pack...${NC}"
+
     manage="vboxmanage"
     extension_link="https://download.virtualbox.org/virtualbox/7.0.12/Oracle_VM_VirtualBox_Extension_Pack-7.0.12.vbox-extpack"
 
