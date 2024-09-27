@@ -171,6 +171,7 @@ function setup_hacknerd_fonts() {
     rm -rfv ./Hack Hack.zip
 }
 
+# Install blesh and add aliases
 function setup_bash() {
     if [ -d ~/.local/share/blesh ]; then
         echo -e "${YELLOW}blesh is already setup${NC}"
@@ -216,6 +217,7 @@ function setup_fish() {
     fi
 }
 
+# Install prezto and add plugins and abbreviations  
 function setup_zsh() {
     if [ -d "$HOME/.zprezto" ]; then
         echo -e "${GREEN}prezto already setup!  ${NC}"
@@ -273,7 +275,41 @@ function setup_starship() {
         printf "\neval \"\$(starship init zsh)\"" | tee -a "$HOME/.zshrc"
     fi
 
+    # Add icon based on distro
+    distro_release=/etc/os-release
+    distro_icon=
+
+    if grep -iq fedora "$distro_release"; then
+        distro_icon=
+    fi
+
+    if grep -iq opensuse "$distro_release"; then
+        distro_icon=
+    fi
+
+    if grep -iq arch "$distro_release"; then
+        distro_icon=
+    fi
+
+    if grep -iq debian "$distro_release"; then
+        if grep -iq ID=debian "$distro_release"; then
+            distro_icon=
+        fi
+
+        if grep -iq ID=ubuntu "$distro_release"; then
+            distro_icon=
+        fi
+        
+        if grep -iq ID=linuxmint "$distro_release"; then
+            distro_icon=󰣭
+        fi
+    fi
+
     starship preset tokyo-night -o ~/.config/starship.toml
+
+    starship_config=$(cat ~/.config/starship.toml)
+
+    starship_config=${starship_config//${distro_icon}}
 }
 
 function choose_nvim_config() {
