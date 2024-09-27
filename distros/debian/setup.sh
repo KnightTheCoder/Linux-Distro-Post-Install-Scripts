@@ -77,6 +77,8 @@ setups+=("$nvim_config")
 for package in $packages; do
     case $package in
         bash )
+            packages+=" gawk"
+
             setups+=(bash)
             ;;
 
