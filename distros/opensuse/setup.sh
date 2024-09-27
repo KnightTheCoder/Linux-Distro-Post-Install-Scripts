@@ -99,6 +99,10 @@ setups+=("$nvim_config")
 # Add packages to the correct categories
 for package in $packages; do
     case $package in
+        bash )
+            setups+=(bash)
+            ;;
+
         fish )
             setups+=(fish)
             ;;
@@ -327,6 +331,10 @@ for app in "${setups[@]}"; do
 
         flatpak )
             setup_flatpak
+            ;;
+
+        bash )
+            setup_bash
             ;;
 
         fish )

@@ -159,6 +159,17 @@ function setup_hacknerd_fonts() {
     rm -rfv ./Hack Hack.zip
 }
 
+function setup_bash() {
+    if [ -d ~/.local/share/blesh ]; then
+        echo -e "${GREEN}blesh is already setup!${NC}"
+        return
+    fi
+
+    git clone --recursive --depth 1 --shallow-submodules https://github.com/akinomyoga/ble.sh.git
+    make -C ble.sh install PREFIX=~/.local
+    echo 'source ~/.local/share/blesh/ble.sh' >> ~/.bashrc
+}
+
 # Install oh my fish and copy fish config
 function setup_fish() {
     echo -e "${GREEN}Installing oh my fish!...${NC}"
@@ -182,7 +193,7 @@ function setup_fish() {
 
 function setup_zsh() {
     if [ -d "$HOME/.zprezto" ]; then
-        echo -e "${GREEN}prezto already setup${NC}"
+        echo -e "${GREEN}prezto already setup!  ${NC}"
         return
     fi
 
@@ -267,6 +278,7 @@ function choose_nvim_config() {
 function choose_shells() {
     shells=$(
         whiptail --title "Shells" --separate-output --checklist "Select the shells you'd like to install" 0 0 0 \
+            "bash" "Bash shell" ON \
             "fish" "Fish shell" ON \
             "zsh" "zsh shell" OFF \
             "starship" "Starship prompt" ON \
