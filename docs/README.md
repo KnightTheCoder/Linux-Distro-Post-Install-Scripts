@@ -38,6 +38,7 @@
 
 ### Starship
 * [Tokyo Night preset](https://starship.rs/presets/tokyo-night)
+* Prompt's logo changes to distro's logo
 
 ## 🌐 Firefox policy
 A firefox policy is included for increased privacy.
