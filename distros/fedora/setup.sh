@@ -223,6 +223,7 @@ else
     printf "max_parallel_downloads=20\ndefaultyes=True\n" | sudo tee -a /etc/dnf/dnf.conf
 fi
 
+echo -e "${GREEN}Adding rpm fusion repositories...${NC}"
 # Add rpm fusion repositories
 
 # shellcheck disable=SC2046
@@ -245,6 +246,7 @@ sudo dnf group install -y "${groups[@]}" --allowerasing
 sudo dnf install -y $packages
 
 # Install msfonts
+echo -e "${GREEN}Installing microsoft core fonts...${NC}"
 sudo rpm -i https://downloads.sourceforge.net/project/mscorefonts2/rpms/msttcore-fonts-installer-2.6-1.noarch.rpm
 
 echo -e "${GREEN}Adding user to groups...${NC}"
