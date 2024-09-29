@@ -258,13 +258,6 @@ function setup_starship_install() {
 }
 
 function setup_starship() {
-    starship_config_file=~/.config/starship.toml
-
-    if [[ -d "$starship_config_file" ]]; then
-        echo -e "${YELLOW}Starship is already setup${NC}"
-        return
-    fi
-
     if [[ -x "$(command -v bash)" ]] && ! grep -iq starship "$HOME/.bashrc"; then
         printf "\neval \"\$(starship init bash)\"" | tee -a "$HOME/.bashrc"
     fi
@@ -275,6 +268,13 @@ function setup_starship() {
 
     if [[ -x "$(command -v zsh)" ]] && ! grep -iq starship "$HOME/.zshrc"; then
         printf "\neval \"\$(starship init zsh)\"" | tee -a "$HOME/.zshrc"
+    fi
+
+    starship_config_file=~/.config/starship.toml
+    
+    if [[ -d "$starship_config_file" ]]; then
+        echo -e "${YELLOW}Starship is already setup${NC}"
+        return
     fi
 
     # Add icon based on distro
