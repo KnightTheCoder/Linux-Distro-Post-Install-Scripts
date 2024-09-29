@@ -39,6 +39,10 @@
         "PromptForDownloadLocation": true,
         "AutofillAddressEnabled": false,
         "AutofillCreditCardEnabled": false,
-        "NoDefaultBookmarks": true
+        "NoDefaultBookmarks": true,
+        "HttpsOnlyMode": "enabled",
+        "Homepage": {
+            "StartPage": "previous-session"
+        }
     }
 }

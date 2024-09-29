@@ -49,6 +49,7 @@ A firefox policy is included for increased privacy.
 > Manually edit to customize, then copy to ``/etc/firefox/policies/`` for it to work
 
 ### 📖 Included policy has the following changes
+* Start by opening previous session
 * Disable telemetry
 * Disable firefox studies
 * Disable pocket
@@ -63,6 +64,7 @@ A firefox policy is included for increased privacy.
 * Disable autofill address
 * Disable autofill creditcard
 * No default bookmarks (only works if you copied the policies.json before opening firefox for the first time)
+* HTTPS-Only Mode in all windows
 
 ### 📦 Installs basic extensions for privacy (can be removed anytime)
 * [uBlock Origin][5]
