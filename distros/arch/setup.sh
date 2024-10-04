@@ -44,7 +44,7 @@ packages=$(
 )
 
 cli_packages=$(
-    whiptail --title "CLI install" --separate-output --checklist "Select cli applications to install" 0 0 0 \
+    whiptail --title "CLI install" --separate-output --notags --checklist "Select cli applications to install" 0 0 0 \
     "neofetch" "neofetch" ON \
     "htop" "htop" ON \
     "btop" "btop++" ON \
