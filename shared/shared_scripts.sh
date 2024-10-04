@@ -390,6 +390,8 @@ function setup_astrovim() {
 }
 
 function setup_npm() {
+    echo -e "${GREEN}Updating npm and installing npm-check...${NC}"
+    
     sudo npm -g install npm npm-check
 }
 
