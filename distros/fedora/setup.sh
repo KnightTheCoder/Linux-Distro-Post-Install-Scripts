@@ -6,7 +6,7 @@ cd "$(dirname "$0")" || exit
 source "../../shared/shared_scripts.sh"
 
 packages=$(
-    whiptail --title "Fedora app installer" --separate-output --checklist "Choose which apps to install" 0 0 0 \
+    whiptail --title "Fedora app installer" --separate-output --checklist --notags "Choose which apps to install" 0 0 0 \
     "lutris" "Lutris" OFF \
     "wine" "Wine" OFF \
     "gaming-overlay" "Gaming overlay" OFF \

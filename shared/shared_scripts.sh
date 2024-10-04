@@ -20,7 +20,7 @@ function setup_firefox() {
     echo -e "${GREEN}Setting up firefox...${NC}"
 
     extension_sets=$(
-        whiptail --title "Firefox extension sets" --separate-output --checklist "Choose what set of extensions to install\nWill open the extension's page to install manually\nClose to progress install" 0 0 0 \
+        whiptail --title "Firefox extension sets" --separate-output --notags --checklist "Choose what set of extensions to install\nWill open the extension's page to install manually\nClose to progress install" 0 0 0 \
         "youtube" "Youtube" OFF \
         "steam" "Steam" OFF \
         "utilities" "Utilities" OFF \
@@ -344,7 +344,7 @@ function choose_nvim_config() {
 
 function choose_shells() {
     shells=$(
-        whiptail --title "Shells" --separate-output --checklist "Select the shells you'd like to install" 0 0 0 \
+        whiptail --title "Shells" --separate-output --notags --checklist "Select the shells you'd like to install" 0 0 0 \
             "bash" "Bash shell" ON \
             "fish" "Fish shell" ON \
             "zsh" "zsh shell" OFF \
@@ -414,7 +414,7 @@ function setup_flatpak() {
 
     local apps
     apps=$(
-        whiptail --title "Flatpaks to install" --separate-output --checklist "Choose what to install for flatpak" 0 0 0 \
+        whiptail --title "Flatpaks to install" --separate-output --notags --checklist "Choose what to install for flatpak" 0 0 0 \
         "io.missioncenter.MissionCenter" "MissionCenter" ON \
         "com.github.tchx84.Flatseal" "Flatseal" ON \
         "com.valvesoftware.Steam" "Steam" OFF \

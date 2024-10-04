@@ -6,7 +6,7 @@ cd "$(dirname "$0")" || exit
 source "../../shared/shared_scripts.sh"
 
 packages=$(
-    whiptail --title "Arch linux app installer" --separate-output --checklist "Choose which apps to install" 0 0 0 \
+    whiptail --title "Arch linux app installer" --separate-output --notags --checklist "Choose which apps to install" 0 0 0 \
     "lutris" "Lutris" OFF \
     "wine" "Wine" OFF \
     "gaming-overlay" "Gaming overlay" OFF \
