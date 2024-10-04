@@ -6,6 +6,8 @@ readonly GREEN='\033[0;32m'
 readonly YELLOW='\033[0;33m'
 readonly NC='\033[0m' # No Color
 
+readonly distro_release=/etc/os-release
+
 function remove_package() {
     package_list="$1"
     package="$2"
@@ -185,7 +187,7 @@ function setup_bash() {
     # echo 'source ~/.local/share/blesh/ble.sh' >> ~/.bashrc
 
     bat_fullname=bat
-    if grep -iq debian /etc/os-release; then
+    if grep -iq debian "$distro_release"; then
         bat_fullname=batcat
     fi
 
@@ -210,7 +212,7 @@ function setup_fish() {
     config_output="$HOME/.config/fish/config.fish"
 
     # Need to use a different config for debian based systems because it's called batcat and not bat on them
-    if grep -iq debian /etc/os-release; then
+    if grep -iq debian "$distro_release"; then
         cp -fv "${config_input}/config_debian.fish" "${config_output}"
     else
         cp -fv "${config_input}/config.fish" "${config_output}"
@@ -242,7 +244,7 @@ function setup_zsh() {
     mkdir -p "$HOME/.config/zsh-abbr"
 
     bat_fullname=bat
-    if grep -iq debian /etc/os-release; then
+    if grep -iq debian "$distro_release"; then
         bat_fullname=batcat
     fi
     printf "abbr cat=%s\nabbr ls=eza" $bat_fullname > "$HOME/.config/zsh-abbr/user-abbreviations"
@@ -278,7 +280,6 @@ function setup_starship() {
     fi
 
     # Add icon based on distro
-    distro_release=/etc/os-release
     distro_icon=
 
     if grep -iq fedora "$distro_release"; then
@@ -396,11 +397,11 @@ function setup_virtualbox_extension() {
     manage="vboxmanage"
     extension_link="https://download.virtualbox.org/virtualbox/7.0.12/Oracle_VM_VirtualBox_Extension_Pack-7.0.12.vbox-extpack"
 
-    if grep -iq arch /etc/os-release; then
+    if grep -iq arch "$distro_release" || grep -iq fedora "$distro_release"; then
         extension_link="https://download.virtualbox.org/virtualbox/7.1.0/Oracle_VirtualBox_Extension_Pack-7.1.0.vbox-extpack"
     fi
 
-    if grep -iq opensuse /etc/os-release; then
+    if grep -iq opensuse "$distro_release"; then
         manage="VBoxManage"
     fi
 
@@ -461,3 +462,5 @@ export RED
 export GREEN
 export YELLOW
 export NC
+
+export distro_release

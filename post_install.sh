@@ -64,13 +64,13 @@ fi
 
 whiptail --title "Linux Post-Install Script" --msgbox "Welcome to the post install script!\nFirst we'll need to gather some info about your system" 0 0                                                  
 # Auto detect distro
-if grep -iq opensuse /etc/os-release; then
+if grep -iq opensuse "$distro_release"; then
   chosen_distro="1"
-elif grep -iq fedora /etc/os-release; then
+elif grep -iq fedora "$distro_release"; then
   chosen_distro="2"
-elif grep -iq "arch" /etc/os-release; then
+elif grep -iq "arch" "$distro_release"; then
   chosen_distro="3"
-elif grep -iq debian /etc/os-release; then
+elif grep -iq debian "$distro_release"; then
   chosen_distro="4"
 else
   chosen_distro="-1"

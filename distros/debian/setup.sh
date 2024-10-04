@@ -117,7 +117,7 @@ for package in $packages; do
 
             packages+=" libvirt-clients libvirt-daemon-system bridge-utils virtinst libvirt-daemon virt-manager"
 
-            if grep -iq ID=debian /etc/os-release; then
+            if grep -iq ID=debian "$distro_release"; then
                 packages+=" qemu-system-x86"
             else
                 packages+=" qemu-kvm"
@@ -140,7 +140,7 @@ for package in $packages; do
 
         steam ) 
             # steam package has a different name for debian
-            if grep -iq ID=debian /etc/os-release; then
+            if grep -iq ID=debian "$distro_release"; then
                 packages=$(remove_package "$packages" "$package")
 
                 packages+=" steam-installer"
@@ -185,7 +185,7 @@ for package in $packages; do
         dotnet )
             packages=$(remove_package "$packages" "$package")
 
-            if grep -iq "ID=debian" /etc/os-release; then
+            if grep -iq "ID=debian" "$distro_release"; then
                 setups+=(dotnet)
             else
                 packages+=" dotnet-sdk-8.0"
@@ -205,7 +205,7 @@ for package in $packages; do
             ;;
 
         golang )
-            if grep -iq ubuntu /etc/os-release; then
+            if grep -iq ubuntu "$distro_release"; then
                 packages=$(remove_package "$packages" "$package")
 
                 packages+=" golang-go"
@@ -262,7 +262,7 @@ if whiptail --title "Remove discover" --yesno "Would you like to remove discover
     packages_to_remove+=" plasma-discover"
 fi
 
-if grep -iq "kde neon" /etc/os-release; then
+if grep -iq "kde neon" "$distro_release"; then
     echo -e "${GREEN}Installing nala...${NC}"
     # Download files for installing nala
     wget -O 'volian-keyring.deb' "https://gitlab.com/volian/volian-archive/uploads/d9473098bc12525687dc9aca43d50159/volian-archive-keyring_0.2.0_all.deb"
@@ -272,7 +272,7 @@ if grep -iq "kde neon" /etc/os-release; then
     sudo apt install ./volian-nala.deb
 
     rm -v "volian-*.deb"
-elif grep -iq ID=debian /etc/os-release; then
+elif grep -iq ID=debian "$distro_release"; then
     echo -e "${GREEN}Adding extra repositories...${NC}"
     # Add extra repositories to debian
     sudo apt install software-properties-common -y
@@ -385,7 +385,7 @@ for app in "${setups[@]}"; do
             sudo apt-get update
             sudo install -m 0755 -d /etc/apt/keyrings
            
-            if grep -iq ID=debian /etc/os-release; then
+            if grep -iq ID=debian "$distro_release"; then
                 # Debian
 
                 # Add Docker's official GPG key:
@@ -413,7 +413,7 @@ for app in "${setups[@]}"; do
                 sudo chmod a+r /etc/apt/keyrings/docker.asc
 
                 # Add the repository to Apt sources:
-                if grep -iq ID=linuxmint /etc/os-release; then
+                if grep -iq ID=linuxmint "$distro_release"; then
                     # Linux Mint
 
                     # shellcheck disable=SC1091
@@ -458,7 +458,7 @@ for app in "${setups[@]}"; do
 
             vb_name="virtualbox"
 
-            if grep -iq ID=debian /etc/os-release; then
+            if grep -iq ID=debian "$distro_release"; then
                 vb_name="virtualbox-7.0"
             fi
 
