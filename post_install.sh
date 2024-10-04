@@ -104,7 +104,9 @@ if [[ "$chosen_distro" != "unknown" ]]; then
 else
   echo -e "${RED}Unknown distro detected!${NC}"
   echo -e "${RED}Can't continue!${NC}"
-  whiptail --title "Unknown distro" --msgbox "Can't continue!\nUnknown distro detected!\nDistro: ${distro_fullname}\nPackage manager: ${package_manager}" 0 0
+
+  # shellcheck disable=SC1090
+  whiptail --title "Unknown distro" --msgbox "Can't continue!\nUnknown distro detected!\nDistro: $(. "$distro_release" && echo "$NAME")\nPackage manager: ${package_manager}" 0 0
   exit 1
 fi
 
@@ -131,14 +133,15 @@ if [[ $1 == "--copy-firefox-policy" ]]; then
 fi
 
 echo -e "${GREEN}Checking package manager and distro combination...${NC}"
+
 if [[ $chosen_distro = "opensuse" && $package_manager = "zypper" ]]; then
-  echo -e "${GREEN}zypper found for OpenSUSE!${NC}"
+  :
 elif [[ $chosen_distro = "fedora" && $package_manager = "dnf" ]]; then
-  echo -e "${GREEN}dnf found for Fedora!${NC}"
+  :
 elif [[ $chosen_distro = "arch" && $package_manager = "pacman" ]]; then
-  echo -e "${GREEN}pacman found for Arch linux!${NC}"
+  :
 elif [[ $chosen_distro = "debian" && $package_manager = "apt" ]]; then
-  echo -e "${GREEN}apt found for Debian!${NC}"
+  :
 else
   echo -e "${RED}Can't continue! Mismatched package manager and distro!${NC}"
   echo -e "${RED}Chosen distro: ${distro_fullname}${NC}"
