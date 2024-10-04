@@ -453,7 +453,6 @@ function setup_flatpak() {
             "com.discordapp.Discord" "Discord" OFF \
             "io.github.spacingbat3.webcord" "Webcord" OFF \
             "dev.vencord.Vesktop" "Vesktop" OFF \
-            "de.shorsh.discord-screenaudio " "Discord-screenaudio" OFF \
             "io.gitlab.librewolf-community" "Librewolf" OFF \
             "one.ablaze.floorp" "Floorp" OFF \
             "com.google.Chrome" "Google Chrome" OFF \
