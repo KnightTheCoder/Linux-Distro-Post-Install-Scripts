@@ -103,7 +103,9 @@ if [[ "$chosen_distro" != "unknown" ]]; then
   correct=$?
 else
   echo -e "${RED}Unknown distro detected!${NC}"
-  echo -e "${RED}Can't continue!${NC}"
+  
+  # shellcheck disable=SC1090
+  echo -e "${RED}Detected distro: $(. "$distro_release" && echo "$NAME")${NC}"
 
   # shellcheck disable=SC1090
   whiptail --title "Unknown distro" --msgbox "Can't continue!\nUnknown distro detected!\nDistro: $(. "$distro_release" && echo "$NAME")\nPackage manager: ${package_manager}" 0 0
