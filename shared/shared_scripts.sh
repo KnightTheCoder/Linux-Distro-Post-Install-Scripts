@@ -123,6 +123,7 @@ function setup_vscode() {
         "svelte.svelte-vscode"
         "tamasfe.even-better-toml"
         "timonwong.shellcheck"
+        "foxundermoon.shell-format"
         "ultram4rine.vscode-choosealicense"
         "usernamehw.errorlens"
         "vadimcn.vscode-lldb"

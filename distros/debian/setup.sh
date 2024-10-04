@@ -25,10 +25,10 @@ packages=$(
     "vscode" "Visual Studio Code" OFF \
     "vscodium" "VSCodium" OFF \
     "nodejs" "Nodejs" OFF \
-    "dotnet" ".NET sdk" OFF \
+    "dotnet" ".NET SDK" OFF \
     "rustup" "Rust" OFF \
     "golang" "Golang" OFF \
-    "java" "Java openjdk" OFF \
+    "java" "Java OpenJDK" OFF \
     "xampp" "XAMPP" OFF \
     "docker" "Docker engine" OFF \
     "docker-desktop" "Docker desktop" OFF \

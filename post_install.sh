@@ -64,7 +64,9 @@ fi
 
 whiptail --title "Linux Post-Install Script" --msgbox "Welcome to the post install script!\nFirst we'll need to gather some info about your system" 0 0                                                  
 # Auto detect distro
-if grep -iq opensuse "$distro_release"; then
+
+# shellcheck disable=SC2154
+if grep -iq opensuse "$distro_release"; then    
   chosen_distro="1"
 elif grep -iq fedora "$distro_release"; then
   chosen_distro="2"
