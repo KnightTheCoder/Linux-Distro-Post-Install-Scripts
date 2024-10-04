@@ -54,6 +54,7 @@ Tested distros:
 * ZorinOS
 * Pop!_OS
 * MX Linux
+* WSL
 * Arch Linux
 * EndeavourOS
 * Manjaro Linux
