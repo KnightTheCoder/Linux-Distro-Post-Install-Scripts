@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Global colors 
+# Global colors
 readonly RED='\033[0;31m'
 readonly GREEN='\033[0;32m'
 readonly YELLOW='\033[0;33m'
@@ -23,49 +23,49 @@ function setup_firefox() {
 
     extension_sets=$(
         whiptail --title "Firefox extension sets" --separate-output --notags --checklist "Choose what set of extensions to install\nWill open the extension's page to install manually\nClose to progress install" 0 0 0 \
-        "youtube" "Youtube" OFF \
-        "steam" "Steam" OFF \
-        "utilities" "Utilities" OFF \
-        3>&1 1>&2 2>&3
+            "youtube" "Youtube" OFF \
+            "steam" "Steam" OFF \
+            "utilities" "Utilities" OFF \
+            3>&1 1>&2 2>&3
     )
 
-  # Remove new lines
-  extension_sets=$(echo "$extension_sets"| tr "\n" " ")
-  extensions=()
+    # Remove new lines
+    extension_sets=$(echo "$extension_sets" | tr "\n" " ")
+    extensions=()
 
-  firefox_policy_directory=/etc/firefox/policies
+    firefox_policy_directory=/etc/firefox/policies
 
-  if [ ! -f "${firefox_policy_directory}/policies.json" ]; then
-    sudo mkdir -pv "${firefox_policy_directory}"
-    sudo cp -fv config/firefox/policies.json "${firefox_policy_directory}"
-  fi
+    if [ ! -f "${firefox_policy_directory}/policies.json" ]; then
+        sudo mkdir -pv "${firefox_policy_directory}"
+        sudo cp -fv config/firefox/policies.json "${firefox_policy_directory}"
+    fi
 
-  for extension_set in $extension_sets; do
+    for extension_set in $extension_sets; do
 
-    case $extension_set in
-      youtube )
-        extensions+=("https://addons.mozilla.org/en-US/firefox/addon/enhancer-for-youtube/")
-        extensions+=("https://addons.mozilla.org/en-US/firefox/addon/dearrow/")
-        extensions+=("https://addons.mozilla.org/en-US/firefox/addon/return-youtube-dislikes/")
-        extensions+=("https://addons.mozilla.org/en-US/firefox/addon/sponsorblock/")
-        ;;
+        case $extension_set in
+        youtube)
+            extensions+=("https://addons.mozilla.org/en-US/firefox/addon/enhancer-for-youtube/")
+            extensions+=("https://addons.mozilla.org/en-US/firefox/addon/dearrow/")
+            extensions+=("https://addons.mozilla.org/en-US/firefox/addon/return-youtube-dislikes/")
+            extensions+=("https://addons.mozilla.org/en-US/firefox/addon/sponsorblock/")
+            ;;
 
-      steam )
-        extensions+=("https://addons.mozilla.org/en-US/firefox/addon/augmented-steam/")
-        extensions+=("https://addons.mozilla.org/en-US/firefox/addon/protondb-for-steam/")
-        ;;
+        steam)
+            extensions+=("https://addons.mozilla.org/en-US/firefox/addon/augmented-steam/")
+            extensions+=("https://addons.mozilla.org/en-US/firefox/addon/protondb-for-steam/")
+            ;;
 
-      utilities )
-        extensions+=("https://addons.mozilla.org/en-US/firefox/addon/darkreader/")
-        extensions+=("https://addons.mozilla.org/en-US/firefox/addon/save-webp-as-png-or-jpeg/")
-        ;;
-    esac
-    
-  done
+        utilities)
+            extensions+=("https://addons.mozilla.org/en-US/firefox/addon/darkreader/")
+            extensions+=("https://addons.mozilla.org/en-US/firefox/addon/save-webp-as-png-or-jpeg/")
+            ;;
+        esac
 
-  if [ ${#extensions[@]} -ne 0 ]; then
-    firefox "${extensions[@]}"
-  fi
+    done
+
+    if [ ${#extensions[@]} -ne 0 ]; then
+        firefox "${extensions[@]}"
+    fi
 }
 
 # Install the itch desktop app
@@ -192,7 +192,11 @@ function setup_bash() {
         bat_fullname=batcat
     fi
 
-    { echo 'source ~/.local/share/blesh/ble.sh'; echo "alias ls=\"eza\""; echo "alias cat=\"$bat_fullname\""; } >> ~/.bashrc
+    {
+        echo 'source ~/.local/share/blesh/ble.sh'
+        echo "alias ls=\"eza\""
+        echo "alias cat=\"$bat_fullname\""
+    } >>~/.bashrc
 
     rm -rfv ./ble.sh
 }
@@ -220,7 +224,7 @@ function setup_fish() {
     fi
 }
 
-# Install prezto and add plugins and abbreviations  
+# Install prezto and add plugins and abbreviations
 function setup_zsh() {
     if [ -d "$HOME/.zprezto" ]; then
         echo -e "${GREEN}prezto already setup!  ${NC}"
@@ -231,7 +235,7 @@ function setup_zsh() {
 
     # Add prezto as plugin manager
     git clone --depth 1 -b master --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
-    
+
     zsh "../../shared/setup.zsh"
 
     # Add zsh-abbr for fish-like abbreviations
@@ -248,14 +252,14 @@ function setup_zsh() {
     if grep -iq debian "$distro_release"; then
         bat_fullname=batcat
     fi
-    printf "abbr cat=%s\nabbr ls=eza" $bat_fullname > "$HOME/.config/zsh-abbr/user-abbreviations"
+    printf "abbr cat=%s\nabbr ls=eza" $bat_fullname >"$HOME/.config/zsh-abbr/user-abbreviations"
 
     echo -e "${GREEN}Changing login shell for ${USER}...${NC}"
     chsh -s /bin/zsh
 }
 
 function setup_starship_install() {
-     if [[ ! -x "$(command -v starship)" ]]; then
+    if [[ ! -x "$(command -v starship)" ]]; then
         curl -sS https://starship.rs/install.sh | sh
     fi
 }
@@ -274,7 +278,7 @@ function setup_starship() {
     fi
 
     starship_config_file=~/.config/starship.toml
-    
+
     if [[ -d "$starship_config_file" ]]; then
         echo -e "${YELLOW}Starship is already setup${NC}"
         return
@@ -303,7 +307,7 @@ function setup_starship() {
         if grep -iq ID=ubuntu "$distro_release"; then
             distro_icon=
         fi
-        
+
         if grep -iq ID=linuxmint "$distro_release"; then
             distro_icon=󰣭
         fi
@@ -315,7 +319,7 @@ function setup_starship() {
 
     starship_config_content=${starship_config_content//${distro_icon}}
 
-    echo "${starship_config_content}" > "${starship_config_file}"
+    echo "${starship_config_content}" >"${starship_config_file}"
 }
 
 function choose_nvim_config() {
@@ -324,11 +328,12 @@ function choose_nvim_config() {
         return
     fi
 
-    nvim_config=$(whiptail --notags --menu "Choose a neovim configuration (choose nvchad if unsure)" 0 0 0 \
-        "" "Default" \
-        "nvchad" "NVChad" \
-        "astrovim" "Astrovim" \
-        3>&1 1>&2 2>&3
+    nvim_config=$(
+        whiptail --notags --menu "Choose a neovim configuration (choose nvchad if unsure)" 0 0 0 \
+            "" "Default" \
+            "nvchad" "NVChad" \
+            "astrovim" "Astrovim" \
+            3>&1 1>&2 2>&3
     )
 
     if [ -n "$nvim_config" ]; then
@@ -338,8 +343,8 @@ function choose_nvim_config() {
         # Clean neovim folders
         rm -rf ~/.local/share/nvim
         rm -rf ~/.local/state/nvim
-        rm -rf ~/.cache/nvim 
-        
+        rm -rf ~/.cache/nvim
+
         echo "$nvim_config"
     fi
 }
@@ -417,33 +422,33 @@ function setup_flatpak() {
     local apps
     apps=$(
         whiptail --title "Flatpaks to install" --separate-output --notags --checklist "Choose what to install for flatpak" 0 0 0 \
-        "io.missioncenter.MissionCenter" "MissionCenter" ON \
-        "com.github.tchx84.Flatseal" "Flatseal" ON \
-        "com.valvesoftware.Steam" "Steam" OFF \
-        "io.itch.itch" "Itch desktop app" OFF \
-        "com.heroicgameslauncher.hgl" "Heroic Games Launcher" OFF \
-        "net.davidotek.pupgui2" "ProtonUp-QT" OFF \
-        "com.obsproject.Studio" "OBS Studio" OFF \
-        "com.dec05eba.gpu_screen_recorder" "GPU screen recoder" OFF \
-        "io.podman_desktop.PodmanDesktop" "Podman Desktop" OFF \
-        "com.github.unrud.VideoDownloader" "Video Downloader" ON \
-        "org.gimp.GIMP" "GIMP" OFF \
-        "org.kde.kdenlive" "Kdenlive" OFF \
-        "org.keepassxc.KeePassXC" "KeePassXC" OFF \
-        "com.discordapp.Discord" "Discord" OFF \
-        "io.github.spacingbat3.webcord" "Webcord" OFF \
-        "dev.vencord.Vesktop" "Vesktop" OFF \
-        "de.shorsh.discord-screenaudio " "Discord-screenaudio" OFF \
-        "io.gitlab.librewolf-community" "Librewolf" OFF \
-        "one.ablaze.floorp" "Floorp" OFF \
-        "com.google.Chrome" "Google Chrome" OFF \
-        "com.brave.Browser" "Brave browser" OFF \
-        "net.mullvad.MullvadBrowser" "Mullavad Browser" OFF \
-        "org.libreoffice.LibreOffice" "Libreoffice" OFF \
-        "org.onlyoffice.desktopeditors" "ONLYOFFICE Desktop Editors" OFF \
-        "org.qbittorrent.qBittorrent" "qbittorrent bittorrent client" OFF \
-        "com.transmissionbt.Transmission" "Transmission bittorrent client" OFF \
-        3>&1 1>&2 2>&3
+            "io.missioncenter.MissionCenter" "MissionCenter" ON \
+            "com.github.tchx84.Flatseal" "Flatseal" ON \
+            "com.valvesoftware.Steam" "Steam" OFF \
+            "io.itch.itch" "Itch desktop app" OFF \
+            "com.heroicgameslauncher.hgl" "Heroic Games Launcher" OFF \
+            "net.davidotek.pupgui2" "ProtonUp-QT" OFF \
+            "com.obsproject.Studio" "OBS Studio" OFF \
+            "com.dec05eba.gpu_screen_recorder" "GPU screen recoder" OFF \
+            "io.podman_desktop.PodmanDesktop" "Podman Desktop" OFF \
+            "com.github.unrud.VideoDownloader" "Video Downloader" ON \
+            "org.gimp.GIMP" "GIMP" OFF \
+            "org.kde.kdenlive" "Kdenlive" OFF \
+            "org.keepassxc.KeePassXC" "KeePassXC" OFF \
+            "com.discordapp.Discord" "Discord" OFF \
+            "io.github.spacingbat3.webcord" "Webcord" OFF \
+            "dev.vencord.Vesktop" "Vesktop" OFF \
+            "de.shorsh.discord-screenaudio " "Discord-screenaudio" OFF \
+            "io.gitlab.librewolf-community" "Librewolf" OFF \
+            "one.ablaze.floorp" "Floorp" OFF \
+            "com.google.Chrome" "Google Chrome" OFF \
+            "com.brave.Browser" "Brave browser" OFF \
+            "net.mullvad.MullvadBrowser" "Mullavad Browser" OFF \
+            "org.libreoffice.LibreOffice" "Libreoffice" OFF \
+            "org.onlyoffice.desktopeditors" "ONLYOFFICE Desktop Editors" OFF \
+            "org.qbittorrent.qBittorrent" "qbittorrent bittorrent client" OFF \
+            "com.transmissionbt.Transmission" "Transmission bittorrent client" OFF \
+            3>&1 1>&2 2>&3
     )
 
     for app in "${extra_apps[@]}"; do

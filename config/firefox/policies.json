@@ -7,8 +7,8 @@
         "DisableFormHistory": true,
         "DisablePocket": true,
         "DisableFeedbackCommands": true,
-        "Extensions":{
-            "Install":[
+        "Extensions": {
+            "Install": [
                 "https://addons.mozilla.org/firefox/downloads/file/4261710/ublock_origin-1.57.2.xpi",
                 "https://addons.mozilla.org/firefox/downloads/file/4232703/privacy_badger17-2024.2.6.xpi",
                 "https://addons.mozilla.org/firefox/downloads/file/4262820/canvasblocker-1.10.1.xpi",
@@ -18,22 +18,22 @@
                 "https://addons.mozilla.org/firefox/downloads/file/3920533/skip_redirect-2.3.6.xpi"
             ]
         },
-        "EnableTrackingProtection":{
+        "EnableTrackingProtection": {
             "Value": true,
             "CryptoMining": true,
             "Fingerprinting": true,
             "EmailTracking": true
         },
         "OfferToSaveLogins": false,
-        "Permissions":{
-            "Notifications":{
+        "Permissions": {
+            "Notifications": {
                 "BlockNewRequests": true
             },
-            "Autoplay":{
+            "Autoplay": {
                 "Default": "block-audio-video"
             }
         },
-        "PictureInPicture":{
+        "PictureInPicture": {
             "Enabled": false
         },
         "PromptForDownloadLocation": true,

@@ -11,15 +11,15 @@ function create_snapshot() {
     local snapshot_tag='Pre'
 
     case $snapshot_type in
-        0)
-            prompt_tag='before'
-            snapshot_tag='Pre'
-            ;;
+    0)
+        prompt_tag='before'
+        snapshot_tag='Pre'
+        ;;
 
-        *)
-            prompt_tag='after'
-            snapshot_tag='Post'
-            ;;
+    *)
+        prompt_tag='after'
+        snapshot_tag='Post'
+        ;;
     esac
 
     if whiptail --yesno "Do you want to make a snapshot ${prompt_tag} the setup?" 0 0; then
@@ -29,48 +29,48 @@ function create_snapshot() {
 
 packages=$(
     whiptail --title "OpenSUSE app installer" --separate-output --notags --checklist "Choose which apps to install" 0 0 0 \
-    "lutris" "Lutris" OFF \
-    "wine" "Wine" OFF \
-    "gaming-overlay" "Gaming overlay" OFF \
-    "steam" "Steam" OFF \
-    "itch" "Itch desktop app" OFF \
-    "heroic" "Heroic Games Launcher" OFF \
-    "haruna" "Haruna media player" ON \
-    "celluloid" "Celluloid media player" ON \
-    "vlc" "VLC media player" ON \
-    "strawberry" "Strawberry music player" ON \
-    "audacious" "Audacious music player" OFF \
-    "libreoffice" "Libreoffice" OFF \
-    "transmission-gtk" "Transmission bittorrent client" OFF \
-    "qbittorrent" "Qbittorrent bittorrent client" OFF \
-    "gimp" "GIMP" OFF \
-    "kdenlive" "Kdenlive" OFF \
-    "keepassxc" "KeePassXC" OFF \
-    "vscode" "Visual Studio Code" OFF \
-    "vscodium" "VSCodium" OFF \
-    "nodejs" "Nodejs" OFF \
-    "dotnet" ".NET SDK" OFF \
-    "rustup" "Rust" OFF \
-    "golang" "Golang" OFF \
-    "java" "Java OpenJDK" OFF \
-    "xampp" "XAMPP" OFF \
-    "docker" "Docker engine" OFF \
-    "podman" "Podman" OFF \
-    "distrobox" "Distrobox" OFF \
-    "flatpak" "Flatpak" ON \
-    "qemu" "QEMU/KVM" OFF \
-    "virtualbox" "Oracle Virtualbox" OFF \
-    "OpenRGB" "OpenRGB" OFF \
-    3>&1 1>&2 2>&3
+        "lutris" "Lutris" OFF \
+        "wine" "Wine" OFF \
+        "gaming-overlay" "Gaming overlay" OFF \
+        "steam" "Steam" OFF \
+        "itch" "Itch desktop app" OFF \
+        "heroic" "Heroic Games Launcher" OFF \
+        "haruna" "Haruna media player" ON \
+        "celluloid" "Celluloid media player" ON \
+        "vlc" "VLC media player" ON \
+        "strawberry" "Strawberry music player" ON \
+        "audacious" "Audacious music player" OFF \
+        "libreoffice" "Libreoffice" OFF \
+        "transmission-gtk" "Transmission bittorrent client" OFF \
+        "qbittorrent" "Qbittorrent bittorrent client" OFF \
+        "gimp" "GIMP" OFF \
+        "kdenlive" "Kdenlive" OFF \
+        "keepassxc" "KeePassXC" OFF \
+        "vscode" "Visual Studio Code" OFF \
+        "vscodium" "VSCodium" OFF \
+        "nodejs" "Nodejs" OFF \
+        "dotnet" ".NET SDK" OFF \
+        "rustup" "Rust" OFF \
+        "golang" "Golang" OFF \
+        "java" "Java OpenJDK" OFF \
+        "xampp" "XAMPP" OFF \
+        "docker" "Docker engine" OFF \
+        "podman" "Podman" OFF \
+        "distrobox" "Distrobox" OFF \
+        "flatpak" "Flatpak" ON \
+        "qemu" "QEMU/KVM" OFF \
+        "virtualbox" "Oracle Virtualbox" OFF \
+        "OpenRGB" "OpenRGB" OFF \
+        3>&1 1>&2 2>&3
 )
 
 cli_packages=$(
     whiptail --title "CLI install" --separate-output --notags --checklist "Select cli applications to install" 0 0 0 \
-    "neofetch" "neofetch" ON \
-    "htop" "htop" ON \
-    "btop" "btop++" ON \
-    "gh" "github cli" OFF \
-    3>&1 1>&2 2>&3
+        "neofetch" "neofetch" ON \
+        "htop" "htop" ON \
+        "btop" "btop++" ON \
+        "gh" "github cli" OFF \
+        3>&1 1>&2 2>&3
 )
 
 packages+=" $cli_packages"
@@ -82,7 +82,7 @@ shells=$(choose_shells)
 packages+=" $shells"
 
 # Remove new lines
-packages=$(echo "$packages"| tr "\n" " ")
+packages=$(echo "$packages" | tr "\n" " ")
 
 # Add defaults
 opi=(codecs)
@@ -99,131 +99,131 @@ setups+=("$nvim_config")
 # Add packages to the correct categories
 for package in $packages; do
     case $package in
-        bash )
-            packages+=" gawk"
+    bash)
+        packages+=" gawk"
 
-            setups+=(bash)
-            ;;
+        setups+=(bash)
+        ;;
 
-        fish )
-            setups+=(fish)
-            ;;
+    fish)
+        setups+=(fish)
+        ;;
 
-        zsh )
-            setups+=(zsh)
-            ;;
+    zsh)
+        setups+=(zsh)
+        ;;
 
-        starship )
-            setups+=(starship)
-            ;;
-        
-        gaming-overlay)
-            packages=$(remove_package "$packages" "$package")
+    starship)
+        setups+=(starship)
+        ;;
 
-            packages+=" goverlay mangohud gamemode"
-            ;;
+    gaming-overlay)
+        packages=$(remove_package "$packages" "$package")
 
-        wine )
-            packages+=" wine-mono winetricks"
-            ;;
+        packages+=" goverlay mangohud gamemode"
+        ;;
 
-        qemu )
-            patterns+=(kvm_tools)
-            patterns+=(kvm_server)
+    wine)
+        packages+=" wine-mono winetricks"
+        ;;
 
-            packages+=" libvirt bridge-utils"
+    qemu)
+        patterns+=(kvm_tools)
+        patterns+=(kvm_server)
 
-            services+=(kvm_stat.service)
-            services+=(libvirtd.service)
+        packages+=" libvirt bridge-utils"
 
-            usergroups+=(libvirt)
-            ;;
+        services+=(kvm_stat.service)
+        services+=(libvirtd.service)
 
-        virtualbox )
-            setups+=(virtualbox)
+        usergroups+=(libvirt)
+        ;;
 
-            usergroups+=(vboxusers)
-            ;;
+    virtualbox)
+        setups+=(virtualbox)
 
-        steam )
-            packages+=" steam-devices"
-            ;;
+        usergroups+=(vboxusers)
+        ;;
 
-        heroic )
-            packages=$(remove_package "$packages" "$package")
+    steam)
+        packages+=" steam-devices"
+        ;;
 
-            opi+=(heroic-games-launcher)
-            ;;
+    heroic)
+        packages=$(remove_package "$packages" "$package")
 
-        itch )
-            packages=$(remove_package "$packages" "$package")
+        opi+=(heroic-games-launcher)
+        ;;
 
-            setups+=("$package")
-            ;;
+    itch)
+        packages=$(remove_package "$packages" "$package")
 
-        vscode )
-            packages=$(remove_package "$packages" "$package")
+        setups+=("$package")
+        ;;
 
-            setups+=(vscode)
+    vscode)
+        packages=$(remove_package "$packages" "$package")
 
-            opi+=(vscode)
-            ;;
+        setups+=(vscode)
 
-        vscodium )
-            packages=$(remove_package "$packages" "$package")
+        opi+=(vscode)
+        ;;
 
-            opi+=(vscodium)
-            setups+=(vscodium)
-            ;;
+    vscodium)
+        packages=$(remove_package "$packages" "$package")
 
-        dotnet )
-            packages=$(remove_package "$packages" "$package")
-            
-            opi+=(dotnet)
-            ;;
+        opi+=(vscodium)
+        setups+=(vscodium)
+        ;;
 
-        rustup )
-            setups+=(rust)
-            ;;
+    dotnet)
+        packages=$(remove_package "$packages" "$package")
 
-        nodejs )
-            packages=$(remove_package "$packages" "$package")
+        opi+=(dotnet)
+        ;;
 
-            packages+=" nodejs-default"
+    rustup)
+        setups+=(rust)
+        ;;
 
-            setups+=(npm)
-            ;;
+    nodejs)
+        packages=$(remove_package "$packages" "$package")
 
-        golang )
-            packages=$(remove_package "$packages" "$package")
+        packages+=" nodejs-default"
 
-            packages+=" go go-doc"
-            ;;
+        setups+=(npm)
+        ;;
 
-        java )
-            packages=$(remove_package "$packages" "$package")
+    golang)
+        packages=$(remove_package "$packages" "$package")
 
-            packages+=" java-22-openjdk-devel"
-            ;;
+        packages+=" go go-doc"
+        ;;
 
-        xampp )
-            packages=$(remove_package "$packages" "$package")
+    java)
+        packages=$(remove_package "$packages" "$package")
 
-            setups+=(xampp)
-            ;;
+        packages+=" java-22-openjdk-devel"
+        ;;
 
-        docker )
-            packages+=" docker-compose docker-compose-switch"
-            services+=(docker.service)
-            usergroups+=(docker)
-            ;;
+    xampp)
+        packages=$(remove_package "$packages" "$package")
 
-        flatpak )
-            setups+=(flatpak)
-            usergroups+=(wheel)
-            ;;
+        setups+=(xampp)
+        ;;
 
-        * ) ;;
+    docker)
+        packages+=" docker-compose docker-compose-switch"
+        services+=(docker.service)
+        usergroups+=(docker)
+        ;;
+
+    flatpak)
+        setups+=(flatpak)
+        usergroups+=(wheel)
+        ;;
+
+    *) ;;
     esac
 done
 
@@ -277,9 +277,9 @@ echo -e "${GREEN}Refreshing new repos...${NC}"
 repos=$(sudo zypper lr)
 for repo in $repos; do
     case $repo in
-        vscode|dotnet )
-            sudo zypper mr --refresh "$repo"
-            ;;
+    vscode | dotnet)
+        sudo zypper mr --refresh "$repo"
+        ;;
 
     esac
 done
@@ -294,65 +294,65 @@ done
 # Run setups
 for app in "${setups[@]}"; do
     case $app in
-        itch )
-            setup_itch_app
-            ;;
+    itch)
+        setup_itch_app
+        ;;
 
-        vscode )
-            setup_vscode code
-            ;;
+    vscode)
+        setup_vscode code
+        ;;
 
-        vscodium )
-            setup_vscode codium
-            ;;
+    vscodium)
+        setup_vscode codium
+        ;;
 
-        hacknerd )
-            setup_hacknerd_fonts
-            ;;
+    hacknerd)
+        setup_hacknerd_fonts
+        ;;
 
-        nvchad )
-            setup_nvchad
-            ;;
+    nvchad)
+        setup_nvchad
+        ;;
 
-        astrovim )
-            setup_astrovim
-            ;;
+    astrovim)
+        setup_astrovim
+        ;;
 
-        rust )
-            rustup toolchain install stable
-            ;;
+    rust)
+        rustup toolchain install stable
+        ;;
 
-        npm )
-            setup_npm
-            ;;
+    npm)
+        setup_npm
+        ;;
 
-        xampp )
-            setup_xampp
-            ;;
+    xampp)
+        setup_xampp
+        ;;
 
-        virtualbox )
-            setup_virtualbox_extension
-            ;;
+    virtualbox)
+        setup_virtualbox_extension
+        ;;
 
-        flatpak )
-            setup_flatpak
-            ;;
+    flatpak)
+        setup_flatpak
+        ;;
 
-        bash )
-            setup_bash
-            ;;
+    bash)
+        setup_bash
+        ;;
 
-        fish )
-            setup_fish
-            ;;
+    fish)
+        setup_fish
+        ;;
 
-        zsh )
-            setup_zsh
-            ;;
+    zsh)
+        setup_zsh
+        ;;
 
-        starship )
-            setup_starship
-            ;;
+    starship)
+        setup_starship
+        ;;
     esac
 done
 

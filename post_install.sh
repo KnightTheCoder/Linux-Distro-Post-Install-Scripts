@@ -7,23 +7,28 @@ source "./shared/shared_scripts.sh"
 
 function resolve_distro() {
   case $1 in
-    "1") echo "OpenSUSE"
-      ;;
-    "2") echo "Fedora"
-      ;;
-    "3") echo "Arch linux"
-      ;;
-    "4") echo "Debian"
-      ;;
-    *) echo "Unknown"
-      ;;
+  "1")
+    echo "OpenSUSE"
+    ;;
+  "2")
+    echo "Fedora"
+    ;;
+  "3")
+    echo "Arch linux"
+    ;;
+  "4")
+    echo "Debian"
+    ;;
+  *)
+    echo "Unknown"
+    ;;
   esac
 }
 
 # Auto detect the package manager
 function get_package_manager() {
-    if [ -x "/usr/bin/zypper" ]; then
-     echo "zypper"
+  if [ -x "/usr/bin/zypper" ]; then
+    echo "zypper"
   elif [ -x "/usr/bin/dnf" ]; then
     echo "dnf"
   elif [ -x "/usr/bin/pacman" ]; then
@@ -47,26 +52,31 @@ if [ ! -x "/usr/bin/whiptail" ]; then
   echo -e "${RED}whiptail is not installed! Please install newt to proceed!${NC}"
 
   case $package_manager in
-    "zypper") sudo zypper install --details -y newt
-        ;;
-    "dnf") sudo dnf install -y newt
-        ;;
-    "pacman") sudo pacman -S --noconfirm whiptail
-        ;;
-    "apt") sudo apt install -y whiptail
-        ;;
-    *) echo -e "${RED}Couldn't detect package manager!${NC}"
-       exit 1
-       ;;
+  "zypper")
+    sudo zypper install --details -y newt
+    ;;
+  "dnf")
+    sudo dnf install -y newt
+    ;;
+  "pacman")
+    sudo pacman -S --noconfirm whiptail
+    ;;
+  "apt")
+    sudo apt install -y whiptail
+    ;;
+  *)
+    echo -e "${RED}Couldn't detect package manager!${NC}"
+    exit 1
+    ;;
   esac
 
 fi
 
-whiptail --title "Linux Post-Install Script" --msgbox "Welcome to the post install script!\nFirst we'll need to gather some info about your system" 0 0                                                  
+whiptail --title "Linux Post-Install Script" --msgbox "Welcome to the post install script!\nFirst we'll need to gather some info about your system" 0 0
 # Auto detect distro
 
 # shellcheck disable=SC2154
-if grep -iq opensuse "$distro_release"; then    
+if grep -iq opensuse "$distro_release"; then
   chosen_distro="1"
 elif grep -iq fedora "$distro_release"; then
   chosen_distro="2"
@@ -130,10 +140,10 @@ fi
 
 # Set hostname
 if hostname=$(whiptail --title "Hostname" --inputbox "Type in your hostname\nLeave empty to not change it" 0 0 3>&1 1>&2 2>&3); then
-    # Check if hostname is not empty
-    if [ -n "$hostname" ]; then
-        sudo hostnamectl hostname "$hostname"
-    fi
+  # Check if hostname is not empty
+  if [ -n "$hostname" ]; then
+    sudo hostnamectl hostname "$hostname"
+  fi
 fi
 
 echo -e "${YELLOW}Please reboot for flatpak's path and QEMU to work${NC}"

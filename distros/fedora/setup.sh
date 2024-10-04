@@ -7,48 +7,48 @@ source "../../shared/shared_scripts.sh"
 
 packages=$(
     whiptail --title "Fedora app installer" --separate-output --checklist --notags "Choose which apps to install" 0 0 0 \
-    "lutris" "Lutris" OFF \
-    "wine" "Wine" OFF \
-    "gaming-overlay" "Gaming overlay" OFF \
-    "steam" "Steam" OFF \
-    "itch" "Itch desktop app" OFF \
-    "heroic" "Heroic Games Launcher" OFF \
-    "haruna" "Haruna media player" ON \
-    "celluloid" "Celluloid media player" ON \
-    "vlc" "VLC media player" ON \
-    "strawberry" "Strawberry music player" ON \
-    "audacious" "Audacious music player" OFF \
-    "transmission" "Transmission bittorrent client" OFF \
-    "qbittorrent" "Qbittorrent bittorrent client" OFF \
-    "gimp" "GIMP" OFF \
-    "kdenlive" "Kdenlive" OFF \
-    "keepassxc" "KeePassXC" OFF \
-    "vscode" "Visual Studio Code" OFF \
-    "vscodium" "VSCodium" OFF \
-    "nodejs" "Nodejs" OFF \
-    "dotnet" ".NET SDK" OFF \
-    "rustup" "Rust" OFF \
-    "golang" "Golang" OFF \
-    "java" "Java OpenJDK" OFF \
-    "xampp" "XAMPP" OFF \
-    "docker" "Docker engine" OFF \
-    "docker-desktop" "Docker desktop" OFF \
-    "podman" "Podman" OFF \
-    "distrobox" "Distrobox" OFF \
-    "flatpak" "Flatpak" ON \
-    "qemu" "QEMU/KVM" OFF \
-    "VirtualBox" "Oracle Virtualbox" OFF \
-    "openrgb" "OpenRGB" OFF \
-    3>&1 1>&2 2>&3
+        "lutris" "Lutris" OFF \
+        "wine" "Wine" OFF \
+        "gaming-overlay" "Gaming overlay" OFF \
+        "steam" "Steam" OFF \
+        "itch" "Itch desktop app" OFF \
+        "heroic" "Heroic Games Launcher" OFF \
+        "haruna" "Haruna media player" ON \
+        "celluloid" "Celluloid media player" ON \
+        "vlc" "VLC media player" ON \
+        "strawberry" "Strawberry music player" ON \
+        "audacious" "Audacious music player" OFF \
+        "transmission" "Transmission bittorrent client" OFF \
+        "qbittorrent" "Qbittorrent bittorrent client" OFF \
+        "gimp" "GIMP" OFF \
+        "kdenlive" "Kdenlive" OFF \
+        "keepassxc" "KeePassXC" OFF \
+        "vscode" "Visual Studio Code" OFF \
+        "vscodium" "VSCodium" OFF \
+        "nodejs" "Nodejs" OFF \
+        "dotnet" ".NET SDK" OFF \
+        "rustup" "Rust" OFF \
+        "golang" "Golang" OFF \
+        "java" "Java OpenJDK" OFF \
+        "xampp" "XAMPP" OFF \
+        "docker" "Docker engine" OFF \
+        "docker-desktop" "Docker desktop" OFF \
+        "podman" "Podman" OFF \
+        "distrobox" "Distrobox" OFF \
+        "flatpak" "Flatpak" ON \
+        "qemu" "QEMU/KVM" OFF \
+        "VirtualBox" "Oracle Virtualbox" OFF \
+        "openrgb" "OpenRGB" OFF \
+        3>&1 1>&2 2>&3
 )
 
 cli_packages=$(
     whiptail --title "CLI install" --separate-output --notags --checklist "Select cli applications to install" 0 0 0 \
-    "neofetch" "neofetch" ON \
-    "htop" "htop" ON \
-    "btop" "btop++" ON \
-    "gh" "github cli" OFF \
-    3>&1 1>&2 2>&3
+        "neofetch" "neofetch" ON \
+        "htop" "htop" ON \
+        "btop" "btop++" ON \
+        "gh" "github cli" OFF \
+        3>&1 1>&2 2>&3
 )
 
 packages+=" $cli_packages"
@@ -64,7 +64,7 @@ fi
 packages+=" $shells"
 
 # Remove new lines
-packages=$(echo "$packages"| tr "\n" " ")
+packages=$(echo "$packages" | tr "\n" " ")
 
 # Add defaults
 services=()
@@ -79,130 +79,130 @@ setups+=("$nvim_config")
 # Add packages to the correct categories
 for package in $packages; do
     case $package in
-        bash )
-            packages+=" gawk"
+    bash)
+        packages+=" gawk"
 
-            setups+=(bash)
-            ;;
+        setups+=(bash)
+        ;;
 
-        fish )
-            setups+=(fish)
-            ;;
+    fish)
+        setups+=(fish)
+        ;;
 
-        zsh )
-            setups+=(zsh)
-            ;;
+    zsh)
+        setups+=(zsh)
+        ;;
 
-        starship-install )
-            packages=$(remove_package "$packages" "$package")
+    starship-install)
+        packages=$(remove_package "$packages" "$package")
 
-            setups+=(starship-install)
-            ;;
+        setups+=(starship-install)
+        ;;
 
-        starship )
-            packages=$(remove_package "$packages" "$package")
+    starship)
+        packages=$(remove_package "$packages" "$package")
 
-            setups+=(starship)
-            ;;
+        setups+=(starship)
+        ;;
 
-        btop )
-            packages+=" rocm-smi"
-            ;;
+    btop)
+        packages+=" rocm-smi"
+        ;;
 
-        gaming-overlay)
-            packages=$(remove_package "$packages" "$package")
+    gaming-overlay)
+        packages=$(remove_package "$packages" "$package")
 
-            packages+=" goverlay mangohud gamemode"
-            ;;
+        packages+=" goverlay mangohud gamemode"
+        ;;
 
-        wine )
-            packages+=" wine-mono winetricks"
-            ;;
+    wine)
+        packages+=" wine-mono winetricks"
+        ;;
 
-        qemu )
-            packages=$(remove_package "$packages" "$package")
+    qemu)
+        packages=$(remove_package "$packages" "$package")
 
-            packages+=" @virtualization"
+        packages+=" @virtualization"
 
-            services+=(libvirtd.service)
+        services+=(libvirtd.service)
 
-            usergroups+=(libvirt)
-            ;;
+        usergroups+=(libvirt)
+        ;;
 
-        VirtualBox )
-            setups+=(virtualbox)
+    VirtualBox)
+        setups+=(virtualbox)
 
-            usergroups+=(vboxusers)
-            ;;
+        usergroups+=(vboxusers)
+        ;;
 
-        steam )
-            packages+=" steam-devices"
-            ;;
+    steam)
+        packages+=" steam-devices"
+        ;;
 
-        heroic )
-            packages=$(remove_package "$packages" "$package")
+    heroic)
+        packages=$(remove_package "$packages" "$package")
 
-            setups+=(heroic)
-            ;;
+        setups+=(heroic)
+        ;;
 
-        itch )
-            packages=$(remove_package "$packages" "$package")
+    itch)
+        packages=$(remove_package "$packages" "$package")
 
-            setups+=("$package")
-            ;;
+        setups+=("$package")
+        ;;
 
-        vscode )
-            packages=$(remove_package "$packages" "$package")
-            
-            setups+=(vscode)
-            ;;
+    vscode)
+        packages=$(remove_package "$packages" "$package")
 
-        vscodium )
-            packages=$(remove_package "$packages" "$package")
+        setups+=(vscode)
+        ;;
 
-            setups+=(vscodium)
-            ;;
+    vscodium)
+        packages=$(remove_package "$packages" "$package")
 
-        rustup )
-            setups+=(rust)
-            ;;
+        setups+=(vscodium)
+        ;;
 
-        nodejs )
-            setups+=(npm)
-            ;;
+    rustup)
+        setups+=(rust)
+        ;;
 
-        java )
-            packages=$(remove_package "$packages" "$package")
+    nodejs)
+        setups+=(npm)
+        ;;
 
-            packages+=" java-latest-openjdk"
-            ;;
+    java)
+        packages=$(remove_package "$packages" "$package")
 
-        xampp )
-            packages=$(remove_package "$packages" "$package")
+        packages+=" java-latest-openjdk"
+        ;;
 
-            setups+=(xampp)
-            ;;
+    xampp)
+        packages=$(remove_package "$packages" "$package")
 
-        docker )
-            packages=${packages/"$package"/}
+        setups+=(xampp)
+        ;;
 
-            setups+=(docker)
-            services+=(docker.service)
-            usergroups+=(docker)
-            ;;
+    docker)
+        packages=${packages/"$package"/}
 
-        docker-desktop )
-            packages=$(remove_package "$packages" "$package")
+        setups+=(docker)
+        services+=(docker.service)
+        usergroups+=(docker)
+        ;;
 
-            setups+=(docker-desktop)
-            packages+=" gnome-terminal"
-            ;;
+    docker-desktop)
+        packages=$(remove_package "$packages" "$package")
 
-        flatpak )
-            setups+=(flatpak)
-            ;;
+        setups+=(docker-desktop)
+        packages+=" gnome-terminal"
+        ;;
 
-        * ) ;;
+    flatpak)
+        setups+=(flatpak)
+        ;;
+
+    *) ;;
     esac
 done
 
@@ -259,103 +259,103 @@ done
 # Run setups
 for app in "${setups[@]}"; do
     case $app in
-        vscode )
-            sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
-            sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
-            sudo dnf check-update --refresh
-            sudo dnf install -y code
+    vscode)
+        sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
+        sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
+        sudo dnf check-update --refresh
+        sudo dnf install -y code
 
-            setup_vscode code
-            ;;
+        setup_vscode code
+        ;;
 
-        vscodium )
-            sudo rpmkeys --import https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/-/raw/master/pub.gpg
+    vscodium)
+        sudo rpmkeys --import https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/-/raw/master/pub.gpg
 
-            printf "[gitlab.com_paulcarroty_vscodium_repo]\nname=download.vscodium.com\nbaseurl=https://download.vscodium.com/rpms/\nenabled=1\ngpgcheck=1\nrepo_gpgcheck=1\ngpgkey=https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/-/raw/master/pub.gpg\nmetadata_expire=1h" | sudo tee -a /etc/yum.repos.d/vscodium.repo
+        printf "[gitlab.com_paulcarroty_vscodium_repo]\nname=download.vscodium.com\nbaseurl=https://download.vscodium.com/rpms/\nenabled=1\ngpgcheck=1\nrepo_gpgcheck=1\ngpgkey=https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/-/raw/master/pub.gpg\nmetadata_expire=1h" | sudo tee -a /etc/yum.repos.d/vscodium.repo
 
-            sudo dnf install codium -y
+        sudo dnf install codium -y
 
-            setup_vscode codium
-            ;;
+        setup_vscode codium
+        ;;
 
-        heroic )
-            sudo dnf copr enable atim/heroic-games-launcher -y
-            sudo dnf -y install heroic-games-launcher-bin
-            ;;
+    heroic)
+        sudo dnf copr enable atim/heroic-games-launcher -y
+        sudo dnf -y install heroic-games-launcher-bin
+        ;;
 
-        itch )
-            setup_itch_app
-            ;;
+    itch)
+        setup_itch_app
+        ;;
 
-        hacknerd )
-            setup_hacknerd_fonts
-            ;;
+    hacknerd)
+        setup_hacknerd_fonts
+        ;;
 
-        nvchad )
-            setup_nvchad
-            ;;
+    nvchad)
+        setup_nvchad
+        ;;
 
-        astrovim )
-            setup_astrovim
-            ;;
+    astrovim)
+        setup_astrovim
+        ;;
 
-        rust )
-            setup_rust
-            ;;
+    rust)
+        setup_rust
+        ;;
 
-        npm )
-            setup_npm
-            ;;
+    npm)
+        setup_npm
+        ;;
 
-        xampp )
-            setup_xampp
-            ;;
+    xampp)
+        setup_xampp
+        ;;
 
-        docker )
-            sudo dnf -y install dnf-plugins-core
-            sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo -y
+    docker)
+        sudo dnf -y install dnf-plugins-core
+        sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo -y
 
-            sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-            ;;
+        sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+        ;;
 
-        docker-desktop )
-            wget -O docker-desktop.rpm "https://desktop.docker.com/linux/main/amd64/139021/docker-desktop-4.28.0-x86_64.rpm?utm_source=docker&utm_medium=webreferral&utm_campaign=docs-driven-download-linux-amd64"
-            sudo dnf -y install docker-desktop.rpm
-            rm -v docker-desktop.rpm
-            ;;
+    docker-desktop)
+        wget -O docker-desktop.rpm "https://desktop.docker.com/linux/main/amd64/139021/docker-desktop-4.28.0-x86_64.rpm?utm_source=docker&utm_medium=webreferral&utm_campaign=docs-driven-download-linux-amd64"
+        sudo dnf -y install docker-desktop.rpm
+        rm -v docker-desktop.rpm
+        ;;
 
-        virtualbox )
-                setup_virtualbox_extension
-            ;;
+    virtualbox)
+        setup_virtualbox_extension
+        ;;
 
-        flatpak )
-            # Remove fedora remote if it exists
-            if flatpak remotes | grep -iq fedora; then
-                sudo flatpak remote-delete fedora
-            fi
-            
-            setup_flatpak
-            ;;
+    flatpak)
+        # Remove fedora remote if it exists
+        if flatpak remotes | grep -iq fedora; then
+            sudo flatpak remote-delete fedora
+        fi
 
-        bash )
-            setup_bash
-            ;;
+        setup_flatpak
+        ;;
 
-        fish )
-            setup_fish
-            ;;
+    bash)
+        setup_bash
+        ;;
 
-        zsh )
-            setup_zsh
-            ;;
+    fish)
+        setup_fish
+        ;;
 
-        starship-install )
-            setup_starship_install
-            ;;
+    zsh)
+        setup_zsh
+        ;;
 
-        starship )
-            setup_starship
-            ;;
+    starship-install)
+        setup_starship_install
+        ;;
+
+    starship)
+        setup_starship
+        ;;
     esac
 done
 
