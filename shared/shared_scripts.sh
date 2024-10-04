@@ -21,6 +21,8 @@ function remove_package() {
 function setup_firefox() {
     echo -e "${GREEN}Setting up firefox...${NC}"
 
+    local extension_sets
+
     extension_sets=$(
         whiptail --title "Firefox extension sets" --separate-output --notags --checklist "Choose what set of extensions to install\nWill open the extension's page to install manually\nClose to progress install" 0 0 0 \
             "youtube" "Youtube" OFF \
@@ -31,11 +33,11 @@ function setup_firefox() {
 
     # Remove new lines
     extension_sets=$(echo "$extension_sets" | tr "\n" " ")
-    extensions=()
+    local extensions=()
 
-    firefox_policy_directory=/etc/firefox/policies
+    local firefox_policy_directory=/etc/firefox/policies
 
-    if [ ! -f "${firefox_policy_directory}/policies.json" ]; then
+    if [[ ! -f "${firefox_policy_directory}/policies.json" ]]; then
         sudo mkdir -pv "${firefox_policy_directory}"
         sudo cp -fv config/firefox/policies.json "${firefox_policy_directory}"
     fi
@@ -63,7 +65,7 @@ function setup_firefox() {
 
     done
 
-    if [ ${#extensions[@]} -ne 0 ]; then
+    if [[ ${#extensions[@]} -ne 0 ]]; then
         firefox "${extensions[@]}"
     fi
 }
@@ -73,7 +75,7 @@ function setup_itch_app() {
     echo -e "${GREEN}Installing itch desktop app...${NC}"
 
     # Check if itch is installed
-    if [ -x "$HOME/.itch/itch" ]; then
+    if [[ -x "$HOME/.itch/itch" ]]; then
         echo -e "${YELLOW}Itch desktop app is already installed${NC}"
         return
     fi
@@ -88,7 +90,7 @@ function setup_itch_app() {
 function setup_vscode() {
     local code_editor=$1 # code or codium
 
-    if [ -z "$code_editor" ] || [ "$code_editor" == code ]; then
+    if [[ -z "$code_editor" ]] || [[ "$code_editor" == code ]]; then
         code_editor="code"
     fi
 
@@ -144,6 +146,7 @@ function setup_vscode() {
     done
 
     local code_folder="Code"
+
     if [[ $code_editor = "codium" ]]; then
         code_folder="VSCodium"
     fi
@@ -156,9 +159,9 @@ function setup_vscode() {
 }
 
 function setup_hacknerd_fonts() {
-    hacknerdfont_directory="$HOME/.local/share/fonts/hacknerdfonts"
+    local hacknerdfont_directory="$HOME/.local/share/fonts/hacknerdfonts"
 
-    if [ -d "${hacknerdfont_directory}" ]; then
+    if [[ -d "${hacknerdfont_directory}" ]]; then
         echo -e "${YELLOW}Hack nerd fonts are already installed${NC}"
         return
     fi
@@ -176,7 +179,7 @@ function setup_hacknerd_fonts() {
 
 # Install blesh and add aliases
 function setup_bash() {
-    if [ -d ~/.local/share/blesh ]; then
+    if [[ -d ~/.local/share/blesh ]]; then
         echo -e "${YELLOW}blesh is already setup${NC}"
         return
     fi
@@ -187,7 +190,8 @@ function setup_bash() {
     make -C ble.sh install PREFIX=~/.local
     # echo 'source ~/.local/share/blesh/ble.sh' >> ~/.bashrc
 
-    bat_fullname=bat
+    local bat_fullname=bat
+
     if grep -iq debian "$distro_release"; then
         bat_fullname=batcat
     fi
@@ -203,7 +207,7 @@ function setup_bash() {
 
 # Install oh my fish and copy fish config
 function setup_fish() {
-    if [ -d "$HOME/.local/share/omf" ]; then
+    if [[ -d "$HOME/.local/share/omf" ]]; then
         echo -e "${YELLOW}oh my fish is already installed${NC}"
     else
         echo -e "${YELLOW}Please run 'exit' to exit from fish and install the bobthefish theme${NC}"
@@ -213,8 +217,8 @@ function setup_fish() {
 
     echo -e "${GREEN}Copying fish config...${NC}"
 
-    config_input=../../config/fish
-    config_output="$HOME/.config/fish/config.fish"
+    local config_input=../../config/fish
+    local config_output="$HOME/.config/fish/config.fish"
 
     # Need to use a different config for debian based systems because it's called batcat and not bat on them
     if grep -iq debian "$distro_release"; then
@@ -226,7 +230,7 @@ function setup_fish() {
 
 # Install prezto and add plugins and abbreviations
 function setup_zsh() {
-    if [ -d "$HOME/.zprezto" ]; then
+    if [[ -d "$HOME/.zprezto" ]]; then
         echo -e "${GREEN}prezto already setup!  ${NC}"
         return
     fi
@@ -248,10 +252,12 @@ function setup_zsh() {
 
     mkdir -p "$HOME/.config/zsh-abbr"
 
-    bat_fullname=bat
+    local bat_fullname=bat
+
     if grep -iq debian "$distro_release"; then
         bat_fullname=batcat
     fi
+
     printf "abbr cat=%s\nabbr ls=eza" $bat_fullname >"$HOME/.config/zsh-abbr/user-abbreviations"
 
     echo -e "${GREEN}Changing login shell for ${USER}...${NC}"
@@ -277,7 +283,7 @@ function setup_starship() {
         printf "\neval \"\$(starship init zsh)\"" | tee -a "$HOME/.zshrc"
     fi
 
-    starship_config_file=~/.config/starship.toml
+    local starship_config_file=~/.config/starship.toml
 
     if [[ -d "$starship_config_file" ]]; then
         echo -e "${YELLOW}Starship is already setup${NC}"
@@ -285,7 +291,7 @@ function setup_starship() {
     fi
 
     # Add icon based on distro
-    distro_icon=
+    local distro_icon=
 
     if grep -iq fedora "$distro_release"; then
         distro_icon=
@@ -315,6 +321,8 @@ function setup_starship() {
 
     starship preset tokyo-night -o "${starship_config_file}"
 
+    local starship_config_content
+
     starship_config_content=$(cat "${starship_config_file}")
 
     starship_config_content=${starship_config_content//${distro_icon}}
@@ -328,6 +336,8 @@ function choose_nvim_config() {
         return
     fi
 
+    local nvim_config
+
     nvim_config=$(
         whiptail --notags --menu "Choose a neovim configuration (choose nvchad if unsure)" 0 0 0 \
             "" "Default" \
@@ -336,7 +346,7 @@ function choose_nvim_config() {
             3>&1 1>&2 2>&3
     )
 
-    if [ -n "$nvim_config" ]; then
+    if [[ -n "$nvim_config" ]]; then
         # Clean neovim config folder
         rm -rf ~/.config/nvim
 
@@ -350,6 +360,8 @@ function choose_nvim_config() {
 }
 
 function choose_shells() {
+    local shells
+
     shells=$(
         whiptail --title "Shells" --separate-output --notags --checklist "Select the shells you'd like to install" 0 0 0 \
             "bash" "Bash shell" ON \
@@ -389,7 +401,7 @@ function setup_rust() {
 }
 
 function setup_xampp() {
-    xampp_executable=xampp-linux-installer.run
+    local xampp_executable=xampp-linux-installer.run
 
     wget -O "${xampp_executable}" https://sourceforge.net/projects/xampp/files/XAMPP%20Linux/8.2.12/xampp-linux-x64-8.2.12-0-installer.run/download
     chmod +x "./${xampp_executable}"
@@ -400,8 +412,8 @@ function setup_xampp() {
 function setup_virtualbox_extension() {
     echo -e "${GREEN}Installing virtualbox extension pack...${NC}"
 
-    manage="vboxmanage"
-    extension_link="https://download.virtualbox.org/virtualbox/7.0.12/Oracle_VM_VirtualBox_Extension_Pack-7.0.12.vbox-extpack"
+    local manage="vboxmanage"
+    local extension_link="https://download.virtualbox.org/virtualbox/7.0.12/Oracle_VM_VirtualBox_Extension_Pack-7.0.12.vbox-extpack"
 
     if grep -iq arch "$distro_release" || grep -iq fedora "$distro_release"; then
         extension_link="https://download.virtualbox.org/virtualbox/7.1.0/Oracle_VirtualBox_Extension_Pack-7.1.0.vbox-extpack"
@@ -420,6 +432,7 @@ function setup_flatpak() {
     local extra_apps=("$@")
 
     local apps
+
     apps=$(
         whiptail --title "Flatpaks to install" --separate-output --notags --checklist "Choose what to install for flatpak" 0 0 0 \
             "io.missioncenter.MissionCenter" "MissionCenter" ON \

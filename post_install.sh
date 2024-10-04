@@ -7,16 +7,16 @@ source "./shared/shared_scripts.sh"
 
 function resolve_distro() {
   case $1 in
-  "1")
+  "opensuse")
     echo "OpenSUSE"
     ;;
-  "2")
+  "fedora")
     echo "Fedora"
     ;;
-  "3")
+  "arch")
     echo "Arch linux"
     ;;
-  "4")
+  "debian")
     echo "Debian"
     ;;
   *)
@@ -27,20 +27,26 @@ function resolve_distro() {
 
 # Auto detect the package manager
 function get_package_manager() {
-  if [ -x "/usr/bin/zypper" ]; then
+  if [[ -x "/usr/bin/zypper" ]]; then
     echo "zypper"
-  elif [ -x "/usr/bin/dnf" ]; then
+  elif [[ -x "/usr/bin/dnf" ]]; then
     echo "dnf"
-  elif [ -x "/usr/bin/pacman" ]; then
+  elif [[ -x "/usr/bin/pacman" ]]; then
     echo "pacman"
-  elif [ -x "/usr/bin/apt" ]; then
+  elif [[ -x "/usr/bin/apt" ]]; then
     echo "apt"
   else
     echo "unknown"
   fi
 }
 
-if [ "$EUID" == 0 ]; then
+function get_execution_path() {
+  local distro=$1
+
+  echo "./distros/${distro}/setup.sh"
+}
+
+if [[ "$EUID" == 0 ]]; then
   echo -e "${RED}Please run without root!${NC}"
   exit 1
 fi
@@ -48,7 +54,7 @@ fi
 package_manager=$(get_package_manager)
 
 # check if whiptail is installed and install it
-if [ ! -x "/usr/bin/whiptail" ]; then
+if [[ ! -x "/usr/bin/whiptail" ]]; then
   echo -e "${RED}whiptail is not installed! Please install newt to proceed!${NC}"
 
   case $package_manager in
@@ -77,25 +83,32 @@ whiptail --title "Linux Post-Install Script" --msgbox "Welcome to the post insta
 
 # shellcheck disable=SC2154
 if grep -iq opensuse "$distro_release"; then
-  chosen_distro="1"
+  chosen_distro="opensuse"
 elif grep -iq fedora "$distro_release"; then
-  chosen_distro="2"
+  chosen_distro="fedora"
 elif grep -iq "arch" "$distro_release"; then
-  chosen_distro="3"
+  chosen_distro="arch"
 elif grep -iq debian "$distro_release"; then
-  chosen_distro="4"
+  chosen_distro="debian"
 else
-  chosen_distro="-1"
+  chosen_distro="unknown"
 fi
 
-echo -e "${GREEN}$(resolve_distro "$chosen_distro") and ${package_manager} detected!${NC}"
+distro_fullname=$(resolve_distro "$chosen_distro")
 
-if [ "$chosen_distro" -gt -1 ]; then
-  whiptail --title "Autodetection" --yesno "$(resolve_distro "$chosen_distro") detected with ${package_manager} as your package manager!\nIs this correct?" 0 0
+echo -e "${GREEN}${distro_fullname} and ${package_manager} detected!${NC}"
+
+if [[ "$chosen_distro" != "unknown" ]]; then
+  whiptail --title "Autodetection" --yesno "${distro_fullname} detected with ${package_manager} as your package manager!\nIs this correct?" 0 0
   correct=$?
+else
+  echo -e "${RED}Unknown distro detected!${NC}"
+  echo -e "${RED}Can't continue!${NC}"
+  whiptail --title "Unknown distro" --msgbox "Can't continue!\nUnknown distro detected!\nDistro: ${distro_fullname}\nPackage manager: ${package_manager}" 0 0
+  exit 1
 fi
 
-if [ "$correct" != "0" ]; then
+if [[ "$correct" != "0" ]]; then
   chosen_distro=$(
     whiptail --title "Select distro" --notags --menu "Please select your distro" --ok-button "Select" 0 0 40 \
       "1" "OpenSUSE" \
@@ -105,43 +118,42 @@ if [ "$correct" != "0" ]; then
       3>&2 2>&1 1>&3
   )
 
-  if [ -z "$chosen_distro" ]; then
+  if [[ -z "$chosen_distro" ]]; then
     echo -e "${RED}User canceled, Aborting...${NC}"
     exit
   fi
 fi
 
-echo -e "${GREEN}Your chosen distro is $(resolve_distro "$chosen_distro")${NC}"
+echo -e "${GREEN}Your chosen distro is ${distro_fullname}${NC}"
 
 if [[ $1 == "--copy-firefox-policy" ]]; then
   setup_firefox
 fi
 
 echo -e "${GREEN}Checking package manager and distro combination...${NC}"
-if [[ $chosen_distro = "1" && $package_manager = "zypper" ]]; then
+if [[ $chosen_distro = "opensuse" && $package_manager = "zypper" ]]; then
   echo -e "${GREEN}zypper found for OpenSUSE!${NC}"
-  bash "./distros/opensuse/setup.sh"
-elif [[ $chosen_distro = "2" && $package_manager = "dnf" ]]; then
+elif [[ $chosen_distro = "fedora" && $package_manager = "dnf" ]]; then
   echo -e "${GREEN}dnf found for Fedora!${NC}"
-  bash "./distros/fedora/setup.sh"
-elif [[ $chosen_distro = "3" && $package_manager = "pacman" ]]; then
+elif [[ $chosen_distro = "arch" && $package_manager = "pacman" ]]; then
   echo -e "${GREEN}pacman found for Arch linux!${NC}"
-  bash "./distros/arch/setup.sh"
-elif [[ $chosen_distro = "4" && $package_manager = "apt" ]]; then
+elif [[ $chosen_distro = "debian" && $package_manager = "apt" ]]; then
   echo -e "${GREEN}apt found for Debian!${NC}"
-  bash "./distros/debian/setup.sh"
 else
   echo -e "${RED}Can't continue! Mismatched package manager and distro!${NC}"
-  echo -e "${RED}Chosen distro: $(resolve_distro "$chosen_distro")${NC}"
+  echo -e "${RED}Chosen distro: ${distro_fullname}${NC}"
   echo -e "${RED}Detected package manager: $package_manager${NC}"
-  whiptail --title "Mismatched!" --msgbox "Can't continue! Mismatched package manager and distro!\nChosen distro: $(resolve_distro "$chosen_distro")\nDetected package manager: $package_manager" 0 0
+  whiptail --title "Mismatched!" --msgbox "Can't continue! Mismatched package manager and distro!\nChosen distro: ${distro_fullname}\nDetected package manager: $package_manager" 0 0
   exit 1
 fi
+
+echo -e "${GREEN}${package_manager} found for ${distro_fullname}!${NC}"
+bash get_execution_path "$chosen_distro"
 
 # Set hostname
 if hostname=$(whiptail --title "Hostname" --inputbox "Type in your hostname\nLeave empty to not change it" 0 0 3>&1 1>&2 2>&3); then
   # Check if hostname is not empty
-  if [ -n "$hostname" ]; then
+  if [[ -n "$hostname" ]]; then
     sudo hostnamectl hostname "$hostname"
   fi
 fi

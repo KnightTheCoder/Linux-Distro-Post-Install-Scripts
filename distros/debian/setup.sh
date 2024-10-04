@@ -117,6 +117,7 @@ for package in $packages; do
 
         packages+=" libvirt-clients libvirt-daemon-system bridge-utils virtinst libvirt-daemon virt-manager"
 
+        # shellcheck disable=SC2154
         if grep -iq ID=debian "$distro_release"; then
             packages+=" qemu-system-x86"
         else
