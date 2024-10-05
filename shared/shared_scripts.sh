@@ -192,17 +192,24 @@ function setup_itch_app() {
 # Globals:
 #   HOME
 #   GREEN
+#   RED
 #   NC
 # Arguments:
 #   Code editor, either code or codium
 # Outputs:
 #   Log for which one is being installed
+#   Log if code/codium is not installed
 #######################################
 function setup_vscode() {
     local code_editor=$1 # code or codium
 
     if [[ -z "$code_editor" ]] || [[ "$code_editor" == code ]]; then
         code_editor="code"
+    fi
+
+    if [[ ! -x "$(command -v "$code_editor")" ]]; then
+        echo -e "${RED}${code_editor} is not installed!${NC}"
+        return
     fi
 
     echo -e "${GREEN}Installing extensions for VS${code_editor}...${NC}"
@@ -480,7 +487,7 @@ function setup_starship() {
 function choose_nvim_config() {
     local nvim_config
     nvim_config=$(
-        whiptail --notags --menu "Choose a neovim configuration (choose nvchad if unsure)" 0 0 0 \
+        whiptail --notags --menu "Choose a neovim configuration (choose default to keep current)" 0 0 0 \
             "" "Default" \
             "nvchad" "NVChad" \
             "astronvim" "AstroNvim" \
@@ -639,14 +646,21 @@ function setup_xampp() {
 # Install extension pack for virtualbox based on distro
 # Globals:
 #   GREEN
+#   RED
 #   NC
 # Arguments:
 #   None
 # Outputs:
 #   Log for starting step
+#   Log if virtualbox is not installed
 #   Log if virtualbox manager is not installed
 #######################################
 function setup_virtualbox_extension() {
+    if [[ ! -x "$(command -v virtualbox)" ]]; then
+        echo -e "${RED}Virtualbox is not installed!${NC}"
+        return
+    fi
+
     echo -e "${GREEN}Installing virtualbox extension pack...${NC}"
 
     local manage="vboxmanage"

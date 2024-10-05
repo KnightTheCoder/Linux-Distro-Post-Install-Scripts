@@ -121,6 +121,7 @@ bash ./post_install.sh
 * Installs NvChad or AstroNvim for neovim
 * Installs the GitHub CLI
 * Installs docker, podman and distrobox for containers
+* Installs qemu, virtualbox for virtualization
 * Installs code editors: vscode, vscodium
 * Installs programming languages and development environments: gcc, nodejs, dotnet, rust, go, java, xampp                       
 * Optionally sets hostname
