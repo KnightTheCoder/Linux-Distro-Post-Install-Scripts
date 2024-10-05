@@ -1,10 +1,19 @@
 #!/usr/bin/env bash
+#
+# Entry point for project
 
 cd "$(dirname "$0")" || exit
 
 # shellcheck source=./shared/shared_scripts.sh
 source "./shared/shared_scripts.sh"
 
+#######################################
+# Turn distro tag into readable text form
+# Arguments:
+#   Distro tag
+# Outputs:
+#   Distro name in readable text form
+#######################################
 function resolve_distro() {
   case $1 in
   "opensuse")
@@ -25,7 +34,13 @@ function resolve_distro() {
   esac
 }
 
-# Auto detect the package manager
+#######################################
+# Auto detect package manager
+# Arguments:
+#   None
+# Outputs:
+#   Package manager's name
+#######################################
 function get_package_manager() {
   if [[ -x "/usr/bin/zypper" ]]; then
     echo "zypper"
@@ -40,12 +55,20 @@ function get_package_manager() {
   fi
 }
 
+#######################################
+# Returns setup execution path for the selected distro
+# Arguments:
+#   Distro tag
+# Outputs:
+#   Setup's path
+#######################################
 function get_execution_path() {
   local distro=$1
 
   echo "./distros/${distro}/setup.sh"
 }
 
+# Stop script from running with root
 if [[ "$EUID" == 0 ]]; then
   echo -e "${RED}Please run without root!${NC}"
   exit 1
@@ -82,19 +105,22 @@ whiptail --title "Linux Post-Install Script" --msgbox "Welcome to the post insta
 # Auto detect distro
 
 # shellcheck disable=SC2154
-if grep -iq opensuse "$distro_release"; then
+if grep -iq opensuse "$DISTRO_RELEASE"; then
   chosen_distro="opensuse"
-elif grep -iq fedora "$distro_release"; then
+elif grep -iq fedora "$DISTRO_RELEASE"; then
   chosen_distro="fedora"
-elif grep -iq "arch" "$distro_release"; then
+elif grep -iq "arch" "$DISTRO_RELEASE"; then
   chosen_distro="arch"
-elif grep -iq debian "$distro_release"; then
+elif grep -iq debian "$DISTRO_RELEASE"; then
   chosen_distro="debian"
 else
   chosen_distro="unknown"
 fi
 
 distro_fullname=$(resolve_distro "$chosen_distro")
+
+# shellcheck disable=SC1090
+distro_realname=$(. "$DISTRO_RELEASE" && echo "$NAME")
 
 echo -e "${GREEN}${distro_fullname} and ${package_manager} detected!${NC}"
 
@@ -103,12 +129,12 @@ if [[ "$chosen_distro" != "unknown" ]]; then
   correct=$?
 else
   echo -e "${RED}Unknown distro detected!${NC}"
-  
-  # shellcheck disable=SC1090
-  echo -e "${RED}Detected distro: $(. "$distro_release" && echo "$NAME")${NC}"
 
   # shellcheck disable=SC1090
-  whiptail --title "Unknown distro" --msgbox "Can't continue!\nUnknown distro detected!\nDistro: $(. "$distro_release" && echo "$NAME")\nPackage manager: ${package_manager}" 0 0
+  echo -e "${RED}Detected distro: ${distro_realname}${NC}"
+
+  # shellcheck disable=SC1090
+  whiptail --title "Unknown distro" --msgbox "Can't continue!\nUnknown distro detected!\nDistro: ${distro_realname}\nPackage manager: ${package_manager}" 0 0
   exit 1
 fi
 
@@ -146,7 +172,7 @@ else
   echo -e "${RED}Detected package manager: $package_manager${NC}"
 
   whiptail --title "Mismatched!" --msgbox "Can't continue! Mismatched package manager and distro!\nChosen distro: ${distro_fullname}\nDetected package manager: $package_manager" 0 0
-  
+
   exit 1
 fi
 

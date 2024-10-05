@@ -275,8 +275,8 @@ for app in "${setups[@]}"; do
         setup_nvchad
         ;;
 
-    astrovim)
-        setup_astrovim
+    astronvim)
+        setup_astronvim
         ;;
 
     rust)

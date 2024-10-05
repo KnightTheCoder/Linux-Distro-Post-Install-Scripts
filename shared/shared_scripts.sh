@@ -6,23 +6,72 @@ readonly GREEN='\033[0;32m'
 readonly YELLOW='\033[0;33m'
 readonly NC='\033[0m' # No Color
 
-readonly distro_release=/etc/os-release
+readonly DISTRO_RELEASE=/etc/os-release
 
+#######################################
+# Remove provided package from a list
+# Arguments:
+#   Package list, string
+#   Package to remove
+# Outputs:
+#   Remaining packages
+#######################################
 function remove_package() {
-    package_list="$1"
-    package="$2"
+    local package_list="$1"
+    local package="$2"
 
-    result_package_list=${package_list//"$package"/}
+    local result_package_list=${package_list//"$package"/}
 
     echo "$result_package_list"
 }
 
+function get_current_distro_icon() {
+    # Add icon based on distro
+    local distro_icon=
+
+    if grep -iq fedora "$DISTRO_RELEASE"; then
+        distro_icon=
+    fi
+
+    if grep -iq opensuse "$DISTRO_RELEASE"; then
+        distro_icon=
+    fi
+
+    if grep -iq arch "$DISTRO_RELEASE"; then
+        distro_icon=
+    fi
+
+    if grep -iq debian "$DISTRO_RELEASE"; then
+        if grep -iq ID=debian "$DISTRO_RELEASE"; then
+            distro_icon=
+        fi
+
+        if grep -iq ID=ubuntu "$DISTRO_RELEASE"; then
+            distro_icon=
+        fi
+
+        if grep -iq ID=linuxmint "$DISTRO_RELEASE"; then
+            distro_icon=󰣭
+        fi
+    fi
+
+    echo "$distro_icon"
+}
+
+#######################################
 # Copy policies and install extensions for firefox
+# Globals:
+#   GREEN
+#   NC
+# Arguments:
+#   None
+# Outputs:
+#   whiptail screen
+#######################################
 function setup_firefox() {
     echo -e "${GREEN}Setting up firefox...${NC}"
 
     local policy_filename="policies.json"
-
     local policy_template
 
     policy_template=$(
@@ -100,12 +149,22 @@ function setup_firefox() {
     fi
 }
 
-# Install the itch desktop app
+#######################################
+# Download and run the itch desktop app installer
+# Globals:
+#   GREEN
+#   YELLOW
+#   NC
+# Arguments:
+#   None
+# Outputs:
+#   Log if already installed
+#######################################
 function setup_itch_app() {
     echo -e "${GREEN}Installing itch desktop app...${NC}"
 
     # Check if itch is installed
-    if [[ -x "$HOME/.itch/itch" ]]; then
+    if [[ -x ~/.itch/itch ]]; then
         echo -e "${YELLOW}Itch desktop app is already installed${NC}"
         return
     fi
@@ -116,7 +175,17 @@ function setup_itch_app() {
     rm -vf "./itch-setup"
 }
 
+#######################################
 # Install vscode extensions and copy keybindings
+# Globals:
+#   HOME
+#   GREEN
+#   NC
+# Arguments:
+#   Code editor, either code or codium
+# Outputs:
+#   Log for which one is being installed
+#######################################
 function setup_vscode() {
     local code_editor=$1 # code or codium
 
@@ -188,8 +257,19 @@ function setup_vscode() {
     cp -fv "../../config/vscode/settings.json" "$HOME/.config/${code_folder}/User"
 }
 
+#######################################
+# Install Hack Nerd Fonts
+# Globals:
+#   GREEN
+#   YELLOW
+#   NC
+# Arguments:
+#   None
+# Outputs:
+#   Log if already installed
+#######################################
 function setup_hacknerd_fonts() {
-    local hacknerdfont_directory="$HOME/.local/share/fonts/hacknerdfonts"
+    local hacknerdfont_directory=~/.local/share/fonts/hacknerdfonts
 
     if [[ -d "${hacknerdfont_directory}" ]]; then
         echo -e "${YELLOW}Hack nerd fonts are already installed${NC}"
@@ -207,7 +287,17 @@ function setup_hacknerd_fonts() {
     rm -rfv ./Hack Hack.zip
 }
 
+#######################################
 # Install blesh and add aliases
+# Globals:
+#   GREEN
+#   YELLOW
+#   NC
+# Arguments:
+#   None
+# Outputs:
+#   Log if already installed
+#######################################
 function setup_bash() {
     if [[ -d ~/.local/share/blesh ]]; then
         echo -e "${YELLOW}blesh is already setup${NC}"
@@ -222,7 +312,7 @@ function setup_bash() {
 
     local bat_fullname=bat
 
-    if grep -iq debian "$distro_release"; then
+    if grep -iq debian "$DISTRO_RELEASE"; then
         bat_fullname=batcat
     fi
 
@@ -235,10 +325,27 @@ function setup_bash() {
     rm -rfv ./ble.sh
 }
 
+#######################################
 # Install oh my fish and copy fish config
+# Globals:
+#   HOME
+#   GREEN
+#   YELLOW
+#   RED
+#   NC
+# Arguments:
+#   None
+# Outputs:
+#   Log if already installed
+#######################################
 function setup_fish() {
+    if [[ ! -x "$(command -v fish)" ]]; then
+        echo -e "${RED}Fish is not installed!${NC}"
+        return
+    fi
+
     if [[ -d "$HOME/.local/share/omf" ]]; then
-        echo -e "${YELLOW}oh my fish is already installed${NC}"
+        echo -e "${YELLOW}Oh my fish is already installed${NC}"
     else
         echo -e "${YELLOW}Please run 'exit' to exit from fish and install the bobthefish theme${NC}"
         curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
@@ -251,17 +358,34 @@ function setup_fish() {
     local config_output="$HOME/.config/fish/config.fish"
 
     # Need to use a different config for debian based systems because it's called batcat and not bat on them
-    if grep -iq debian "$distro_release"; then
+    if grep -iq debian "$DISTRO_RELEASE"; then
         cp -fv "${config_input}/config_debian.fish" "${config_output}"
     else
         cp -fv "${config_input}/config.fish" "${config_output}"
     fi
 }
 
+#######################################
 # Install prezto and add plugins and abbreviations
+# Globals:
+#   HOME
+#   GREEN
+#   YELLOW
+#   RED
+#   NC
+# Arguments:
+#   None
+# Outputs:
+#   Log if already installed
+#######################################
 function setup_zsh() {
+    if [[ ! -x "$(command -v zsh)" ]]; then
+        echo -e "${RED}Zsh is not installed!${NC}"
+        return
+    fi
+
     if [[ -d "$HOME/.zprezto" ]]; then
-        echo -e "${GREEN}prezto already setup!  ${NC}"
+        echo -e "${YELLOW}Prezto already setup!${NC}"
         return
     fi
 
@@ -284,33 +408,70 @@ function setup_zsh() {
 
     local bat_fullname=bat
 
-    if grep -iq debian "$distro_release"; then
+    if grep -iq debian "$DISTRO_RELEASE"; then
         bat_fullname=batcat
     fi
 
     printf "abbr cat=%s\nabbr ls=eza" $bat_fullname >"$HOME/.config/zsh-abbr/user-abbreviations"
 
+    # Change login shell to zsh
     echo -e "${GREEN}Changing login shell for ${USER}...${NC}"
     chsh -s /bin/zsh
 }
 
+#######################################
+# Install starship prompt
+# Globals:
+#   YELLOW
+#   NC
+# Arguments:
+#   None
+# Outputs:
+#   Log if already installed
+#######################################
 function setup_starship_install() {
-    if [[ ! -x "$(command -v starship)" ]]; then
+    if [[ -x "$(command -v starship)" ]]; then
+        echo -e "${YELLOW}Starship is already installed!${NC}"
+    else
         curl -sS https://starship.rs/install.sh | sh
     fi
 }
 
+#######################################
+# Setup starship prompt for bash, fish and zsh with custom distro icons
+# Globals:
+#   GREEN
+#   YELLOW
+#   RED
+#   NC
+# Arguments:
+#   None
+# Outputs:
+#   Log for starting step
+#   Log if already installed
+#######################################
 function setup_starship() {
-    if [[ -x "$(command -v bash)" ]] && ! grep -iq starship "$HOME/.bashrc"; then
-        printf "\neval \"\$(starship init bash)\"" | tee -a "$HOME/.bashrc"
+    echo -e "${GREEN}Setting up starship for shells...${NC}"
+
+    if [[ ! -x "$(command -v starship)" ]]; then
+        echo -e "${RED}Starship is not installed!${NC}"
+        return
     fi
 
-    if [[ -x "$(command -v fish)" ]] && ! grep -iq starship "$HOME/.config/fish/config.fish"; then
-        printf "\nstarship init fish | source" | tee -a "$HOME/.config/fish/config.fish"
+    local bash_config=~/.bashrc
+    local fish_config=~/.config/fish/config.fish
+    local zsh_config=~/.zshrc
+
+    if [[ -x "$(command -v bash)" ]] && ! grep -iq starship $bash_config; then
+        printf "\neval \"\$(starship init bash)\"" | tee -a $bash_config
     fi
 
-    if [[ -x "$(command -v zsh)" ]] && ! grep -iq starship "$HOME/.zshrc"; then
-        printf "\neval \"\$(starship init zsh)\"" | tee -a "$HOME/.zshrc"
+    if [[ -x "$(command -v fish)" ]] && ! grep -iq starship $fish_config; then
+        printf "\nstarship init fish | source" | tee -a $fish_config
+    fi
+
+    if [[ -x "$(command -v zsh)" ]] && ! grep -iq starship $zsh_config; then
+        printf "\neval \"\$(starship init zsh)\"" | tee -a $zsh_config
     fi
 
     local starship_config_file=~/.config/starship.toml
@@ -320,39 +481,14 @@ function setup_starship() {
         return
     fi
 
-    # Add icon based on distro
-    local distro_icon=
+    echo -e "${GREEN}Setting up starship configuration...${NC}"
 
-    if grep -iq fedora "$distro_release"; then
-        distro_icon=
-    fi
-
-    if grep -iq opensuse "$distro_release"; then
-        distro_icon=
-    fi
-
-    if grep -iq arch "$distro_release"; then
-        distro_icon=
-    fi
-
-    if grep -iq debian "$distro_release"; then
-        if grep -iq ID=debian "$distro_release"; then
-            distro_icon=
-        fi
-
-        if grep -iq ID=ubuntu "$distro_release"; then
-            distro_icon=
-        fi
-
-        if grep -iq ID=linuxmint "$distro_release"; then
-            distro_icon=󰣭
-        fi
-    fi
+    local distro_icon
+    distro_icon=$(get_current_distro_icon)
 
     starship preset tokyo-night -o "${starship_config_file}"
 
     local starship_config_content
-
     starship_config_content=$(cat "${starship_config_file}")
 
     starship_config_content=${starship_config_content//${distro_icon}}
@@ -360,19 +496,21 @@ function setup_starship() {
     echo "${starship_config_content}" >"${starship_config_file}"
 }
 
+#######################################
+# Choose a neovim configuration
+# Arguments:
+#   None
+# Outputs:
+#   whiptail screen
+#   Chosen neovim configuration
+#######################################
 function choose_nvim_config() {
-    # Since neovim versions are too old for either config to work, don't ask when using them
-    if grep -iq debian /etc/os-release; then
-        return
-    fi
-
     local nvim_config
-
     nvim_config=$(
         whiptail --notags --menu "Choose a neovim configuration (choose nvchad if unsure)" 0 0 0 \
             "" "Default" \
             "nvchad" "NVChad" \
-            "astrovim" "Astrovim" \
+            "astronvim" "AstroNvim" \
             3>&1 1>&2 2>&3
     )
 
@@ -389,9 +527,16 @@ function choose_nvim_config() {
     fi
 }
 
+#######################################
+# Choose which shells to install and set up
+# Arguments:
+#   None
+# Outputs:
+#   whiptail screen
+#   Chosen shells
+#######################################
 function choose_shells() {
     local shells
-
     shells=$(
         whiptail --title "Shells" --separate-output --notags --checklist "Select the shells you'd like to install" 0 0 0 \
             "bash" "Bash shell" ON \
@@ -404,35 +549,111 @@ function choose_shells() {
     echo "$shells"
 }
 
+#######################################
+# Setup NvChad for neovim
+# Globals:
+#   GREEN
+#   RED
+#   NC
+# Arguments:
+#   None
+# Outputs:
+#   Log for starting step
+#######################################
 function setup_nvchad() {
+    if [[ ! -x "$(command -v nvim)" ]]; then
+        echo -e "${RED}neovim is not installed!${NC}"
+        return
+    fi
+
     echo -e "${GREEN}Setting up NVchad...${NC}"
 
     git clone https://github.com/NvChad/starter ~/.config/nvim && nvim
 }
 
-function setup_astrovim() {
-    echo -e "${GREEN}Setting up astrovim...${NC}"
+#######################################
+# Setup AstroNvim for neovim
+# Globals:
+#   GREEN
+#   RED
+#   NC
+# Arguments:
+#   None
+# Outputs:
+#   Log for starting step
+#######################################
+function setup_astronvim() {
+    if [[ ! -x "$(command -v nvim)" ]]; then
+        echo -e "${RED}neovim is not installed!${NC}"
+        return
+    fi
+
+    echo -e "${GREEN}Setting up AstroNvim...${NC}"
 
     git clone --depth 1 https://github.com/AstroNvim/template ~/.config/nvim
+
     # remove template's git connection to set up your own later
     rm -rf ~/.config/nvim/.git
     nvim
 }
 
+#######################################
+# Install the latest npm and npm-check packages
+# Globals:
+#   GREEN
+#   RED
+#   NC
+# Arguments:
+#   None
+# Outputs:
+#   Log for starting step
+#   Log for npm not being installed
+#######################################
 function setup_npm() {
+    if [[ ! -x "$(command -v npm)" ]]; then
+        echo -e "${RED}npm is not installed!${NC}"
+        return
+    fi
+
     echo -e "${GREEN}Updating npm and installing npm-check...${NC}"
 
     sudo npm -g install npm npm-check
 }
 
+#######################################
+# Install the latest rust toolchain
+# Globals:
+#   GREEN
+#   NC
+# Arguments:
+#   None
+# Outputs:
+#   Log for starting step
+#######################################
 function setup_rust() {
-    # Create fish directory for the script to run
-    mkdir -p "$HOME/.config/fish/conf.d"
+    if [[ -x "$(command -v fish)" ]]; then
+        # Create fish directory for the script to run
+        mkdir -pv ~/.config/fish/conf.d
+    fi
+
+    echo -e "${GREEN}Installing rust...${NC}"
 
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 }
 
+#######################################
+# Download and run xampp installer
+# Globals:
+#   GREEN
+#   NC
+# Arguments:
+#   None
+# Outputs:
+#   Log for starting step
+#######################################
 function setup_xampp() {
+    echo -e "${GREEN}Installing xampp...${NC}"
+
     local xampp_executable=xampp-linux-installer.run
 
     wget -O "${xampp_executable}" https://sourceforge.net/projects/xampp/files/XAMPP%20Linux/8.2.12/xampp-linux-x64-8.2.12-0-installer.run/download
@@ -441,18 +662,34 @@ function setup_xampp() {
     rm -rv "./${xampp_executable}"
 }
 
+#######################################
+# Install extension pack for virtualbox based on distro
+# Globals:
+#   GREEN
+#   NC
+# Arguments:
+#   None
+# Outputs:
+#   Log for starting step
+#   Log if virtualbox manager is not installed
+#######################################
 function setup_virtualbox_extension() {
     echo -e "${GREEN}Installing virtualbox extension pack...${NC}"
 
     local manage="vboxmanage"
     local extension_link="https://download.virtualbox.org/virtualbox/7.0.12/Oracle_VM_VirtualBox_Extension_Pack-7.0.12.vbox-extpack"
 
-    if grep -iq arch "$distro_release" || grep -iq fedora "$distro_release"; then
+    if grep -iq arch "$DISTRO_RELEASE" || grep -iq fedora "$DISTRO_RELEASE"; then
         extension_link="https://download.virtualbox.org/virtualbox/7.1.0/Oracle_VirtualBox_Extension_Pack-7.1.0.vbox-extpack"
     fi
 
-    if grep -iq opensuse "$distro_release"; then
+    if grep -iq opensuse "$DISTRO_RELEASE"; then
         manage="VBoxManage"
+    fi
+
+    if [[ ! -x "$(command -v ${manage})" ]]; then
+        echo -e "${RED}Virtualbox manager is not installed!${NC}"
+        return
     fi
 
     wget "$extension_link"
@@ -460,9 +697,14 @@ function setup_virtualbox_extension() {
     rm -fv Oracle*.vbox-extpack
 }
 
+#######################################
+# Select and install flatpak applications and remove default fedora repo
+# Arguments:
+#   None
+# Outputs:
+#   whiptail screen
+#######################################
 function setup_flatpak() {
-    local extra_apps=("$@")
-
     local apps
 
     apps=$(
@@ -495,9 +737,12 @@ function setup_flatpak() {
             3>&1 1>&2 2>&3
     )
 
-    for app in "${extra_apps[@]}"; do
-        apps+=" $app"
-    done
+    if grep -iq fedora $DISTRO_RELEASE; then
+        # Remove fedora remote if it exists
+        if flatpak remotes | grep -iq fedora; then
+            sudo flatpak remote-delete fedora
+        fi
+    fi
 
     # Setup flathub
     sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
@@ -513,4 +758,4 @@ export GREEN
 export YELLOW
 export NC
 
-export distro_release
+export DISTRO_RELEASE

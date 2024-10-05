@@ -5,6 +5,13 @@ cd "$(dirname "$0")" || exit
 # shellcheck source=.../../shared/shared_scripts.sh
 source "../../shared/shared_scripts.sh"
 
+#######################################
+# Creates a snapshot with snapper
+# Arguments:
+#   Snapshot type, 0 or 1
+# Outputs:
+#   Whiptail screen
+#######################################
 function create_snapshot() {
     local snapshot_type=$1 # 0 or anything else
     local prompt_tag='before'
@@ -315,8 +322,8 @@ for app in "${setups[@]}"; do
         setup_nvchad
         ;;
 
-    astrovim)
-        setup_astrovim
+    astronvim)
+        setup_astronvim
         ;;
 
     rust)

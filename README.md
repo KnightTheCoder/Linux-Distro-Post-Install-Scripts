@@ -117,7 +117,7 @@ bash ./post_install.sh
 * Adds the following command line utilities: neofetch, htop, btop, neovim, eza, bat
 * Installs wine and Protonup-Qt to run windows games
 * Sets up bash, fish and zsh
-* Installs NvChad or Astrovim for neovim
+* Installs NvChad or AstroNvim for neovim
 * Installs the GitHub CLI
 * Installs docker, podman and distrobox for containers
 * Installs code editors: vscode, vscodium
