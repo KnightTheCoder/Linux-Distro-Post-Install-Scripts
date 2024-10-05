@@ -48,23 +48,32 @@ A firefox policy is included for increased privacy.
 > Can be found at ``config/firefox/policies.json`` <br />
 > Manually edit to customize, then copy to ``/etc/firefox/policies/`` for it to work
 
-### 📖 Included policy has the following changes
-* Start by opening previous session
-* Disable telemetry
-* Disable firefox studies
-* Disable pocket
-* Disable form history
-* Disable feedback commands
-* Enable all tracking protection
-* Don't offer to save logins
-* Block requests for notifications
-* Block audio and video autoplay
-* Disable picture in picture
-* Always ask for download location
-* Disable autofill address
-* Disable autofill creditcard
-* No default bookmarks (only works if you copied the policies.json before opening firefox for the first time)
-* HTTPS-Only Mode in all windows
+The project provides the following policy templates:
+* Basic
+* Default
+* Full
+
+### 📖 Difference between policies
+
+| Changes                          |       Basic        |                      Default                      |          Full           |
+| :------------------------------- | :----------------: | :-----------------------------------------------: | :---------------------: |
+| Open previous session            |                    |                         X                         |            X            |
+| Disable telemetry                |         X          |                         X                         |            X            |
+| Disable firefox studies          |         X          |                         X                         |            X            |
+| Disable feedback commands        |         X          |                         X                         |            X            |
+| Disable pocket                   |         X          |                         X                         |            X            |
+| Disable form history             |                    |                         X                         |            X            |
+| Enable all tracking protection   |         X          |                         X                         |            X            |
+| Disable Offer to save logins     |                    |                         x                         |            x            |
+| Block requests for notifications |         X          |                         X                         |            X            |
+| Block audio and video autoplay   |                    |                         X                         |            X            |
+| Disable picture in picture       |                    |                         X                         |            X            |
+| Ask for download location        |                    |                         X                         |            X            |
+| Disable autofill address         |                    |                         X                         |            X            |
+| Disable autofill creditcard      |                    |                         X                         |            X            |
+| No default bookmarks             |                    |                         X                         |            X            |
+| HTTPS-Only Mode in all windows   |         X          |                         X                         |            X            |
+| Extensions                       | Ublock origin only | All privacy extensions, choose from optional ones | All extensions included |
 
 ### 📦 Installs basic extensions for privacy (can be removed anytime)
 * [uBlock Origin][5]

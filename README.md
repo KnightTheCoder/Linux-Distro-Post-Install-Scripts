@@ -107,15 +107,6 @@ bash ./post_install.sh
 ```
 </details>
 
-<details>
-<summary>To copy the firefox policy</summary>
-
-#### Run with
-```console
-bash ./post_install.sh --copy-firefox-policy
-```
-</details>
-
 ## ✨ Features
 * Choose the apps and configurations you need
 * Updates the system

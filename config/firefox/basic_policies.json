@@ -4,7 +4,6 @@
         "DisableAppUpdate": true,
         "DisableTelemetry": true,
         "DisableFirefoxStudies": true,
-        "DisableFormHistory": true,
         "DisablePocket": true,
         "DisableFeedbackCommands": true,
         "Extensions": {

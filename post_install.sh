@@ -130,10 +130,6 @@ fi
 
 echo -e "${GREEN}Your chosen distro is ${distro_fullname}${NC}"
 
-if [[ $1 == "--copy-firefox-policy" ]]; then
-  setup_firefox
-fi
-
 echo -e "${GREEN}Checking package manager and distro combination...${NC}"
 
 if [[ $chosen_distro = "opensuse" && $package_manager = "zypper" ]]; then
@@ -148,9 +144,13 @@ else
   echo -e "${RED}Can't continue! Mismatched package manager and distro!${NC}"
   echo -e "${RED}Chosen distro: ${distro_fullname}${NC}"
   echo -e "${RED}Detected package manager: $package_manager${NC}"
+
   whiptail --title "Mismatched!" --msgbox "Can't continue! Mismatched package manager and distro!\nChosen distro: ${distro_fullname}\nDetected package manager: $package_manager" 0 0
+  
   exit 1
 fi
+
+setup_firefox
 
 echo -e "${GREEN}${package_manager} found for ${distro_fullname}!${NC}"
 bash "$(get_execution_path "$chosen_distro")"

@@ -28,7 +28,7 @@ function setup_firefox() {
     policy_template=$(
         whiptail --title "Firefox policy template" --notags --menu "Choose which firefox policy template you'd like to use" 0 0 0 \
             "basic" "Basic policy" \
-            "" "Default policy" \
+            "default" "Default policy" \
             "full" "Full policy" \
             3>&1 1>&2 2>&3
     )
@@ -49,8 +49,9 @@ function setup_firefox() {
 
     if [[ ! -f "${firefox_policy_directory}/policies.json" ]]; then
         sudo mkdir -pv "${firefox_policy_directory}"
-        sudo cp -fv config/firefox/${policy_filename} "${firefox_policy_directory}/policies.json"
     fi
+
+    sudo cp -fv config/firefox/${policy_filename} "${firefox_policy_directory}/policies.json"
 
     if [[ $policy_template == "default" ]]; then
         local extension_sets
@@ -92,7 +93,7 @@ function setup_firefox() {
 
         done
 
-        if (( ${#extensions[@]} != 0 )); then
+        if ((${#extensions[@]} != 0)); then
             firefox "${extensions[@]}"
         fi
 
