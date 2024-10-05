@@ -202,52 +202,13 @@ function setup_vscode() {
 
     echo -e "${GREEN}Installing extensions for VS${code_editor}...${NC}"
 
-    local extensions=(
-        "adpyke.codesnap"
-        "adriano-markovic.c-cpp-makefile-project"
-        "ardenivanov.svelte-intellisense"
-        "bradlc.vscode-tailwindcss"
-        "christian-kohler.path-intellisense"
-        "codezombiech.gitignore"
-        "vunguyentuan.vscode-postcss"
-        "dannyconnell.split-html-attributes"
-        "dbaeumer.vscode-eslint"
-        "eamodio.gitlens"
-        "esbenp.prettier-vscode"
-        "formulahendry.auto-close-tag"
-        "formulahendry.auto-rename-tag"
-        "formulahendry.code-runner"
-        "github.github-vscode-theme"
-        "github.vscode-github-actions"
-        "github.vscode-pull-request-github"
-        "mads-hartmann.bash-ide-vscode"
-        "mhutchie.git-graph"
-        "ms-vscode.cpptools"
-        "ms-vscode.makefile-tools"
-        "pkief.material-icon-theme"
-        "rust-lang.rust-analyzer"
-        "rvest.vs-code-prettier-eslint"
-        "steoates.autoimport"
-        "svelte.svelte-vscode"
-        "tamasfe.even-better-toml"
-        "timonwong.shellcheck"
-        "foxundermoon.shell-format"
-        "ultram4rine.vscode-choosealicense"
-        "usernamehw.errorlens"
-        "vadimcn.vscode-lldb"
-        "vue.volar"
-        "burkeholland.simple-react-snippets"
-        "Angular.ng-template"
-        "zignd.html-css-class-completion"
-        "ms-azuretools.vscode-docker"
-        "ritwickdey.LiveServer"
-        "WallabyJs.quokka-vscode"
-        "YoavBls.pretty-ts-errors"
-        "nrwl.angular-console"
-    )
+    local vscode_config_directory=../../config/vscode
+
+    local extensions
+    extensions=$(cat ${vscode_config_directory}/extensions.txt)
 
     # Install extensions
-    for ext in "${extensions[@]}"; do
+    for ext in $extensions; do
         $code_editor --force --install-extension "$ext"
     done
 
@@ -258,10 +219,10 @@ function setup_vscode() {
     fi
 
     # Copy key bindings
-    cp -fv "../../config/vscode/keybindings.json" "$HOME/.config/${code_folder}/User"
+    cp -fv "${vscode_config_directory}/keybindings.json" "$HOME/.config/${code_folder}/User"
 
     # Copy settings
-    cp -fv "../../config/vscode/settings.json" "$HOME/.config/${code_folder}/User"
+    cp -fv "${vscode_config_directory}/settings.json" "$HOME/.config/${code_folder}/User"
 }
 
 #######################################
