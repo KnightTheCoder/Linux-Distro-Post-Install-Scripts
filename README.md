@@ -109,6 +109,7 @@ bash ./post_install.sh
 
 ## ✨ Features
 * Choose the apps and configurations you need
+* Install one of 3 firefox policy templates for privacy and preinstalled extensions
 * Updates the system
 * Sets up flatpak and install apps
 * Downloads and installs microsoft and hack nerd fonts

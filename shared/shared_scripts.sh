@@ -83,6 +83,7 @@ function setup_firefox() {
 
     policy_template=$(
         whiptail --title "Firefox policy template" --notags --menu "Choose which firefox policy template you'd like to use" 0 0 0 \
+            "none" "No policy" \
             "basic" "Basic policy" \
             "default" "Default policy" \
             "full" "Full policy" \
@@ -91,11 +92,15 @@ function setup_firefox() {
 
     case $policy_template in
 
-    "basic")
+    none)
+        return
+        ;;
+
+    basic)
         policy_filename="basic_policies.json"
         ;;
 
-    "full")
+    full)
         policy_filename="full_policies.json"
         ;;
 
