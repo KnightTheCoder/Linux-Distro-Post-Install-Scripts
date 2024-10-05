@@ -25,6 +25,13 @@ function remove_package() {
     echo "$result_package_list"
 }
 
+#######################################
+# Get distro icon based on distro
+# Arguments:
+#   None
+# Outputs:
+#   Distro's icon, otherwise default tux icon
+#######################################
 function get_current_distro_icon() {
     # Add icon based on distro
     local distro_icon=
