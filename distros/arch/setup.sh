@@ -30,7 +30,7 @@ packages=$(
         "dotnet-sdk" ".NET SDK" OFF \
         "rustup" "Rust" OFF \
         "go" "Golang" OFF \
-        "java" "Java OpenJDK                " OFF \
+        "java" "Java OpenJDK" OFF \
         "xampp" "XAMPP" OFF \
         "docker" "Docker engine" OFF \
         "docker-desktop" "Docker desktop" OFF \
