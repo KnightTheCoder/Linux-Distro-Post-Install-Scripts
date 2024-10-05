@@ -15,7 +15,15 @@
                 "https://addons.mozilla.org/firefox/downloads/file/4098688/user_agent_string_switcher-0.5.0.xpi",
                 "https://addons.mozilla.org/firefox/downloads/file/4251866/localcdn_fork_of_decentraleyes-2.6.65.xpi",
                 "https://addons.mozilla.org/firefox/downloads/file/4064884/clearurls-1.26.1.xpi",
-                "https://addons.mozilla.org/firefox/downloads/file/3920533/skip_redirect-2.3.6.xpi"
+                "https://addons.mozilla.org/firefox/downloads/file/3920533/skip_redirect-2.3.6.xpi",
+                "https://addons.mozilla.org/firefox/downloads/file/4354445/enhancer_for_youtube-2.0.126.1.xpi",
+                "https://addons.mozilla.org/firefox/downloads/file/4356986/dearrow-1.8.xpi",
+                "https://addons.mozilla.org/firefox/downloads/file/4342747/return_youtube_dislikes-3.0.0.17.xpi",
+                "https://addons.mozilla.org/firefox/downloads/file/4360577/sponsorblock-5.9.3.xpi",
+                "https://addons.mozilla.org/firefox/downloads/file/4354268/augmented_steam-4.1.2.xpi",
+                "https://addons.mozilla.org/firefox/downloads/file/4195217/protondb_for_steam-2.1.0.xpi",
+                "https://addons.mozilla.org/firefox/downloads/file/4359254/darkreader-4.9.94.xpi",
+                "https://addons.mozilla.org/firefox/downloads/file/4357341/save_webp_as_png_or_jpeg-1.5.4.xpi"
             ]
         },
         "EnableTrackingProtection": {
@@ -43,19 +51,6 @@
         "HttpsOnlyMode": "enabled",
         "Homepage": {
             "StartPage": "previous-session"
-        },
-        "SearchEngines": {
-            "Add": [
-                {
-                    "Name": "Brave Search",
-                    "URLTemplate": "search.brave.com/search?q={searchTerms}",
-                    "Method": "GET",
-                    "IconURL": "https://cdn.search.brave.com/serp/v2/_app/immutable/assets/brave-logo-dark.Bg87GL4b.svg",
-                    "Alias": "brave",
-                    "Description": "Brave search engine"
-                }
-            ],
-            "Default": "Brave Search"
         }
     }
 }
