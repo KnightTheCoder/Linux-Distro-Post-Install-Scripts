@@ -71,7 +71,7 @@ The project provides the following policy templates:
 | Ask for download location        |                    |                         X                         |            X            |
 | Disable autofill address         |                    |                         X                         |            X            |
 | Disable autofill creditcard      |                    |                         X                         |            X            |
-| No default bookmarks             |                    |                         X                         |            X            |
+| No default bookmarks             |         X          |                         X                         |            X            |
 | HTTPS-Only Mode in all windows   |         X          |                         X                         |            X            |
 | Extensions                       | Ublock origin only | All privacy extensions, choose from optional ones | All extensions included |
 

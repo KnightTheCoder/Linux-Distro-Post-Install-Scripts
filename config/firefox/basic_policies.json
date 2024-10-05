@@ -22,6 +22,7 @@
                 "BlockNewRequests": true
             }
         },
+        "NoDefaultBookmarks": true,
         "HttpsOnlyMode": "enabled"
     }
 }
