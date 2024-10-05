@@ -202,7 +202,6 @@ for package in $packages; do
         setups+=(flatpak)
         ;;
 
-    *) ;;
     esac
 done
 
@@ -356,6 +355,7 @@ for app in "${setups[@]}"; do
     starship)
         setup_starship
         ;;
+
     esac
 done
 

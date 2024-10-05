@@ -1,0 +1,61 @@
+{
+    "policies": {
+        "AppAutoUpdate": false,
+        "DisableAppUpdate": true,
+        "DisableTelemetry": true,
+        "DisableFirefoxStudies": true,
+        "DisableFormHistory": true,
+        "DisablePocket": true,
+        "DisableFeedbackCommands": true,
+        "Extensions": {
+            "Install": [
+                "https://addons.mozilla.org/firefox/downloads/file/4261710/ublock_origin-1.57.2.xpi",
+                "https://addons.mozilla.org/firefox/downloads/file/4232703/privacy_badger17-2024.2.6.xpi",
+                "https://addons.mozilla.org/firefox/downloads/file/4262820/canvasblocker-1.10.1.xpi",
+                "https://addons.mozilla.org/firefox/downloads/file/4098688/user_agent_string_switcher-0.5.0.xpi",
+                "https://addons.mozilla.org/firefox/downloads/file/4251866/localcdn_fork_of_decentraleyes-2.6.65.xpi",
+                "https://addons.mozilla.org/firefox/downloads/file/4064884/clearurls-1.26.1.xpi",
+                "https://addons.mozilla.org/firefox/downloads/file/3920533/skip_redirect-2.3.6.xpi"
+            ]
+        },
+        "EnableTrackingProtection": {
+            "Value": true,
+            "CryptoMining": true,
+            "Fingerprinting": true,
+            "EmailTracking": true
+        },
+        "OfferToSaveLogins": false,
+        "Permissions": {
+            "Notifications": {
+                "BlockNewRequests": true
+            },
+            "Autoplay": {
+                "Default": "block-audio-video"
+            }
+        },
+        "PictureInPicture": {
+            "Enabled": false
+        },
+        "PromptForDownloadLocation": true,
+        "AutofillAddressEnabled": false,
+        "AutofillCreditCardEnabled": false,
+        "NoDefaultBookmarks": true,
+        "HttpsOnlyMode": "enabled",
+        "Homepage": {
+            "StartPage": "previous-session"
+        },
+        "SearchEngines": {
+            "Add": [
+                {
+                    "Name": "Brave Search",
+                    "URLTemplate": "search.brave.com/search?q={searchTerms}",
+                    "Method": "GET",
+                    "IconURL": "https://cdn.search.brave.com/serp/v2/_app/immutable/assets/brave-logo-dark.Bg87GL4b.svg",
+                    "Alias": "brave",
+                    "Description": "Brave search engine"
+                }
+            ],
+            "Default": "Brave Search"
+        }
+    }
+}

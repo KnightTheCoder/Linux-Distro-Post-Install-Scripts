@@ -76,6 +76,7 @@ setups+=("$nvim_config")
 # Add packages to the correct categories
 for package in $packages; do
     case $package in
+
     bash)
         packages+=" gawk"
 
@@ -251,7 +252,6 @@ for package in $packages; do
         setups+=(flatpak)
         ;;
 
-    *) ;;
     esac
 done
 
@@ -312,6 +312,7 @@ done
 # Run setups
 for app in "${setups[@]}"; do
     case $app in
+
     lutris)
         wget -O 'lutris.deb' "https://github.com/lutris/lutris/releases/download/v0.5.17/lutris_0.5.17_all.deb"
         sudo apt install -y ./lutris.deb
@@ -507,6 +508,7 @@ for app in "${setups[@]}"; do
     starship)
         setup_starship
         ;;
+
     esac
 done
 

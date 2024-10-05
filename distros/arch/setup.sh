@@ -76,6 +76,7 @@ setups+=("$nvim_config")
 # Add packages to the correct categories
 for package in $packages; do
     case $package in
+
     bash)
         packages+=" gawk"
 
@@ -184,7 +185,6 @@ for package in $packages; do
         setups+=(flatpak)
         ;;
 
-    *) ;;
     esac
 done
 
@@ -314,6 +314,7 @@ for app in "${setups[@]}"; do
     starship)
         setup_starship
         ;;
+
     esac
 done
 

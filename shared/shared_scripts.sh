@@ -21,52 +21,81 @@ function remove_package() {
 function setup_firefox() {
     echo -e "${GREEN}Setting up firefox...${NC}"
 
-    local extension_sets
+    local policy_filename="policies.json"
 
-    extension_sets=$(
-        whiptail --title "Firefox extension sets" --separate-output --notags --checklist "Choose what set of extensions to install\nWill open the extension's page to install manually\nClose to progress install" 0 0 0 \
-            "youtube" "Youtube" OFF \
-            "steam" "Steam" OFF \
-            "utilities" "Utilities" OFF \
+    local policy_template
+
+    policy_template=$(
+        whiptail --title "Firefox policy template" --notags --menu "Choose which firefox policy template you'd like to use" 0 0 0 \
+            "basic" "Basic policy" \
+            "" "Default policy" \
+            "full" "Full policy" \
             3>&1 1>&2 2>&3
     )
 
-    # Remove new lines
-    extension_sets=$(echo "$extension_sets" | tr "\n" " ")
-    local extensions=()
+    case $policy_template in
+
+    "basic")
+        policy_filename="basic_policies.json"
+        ;;
+
+    "full")
+        policy_filename="full_policies.json"
+        ;;
+
+    esac
 
     local firefox_policy_directory=/etc/firefox/policies
 
     if [[ ! -f "${firefox_policy_directory}/policies.json" ]]; then
         sudo mkdir -pv "${firefox_policy_directory}"
-        sudo cp -fv config/firefox/policies.json "${firefox_policy_directory}"
+        sudo cp -fv config/firefox/${policy_filename} "${firefox_policy_directory}"
     fi
 
-    for extension_set in $extension_sets; do
+    if [[ $policy_template == "default" ]]; then
+        local extension_sets
 
-        case $extension_set in
-        youtube)
-            extensions+=("https://addons.mozilla.org/en-US/firefox/addon/enhancer-for-youtube/")
-            extensions+=("https://addons.mozilla.org/en-US/firefox/addon/dearrow/")
-            extensions+=("https://addons.mozilla.org/en-US/firefox/addon/return-youtube-dislikes/")
-            extensions+=("https://addons.mozilla.org/en-US/firefox/addon/sponsorblock/")
-            ;;
+        extension_sets=$(
+            whiptail --title "Firefox extension sets" --separate-output --notags --checklist "Choose what set of extensions to install\nWill open the extension's page to install manually\nClose to progress install" 0 0 0 \
+                "youtube" "Youtube" OFF \
+                "steam" "Steam" OFF \
+                "utilities" "Utilities" OFF \
+                3>&1 1>&2 2>&3
+        )
 
-        steam)
-            extensions+=("https://addons.mozilla.org/en-US/firefox/addon/augmented-steam/")
-            extensions+=("https://addons.mozilla.org/en-US/firefox/addon/protondb-for-steam/")
-            ;;
+        # Remove new lines
+        extension_sets=$(echo "$extension_sets" | tr "\n" " ")
+        local extensions=()
 
-        utilities)
-            extensions+=("https://addons.mozilla.org/en-US/firefox/addon/darkreader/")
-            extensions+=("https://addons.mozilla.org/en-US/firefox/addon/save-webp-as-png-or-jpeg/")
-            ;;
-        esac
+        for extension_set in $extension_sets; do
 
-    done
+            case $extension_set in
 
-    if [[ ${#extensions[@]} -ne 0 ]]; then
-        firefox "${extensions[@]}"
+            youtube)
+                extensions+=("https://addons.mozilla.org/en-US/firefox/addon/enhancer-for-youtube/")
+                extensions+=("https://addons.mozilla.org/en-US/firefox/addon/dearrow/")
+                extensions+=("https://addons.mozilla.org/en-US/firefox/addon/return-youtube-dislikes/")
+                extensions+=("https://addons.mozilla.org/en-US/firefox/addon/sponsorblock/")
+                ;;
+
+            steam)
+                extensions+=("https://addons.mozilla.org/en-US/firefox/addon/augmented-steam/")
+                extensions+=("https://addons.mozilla.org/en-US/firefox/addon/protondb-for-steam/")
+                ;;
+
+            utilities)
+                extensions+=("https://addons.mozilla.org/en-US/firefox/addon/darkreader/")
+                extensions+=("https://addons.mozilla.org/en-US/firefox/addon/save-webp-as-png-or-jpeg/")
+                ;;
+
+            esac
+
+        done
+
+        if (( ${#extensions[@]} != 0 )); then
+            firefox "${extensions[@]}"
+        fi
+
     fi
 }
 
@@ -391,7 +420,7 @@ function setup_astrovim() {
 
 function setup_npm() {
     echo -e "${GREEN}Updating npm and installing npm-check...${NC}"
-    
+
     sudo npm -g install npm npm-check
 }
 

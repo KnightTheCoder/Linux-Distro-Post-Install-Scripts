@@ -99,6 +99,7 @@ setups+=("$nvim_config")
 # Add packages to the correct categories
 for package in $packages; do
     case $package in
+
     bash)
         packages+=" gawk"
 
@@ -223,7 +224,6 @@ for package in $packages; do
         usergroups+=(wheel)
         ;;
 
-    *) ;;
     esac
 done
 
@@ -294,6 +294,7 @@ done
 # Run setups
 for app in "${setups[@]}"; do
     case $app in
+
     itch)
         setup_itch_app
         ;;
@@ -353,6 +354,7 @@ for app in "${setups[@]}"; do
     starship)
         setup_starship
         ;;
+
     esac
 done
 
