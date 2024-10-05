@@ -49,7 +49,7 @@ function setup_firefox() {
 
     if [[ ! -f "${firefox_policy_directory}/policies.json" ]]; then
         sudo mkdir -pv "${firefox_policy_directory}"
-        sudo cp -fv config/firefox/${policy_filename} "${firefox_policy_directory}"
+        sudo cp -fv config/firefox/${policy_filename} "${firefox_policy_directory}/policies.json"
     fi
 
     if [[ $policy_template == "default" ]]; then
