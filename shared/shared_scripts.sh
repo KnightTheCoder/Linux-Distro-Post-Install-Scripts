@@ -219,7 +219,9 @@ function setup_vscode() {
 
     if [[ -f "${vscode_config_directory}/extensions.txt" ]]; then
 
-        if whiptail --yesno "Would you like to install extensions from extensions.txt?" 0 0; then
+        whiptail --yesno "Would you like to install extensions from extensions.txt?" 0 0
+        skip_extensions=$?
+        if (("$skip_extensions" == 0)); then
             local extensions
             extensions=$(cat "${vscode_config_directory}/extensions.txt")
 
