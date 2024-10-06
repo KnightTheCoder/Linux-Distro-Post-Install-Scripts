@@ -219,10 +219,10 @@ function setup_vscode() {
 
     if [[ -f "${vscode_config_directory}/extensions.txt" ]]; then
 
-        whiptail --yesno "Would you like to install extensions from extensions.txt?" 0 0
+        whiptail --yesno "Would you like to install extensions from extensions.txt for VS${code_editor}?" 0 0
 
         local skip_extensions=$?
-        if [[ "$skip_extensions" == "0" ]]; then
+        if (("$skip_extensions" == 0)); then
             local extensions
             extensions=$(cat "${vscode_config_directory}/extensions.txt")
 
@@ -230,10 +230,12 @@ function setup_vscode() {
             for ext in $extensions; do
                 $code_editor --force --install-extension "$ext"
             done
+        else
+            echo -e "${YELLOW}Skipping extensions for VS${code_editor}...${NC}"
         fi
 
     else
-        echo -e "${YELLOW}extensions.txt not found! Skipping extensions...${NC}"
+        echo -e "${YELLOW}extensions.txt not found!${NC}"
     fi
 
     local code_folder="Code"
