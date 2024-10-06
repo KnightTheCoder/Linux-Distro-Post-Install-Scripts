@@ -140,7 +140,7 @@ function main() {
 
   if [[ "$chosen_distro" != "unknown" ]]; then
     whiptail --title "Autodetection" --yesno "${distro_fullname} detected with ${package_manager} as your package manager!\nIs this correct?" 0 0
-    correct=$?
+    local correct=$?
   else
     echo -e "${RED}Unknown distro detected!${NC}"
 
