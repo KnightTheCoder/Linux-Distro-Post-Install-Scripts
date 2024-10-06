@@ -88,17 +88,16 @@ function main() {
             "htop" "htop" ON \
             "btop" "btop++" ON \
             "gh" "github cli" OFF \
-            "tldr" "tldr, short man pages" OFF \
             3>&1 1>&2 2>&3
     )
 
     packages+=" $cli_packages"
 
-    packages+=" opi neovim eza bat fetchmsttfonts systemd-zram-service p7zip p7zip-full unrar"
+    packages+=" opi neovim eza bat fetchmsttfonts systemd-zram-service 7zip unrar"
 
     local shells
     shells=$(choose_shells)
-    
+
     packages+=" $shells"
 
     # Remove new lines
@@ -381,7 +380,7 @@ function main() {
         esac
     done
 
-    echo -e "${GREEN}Starting services...${NC}" 
+    echo -e "${GREEN}Starting services...${NC}"
     # Start services
     for serv in "${services[@]}"; do
         sudo systemctl enable --now "$serv"
