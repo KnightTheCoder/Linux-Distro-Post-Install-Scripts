@@ -24,6 +24,7 @@
     "terminal.integrated.cursorBlinking": true,
     "terminal.integrated.defaultProfile.linux": "fish",
     "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
+    "editor.fontFamily": " 'Hack Nerd Font', 'Droid Sans Mono', 'monospace', monospace",
     "emmet.includeLanguages": {
         "javascript": "javascriptreact"
     }
