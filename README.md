@@ -115,7 +115,7 @@ bash ./post_install.sh
 * Downloads and installs microsoft and hack nerd fonts
 * Installs Visual Studio Code and Codium extensions and copies the keybindings
 * Installs gaming launchers such as Steam, lutris, itch desktop app
-* Adds the following command line utilities: neofetch, htop, btop, neovim, eza, bat
+* Adds the following command line utilities: neofetch, htop, btop, neovim, eza, bat, tldr
 * Installs wine and Protonup-Qt to run windows games
 * Sets up bash, fish and zsh
 * Installs NvChad or AstroNvim for neovim
