@@ -31,6 +31,7 @@ function main() {
             "transmission" "Transmission bittorrent client" OFF \
             "gimp" "GIMP" OFF \
             "kdenlive" "Kdenlive" OFF \
+            "calibre" "Calibre E-book manager" OFF \
             "keepass2" "KeePass" OFF \
             "vscode" "Visual Studio Code" OFF \
             "vscodium" "VSCodium" OFF \

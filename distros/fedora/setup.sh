@@ -32,6 +32,7 @@ function main() {
             "qbittorrent" "Qbittorrent bittorrent client" OFF \
             "gimp" "GIMP" OFF \
             "kdenlive" "Kdenlive" OFF \
+            "calibre" "Calibre E-book manager" OFF \
             "keepassxc" "KeePassXC" OFF \
             "vscode" "Visual Studio Code" OFF \
             "vscodium" "VSCodium" OFF \
