@@ -725,10 +725,12 @@ function setup_flatpak() {
             "com.discordapp.Discord" "Discord" OFF \
             "io.github.spacingbat3.webcord" "Webcord" OFF \
             "dev.vencord.Vesktop" "Vesktop" OFF \
-            "io.gitlab.librewolf-community" "Librewolf" OFF \
-            "one.ablaze.floorp" "Floorp" OFF \
-            "com.google.Chrome" "Google Chrome" OFF \
-            "com.brave.Browser" "Brave browser" OFF \
+            "org.mozilla.firefox" "Firefox web browser" OFF \
+            "io.gitlab.librewolf-community" "Librewolf web browser" OFF \
+            "one.ablaze.floorp" "Floorp web browser" OFF \
+            "com.google.Chrome" "Google Chrome web browser" OFF \
+            "com.brave.Browser" "Brave web browser" OFF \
+            "com.vivaldi.Vivaldi" "Vivaldi web browser" OFF \
             "net.mullvad.MullvadBrowser" "Mullavad Browser" OFF \
             "org.libreoffice.LibreOffice" "Libreoffice" OFF \
             "org.onlyoffice.desktopeditors" "ONLYOFFICE Desktop Editors" OFF \

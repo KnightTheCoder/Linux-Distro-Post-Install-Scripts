@@ -23,6 +23,12 @@ function main() {
             "steam" "Steam" OFF \
             "itch" "Itch desktop app" OFF \
             "heroic" "Heroic Games Launcher" OFF \
+            "firefox" "Firefox web browser" ON \
+            "librewolf" "Librewolf web browser" OFF \
+            "floorp" "Floorp web browser" OFF \
+            "chromium" "Chromium web browser" OFF \
+            "vivaldi" "Vivaldi web browser" OFF \
+            "brave" "Brave web browser" OFF \
             "haruna" "Haruna media player" ON \
             "celluloid" "Celluloid media player" ON \
             "vlc" "VLC media player" ON \
@@ -118,6 +124,24 @@ function main() {
 
         wine)
             packages+=" winetricks"
+            ;;
+
+        brave)
+            packages=$(remove_package "$packages" "$package")
+
+            aur+=(brave-bin)
+            ;;
+
+        librewolf)
+            packages=$(remove_package "$packages" "$package")
+
+            aur+=(librewolf-bin)
+            ;;
+
+        floorp)
+            packages=$(remove_package "$packages" "$package")
+
+            aur+=(floorp-bin)
             ;;
 
         qemu)

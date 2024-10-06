@@ -52,6 +52,11 @@ function main() {
             "steam" "Steam" OFF \
             "itch" "Itch desktop app" OFF \
             "heroic" "Heroic Games Launcher" OFF \
+            "MozillaFirefox" "Firefox web browser" ON \
+            "librewolf" "Librewolf web browser" OFF \
+            "chromium" "Chromium web browser" OFF \
+            "vivaldi" "Vivaldi web browser" OFF \
+            "brave" "Brave web browser" OFF \
             "haruna" "Haruna media player" ON \
             "celluloid" "Celluloid media player" ON \
             "vlc" "VLC media player" ON \
@@ -147,6 +152,24 @@ function main() {
 
         wine)
             packages+=" wine-mono winetricks"
+            ;;
+
+        vivaldi)
+            packages=$(remove_package "$packages" "$package")
+
+            opi+=(vivaldi)
+            ;;
+
+        brave)
+            packages=$(remove_package "$packages" "$package")
+
+            opi+=(brave)
+            ;;
+
+        librewolf)
+            packages=$(remove_package "$packages" "$package")
+
+            setups+=(librewolf)
             ;;
 
         qemu)
@@ -328,6 +351,16 @@ function main() {
 
         vscodium)
             setup_vscode codium
+            ;;
+
+        librewolf)
+            sudo rpm --import https://rpm.librewolf.net/pubkey.gpg
+
+            sudo zypper ar -ef https://rpm.librewolf.net librewolf
+
+            sudo zypper ref
+
+            sudo zypper install --details -y librewolf
             ;;
 
         hacknerd)

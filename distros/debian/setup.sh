@@ -23,6 +23,11 @@ function main() {
             "steam" "Steam" OFF \
             "itch" "Itch desktop app" OFF \
             "heroic" "Heroic Games Launcher" OFF \
+            "firefox" "Firefox web browser" ON \
+            "librewolf" "Librewolf web browser" OFF \
+            "chromium" "Chromium web browser" OFF \
+            "vivaldi" "Vivaldi web browser" OFF \
+            "brave" "Brave web browser" OFF \
             "haruna" "Haruna media player" ON \
             "celluloid" "Celluloid media player" ON \
             "vlc" "VLC media player" ON \
@@ -122,6 +127,24 @@ function main() {
 
         wine)
             packages+=" wine32 winetricks"
+            ;;
+
+        vivaldi)
+            packages=$(remove_package "$packages" "$package")
+
+            setups+=(vivaldi)
+
+            ;;
+        brave)
+            packages=$(remove_package "$packages" "$package")
+
+            setups+=(brave)
+            ;;
+
+        librewolf)
+            packages=$(remove_package "$packages" "$package")
+
+            setups+=(librewolf)
             ;;
 
         qemu)
@@ -368,6 +391,29 @@ function main() {
             sudo nala update && sudo nala install codium -y
 
             setup_vscode codium
+            ;;
+
+        vivaldi)
+            wget -O vivaldi.deb https://downloads.vivaldi.com/stable/vivaldi-stable_6.9.3447.51-1_amd64.deb
+            sudo nala update && sudo nala install -y ./vivaldi.deb
+
+            rm -fv ./vivaldi.deb
+            ;;
+
+        brave)
+            sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
+
+            echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
+
+            sudo nala update && sudo nala install brave-browser -y
+            ;;
+
+        librewolf)
+            sudo apt update && sudo apt install extrepo -y
+
+            sudo extrepo enable librewolf
+
+            sudo nala update && sudo nala install librewolf -y
             ;;
 
         hacknerd)

@@ -23,6 +23,11 @@ function main() {
             "steam" "Steam" OFF \
             "itch" "Itch desktop app" OFF \
             "heroic" "Heroic Games Launcher" OFF \
+            "firefox" "Firefox web browser" ON \
+            "librewolf" "Librewolf web browser" OFF \
+            "chromium" "Chromium web browser" OFF \
+            "vivaldi" "Vivaldi web browser" OFF \
+            "brave" "Brave web browser" OFF \
             "haruna" "Haruna media player" ON \
             "celluloid" "Celluloid media player" ON \
             "vlc" "VLC media player" ON \
@@ -66,7 +71,7 @@ function main() {
 
     packages+=" $cli_packages"
 
-    packages+=" neovim eza bat dnf5 dnf5-plugins curl cabextract xorg-x11-font-utils fontconfig p7zip p7zip-plugins unrar git"
+    packages+=" neovim eza bat dnf5 dnf5-plugins curl cabextract xorg-x11-font-utils fontconfig p7zip p7zip-plugins unrar git dnf-plugins-core"
 
     local shells
     shells=$(choose_shells)
@@ -132,6 +137,26 @@ function main() {
 
         wine)
             packages+=" wine-mono winetricks"
+            ;;
+
+        vivaldi)
+            packages=$(remove_package "$packages" "$package")
+
+            setups+=(vivaldi)
+
+            ;;
+
+        brave)
+            packages=$(remove_package "$packages" "$package")
+
+            setups+=(brave)
+            ;;
+
+        librewolf)
+            packages=$(remove_package "$packages" "$package")
+
+            setups+=(librewolf)
+
             ;;
 
         qemu)
@@ -301,6 +326,27 @@ function main() {
             setup_itch_app
             ;;
 
+        vivaldi)
+            sudo dnf install dnf-utils -y
+            sudo dnf config-manager --add-repo https://repo.vivaldi.com/archive/vivaldi-fedora.repo
+
+            sudo dnf install -y vivaldi-stable
+            ;;
+
+        brave)
+            sudo dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
+
+            sudo rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
+
+            sudo dnf install -y brave-browser
+            ;;
+
+        librewolf)
+            curl -fsSL https://rpm.librewolf.net/librewolf-repo.repo | pkexec tee /etc/yum.repos.d/librewolf.repo
+
+            sudo dnf install -y librewolf
+            ;;
+
         hacknerd)
             setup_hacknerd_fonts
             ;;
@@ -326,7 +372,6 @@ function main() {
             ;;
 
         docker)
-            sudo dnf -y install dnf-plugins-core
             sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo -y
 
             sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
