@@ -671,15 +671,9 @@ function setup_xampp() {
 #   None
 # Outputs:
 #   Log for starting step
-#   Log if virtualbox is not installed
 #   Log if virtualbox manager is not installed
 #######################################
 function setup_virtualbox_extension() {
-    if [[ ! -x "$(command -v virtualbox)" ]]; then
-        echo -e "${RED}Virtualbox is not installed!${NC}"
-        return
-    fi
-
     echo -e "${GREEN}Installing virtualbox extension pack...${NC}"
 
     local manage="vboxmanage"
