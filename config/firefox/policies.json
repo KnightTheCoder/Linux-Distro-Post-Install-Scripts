@@ -40,6 +40,10 @@
         "HttpsOnlyMode": "enabled",
         "Homepage": {
             "StartPage": "previous-session"
+        },
+        "UserMessaging": {
+            "ExtensionRecommendations": false,
+            "FeatureRecommendations": false
         }
     }
 }

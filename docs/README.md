@@ -68,6 +68,8 @@ The project provides the following policy templates:
 | Disable firefox studies          |         X          |                         X                         |            X            |
 | Disable feedback commands        |         X          |                         X                         |            X            |
 | Disable pocket                   |         X          |                         X                         |            X            |
+| Extension recommendations        |         X          |                         X                         |            X            |
+| Feature recommendations          |         X          |                         X                         |            X            |
 | Disable form history             |                    |                         X                         |            X            |
 | Enable all tracking protection   |         X          |                         X                         |            X            |
 | Disable Offer to save logins     |                    |                         x                         |            x            |

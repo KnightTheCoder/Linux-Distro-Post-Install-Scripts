@@ -23,6 +23,10 @@
             }
         },
         "NoDefaultBookmarks": true,
-        "HttpsOnlyMode": "enabled"
+        "HttpsOnlyMode": "enabled",
+        "UserMessaging": {
+            "ExtensionRecommendations": false,
+            "FeatureRecommendations": false
+        }
     }
 }
