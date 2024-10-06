@@ -50,7 +50,6 @@
 A firefox policy is included for increased privacy.
 
 > [!NOTE]
-> Will be applied when selecting anything other than no policy <br />
 > Can be found at `config/firefox/policies.json` <br />
 > Manually edit to customize, then copy to `/etc/firefox/policies/` for it to work
 
