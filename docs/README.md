@@ -61,26 +61,26 @@ The project provides the following policy templates:
 
 ### 📖 Difference between policies
 
-| Changes                          |       Basic        |                      Default                      |          Full           |
-| :------------------------------- | :----------------: | :-----------------------------------------------: | :---------------------: |
-| Open previous session            |                    |                         X                         |            X            |
-| Disable telemetry                |         X          |                         X                         |            X            |
-| Disable firefox studies          |         X          |                         X                         |            X            |
-| Disable feedback commands        |         X          |                         X                         |            X            |
-| Disable pocket                   |         X          |                         X                         |            X            |
-| Extension recommendations        |         X          |                         X                         |            X            |
-| Feature recommendations          |         X          |                         X                         |            X            |
-| Disable form history             |                    |                         X                         |            X            |
-| Enable all tracking protection   |         X          |                         X                         |            X            |
-| Disable Offer to save logins     |                    |                         x                         |            x            |
-| Block requests for notifications |         X          |                         X                         |            X            |
-| Block audio and video autoplay   |                    |                         X                         |            X            |
-| Ask for download location        |                    |                         X                         |            X            |
-| Disable autofill address         |                    |                         X                         |            X            |
-| Disable autofill creditcard      |                    |                         X                         |            X            |
-| No default bookmarks             |         X          |                         X                         |            X            |
-| HTTPS-Only Mode in all windows   |         X          |                         X                         |            X            |
-| Extensions                       | Ublock origin only | All privacy extensions, choose from optional ones | All extensions included |
+| Changes                           |       Basic        |                      Default                      |          Full           |
+| :-------------------------------- | :----------------: | :-----------------------------------------------: | :---------------------: |
+| Open previous session             |                    |                         X                         |            X            |
+| Disable telemetry                 |         X          |                         X                         |            X            |
+| Disable firefox studies           |         X          |                         X                         |            X            |
+| Disable feedback commands         |         X          |                         X                         |            X            |
+| Disable pocket                    |         X          |                         X                         |            X            |
+| Disable extension recommendations |         X          |                         X                         |            X            |
+| Disable feature recommendations   |         X          |                         X                         |            X            |
+| Disable form history              |                    |                         X                         |            X            |
+| Enable all tracking protection    |         X          |                         X                         |            X            |
+| Disable Offer to save logins      |                    |                         x                         |            x            |
+| Block requests for notifications  |         X          |                         X                         |            X            |
+| Block audio and video autoplay    |                    |                         X                         |            X            |
+| Ask for download location         |                    |                         X                         |            X            |
+| Disable autofill address          |                    |                         X                         |            X            |
+| Disable autofill creditcard       |                    |                         X                         |            X            |
+| No default bookmarks              |         X          |                         X                         |            X            |
+| HTTPS-Only Mode in all windows    |         X          |                         X                         |            X            |
+| Extensions                        | Ublock origin only | All privacy extensions, choose from optional ones | All extensions included |
 
 ### 📦 Installs basic extensions for privacy (can be removed anytime)
 
