@@ -151,7 +151,7 @@ Increases privacy, removes telemetry and installs privacy extensions.
 Full policy list and changes: [here](docs#-firefox-policy)
 
 > [!NOTE]
-> The policy is applied automatically when running the script with the `--copy-firefox-policy` argument <br />
+> Will be applied when selecting anything other than no policy <br />
 > Can be found at `config/firefox/policies.json` <br />
 > Manually edit to customize, then copy to `/etc/firefox/policies/` for it to work
 
