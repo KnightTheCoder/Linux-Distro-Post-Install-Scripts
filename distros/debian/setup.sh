@@ -269,7 +269,7 @@ function main() {
     packages=$(echo "$packages" | xargs)
 
     # Ask if you want to remove discover
-    if whiptail --title "Remove discover" --yesno "Would you like to remove discover?" 0 0; then
+    if whiptail --title "Remove discover" --yesno "Would you like to remove discover?" --defaultno 0 0; then
         packages_to_remove+=" plasma-discover"
     fi
 

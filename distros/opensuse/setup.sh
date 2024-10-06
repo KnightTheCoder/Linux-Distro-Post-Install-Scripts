@@ -29,7 +29,7 @@ function create_snapshot() {
         ;;
     esac
 
-    if whiptail --yesno "Do you want to make a snapshot ${prompt_tag} the setup?" 0 0; then
+    if whiptail --yesno "Do you want to make a snapshot ${prompt_tag} the setup?" --defaultno 0 0; then
         sudo snapper -v create --description "${snapshot_tag}-Install script snapshot"
     fi
 }
