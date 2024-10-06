@@ -48,12 +48,13 @@ cli_packages=$(
         "htop" "htop" ON \
         "btop" "btop++" ON \
         "gh" "github cli" OFF \
+        "tldr" "tldr, short man pages" OFF \
         3>&1 1>&2 2>&3
 )
 
 packages+=" $cli_packages"
 
-packages+=" neovim eza bat dnf5 dnf5-plugins curl cabextract xorg-x11-font-utils fontconfig p7zip p7zip-plugins unrar git tldr"
+packages+=" neovim eza bat dnf5 dnf5-plugins curl cabextract xorg-x11-font-utils fontconfig p7zip p7zip-plugins unrar git"
 
 shells=$(choose_shells)
 

@@ -49,12 +49,13 @@ cli_packages=$(
         "htop" "htop" ON \
         "btop" "btop++" ON \
         "github-cli" "github cli" OFF \
+        "tldr" "tldr, short man pages" OFF \
         3>&1 1>&2 2>&3
 )
 
 packages+=" $cli_packages"
 
-packages+=" neovim eza bat zram-generator wget curl ark filelight git base-devel p7zip unrar tldr"
+packages+=" neovim eza bat zram-generator wget curl ark filelight git base-devel p7zip unrar"
 
 shells=$(choose_shells)
 

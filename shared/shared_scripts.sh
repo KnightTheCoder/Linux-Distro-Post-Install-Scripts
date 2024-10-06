@@ -192,6 +192,7 @@ function setup_itch_app() {
 # Globals:
 #   HOME
 #   GREEN
+#   YELLOW
 #   RED
 #   NC
 # Arguments:
@@ -216,13 +217,19 @@ function setup_vscode() {
 
     local vscode_config_directory=../../config/vscode
 
-    local extensions
-    extensions=$(cat ${vscode_config_directory}/extensions.txt)
+    if [[ -f "${vscode_config_directory}/extensions.txt" ]]; then
 
-    # Install extensions
-    for ext in $extensions; do
-        $code_editor --force --install-extension "$ext"
-    done
+        local extensions
+        extensions=$(cat "${vscode_config_directory}/extensions.txt")
+
+        # Install extensions
+        for ext in $extensions; do
+            $code_editor --force --install-extension "$ext"
+        done
+
+    else
+        echo -e "${YELLOW}extensions.txt not found! Skipping extensions...${NC}"
+    fi
 
     local code_folder="Code"
 

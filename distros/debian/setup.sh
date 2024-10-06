@@ -46,12 +46,13 @@ cli_packages=$(
         "htop" "htop" ON \
         "btop" "btop++" ON \
         "gh" "github cli" OFF \
+        "tldr" "tldr, short man pages" OFF \
         3>&1 1>&2 2>&3
 )
 
 packages+=" $cli_packages"
 
-packages+=" git build-essential neovim bat curl wget gpg ttf-mscorefonts-installer fontconfig p7zip p7zip-rar unrar rar tldr"
+packages+=" git build-essential neovim bat curl wget gpg ttf-mscorefonts-installer fontconfig p7zip p7zip-rar unrar rar"
 
 shells=$(choose_shells)
 

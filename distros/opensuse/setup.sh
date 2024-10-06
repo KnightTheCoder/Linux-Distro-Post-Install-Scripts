@@ -77,12 +77,13 @@ cli_packages=$(
         "htop" "htop" ON \
         "btop" "btop++" ON \
         "gh" "github cli" OFF \
+        "tldr" "tldr, short man pages" OFF \
         3>&1 1>&2 2>&3
 )
 
 packages+=" $cli_packages"
 
-packages+=" opi neovim eza bat fetchmsttfonts systemd-zram-service p7zip p7zip-full unrar tldr"
+packages+=" opi neovim eza bat fetchmsttfonts systemd-zram-service p7zip p7zip-full unrar"
 
 shells=$(choose_shells)
 

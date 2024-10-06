@@ -131,11 +131,9 @@ else
   echo -e "${RED}Unknown distro detected!${NC}"
 
   # shellcheck disable=SC1090
-  echo -e "${RED}Detected distro: ${distro_realname}${NC}"
+  echo -e "${RED}Detected distro ${distro_realname} with ${package_manager}${NC}"
 
-  # shellcheck disable=SC1090
-  whiptail --title "Unknown distro" --msgbox "Can't continue!\nUnknown distro detected!\nDistro: ${distro_realname}\nPackage manager: ${package_manager}" 0 0
-  exit 1
+  correct=1
 fi
 
 if [[ "$correct" != "0" ]]; then
@@ -155,7 +153,7 @@ if [[ "$correct" != "0" ]]; then
 fi
 
 echo -e "${GREEN}Your chosen distro is ${distro_fullname}${NC}"
-
+echo -e "${GREEN}Your real distro is ${distro_realname}${NC}"
 echo -e "${GREEN}Checking package manager and distro combination...${NC}"
 
 if [[ $chosen_distro = "opensuse" && $package_manager = "zypper" ]]; then
