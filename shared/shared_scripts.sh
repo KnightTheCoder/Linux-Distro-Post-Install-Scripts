@@ -237,11 +237,16 @@ function setup_vscode() {
         code_folder="VSCodium"
     fi
 
+    local vscode_user_directory
+    vscode_user_directory="$HOME/.config/${code_folder}/User"
+
+    mkdir -p "$vscode_user_directory"
+
     # Copy key bindings
-    cp -fv "${vscode_config_directory}/keybindings.json" "$HOME/.config/${code_folder}/User"
+    cp -fv "${vscode_config_directory}/keybindings.json" "$vscode_user_directory"
 
     # Copy settings
-    cp -fv "${vscode_config_directory}/settings.json" "$HOME/.config/${code_folder}/User"
+    cp -fv "${vscode_config_directory}/settings.json" "$vscode_user_directory"
 }
 
 #######################################
