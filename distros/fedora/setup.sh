@@ -342,7 +342,7 @@ function main() {
             ;;
 
         librewolf)
-            curl -fsSL https://rpm.librewolf.net/librewolf-repo.repo | pkexec tee /etc/yum.repos.d/librewolf.repo
+            curl -fsSL https://rpm.librewolf.net/librewolf-repo.repo | sudo pkexec tee /etc/yum.repos.d/librewolf.repo
 
             sudo dnf install -y librewolf
             ;;
