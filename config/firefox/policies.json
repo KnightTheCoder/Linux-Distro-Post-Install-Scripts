@@ -33,9 +33,6 @@
                 "Default": "block-audio-video"
             }
         },
-        "PictureInPicture": {
-            "Enabled": false
-        },
         "PromptForDownloadLocation": true,
         "AutofillAddressEnabled": false,
         "AutofillCreditCardEnabled": false,

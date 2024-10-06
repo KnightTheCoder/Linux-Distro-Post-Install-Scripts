@@ -73,7 +73,6 @@ The project provides the following policy templates:
 | Disable Offer to save logins     |                    |                         x                         |            x            |
 | Block requests for notifications |         X          |                         X                         |            X            |
 | Block audio and video autoplay   |                    |                         X                         |            X            |
-| Disable picture in picture       |                    |                         X                         |            X            |
 | Ask for download location        |                    |                         X                         |            X            |
 | Disable autofill address         |                    |                         X                         |            X            |
 | Disable autofill creditcard      |                    |                         X                         |            X            |
