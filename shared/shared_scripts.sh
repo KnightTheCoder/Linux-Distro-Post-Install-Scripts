@@ -213,8 +213,6 @@ function setup_vscode() {
         return
     fi
 
-    echo -e "${GREEN}Installing extensions for VS${code_editor}...${NC}"
-
     local vscode_config_directory=../../config/vscode
 
     if [[ -f "${vscode_config_directory}/extensions.txt" ]]; then
@@ -225,6 +223,8 @@ function setup_vscode() {
         if (("$skip_extensions" == 0)); then
             local extensions
             extensions=$(cat "${vscode_config_directory}/extensions.txt")
+
+            echo -e "${GREEN}Installing extensions for VS${code_editor}...${NC}"
 
             # Install extensions
             for ext in $extensions; do
