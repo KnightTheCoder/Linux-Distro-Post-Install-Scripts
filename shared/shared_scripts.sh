@@ -188,7 +188,7 @@ function setup_itch_app() {
 }
 
 #######################################
-# Install vscode extensions and copy keybindings
+# Install vscode extensions, copy settings and copy keybindings
 # Globals:
 #   HOME
 #   GREEN
@@ -204,7 +204,7 @@ function setup_itch_app() {
 function setup_vscode() {
     local code_editor=$1 # code or codium
 
-    if [[ -z "$code_editor" ]] || [[ "$code_editor" == code ]]; then
+    if [[ -z "$code_editor" ]]; then
         code_editor="code"
     fi
 
@@ -240,7 +240,7 @@ function setup_vscode() {
 
     local code_folder="Code"
 
-    if [[ $code_editor = "codium" ]]; then
+    if [[ $code_editor == "codium" ]]; then
         code_folder="VSCodium"
     fi
 
@@ -739,11 +739,9 @@ function setup_flatpak() {
             3>&1 1>&2 2>&3
     )
 
-    if grep -iq fedora $DISTRO_RELEASE; then
-        # Remove fedora remote if it exists
-        if flatpak remotes | grep -iq fedora; then
-            sudo flatpak remote-delete fedora
-        fi
+    # Remove fedora remote if it exists
+    if grep -iq fedora $DISTRO_RELEASE && flatpak remotes | grep -iq fedora; then
+        sudo flatpak remote-delete fedora
     fi
 
     # Setup flathub
