@@ -119,11 +119,14 @@ The project provides the following policy templates:
 .
 ├── config
 │   ├── firefox
+│   │   ├── basic_policies.json
+│   │   ├── full_policies.json
 │   │   └── policies.json
 │   ├── fish
 │   │   ├── config_debian.fish
 │   │   └── config.fish
 │   └── vscode
+│       ├── extensions.txt
 │       ├── keybindings.json
 │       └── settings.json
 ├── distros
