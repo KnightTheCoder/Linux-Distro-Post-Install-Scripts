@@ -46,9 +46,7 @@
             "FeatureRecommendations": false
         },
         "FirefoxHome": {
-            "SponsoredTopSites": false,
-            "Pocket": false,
-            "SponsoredPocket": false
+            "SponsoredTopSites": false
         }
     }
 }
