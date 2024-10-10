@@ -70,6 +70,7 @@ The project provides the following policy templates:
 | Disable pocket                    |         X          |                         X                         |            X            |
 | Disable extension recommendations |         X          |                         X                         |            X            |
 | Disable feature recommendations   |         X          |                         X                         |            X            |
+| Disable sponsored top sites       |         X          |                         X                         |            X            |
 | Disable form history              |                    |                         X                         |            X            |
 | Enable all tracking protection    |         X          |                         X                         |            X            |
 | Disable Offer to save logins      |                    |                         x                         |            x            |

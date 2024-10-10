@@ -52,6 +52,9 @@
         "UserMessaging": {
             "ExtensionRecommendations": false,
             "FeatureRecommendations": false
+        },
+        "FirefoxHome": {
+            "SponsoredTopSites": false
         }
     }
 }

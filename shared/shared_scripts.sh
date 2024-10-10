@@ -109,7 +109,7 @@ function setup_firefox() {
     local firefox_policy_directory=/etc/firefox/policies
 
     if [[ ! -f "${firefox_policy_directory}/policies.json" ]]; then
-        sudo mkdir -pv "${firefox_policy_directory}"
+        sudo mkdir -p "${firefox_policy_directory}"
     fi
 
     sudo cp -fv config/firefox/${policy_filename} "${firefox_policy_directory}/policies.json"
