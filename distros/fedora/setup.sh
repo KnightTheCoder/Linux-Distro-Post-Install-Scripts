@@ -65,7 +65,6 @@ function main() {
             "htop" "htop" ON \
             "btop" "btop++" ON \
             "gh" "github cli" OFF \
-            "tldr" "tldr, short man pages" OFF \
             3>&1 1>&2 2>&3
     )
 
