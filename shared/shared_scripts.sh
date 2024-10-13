@@ -352,6 +352,9 @@ function setup_fish() {
         # only apply theme if starship is not installed
         if [[ ! $(command -v starship) ]]; then
             fish "../../shared/setup.fish"
+        else
+            # Reset fish theme if starship is installed
+            fish -c "omf theme default"
         fi
     fi
 
