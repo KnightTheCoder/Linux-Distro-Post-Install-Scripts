@@ -348,7 +348,11 @@ function setup_fish() {
     else
         echo -e "${YELLOW}Please run 'exit' to exit from fish and install the bobthefish theme${NC}"
         curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
-        fish "../../shared/setup.fish"
+
+        # only apply theme if starship is not installed
+        if [[ ! $(command -v starship) ]]; then
+            fish "../../shared/setup.fish"
+        fi
     fi
 
     echo -e "${GREEN}Copying fish config...${NC}"
