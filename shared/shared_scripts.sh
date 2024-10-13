@@ -458,15 +458,15 @@ function setup_starship() {
     local zsh_config=~/.zshrc
 
     if [[ -x "$(command -v bash)" ]] && ! grep -iq starship $bash_config; then
-        printf "\neval \"\$(starship init bash)\"" | tee -a $bash_config
+        printf "\neval \"\$(starship init bash)\"" >>$bash_config
     fi
 
     if [[ -x "$(command -v fish)" ]] && ! grep -iq starship $fish_config; then
-        printf "\nstarship init fish | source" | tee -a $fish_config
+        printf "\nstarship init fish | source" >>$fish_config
     fi
 
     if [[ -x "$(command -v zsh)" ]] && ! grep -iq starship $zsh_config; then
-        printf "\neval \"\$(starship init zsh)\"" | tee -a $zsh_config
+        printf "\neval \"\$(starship init zsh)\"" >>$zsh_config
     fi
 
     local starship_config_file=~/.config/starship.toml
