@@ -713,6 +713,7 @@ function setup_flatpak() {
     apps=$(
         whiptail --title "Flatpaks to install" --separate-output --notags --checklist "Choose what to install for flatpak" 0 0 0 \
             "io.missioncenter.MissionCenter" "MissionCenter" ON \
+            "net.nokyan.Resources" "Resources" OFF \
             "com.github.tchx84.Flatseal" "Flatseal" ON \
             "com.valvesoftware.Steam" "Steam" OFF \
             "io.itch.itch" "Itch desktop app" OFF \
