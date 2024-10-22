@@ -57,7 +57,7 @@ Tested distros:
 -   EndeavourOS
 -   Manjaro Linux
 
-> Written in Bash and whiptail <br /> > <img src="https://skillicons.dev/icons?i=bash" />
+> Written in Bash and whiptail <br /> <img src="https://skillicons.dev/icons?i=bash" />
 
 > [!NOTE]
 > Originally designed for OpenSUSE Tumbleweed KDE <br />
