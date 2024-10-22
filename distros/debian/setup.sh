@@ -121,7 +121,7 @@ function main() {
         gaming-overlay)
             packages=$(remove_package "$packages" "$package")
 
-            packages+=" goverlay mangohud gamemode"
+            packages+=" goverlay mangohud mangohud:i386 gamemode"
             ;;
 
         wine)
