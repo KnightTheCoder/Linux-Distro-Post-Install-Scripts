@@ -248,7 +248,7 @@ function main() {
         java)
             packages=$(remove_package "$packages" "$package")
 
-            packages+=" java-22-openjdk-devel"
+            packages+=" java-devel"
             ;;
 
         xampp)
