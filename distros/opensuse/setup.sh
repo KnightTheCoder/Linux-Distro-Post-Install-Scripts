@@ -51,7 +51,6 @@ function main() {
             "gaming-overlay" "Gaming overlay" OFF \
             "steam" "Steam" OFF \
             "itch" "Itch desktop app" OFF \
-            "heroic" "Heroic Games Launcher" OFF \
             "MozillaFirefox" "Firefox web browser" ON \
             "librewolf" "Librewolf web browser" OFF \
             "chromium" "Chromium web browser" OFF \
@@ -192,12 +191,6 @@ function main() {
 
         steam)
             packages+=" steam-devices"
-            ;;
-
-        heroic)
-            packages=$(remove_package "$packages" "$package")
-
-            opi+=(heroic-games-launcher)
             ;;
 
         itch)
