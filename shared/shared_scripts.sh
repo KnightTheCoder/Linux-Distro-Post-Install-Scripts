@@ -715,6 +715,7 @@ function setup_flatpak() {
             "io.missioncenter.MissionCenter" "MissionCenter" ON \
             "net.nokyan.Resources" "Resources" OFF \
             "com.github.tchx84.Flatseal" "Flatseal" ON \
+            "it.mijorus.gearlever" "Gear Lever" OFF \
             "com.valvesoftware.Steam" "Steam" OFF \
             "io.itch.itch" "Itch desktop app" OFF \
             "com.heroicgameslauncher.hgl" "Heroic Games Launcher" OFF \
