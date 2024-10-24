@@ -128,6 +128,14 @@ function main() {
             packages+=" wine32 winetricks"
             ;;
 
+        firefox)
+            if grep -iq ID=debian "$DISTRO_RELEASE"; then
+                packages=$(remove_package "$packages" "$package")
+                packages+=" firefox-esr"
+            fi
+
+            ;;
+
         vivaldi)
             packages=$(remove_package "$packages" "$package")
 
