@@ -300,14 +300,15 @@ function setup_hacknerd_fonts() {
 function setup_bash() {
     if [[ -d ~/.local/share/blesh ]]; then
         echo -e "${YELLOW}blesh is already setup${NC}"
-        return
+    else
+        echo -e "${GREEN}Installing blesh...${NC}"
+
+        echo 'source ~/.local/share/blesh/ble.sh' >>~/.bashrc
+        git clone --recursive --depth 1 --shallow-submodules https://github.com/akinomyoga/ble.sh.git
+        make -C ble.sh install PREFIX=~/.local
+
+        rm -rfv ./ble.sh
     fi
-
-    echo -e "${GREEN}Installing blesh...${NC}"
-
-    git clone --recursive --depth 1 --shallow-submodules https://github.com/akinomyoga/ble.sh.git
-    make -C ble.sh install PREFIX=~/.local
-    # echo 'source ~/.local/share/blesh/ble.sh' >> ~/.bashrc
 
     local bat_fullname=bat
 
@@ -315,15 +316,12 @@ function setup_bash() {
         bat_fullname=batcat
     fi
 
-    if ! grep -iq blesh ~/.bashrc; then
+    if ! grep -iq eza ~/.bashrc && ! grep -iq $bat_fullname ~/.bashrc; then
         {
-            echo 'source ~/.local/share/blesh/ble.sh'
             echo "alias ls=\"eza\""
             echo "alias cat=\"$bat_fullname\""
         } >>~/.bashrc
     fi
-
-    rm -rfv ./ble.sh
 }
 
 #######################################
