@@ -315,11 +315,13 @@ function setup_bash() {
         bat_fullname=batcat
     fi
 
-    {
-        echo 'source ~/.local/share/blesh/ble.sh'
-        echo "alias ls=\"eza\""
-        echo "alias cat=\"$bat_fullname\""
-    } >>~/.bashrc
+    if ! grep -iq blesh ~/.bashrc; then
+        {
+            echo 'source ~/.local/share/blesh/ble.sh'
+            echo "alias ls=\"eza\""
+            echo "alias cat=\"$bat_fullname\""
+        } >>~/.bashrc
+    fi
 
     rm -rfv ./ble.sh
 }
@@ -465,15 +467,15 @@ function setup_starship() {
     local zsh_config=~/.zshrc
 
     if [[ -x "$(command -v bash)" ]] && ! grep -iq starship $bash_config; then
-        printf "\neval \"\$(starship init bash)\"" >>$bash_config
+        printf "\neval \"\$(starship init bash)\"\n" >>$bash_config
     fi
 
     if [[ -x "$(command -v fish)" ]] && ! grep -iq starship $fish_config; then
-        printf "\nstarship init fish | source" >>$fish_config
+        printf "\nstarship init fish | source\n" >>$fish_config
     fi
 
     if [[ -x "$(command -v zsh)" ]] && ! grep -iq starship $zsh_config; then
-        printf "\neval \"\$(starship init zsh)\"" >>$zsh_config
+        printf "\neval \"\$(starship init zsh)\"\n" >>$zsh_config
     fi
 
     local starship_config_file=~/.config/starship.toml
