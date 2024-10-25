@@ -269,9 +269,8 @@ function main() {
     # shellcheck disable=SC2046
     sudo rpm -Uvh http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
-    if grep -iq 40 "$DISTRO_RELEASE" || grep -iq 39 "$DISTRO_RELEASE"; then
-        sudo dnf install -y dnf5 dnf5-plugins
-    fi
+    # Install dnf5 if it's an older system
+    sudo dnf install -y dnf5 dnf5-plugins
 
     # Update system
     sudo dnf5 upgrade -y --refresh
