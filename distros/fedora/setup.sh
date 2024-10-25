@@ -330,7 +330,7 @@ function main() {
 
         vivaldi)
             sudo dnf5 install dnf-utils -y
-            sudo dnf5 config-manager addrepo https://repo.vivaldi.com/archive/vivaldi-fedora.repo
+            sudo dnf5 config-manager addrepo --from-repofile=https://repo.vivaldi.com/archive/vivaldi-fedora.repo
 
             sudo dnf5 install -y vivaldi-stable
 
@@ -338,7 +338,7 @@ function main() {
             ;;
 
         brave)
-            sudo dnf5 config-manager addrepo https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
+            sudo dnf5 config-manager addrepo --from-repofile=https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
 
             sudo rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
 
@@ -376,7 +376,7 @@ function main() {
             ;;
 
         docker)
-            sudo dnf5 config-manager addrepo https://download.docker.com/linux/fedora/docker-ce.repo -y
+            sudo dnf5 config-manager addrepo --from-repofile=https://download.docker.com/linux/fedora/docker-ce.repo
 
             sudo dnf5 install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
             ;;
