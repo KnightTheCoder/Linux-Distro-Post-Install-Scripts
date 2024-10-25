@@ -70,7 +70,7 @@ function main() {
 
     packages+=" $cli_packages"
 
-    packages+=" neovim eza bat dnf5 dnf5-plugins curl cabextract xorg-x11-font-utils fontconfig p7zip p7zip-plugins unrar git dnf-plugins-core"
+    packages+=" neovim eza bat curl cabextract xorg-x11-font-utils fontconfig p7zip p7zip-plugins unrar git dnf-plugins-core"
 
     local shells
     shells=$(choose_shells)
@@ -269,19 +269,23 @@ function main() {
     # shellcheck disable=SC2046
     sudo rpm -Uvh http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
+    if grep -iq 40 "$DISTRO_RELEASE" || grep -iq 39 "$DISTRO_RELEASE"; then
+        sudo dnf install -y dnf5 dnf5-plugins
+    fi
+
     # Update system
-    sudo dnf upgrade -y --refresh
+    sudo dnf5 upgrade -y --refresh
 
     # Remove unneccessary packages
     # shellcheck disable=SC2086
-    sudo dnf remove -y $packages_to_remove
+    sudo dnf5 remove -y $packages_to_remove
 
     # Install groups
-    sudo dnf group install -y "${groups[@]}" --allowerasing
+    sudo dnf5 group install -y "${groups[@]}" --allowerasing
 
     # Install packages
     # shellcheck disable=SC2086
-    sudo dnf install -y $packages
+    sudo dnf5 install -y $packages
 
     # Install msfonts
     echo -e "${GREEN}Installing microsoft core fonts...${NC}"
@@ -300,8 +304,8 @@ function main() {
         vscode)
             sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
             sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
-            sudo dnf check-update --refresh
-            sudo dnf install -y code
+            sudo dnf5 check-update --refresh
+            sudo dnf5 install -y code
 
             setup_vscode code
             ;;
@@ -311,14 +315,14 @@ function main() {
 
             printf "[gitlab.com_paulcarroty_vscodium_repo]\nname=download.vscodium.com\nbaseurl=https://download.vscodium.com/rpms/\nenabled=1\ngpgcheck=1\nrepo_gpgcheck=1\ngpgkey=https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/-/raw/master/pub.gpg\nmetadata_expire=1h" | sudo tee -a /etc/yum.repos.d/vscodium.repo
 
-            sudo dnf install codium -y
+            sudo dnf5 install codium -y
 
             setup_vscode codium
             ;;
 
         heroic)
-            sudo dnf copr enable atim/heroic-games-launcher -y
-            sudo dnf -y install heroic-games-launcher-bin
+            sudo dnf5 copr enable atim/heroic-games-launcher -y
+            sudo dnf5 -y install heroic-games-launcher-bin
             ;;
 
         itch)
@@ -326,26 +330,26 @@ function main() {
             ;;
 
         vivaldi)
-            sudo dnf install dnf-utils -y
-            sudo dnf config-manager --add-repo https://repo.vivaldi.com/archive/vivaldi-fedora.repo
+            sudo dnf5 install dnf-utils -y
+            sudo dnf5 config-manager addrepo https://repo.vivaldi.com/archive/vivaldi-fedora.repo
 
-            sudo dnf install -y vivaldi-stable
+            sudo dnf5 install -y vivaldi-stable
 
             sudo rm -fv /etc/yum.repos.d/vivaldi.repo
             ;;
 
         brave)
-            sudo dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
+            sudo dnf5 config-manager addrepo https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
 
             sudo rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
 
-            sudo dnf install -y brave-browser
+            sudo dnf5 install -y brave-browser
             ;;
 
         librewolf)
             curl -fsSL https://repo.librewolf.net/librewolf.repo | sudo pkexec tee /etc/yum.repos.d/librewolf.repo
 
-            sudo dnf install -y librewolf
+            sudo dnf5 install -y librewolf
             ;;
 
         hacknerd)
@@ -373,14 +377,14 @@ function main() {
             ;;
 
         docker)
-            sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo -y
+            sudo dnf5 config-manager addrepo https://download.docker.com/linux/fedora/docker-ce.repo -y
 
-            sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+            sudo dnf5 install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
             ;;
 
         docker-desktop)
             wget -O docker-desktop.rpm "https://desktop.docker.com/linux/main/amd64/139021/docker-desktop-4.28.0-x86_64.rpm?utm_source=docker&utm_medium=webreferral&utm_campaign=docs-driven-download-linux-amd64"
-            sudo dnf -y install docker-desktop.rpm
+            sudo dnf5 -y install docker-desktop.rpm
             rm -v docker-desktop.rpm
             ;;
 
