@@ -346,16 +346,16 @@ function setup_fish() {
     if [[ -d "$HOME/.local/share/omf" ]]; then
         echo -e "${YELLOW}Oh my fish is already installed${NC}"
     else
-        echo -e "${YELLOW}Please run 'exit' to exit from fish and install the bobthefish theme${NC}"
+        echo -e "${YELLOW}Please run 'exit' to exit from fish and continue setup${NC}"
         curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
+    fi
 
-        # only apply theme if starship is not installed
-        if [[ ! $(command -v starship) ]]; then
-            fish -c "omf install bobthefish"
-        else
-            # Reset fish theme if starship is installed
-            fish -c "omf theme default"
-        fi
+    # only apply theme if starship is not installed
+    if [[ ! $(command -v starship) ]]; then
+        fish -c "omf install bobthefish"
+    else
+        # Reset fish theme if starship is installed
+        fish -c "omf theme default"
     fi
 
     echo -e "${GREEN}Copying fish config...${NC}"
