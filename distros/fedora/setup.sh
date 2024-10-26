@@ -280,7 +280,7 @@ function main() {
     sudo dnf5 remove -y $packages_to_remove
 
     # Install groups
-    sudo dnf5 group install -y "${groups[@]}" --allowerasing
+    sudo dnf4 group install -y "${groups[@]}" --allowerasing
 
     # Install packages
     # shellcheck disable=SC2086
