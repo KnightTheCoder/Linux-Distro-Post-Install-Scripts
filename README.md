@@ -112,19 +112,18 @@ bash ./post_install.sh
 -   Choose the apps and configurations you need
 -   Install one of 3 firefox policy templates for privacy and preinstalled extensions
 -   Updates the system
--   Sets up flatpak and install apps
+-   Removes bloat
+-   Option to remove discover
+-   Installs browsers
+-   Sets up flatpak and install flatpak apps
 -   Downloads and installs microsoft and hack nerd fonts
--   Installs Visual Studio Code and Codium extensions and copies the keybindings
--   Installs gaming launchers such as Steam, lutris, itch desktop app
--   Adds the following command line utilities: neofetch, htop, btop, neovim, eza, bat, tldr
--   Installs wine and Protonup-Qt to run windows games
--   Sets up bash, fish and zsh
--   Installs NvChad or AstroNvim for neovim
--   Installs the GitHub CLI
--   Installs docker, podman and distrobox for containers
--   Installs qemu, virtualbox for virtualization
--   Installs code editors: vscode, vscodium
--   Installs programming languages and development environments: gcc, nodejs, dotnet, rust, go, java, xampp
+-   Installs Visual Studio Code and Codium extensions and copies the keybindings (customizable in the config file)
+-   Adds the following command line utilities: neovim, eza, bat
+-   Installs gaming launchers
+-   Installs wine, Protonup-Qt to run windows games
+-   Sets up shells and prompts
+-   Installs NvChad or AstroNvim for neovim as configs
+-   Installs programming languages and development environments
 -   Optionally sets hostname
 
 ## ❓ Why use it?
@@ -144,7 +143,7 @@ By using the provided commands the scripts will be downloaded and unzipped in yo
 
 ## 🌐 Firefox policy
 
-A firefox policy is included for increased privacy.
+3 firefox policy templates are included for increased privacy.
 
 Increases privacy, removes telemetry and installs privacy extensions.
 

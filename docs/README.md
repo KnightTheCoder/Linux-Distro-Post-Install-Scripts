@@ -17,6 +17,69 @@
 -   Start listed services
 -   Ask for hostname (optional)
 
+## List of programs to install
+
+### Mandatory install list
+
+-   Command line utilities: bat, eza, neovim
+-   Fonts: ms fonts, hack nerd fonts
+-   Archives: 7zip, rar
+-   Development tools: gcc, git, curl, wget
+
+### Bloat list
+
+-   akregator
+-   dragon
+-   elisa-player
+-   dragonplayer
+-   kaddressbook
+-   kmahjongg
+-   kmail
+-   kontact
+-   kmines
+-   konversation
+-   kmouth
+-   korganizer
+-   kpat
+-   kolourpaint
+-   kompare
+-   kreversi
+-   ksudoku
+-   xscreensaver
+-   qt5-qdbusviewer
+-   thunderbird
+
+### Native Install list
+
+-   Browsers: firefox, librewolf, chromium, vivaldi, brave
+-   Gaming launchers: steam, lutris, heroic, itch
+-   Windows compatibility: wine
+-   Multimedia: haruna, celluloid, vlc, strawberry, audacious, kdenlive, gimp
+-   Office apps: libreoffice, calibre ebook reader
+-   Password managers: keepassxc
+-   Command line utilities: fastfetch, btop, github cli, neovim, eza, bat
+-   Shells: bash, fish, zsh
+-   prompts: starship
+-   Containers: docker, docker-desktop, podman, distrobox
+-   Virtualization qemu, virtualbox
+-   Code editors: vscode, vscodium
+-   Programming languages and development environments: gcc, nodejs, dotnet, rust, go, java, xampp
+-   Bittorrent clients: transmission, qbittorrent
+-   RGB management: openrgb
+
+### Flatpak install list
+
+-   Browsers: firefox, librewolf, floorp, google chrome, brave, vivaldi, mullavad
+-   Management: Flatseal(for flatpaks), Gear Lever(for appimages)
+-   Gaming launchers: steam, heroic, itch
+-   Office: libreoffice, onlyoffice
+-   Screen recording: obs, gpu screen recorder
+-   Container GUI apps: podman desktop
+-   Multimedia: gimp, kdenlive
+-   Video/Audio download: video downloader
+-   Password managers: keepassxc
+-   Discord clients: discord, webcord, vesktop
+
 ## Shell configurations
 
 ### Bash
@@ -47,7 +110,7 @@
 
 ## 🌐 Firefox policy
 
-A firefox policy is included for increased privacy.
+3 firefox policy templates are included for increased privacy.
 
 > [!NOTE]
 > Can be found at `config/firefox/policies.json` <br />
