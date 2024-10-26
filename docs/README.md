@@ -59,7 +59,7 @@
 -   Password managers: keepassxc
 -   Command line utilities: fastfetch, btop, github cli, neovim, eza, bat
 -   Shells: bash, fish, zsh
--   prompts: starship
+-   Prompts: starship
 -   Containers: docker, docker-desktop, podman, distrobox
 -   Virtualization qemu, virtualbox
 -   Code editors: vscode, vscodium
