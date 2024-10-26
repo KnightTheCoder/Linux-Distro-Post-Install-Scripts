@@ -126,6 +126,8 @@ bash ./post_install.sh
 -   Installs programming languages and development environments
 -   Optionally sets hostname
 
+## [Full list of packages](docs#list-of-programs-to-install)
+
 ## ❓ Why use it?
 
 Post install script for linux aims to quickly setup a system with the same configuration/software across multiple distros.
