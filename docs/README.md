@@ -72,6 +72,7 @@
 -   Browsers: firefox, librewolf, floorp, google chrome, brave, vivaldi, mullavad
 -   Management: Flatseal(for flatpaks), Gear Lever(for appimages)
 -   Gaming launchers: steam, heroic, itch
+-   Windows compatibility: Protonup-QT
 -   Office: libreoffice, onlyoffice
 -   Screen recording: obs, gpu screen recorder
 -   Container GUI apps: podman desktop
