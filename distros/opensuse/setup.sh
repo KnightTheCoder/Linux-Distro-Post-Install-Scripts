@@ -50,6 +50,7 @@ function main() {
             "wine" "Wine" OFF \
             "gaming-overlay" "Gaming overlay" OFF \
             "steam" "Steam" OFF \
+            "steam-devices" "Steam devices (for controllers when using the steam flatpak)" OFF \
             "itch" "Itch desktop app" OFF \
             "MozillaFirefox" "Firefox web browser" ON \
             "librewolf" "Librewolf web browser" OFF \
@@ -186,10 +187,6 @@ function main() {
             setups+=(virtualbox)
 
             usergroups+=(vboxusers)
-            ;;
-
-        steam)
-            packages+=" steam-devices"
             ;;
 
         itch)

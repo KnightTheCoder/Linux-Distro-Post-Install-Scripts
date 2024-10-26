@@ -21,6 +21,7 @@ function main() {
             "wine" "Wine" OFF \
             "gaming-overlay" "Gaming overlay" OFF \
             "steam" "Steam" OFF \
+            "steam-devices" "Steam devices (for controllers when using the steam flatpak)" OFF \
             "itch" "Itch desktop app" OFF \
             "heroic" "Heroic Games Launcher" OFF \
             "firefox" "Firefox web browser" ON \
@@ -187,8 +188,6 @@ function main() {
 
                 packages+=" steam-installer"
             fi
-
-            packages+=" steam-devices"
             ;;
 
         lutris)
