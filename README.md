@@ -126,7 +126,7 @@ bash ./post_install.sh
 -   Installs programming languages and development environments
 -   Optionally sets hostname
 
-## [Full list of packages](docs#list-of-programs-to-install)
+## [Full list of packages](docs#list-of-packages-to-install)
 
 ## ❓ Why use it?
 
