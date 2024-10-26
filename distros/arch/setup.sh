@@ -63,9 +63,7 @@ function main() {
     local cli_packages
     cli_packages=$(
         whiptail --title "CLI install" --separate-output --notags --checklist "Select cli applications to install" 0 0 0 \
-            "neofetch" "neofetch" ON \
             "fastfetch" "fastfetch" ON \
-            "htop" "htop" ON \
             "btop" "btop++" ON \
             "github-cli" "github cli" OFF \
             3>&1 1>&2 2>&3
