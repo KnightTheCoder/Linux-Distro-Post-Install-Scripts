@@ -17,7 +17,7 @@
 -   Start listed services
 -   Ask for hostname (optional)
 
-## List of programs to install
+## List of packages to install
 
 ### Mandatory install list
 
@@ -49,7 +49,7 @@
 -   qt5-qdbusviewer
 -   thunderbird
 
-### Native Install list
+### Native install list
 
 -   Browsers: firefox, librewolf, chromium, vivaldi, brave
 -   Gaming launchers: steam, lutris, heroic, itch
