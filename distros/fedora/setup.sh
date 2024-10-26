@@ -33,7 +33,7 @@ function main() {
             "vlc" "VLC media player" ON \
             "strawberry" "Strawberry music player" ON \
             "audacious" "Audacious music player" OFF \
-            "transmission" "Transmission bittorrent client" OFF \
+            "transmission-qt" "Transmission bittorrent client" OFF \
             "qbittorrent" "Qbittorrent bittorrent client" OFF \
             "gimp" "GIMP" OFF \
             "kdenlive" "Kdenlive" OFF \
