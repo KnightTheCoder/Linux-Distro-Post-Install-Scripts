@@ -249,7 +249,7 @@ function main() {
 
     # Ask if you want to remove discover
     if whiptail --title "Remove discover" --yesno "Would you like to remove discover?" --defaultno 0 0; then
-        packages_to_remove+=" plasma-discover --exclude=flatpak"
+        packages_to_remove+=" plasma-discover"
     fi
 
     echo -e "${GREEN}Modifying dnf configuration...${NC}"
