@@ -263,7 +263,7 @@ function main() {
             ;;
 
         docker)
-            packages=${packages/"$package"/}
+            packages=$(remove_package "$packages" "$package")
 
             packages+=" ca-certificates"
             setups+=(docker)

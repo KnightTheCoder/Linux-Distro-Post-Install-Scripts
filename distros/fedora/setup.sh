@@ -219,7 +219,7 @@ function main() {
             ;;
 
         docker)
-            packages=${packages/"$package"/}
+            packages=$(remove_package "$packages" "$package")
 
             setups+=(docker)
             services+=(docker.service)

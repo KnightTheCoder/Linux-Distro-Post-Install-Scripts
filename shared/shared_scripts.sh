@@ -20,7 +20,7 @@ function remove_package() {
     local package_list="$1"
     local package="$2"
 
-    local result_package_list=${package_list//"$package"/}
+    local result_package_list=${package_list/"$package"/}
 
     echo "$result_package_list"
 }
@@ -708,8 +708,12 @@ function setup_virtualbox_extension() {
 #   whiptail screen
 #######################################
 function setup_flatpak() {
-    local apps
+    if [ ! "$(command -v flatpak)" ]; then
+        echo -e "${RED}flatpak is not installed!${NC}"
+        return
+    fi
 
+    local apps
     apps=$(
         whiptail --title "Flatpaks to install" --separate-output --notags --checklist "Choose what to install for flatpak" 0 0 0 \
             "io.missioncenter.MissionCenter" "MissionCenter" ON \
