@@ -182,12 +182,9 @@ function main() {
             ;;
 
         steam)
-            # steam package has a different name for debian
-            if grep -iq ID=debian "$DISTRO_RELEASE"; then
-                packages=$(remove_package "$packages" "$package")
+            packages=$(remove_package "$packages" "$package")
 
-                packages+=" steam-installer"
-            fi
+            packages+=" steam-installer"
             ;;
 
         lutris)
