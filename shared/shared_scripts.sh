@@ -76,6 +76,10 @@ function get_current_distro_icon() {
 #   whiptail screen
 #######################################
 function setup_firefox() {
+    if [[ ! "$(command -v firefox)" ]]; then
+        echo -e "${RED}firefox is not installed!${NC}"
+    fi
+
     echo -e "${GREEN}Setting up firefox...${NC}"
 
     local policy_filename="policies.json"
@@ -708,7 +712,7 @@ function setup_virtualbox_extension() {
 #   whiptail screen
 #######################################
 function setup_flatpak() {
-    if [ ! "$(command -v flatpak)" ]; then
+    if [[ ! "$(command -v flatpak)" ]]; then
         echo -e "${RED}flatpak is not installed!${NC}"
         return
     fi
