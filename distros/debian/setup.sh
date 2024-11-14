@@ -26,7 +26,6 @@ function main() {
             "heroic" "Heroic Games Launcher" OFF \
             "firefox" "Firefox web browser" ON \
             "librewolf" "Librewolf web browser" OFF \
-            "chromium" "Chromium web browser" OFF \
             "vivaldi" "Vivaldi web browser" OFF \
             "brave" "Brave web browser" OFF \
             "haruna" "Haruna media player" ON \
