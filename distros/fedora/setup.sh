@@ -212,6 +212,12 @@ function main() {
             packages+=" java-latest-openjdk"
             ;;
 
+        dotnet)
+            packages=$(remove_package "$packages" "$package")
+
+            packages+=" dotnet-sdk-8.0"
+            ;;
+
         xampp)
             packages=$(remove_package "$packages" "$package")
 
