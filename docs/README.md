@@ -145,6 +145,7 @@ The project provides the following policy templates:
 | Disable autofill creditcard       |                    |                         X                         |            X            |
 | No default bookmarks              |         X          |                         X                         |            X            |
 | HTTPS-Only Mode in all windows    |         X          |                         X                         |            X            |
+| DNS over HTTPS using mullvad DNS  |         X          |                         X                         |            X            |
 | Extensions                        | Ublock origin only | All privacy extensions, choose from optional ones | All extensions included |
 
 ### 📦 Installs basic extensions for privacy (can be removed anytime)
