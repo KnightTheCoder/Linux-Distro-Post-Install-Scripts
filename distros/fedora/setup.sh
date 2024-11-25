@@ -89,7 +89,7 @@ function main() {
     local setups=(hacknerd)
     local usergroups=()
     local groups=(c-development multimedia)
-    local packages_to_remove="akregator dragon elisa-player kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat kolourpaint qt5-qdbusviewer"
+    local packages_to_remove="akregator dragon elisa-player kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat kolourpaint qt5-qdbusviewer pim-sieve-editor neochat"
 
     local nvim_config
     nvim_config=$(choose_nvim_config)
