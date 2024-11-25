@@ -46,6 +46,11 @@
         "AutofillCreditCardEnabled": false,
         "NoDefaultBookmarks": true,
         "HttpsOnlyMode": "enabled",
+        "DNSOverHTTPS": {
+            "Enabled": true,
+            "ProviderURL": "https://base.dns.mullvad.net/dns-query",
+            "Fallback": false
+        },
         "Homepage": {
             "StartPage": "previous-session"
         },

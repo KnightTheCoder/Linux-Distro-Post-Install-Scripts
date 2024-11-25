@@ -24,6 +24,11 @@
         },
         "NoDefaultBookmarks": true,
         "HttpsOnlyMode": "enabled",
+        "DNSOverHTTPS": {
+            "Enabled": true,
+            "ProviderURL": "https://base.dns.mullvad.net/dns-query",
+            "Fallback": false
+        },
         "UserMessaging": {
             "ExtensionRecommendations": false,
             "FeatureRecommendations": false
