@@ -21,7 +21,7 @@ function main() {
             "wine" "Wine" OFF \
             "gaming-overlay" "Gaming overlay" OFF \
             "steam" "Steam" OFF \
-            "steam-devices-git" "Steam devices (for the steam flatpak)" OFF \
+            "steam-devices" "Steam devices (for the steam flatpak)" OFF \
             "itch" "Itch desktop app" OFF \
             "heroic" "Heroic Games Launcher" OFF \
             "firefox" "Firefox web browser" ON \
@@ -121,7 +121,7 @@ function main() {
             packages+=" goverlay mangohud gamemode"
             ;;
 
-        steam-devices-git)
+        steam-devices)
             packages=$(remove_package "$packages" "$package")
 
             aur+=(steam-devices-git)
