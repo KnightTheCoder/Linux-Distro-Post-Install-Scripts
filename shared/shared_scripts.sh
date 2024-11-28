@@ -354,13 +354,7 @@ function setup_fish() {
         curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
     fi
 
-    # only apply theme if starship is not installed
-    if [[ ! $(command -v starship) ]]; then
-        fish -c "omf install bobthefish"
-    else
-        # Reset fish theme if starship is installed
-        fish -c "omf theme default"
-    fi
+    fish -c "omf install bobthefish"
 
     echo -e "${GREEN}Copying fish config...${NC}"
 
