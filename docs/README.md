@@ -70,7 +70,7 @@
 ### Flatpak install list
 
 -   Browsers: firefox, librewolf, floorp, google chrome, brave, vivaldi, mullavad
--   Management: Flatseal(for flatpaks), Gear Lever(for appimages)
+-   Management: Flatseal(for flatpaks), Gear Lever(for appimages), Flatsweep (clean up leftover flatpak files)
 -   Gaming launchers: steam, heroic, itch
 -   Windows compatibility: Protonup-QT
 -   Office: libreoffice, onlyoffice
