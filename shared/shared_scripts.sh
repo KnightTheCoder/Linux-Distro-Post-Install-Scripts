@@ -402,12 +402,12 @@ function setup_zsh() {
     echo -e "${GREEN}Installing prezto...${NC}"
 
     # Add prezto as plugin manager
-    git clone --depth 1 -b master --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
+    git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
 
     zsh "../../shared/setup.zsh"
 
     # Add zsh-abbr for fish-like abbreviations
-    git clone --depth 1 -b main https://github.com/olets/zsh-abbr.git "$HOME/.zprezto/modules/zsh-abbr"
+    git clone https://github.com/olets/zsh-abbr --recurse-submodules --single-branch --branch main --depth 1 "$HOME/.zprezto/modules/zsh-abbr"
 
     # Add to the 40th line
     sed -i "40i 'autosuggestions' \\\\" "$HOME/.zpreztorc"
