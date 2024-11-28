@@ -404,6 +404,9 @@ function setup_zsh() {
     # Add prezto as plugin manager
     git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
 
+    # Delete any leftovers from zsh install
+    rm -rfv ~/.z*
+
     zsh "../../shared/setup.zsh"
 
     # Add zsh-abbr for fish-like abbreviations
