@@ -378,7 +378,12 @@ function main() {
             ;;
 
         docker)
-            sudo dnf5 config-manager addrepo --from-repofile=https://download.docker.com/linux/fedora/docker-ce.repo
+            if grep -iq VERSION_ID=40 "$DISTRO_RELEASE"; then
+                sudo dnf4 config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+            else
+                sudo dnf5 config-manager addrepo --from-repofile=https://download.docker.com/linux/fedora/docker-ce.repo
+
+            fi
 
             sudo dnf5 install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
             ;;
