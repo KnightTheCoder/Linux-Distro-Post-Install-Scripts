@@ -399,13 +399,14 @@ function setup_zsh() {
         return
     fi
 
+    # Delete any leftovers from zsh install
+    echo -e "${GREEN}Deleting leftovers from zsh install...${NC}"
+    rm -rfv ~/.z*
+
     echo -e "${GREEN}Installing prezto...${NC}"
 
     # Add prezto as plugin manager
     git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
-
-    # Delete any leftovers from zsh install
-    rm -rfv ~/.z*
 
     zsh "../../shared/setup.zsh"
 
