@@ -88,6 +88,46 @@ function main() {
     local aur=(ttf-ms-win11-auto)
     local packages_to_remove="akregator kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat"
 
+    # Install NVIDIA drivers
+    local driver
+
+    driver=$(
+        whiptail --notags --title "Drivers" --menu "Choose an NVIDIA driver" 0 0 0 \
+            "" "None/Don't install" \
+            "current" "Current GeForce/Quadro/Tesla" \
+            "current-open" "Current  GeForce/Quadro/Tesla (Open Source)" \
+            "legacy1" "Legacy GeForce 600/700" \
+            "legacy2" "Legacy GeForce 400/500" \
+            "legacy3" "Legacy GeForce 8/9/200/300" \
+            3>&1 1>&2 2>&3
+    )
+
+    case "$driver" in
+
+    current)
+        packages+=" nvidia"
+        ;;
+
+    "current-open")
+        packages+=" nvidia-open"
+        ;;
+
+    legacy1)
+        aur+=(nvidia-470xx-dkms)
+        ;;
+
+    legacy2)
+        aur+=(nvidia-390xx-dkms)
+        ;;
+
+    legacy3)
+        aur+=(nvidia-340xx-dkms)
+        ;;
+
+    *) ;;
+
+    esac
+
     local nvim_config
     nvim_config=$(choose_nvim_config)
     setups+=("$nvim_config")
