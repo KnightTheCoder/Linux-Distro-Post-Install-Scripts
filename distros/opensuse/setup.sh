@@ -399,7 +399,6 @@ function main() {
         nvidia)
             sudo zypper install openSUSE-repos-Tumbleweed-NVIDIA -y
             sudo zypper install-new-recommends --repo repo-non-free -y
-            sudo zypper install-new-recommends --repo NVIDIA -y
             ;;
 
         bash)
