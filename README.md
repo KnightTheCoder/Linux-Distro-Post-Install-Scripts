@@ -114,6 +114,7 @@ bash ./post_install.sh
 -   Install one of 3 firefox policy templates for privacy and preinstalled extensions
 -   Updates the system
 -   Removes bloat
+-   Install NVIDIA drivers
 -   Option to remove discover
 -   Installs browsers
 -   Sets up flatpak and install flatpak apps
