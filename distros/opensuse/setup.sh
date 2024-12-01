@@ -121,6 +121,18 @@ function main() {
     nvim_config=$(choose_nvim_config)
     setups+=("$nvim_config")
 
+    # Install NVIDIA drivers
+    driver=$(
+        whiptail --notags --title "Drivers" --menu "Choose a driver" 0 0 0 \
+            "" "None/Don't install" \
+            "nvidia" "NVIDIA driver" \
+            3>&1 1>&2 2>&3
+    )
+
+    if [[ "$driver" == "nvidia" ]]; then
+        setups+=(nvidia)
+    fi
+
     # Add packages to the correct categories
     for package in $packages; do
         case $package in
@@ -382,6 +394,12 @@ function main() {
 
         flatpak)
             setup_flatpak
+            ;;
+
+        nvidia)
+            sudo zypper install openSUSE-repos-Tumbleweed-NVIDIA
+            sudo zypper install-new-recommends --repo repo-non-free
+            sudo zypper install-new-recommends --repo NVIDIA
             ;;
 
         bash)
