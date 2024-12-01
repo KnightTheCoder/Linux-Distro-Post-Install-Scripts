@@ -81,6 +81,44 @@ function main() {
 
     packages+=" $shells"
 
+    # Install NVIDIA drivers
+    local drivers
+    local driver
+
+    driver=$(
+        whiptail --notags --title "Drivers" --menu "Choose an NVIDIA driver" 0 0 0 \
+            "" "None/Don't install" \
+            "current" "Current GeForce/Quadro/Tesla" \
+            "legacy1" "Legacy GeForce 600/700" \
+            "legacy2" "Legacy GeForce 400/500" \
+            "legacy3" "Legacy GeForce 8/9/200/300" \
+            3>&1 1>&2 2>&3
+    )
+
+    case "$driver" in
+
+    current)
+        drivers="akmod-nvidia xorg-x11-drv-nvidia-cuda"
+        ;;
+
+    legacy1)
+        drivers="xorg-x11-drv-nvidia-470xx akmod-nvidia-470xx xorg-x11-drv-nvidia-470xx-cuda"
+        ;;
+
+    legacy2)
+        drivers="xorg-x11-drv-nvidia-390xx akmod-nvidia-390xx xorg-x11-drv-nvidia-390xx-cuda"
+        ;;
+
+    legacy3)
+        drivers="xorg-x11-drv-nvidia-340xx akmod-nvidia-340xx xorg-x11-drv-nvidia-340xx-cuda"
+        ;;
+
+    *) ;;
+
+    esac
+
+    packages+=" $drivers"
+
     # Remove new lines
     packages=$(echo "$packages" | tr "\n" " ")
 
