@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 # Global colors
 readonly RED='\033[0;31m'
