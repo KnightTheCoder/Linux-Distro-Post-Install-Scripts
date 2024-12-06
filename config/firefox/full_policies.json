@@ -49,7 +49,7 @@
         "DNSOverHTTPS": {
             "Enabled": true,
             "ProviderURL": "https://base.dns.mullvad.net/dns-query",
-            "Fallback": false
+            "Fallback": true
         },
         "Homepage": {
             "StartPage": "previous-session"
