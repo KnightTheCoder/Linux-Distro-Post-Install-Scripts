@@ -305,7 +305,7 @@ function main() {
     # shellcheck disable=SC2086
     sudo zypper remove --details -y --clean-deps -t pattern $patterns_to_remove
     # shellcheck disable=SC2086
-    sudo zypper -vv al -t pattern $patterns_to_remove
+    sudo zypper -vv addlock -t pattern $patterns_to_remove
 
     # Install packages
     # Don't use quotes, zypper won't recognize the packages

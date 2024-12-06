@@ -75,6 +75,46 @@ Tested distros:
 -   bash (to run the scripts)
 -   systemd (needed to start services)
 
+<details>
+
+<summary>Debian</summary>
+
+```console
+sudo apt install wget unzip bash -y
+```
+
+</details>
+
+<details>
+
+<summary>Fedora</summary>
+
+```console
+sudo dnf install wget unzip bash -y
+```
+
+</details>
+
+<details>
+
+<summary>OpenSUSE</summary>
+
+```console
+sudo zypper install --details -y wget unzip bash
+```
+
+</details>
+
+<details>
+
+<summary>Arch linux</summary>
+
+```console
+sudo pacman -Syy wget unzip bash --noconfirm --needed
+```
+
+</details>
+
 ## 💡 Usage
 
 > [!NOTE]
