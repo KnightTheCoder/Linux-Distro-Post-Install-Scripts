@@ -352,9 +352,9 @@ function setup_fish() {
     else
         echo -e "${YELLOW}Please run 'exit' to exit from fish and continue setup${NC}"
         curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
-    fi
 
-    fish -c "omf install bobthefish"
+        fish -c "omf install bobthefish"
+    fi
 
     echo -e "${GREEN}Copying fish config...${NC}"
 
