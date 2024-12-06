@@ -42,13 +42,13 @@ function resolve_distro() {
 #   Package manager's name
 #######################################
 function get_package_manager() {
-  if [[ -x "/usr/bin/zypper" ]]; then
+  if [[ -x "$(command -v zypper)" ]]; then
     echo "zypper"
-  elif [[ -x "/usr/bin/dnf" ]]; then
+  elif [[ -x "$(command -v dnf)" ]]; then
     echo "dnf"
-  elif [[ -x "/usr/bin/pacman" ]]; then
+  elif [[ -x "$(command -v pacman)" ]]; then
     echo "pacman"
-  elif [[ -x "/usr/bin/apt" ]]; then
+  elif [[ -x "$(command -v apt)" ]]; then
     echo "apt"
   else
     echo "unknown"
