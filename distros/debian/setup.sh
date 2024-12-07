@@ -26,6 +26,7 @@ function main() {
             "heroic" "Heroic Games Launcher" OFF \
             "firefox" "Firefox web browser" ON \
             "librewolf" "Librewolf web browser" OFF \
+            "chromium" "Chromium web browser" OFF \
             "vivaldi" "Vivaldi web browser" OFF \
             "brave" "Brave web browser" OFF \
             "haruna" "Haruna media player" ON \
@@ -85,6 +86,7 @@ function main() {
     local services=()
     local setups=(hacknerd eza)
     local usergroups=()
+    local snaps=()
     local packages_to_remove="elisa dragonplayer akregator kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat kolourpaint thunderbird"
 
     # Add packages to the correct categories
@@ -131,6 +133,18 @@ function main() {
             if grep -iq ID=debian "$DISTRO_RELEASE"; then
                 packages=$(remove_package "$packages" "$package")
                 packages+=" firefox-esr"
+
+            elif grep -iq ID=ubuntu "$DISTRO_RELEASE" && [[ -x "$(command -v snap)" ]]; then
+                packages=$(remove_package "$packages" "$package")
+                snaps+=(firefox)
+            fi
+
+            ;;
+
+        chromium)
+            if grep -iq ID=ubuntu "$DISTRO_RELEASE" && [[ -x "$(command -v snap)" ]]; then
+                packages=$(remove_package "$packages" "$package")
+                snaps+=(chromium)
             fi
 
             ;;
@@ -336,6 +350,8 @@ function main() {
     # Install packages
     # shellcheck disable=SC2086
     sudo nala install -y $packages
+
+    sudo snap install "${snaps[@]}"
 
     echo -e "${GREEN}Adding user to groups...${NC}"
     # Add user to groups
