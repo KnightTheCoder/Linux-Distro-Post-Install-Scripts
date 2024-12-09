@@ -9,6 +9,7 @@
 -   Select programs/tools to install
 -   Add list of recommended packages (bat, eza, git, etc.)
 -   Select shells to setup
+-   Select NVIDIA driver
 -   Select neovim configuration
 -   Break down programs/tools into setup steps (packages, services, usergroups, setups, etc.)
 -   Distro specific setup (add repos, install codecs, etc.)

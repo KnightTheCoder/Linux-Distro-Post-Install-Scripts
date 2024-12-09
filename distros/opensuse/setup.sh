@@ -122,6 +122,7 @@ function main() {
     setups+=("$nvim_config")
 
     # Install NVIDIA drivers
+    local driver
     driver=$(
         whiptail --notags --title "Drivers" --menu "Choose a driver" 0 0 0 \
             "" "None/Don't install" \

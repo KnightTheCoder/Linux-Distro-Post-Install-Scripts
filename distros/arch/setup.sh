@@ -90,7 +90,6 @@ function main() {
 
     # Install NVIDIA drivers
     local driver
-
     driver=$(
         whiptail --notags --title "Drivers" --menu "Choose an NVIDIA driver" 0 0 0 \
             "" "None/Don't install" \
