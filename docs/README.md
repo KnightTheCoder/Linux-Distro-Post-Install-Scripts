@@ -49,6 +49,7 @@
 -   xscreensaver
 -   qt5-qdbusviewer
 -   thunderbird
+-   konqueror
 
 ### Native install list
 
