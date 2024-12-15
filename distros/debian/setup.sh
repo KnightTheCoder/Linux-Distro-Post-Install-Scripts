@@ -368,7 +368,9 @@ function main() {
     # shellcheck disable=SC2086
     sudo nala install -y $packages
 
-    sudo snap install "${snaps[@]}"
+    if ! grep -iq ID=debian; then
+        sudo snap install "${snaps[@]}"
+    fi
 
     echo -e "${GREEN}Adding user to groups...${NC}"
     # Add user to groups
