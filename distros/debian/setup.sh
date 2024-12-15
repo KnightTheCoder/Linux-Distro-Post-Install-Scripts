@@ -89,6 +89,23 @@ function main() {
     local snaps=()
     local packages_to_remove="elisa dragonplayer akregator kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat kolourpaint thunderbird"
 
+    # Install NVIDIA drivers only on debian
+    if grep -iq ID=debian "$DISTRO_RELEASE"; then
+        local driver
+
+        driver=$(
+            whiptail --notags --title "Drivers" --menu "Choose an NVIDIA driver" 0 0 0 \
+                "" "None/Don't install" \
+                "nvidia" "GeForce 700 series and newer GPUs" \
+                3>&1 1>&2 2>&3
+        )
+
+        if [[ "$driver" == "nvidia" ]]; then
+            packages=" nvidia-driver firmware-misc-nonfree"
+            setups+=(nvidia)
+        fi
+    fi
+
     # Add packages to the correct categories
     for package in $packages; do
         case $package in
@@ -326,7 +343,7 @@ function main() {
         echo -e "${GREEN}Adding extra repositories...${NC}"
         # Add extra repositories to debian
         sudo apt install software-properties-common -y
-        sudo apt-add-repository contrib non-free -y
+        sudo apt-add-repository contrib non-free non-free-firmware -y
     fi
 
     # Add 32 bit support if it's not available
@@ -561,6 +578,14 @@ function main() {
 
         flatpak)
             setup_flatpak
+            ;;
+
+        nvidia)
+            echo install_items+=" /etc/modprobe.d/nvidia-blacklists-nouveau.conf /etc/modprobe.d/nvidia.conf /etc/modprobe.d/nvidia-options.conf " | sudo tee /etc/dracut.conf.d/10-nvidia.conf
+
+            if [[ $(cat /sys/module/nvidia_drm/parameters/modeset) == "N" ]]; then
+                echo "options nvidia-drm modeset=1" | sudo tee -a /etc/modprobe.d/nvidia-options.conf
+            fi
             ;;
 
         bash)

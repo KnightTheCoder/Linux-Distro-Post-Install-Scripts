@@ -81,6 +81,16 @@ function main() {
 
     packages+=" $shells"
 
+    # Remove new lines
+    packages=$(echo "$packages" | tr "\n" " ")
+
+    # Add defaults
+    local services=()
+    local setups=(hacknerd)
+    local usergroups=()
+    local groups=(c-development multimedia)
+    local packages_to_remove="akregator dragon elisa-player kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat kolourpaint qt5-qdbusviewer pim-sieve-editor neochat"
+
     # Install NVIDIA drivers
     local drivers
     local driver
@@ -118,16 +128,6 @@ function main() {
     esac
 
     packages+=" $drivers"
-
-    # Remove new lines
-    packages=$(echo "$packages" | tr "\n" " ")
-
-    # Add defaults
-    local services=()
-    local setups=(hacknerd)
-    local usergroups=()
-    local groups=(c-development multimedia)
-    local packages_to_remove="akregator dragon elisa-player kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat kolourpaint qt5-qdbusviewer pim-sieve-editor neochat"
 
     local nvim_config
     nvim_config=$(choose_nvim_config)
