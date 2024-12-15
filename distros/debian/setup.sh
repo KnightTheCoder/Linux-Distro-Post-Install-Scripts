@@ -368,7 +368,7 @@ function main() {
     # shellcheck disable=SC2086
     sudo nala install -y $packages
 
-    if ! grep -iq ID=debian; then
+    if ! grep -iq ID=debian "$DISTRO_RELEASE"; then
         sudo snap install "${snaps[@]}"
     fi
 
