@@ -583,11 +583,13 @@ function main() {
             ;;
 
         nvidia)
-            touch /etc/dracut.conf.d/10-nvidia.conf
+            sudo mkdir /etc/dracut.conf.d
+            sudo touch /etc/dracut.conf.d/10-nvidia.conf
             echo install_items+=" /etc/modprobe.d/nvidia-blacklists-nouveau.conf /etc/modprobe.d/nvidia.conf /etc/modprobe.d/nvidia-options.conf " | sudo tee /etc/dracut.conf.d/10-nvidia.conf
 
             if [[ $(cat /sys/module/nvidia_drm/parameters/modeset) == "N" ]]; then
-                touch /etc/modprobe.d/nvidia-options.conf
+                sudo mkdir /etc/modprobe.d/
+                sudo touch /etc/modprobe.d/nvidia-options.conf
                 echo "options nvidia-drm modeset=1" | sudo tee -a /etc/modprobe.d/nvidia-options.conf
             fi
             ;;
