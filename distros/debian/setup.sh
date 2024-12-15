@@ -101,7 +101,7 @@ function main() {
         )
 
         if [[ "$driver" == "nvidia" ]]; then
-            packages=" nvidia-driver firmware-misc-nonfree"
+            packages+=" nvidia-driver firmware-misc-nonfree"
             setups+=(nvidia)
         fi
     fi
