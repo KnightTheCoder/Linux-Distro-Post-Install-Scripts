@@ -70,7 +70,7 @@ Tested distros:
 
 ## 🛠 Requirements
 
--   wget (to download the scripts)
+-   curl (to download the scripts)
 -   unzip (to unzip the scripts)
 -   bash (to run the scripts)
 -   systemd (needed to start services)
@@ -80,7 +80,7 @@ Tested distros:
 <summary>Debian</summary>
 
 ```console
-sudo apt install wget unzip bash -y
+sudo apt install curl unzip bash -y
 ```
 
 </details>
@@ -90,7 +90,7 @@ sudo apt install wget unzip bash -y
 <summary>Fedora</summary>
 
 ```console
-sudo dnf install wget unzip bash -y
+sudo dnf install curl unzip bash -y
 ```
 
 </details>
@@ -100,7 +100,7 @@ sudo dnf install wget unzip bash -y
 <summary>OpenSUSE</summary>
 
 ```console
-sudo zypper install --details -y wget unzip bash
+sudo zypper install --details -y curl unzip bash
 ```
 
 </details>
@@ -110,7 +110,7 @@ sudo zypper install --details -y wget unzip bash
 <summary>Arch linux</summary>
 
 ```console
-sudo pacman -Syy wget unzip bash --noconfirm --needed
+sudo pacman -Syy curl unzip bash --noconfirm --needed
 ```
 
 </details>
@@ -126,7 +126,7 @@ sudo pacman -Syy wget unzip bash --noconfirm --needed
 <summary>Stable</summary>
 
 ```console
-wget -O "$(xdg-user-dir DOWNLOAD)/post-install-scripts.zip" "https://github.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/archive/refs/heads/master.zip"
+curl -o "$(xdg-user-dir DOWNLOAD)/post-install-scripts.zip" "https://github.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/archive/refs/heads/master.zip"
 
 cd "$(xdg-user-dir DOWNLOAD)" && unzip -o post-install-scripts.zip && cd Linux-Distro-Post-Install-Scripts-master
 
@@ -139,7 +139,7 @@ bash ./post_install.sh
 <summary>Experimental</summary>
 
 ```console
-wget -O "$(xdg-user-dir DOWNLOAD)/post-install-scripts.zip" "https://github.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/archive/refs/heads/maintanence.zip"
+curl -o "$(xdg-user-dir DOWNLOAD)/post-install-scripts.zip" "https://github.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/archive/refs/heads/maintanence.zip"
 
 cd "$(xdg-user-dir DOWNLOAD)" && unzip -o post-install-scripts.zip && cd Linux-Distro-Post-Install-Scripts-maintanence
 

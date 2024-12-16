@@ -185,7 +185,7 @@ function setup_itch_app() {
         return
     fi
 
-    wget -O itch-setup "https://itch.io/app/download?platform=linux"
+    curl -o itch-setup "https://itch.io/app/download?platform=linux"
     chmod +x "./itch-setup"
     ./itch-setup
     rm -vf "./itch-setup"
@@ -281,7 +281,7 @@ function setup_hacknerd_fonts() {
 
     echo -e "${GREEN}Installing hack nerd fonts...${NC}"
 
-    wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.3.0/Hack.zip
+    curl -o https://github.com/ryanoasis/nerd-fonts/releases/download/v3.3.0/Hack.zip
     unzip ./Hack.zip -d Hack
     mkdir -p "${hacknerdfont_directory}"
     cp -fv ./Hack/*.ttf "${hacknerdfont_directory}"
@@ -660,7 +660,7 @@ function setup_xampp() {
 
     local xampp_executable=xampp-linux-installer.run
 
-    wget -O "${xampp_executable}" https://sourceforge.net/projects/xampp/files/XAMPP%20Linux/8.2.12/xampp-linux-x64-8.2.12-0-installer.run/download
+    curl -o "${xampp_executable}" https://sourceforge.net/projects/xampp/files/XAMPP%20Linux/8.2.12/xampp-linux-x64-8.2.12-0-installer.run/download
     chmod +x "./${xampp_executable}"
     sudo "./${xampp_executable}"
     rm -rv "./${xampp_executable}"
@@ -697,7 +697,7 @@ function setup_virtualbox_extension() {
         return
     fi
 
-    wget "$extension_link"
+    curl -o "$extension_link"
     sudo "${manage}" extpack install Oracle*.vbox-extpack
     rm -fv Oracle*.vbox-extpack
 }
