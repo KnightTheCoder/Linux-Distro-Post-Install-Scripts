@@ -70,7 +70,7 @@ function main() {
 
     packages+=" $cli_packages"
 
-    packages+=" neovim eza bat curl cabextract xorg-x11-font-utils fontconfig p7zip p7zip-plugins unrar git dnf-plugins-core"
+    packages+=" neovim eza bat curl wget cabextract xorg-x11-font-utils fontconfig p7zip p7zip-plugins unrar git dnf-plugins-core"
 
     local shells
     shells=$(choose_shells)

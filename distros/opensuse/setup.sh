@@ -98,7 +98,7 @@ function main() {
 
     packages+=" $cli_packages"
 
-    packages+=" opi neovim eza bat fetchmsttfonts systemd-zram-service 7zip unrar"
+    packages+=" opi neovim eza bat curl wget fetchmsttfonts systemd-zram-service 7zip unrar"
 
     local shells
     shells=$(choose_shells)
