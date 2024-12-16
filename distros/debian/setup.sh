@@ -332,10 +332,10 @@ function main() {
     if grep -iq "kde neon" "$DISTRO_RELEASE"; then
         echo -e "${GREEN}Installing nala...${NC}"
         # Download files for installing nala
-        curl -o 'volian-keyring.deb' "https://gitlab.com/volian/volian-archive/uploads/d9473098bc12525687dc9aca43d50159/volian-archive-keyring_0.2.0_all.deb"
+        curl -Lo 'volian-keyring.deb' "https://gitlab.com/volian/volian-archive/uploads/d9473098bc12525687dc9aca43d50159/volian-archive-keyring_0.2.0_all.deb"
         sudo apt install ./volian-keyring.deb
 
-        curl -o 'volian-nala.deb' "https://gitlab.com/volian/volian-archive/uploads/d00e44faaf2cc8aad526ca520165a0af/volian-archive-nala_0.2.0_all.deb"
+        curl -Lo 'volian-nala.deb' "https://gitlab.com/volian/volian-archive/uploads/d00e44faaf2cc8aad526ca520165a0af/volian-archive-nala_0.2.0_all.deb"
         sudo apt install ./volian-nala.deb
 
         rm -v "volian-*.deb"
@@ -384,13 +384,13 @@ function main() {
         case $app in
 
         lutris)
-            curl -o 'lutris.deb' "https://github.com/lutris/lutris/releases/download/v0.5.18/lutris_0.5.18_all.deb"
+            curl -Lo 'lutris.deb' "https://github.com/lutris/lutris/releases/download/v0.5.18/lutris_0.5.18_all.deb"
             sudo apt install -y ./lutris.deb
             rm -v ./lutris.deb
             ;;
 
         heroic)
-            curl -o heroic.deb https://github.com/Heroic-Games-Launcher/HeroicGamesLauncher/releases/download/v2.14.0/heroic_2.14.0_amd64.deb
+            curl -Lo heroic.deb https://github.com/Heroic-Games-Launcher/HeroicGamesLauncher/releases/download/v2.14.0/heroic_2.14.0_amd64.deb
             sudo dpkg -i heroic.deb
             rm -v heroic.deb
             ;;
@@ -430,7 +430,7 @@ function main() {
             ;;
 
         vivaldi)
-            curl -o vivaldi.deb https://downloads.vivaldi.com/stable/vivaldi-stable_6.9.3447.51-1_amd64.deb
+            curl -Lo vivaldi.deb https://downloads.vivaldi.com/stable/vivaldi-stable_6.9.3447.51-1_amd64.deb
             sudo nala update && sudo nala install -y ./vivaldi.deb
 
             rm -fv ./vivaldi.deb
@@ -532,7 +532,7 @@ function main() {
             ;;
 
         docker-desktop)
-            curl -o docker-desktop.deb "https://desktop.docker.com/linux/main/amd64/139021/docker-desktop-4.28.0-amd64.deb?utm_source=docker&utm_medium=webreferral&utm_campaign=docs-driven-download-linux-amd64"
+            curl -Lo docker-desktop.deb "https://desktop.docker.com/linux/main/amd64/139021/docker-desktop-4.28.0-amd64.deb?utm_source=docker&utm_medium=webreferral&utm_campaign=docs-driven-download-linux-amd64"
             sudo apt-get update
             sudo apt-get install -y ./docker-desktop.deb
             rm -v docker-desktop.deb
