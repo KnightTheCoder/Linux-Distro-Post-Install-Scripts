@@ -622,6 +622,9 @@ function main() {
     for serv in "${services[@]}"; do
         sudo systemctl enable --now "$serv"
     done
+
+    # Update system after setup
+    sudo nala upgrade -y
 }
 
 if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then

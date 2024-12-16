@@ -16,6 +16,7 @@
 -   Add user to usergroups listed before
 -   Run setups for selected apps
 -   Start listed services
+-   Update system after setup finishes
 -   Ask for hostname (optional)
 
 ## List of packages to install

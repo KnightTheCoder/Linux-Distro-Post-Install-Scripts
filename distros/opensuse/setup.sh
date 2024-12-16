@@ -427,6 +427,9 @@ function main() {
         sudo systemctl enable --now "$serv"
     done
 
+    # Update system after setup
+    sudo zypper -vv dist-upgrade -y
+
     create_snapshot 1
 }
 
