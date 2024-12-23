@@ -682,10 +682,10 @@ function setup_virtualbox_extension() {
     echo -e "${GREEN}Installing virtualbox extension pack...${NC}"
 
     local manage="vboxmanage"
-    local extension_link="https://download.virtualbox.org/virtualbox/7.0.12/Oracle_VM_VirtualBox_Extension_Pack-7.0.12.vbox-extpack"
+    local extension_link="https://download.virtualbox.org/virtualbox/7.0.22/Oracle_VM_VirtualBox_Extension_Pack-7.0.22.vbox-extpack"
 
     if grep -iq arch "$DISTRO_RELEASE" || grep -iq fedora "$DISTRO_RELEASE"; then
-        extension_link="https://download.virtualbox.org/virtualbox/7.1.0/Oracle_VirtualBox_Extension_Pack-7.1.0.vbox-extpack"
+        extension_link="https://download.virtualbox.org/virtualbox/7.1.4/Oracle_VirtualBox_Extension_Pack-7.1.4.vbox-extpack"
     fi
 
     if grep -iq opensuse "$DISTRO_RELEASE"; then
