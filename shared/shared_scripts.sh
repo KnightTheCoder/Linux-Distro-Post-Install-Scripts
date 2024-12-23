@@ -281,7 +281,7 @@ function setup_hacknerd_fonts() {
 
     echo -e "${GREEN}Installing hack nerd fonts...${NC}"
 
-    curl -Lo https://github.com/ryanoasis/nerd-fonts/releases/download/v3.3.0/Hack.zip
+    curl -Lo Hack.zip https://github.com/ryanoasis/nerd-fonts/releases/download/v3.3.0/Hack.zip
     unzip ./Hack.zip -d Hack
     mkdir -p "${hacknerdfont_directory}"
     cp -fv ./Hack/*.ttf "${hacknerdfont_directory}"
