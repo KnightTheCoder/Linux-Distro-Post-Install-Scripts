@@ -322,6 +322,12 @@ function main() {
     # Install groups
     sudo dnf4 group install -y "${groups[@]}" --allowerasing
 
+    # Swap mesa drivers to freeworld ones
+    local mesa_drivers=(mesa-va-drivers mesa-vdpau-drivers)
+    for mesa_driver in "${mesa_drivers[@]}"; do
+        sudo dnf swap "$mesa_driver" "${mesa_driver}-freeworld"
+    done
+
     # Install packages
     # shellcheck disable=SC2086
     sudo dnf5 install -y $packages
