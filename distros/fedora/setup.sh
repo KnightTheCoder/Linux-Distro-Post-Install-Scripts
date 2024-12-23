@@ -325,7 +325,7 @@ function main() {
     # Swap mesa drivers to freeworld ones
     local mesa_drivers=(mesa-va-drivers mesa-vdpau-drivers)
     for mesa_driver in "${mesa_drivers[@]}"; do
-        sudo dnf swap "$mesa_driver" "${mesa_driver}-freeworld"
+        sudo dnf swap "$mesa_driver" "${mesa_driver}-freeworld" -y
     done
 
     # Install packages
