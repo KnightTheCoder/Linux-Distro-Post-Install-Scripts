@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 cd "$(dirname "$0")" || exit
 
@@ -21,6 +21,7 @@ function main() {
             "wine" "Wine" OFF \
             "gaming-overlay" "Gaming overlay" OFF \
             "steam" "Steam" OFF \
+            "steam-devices" "Steam devices (for the steam flatpak)" OFF \
             "itch" "Itch desktop app" OFF \
             "heroic" "Heroic Games Launcher" OFF \
             "firefox" "Firefox web browser" ON \
@@ -33,7 +34,7 @@ function main() {
             "vlc" "VLC media player" ON \
             "strawberry" "Strawberry music player" ON \
             "audacious" "Audacious music player" OFF \
-            "transmission" "Transmission bittorrent client" OFF \
+            "transmission-qt" "Transmission bittorrent client" OFF \
             "qbittorrent" "Qbittorrent bittorrent client" OFF \
             "gimp" "GIMP" OFF \
             "kdenlive" "Kdenlive" OFF \
@@ -61,17 +62,15 @@ function main() {
     local cli_packages
     cli_packages=$(
         whiptail --title "CLI install" --separate-output --notags --checklist "Select cli applications to install" 0 0 0 \
-            "neofetch" "neofetch" ON \
-            "htop" "htop" ON \
+            "fastfetch" "fastfetch" ON \
             "btop" "btop++" ON \
             "gh" "github cli" OFF \
-            "tldr" "tldr, short man pages" OFF \
             3>&1 1>&2 2>&3
     )
 
     packages+=" $cli_packages"
 
-    packages+=" neovim eza bat dnf5 dnf5-plugins curl cabextract xorg-x11-font-utils fontconfig p7zip p7zip-plugins unrar git dnf-plugins-core"
+    packages+=" neovim eza bat curl wget cabextract xorg-x11-font-utils fontconfig p7zip p7zip-plugins unrar git dnf-plugins-core"
 
     local shells
     shells=$(choose_shells)
@@ -87,10 +86,48 @@ function main() {
 
     # Add defaults
     local services=()
-    local setups=(fish hacknerd)
+    local setups=(hacknerd)
     local usergroups=()
-    local groups=("C Development Tools and Libraries" Multimedia)
-    local packages_to_remove="akregator dragon elisa-player kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat kolourpaint qt5-qdbusviewer"
+    local groups=(c-development multimedia)
+    local packages_to_remove="akregator dragon elisa-player kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat kolourpaint qt5-qdbusviewer pim-sieve-editor neochat"
+
+    # Install NVIDIA drivers
+    local drivers
+    local driver
+
+    driver=$(
+        whiptail --notags --title "Drivers" --menu "Choose an NVIDIA driver" 0 0 0 \
+            "" "None/Don't install" \
+            "current" "Current GeForce/Quadro/Tesla" \
+            "legacy1" "Legacy GeForce 600/700" \
+            "legacy2" "Legacy GeForce 400/500" \
+            "legacy3" "Legacy GeForce 8/9/200/300" \
+            3>&1 1>&2 2>&3
+    )
+
+    case "$driver" in
+
+    current)
+        drivers="akmod-nvidia xorg-x11-drv-nvidia-cuda"
+        ;;
+
+    legacy1)
+        drivers="xorg-x11-drv-nvidia-470xx akmod-nvidia-470xx xorg-x11-drv-nvidia-470xx-cuda"
+        ;;
+
+    legacy2)
+        drivers="xorg-x11-drv-nvidia-390xx akmod-nvidia-390xx xorg-x11-drv-nvidia-390xx-cuda"
+        ;;
+
+    legacy3)
+        drivers="xorg-x11-drv-nvidia-340xx akmod-nvidia-340xx xorg-x11-drv-nvidia-340xx-cuda"
+        ;;
+
+    *) ;;
+
+    esac
+
+    packages+=" $drivers"
 
     local nvim_config
     nvim_config=$(choose_nvim_config)
@@ -175,10 +212,6 @@ function main() {
             usergroups+=(vboxusers)
             ;;
 
-        steam)
-            packages+=" steam-devices"
-            ;;
-
         heroic)
             packages=$(remove_package "$packages" "$package")
 
@@ -217,6 +250,12 @@ function main() {
             packages+=" java-latest-openjdk"
             ;;
 
+        dotnet)
+            packages=$(remove_package "$packages" "$package")
+
+            packages+=" dotnet-sdk-8.0"
+            ;;
+
         xampp)
             packages=$(remove_package "$packages" "$package")
 
@@ -224,7 +263,7 @@ function main() {
             ;;
 
         docker)
-            packages=${packages/"$package"/}
+            packages=$(remove_package "$packages" "$package")
 
             setups+=(docker)
             services+=(docker.service)
@@ -250,7 +289,7 @@ function main() {
 
     # Ask if you want to remove discover
     if whiptail --title "Remove discover" --yesno "Would you like to remove discover?" --defaultno 0 0; then
-        packages_to_remove+=" plasma-discover --exclude=flatpak"
+        packages_to_remove+=" plasma-discover"
     fi
 
     echo -e "${GREEN}Modifying dnf configuration...${NC}"
@@ -270,19 +309,28 @@ function main() {
     # shellcheck disable=SC2046
     sudo rpm -Uvh http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
+    # Install dnf5 if it's an older system
+    sudo dnf install -y dnf5 dnf5-plugins
+
     # Update system
-    sudo dnf upgrade -y --refresh
+    sudo dnf5 upgrade -y --refresh
 
     # Remove unneccessary packages
     # shellcheck disable=SC2086
-    sudo dnf remove -y $packages_to_remove
+    sudo dnf5 remove -y $packages_to_remove
 
     # Install groups
-    sudo dnf group install -y "${groups[@]}" --allowerasing
+    sudo dnf4 group install -y "${groups[@]}" --allowerasing
+
+    # Swap mesa drivers to freeworld ones
+    local mesa_drivers=(mesa-va-drivers mesa-vdpau-drivers)
+    for mesa_driver in "${mesa_drivers[@]}"; do
+        sudo dnf swap "$mesa_driver" "${mesa_driver}-freeworld" -y
+    done
 
     # Install packages
     # shellcheck disable=SC2086
-    sudo dnf install -y $packages
+    sudo dnf5 install -y $packages
 
     # Install msfonts
     echo -e "${GREEN}Installing microsoft core fonts...${NC}"
@@ -301,8 +349,8 @@ function main() {
         vscode)
             sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
             sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
-            sudo dnf check-update --refresh
-            sudo dnf install -y code
+            sudo dnf5 check-update --refresh
+            sudo dnf5 install -y code
 
             setup_vscode code
             ;;
@@ -312,14 +360,14 @@ function main() {
 
             printf "[gitlab.com_paulcarroty_vscodium_repo]\nname=download.vscodium.com\nbaseurl=https://download.vscodium.com/rpms/\nenabled=1\ngpgcheck=1\nrepo_gpgcheck=1\ngpgkey=https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/-/raw/master/pub.gpg\nmetadata_expire=1h" | sudo tee -a /etc/yum.repos.d/vscodium.repo
 
-            sudo dnf install codium -y
+            sudo dnf5 install codium -y
 
             setup_vscode codium
             ;;
 
         heroic)
-            sudo dnf copr enable atim/heroic-games-launcher -y
-            sudo dnf -y install heroic-games-launcher-bin
+            sudo dnf5 copr enable atim/heroic-games-launcher -y
+            sudo dnf5 -y install heroic-games-launcher-bin
             ;;
 
         itch)
@@ -327,26 +375,26 @@ function main() {
             ;;
 
         vivaldi)
-            sudo dnf install dnf-utils -y
-            sudo dnf config-manager --add-repo https://repo.vivaldi.com/archive/vivaldi-fedora.repo
+            sudo dnf5 install dnf-utils -y
+            sudo dnf5 config-manager addrepo --from-repofile=https://repo.vivaldi.com/archive/vivaldi-fedora.repo
 
-            sudo dnf install -y vivaldi-stable
+            sudo dnf5 install -y vivaldi-stable
 
             sudo rm -fv /etc/yum.repos.d/vivaldi.repo
             ;;
 
         brave)
-            sudo dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
+            sudo dnf5 config-manager addrepo --from-repofile=https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
 
             sudo rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
 
-            sudo dnf install -y brave-browser
+            sudo dnf5 install -y brave-browser
             ;;
 
         librewolf)
-            curl -fsSL https://rpm.librewolf.net/librewolf-repo.repo | sudo pkexec tee /etc/yum.repos.d/librewolf.repo
+            curl -fsSL https://repo.librewolf.net/librewolf.repo | sudo pkexec tee /etc/yum.repos.d/librewolf.repo
 
-            sudo dnf install -y librewolf
+            sudo dnf5 install -y librewolf
             ;;
 
         hacknerd)
@@ -374,14 +422,19 @@ function main() {
             ;;
 
         docker)
-            sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo -y
+            if grep -iq VERSION_ID=40 "$DISTRO_RELEASE"; then
+                sudo dnf4 config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+            else
+                sudo dnf5 config-manager addrepo --from-repofile=https://download.docker.com/linux/fedora/docker-ce.repo
 
-            sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+            fi
+
+            sudo dnf5 install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
             ;;
 
         docker-desktop)
-            wget -O docker-desktop.rpm "https://desktop.docker.com/linux/main/amd64/139021/docker-desktop-4.28.0-x86_64.rpm?utm_source=docker&utm_medium=webreferral&utm_campaign=docs-driven-download-linux-amd64"
-            sudo dnf -y install docker-desktop.rpm
+            curl -Lo docker-desktop.rpm "https://desktop.docker.com/linux/main/amd64/139021/docker-desktop-4.28.0-x86_64.rpm?utm_source=docker&utm_medium=webreferral&utm_campaign=docs-driven-download-linux-amd64"
+            sudo dnf5 -y install docker-desktop.rpm
             rm -v docker-desktop.rpm
             ;;
 
@@ -421,6 +474,9 @@ function main() {
     for serv in "${services[@]}"; do
         sudo systemctl enable --now "$serv"
     done
+
+    # Update system after setup
+    sudo dnf5 upgrade -y --refresh
 }
 
 if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then

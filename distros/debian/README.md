@@ -9,3 +9,4 @@
 -   Installs nala
 -   Enables 32 bit support, contrib and non-free repos
 -   Installs the latest lutris from github (.deb file)
+-   Neofetch offered instead of fastfetch

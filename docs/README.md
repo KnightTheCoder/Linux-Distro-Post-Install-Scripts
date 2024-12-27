@@ -9,13 +9,80 @@
 -   Select programs/tools to install
 -   Add list of recommended packages (bat, eza, git, etc.)
 -   Select shells to setup
+-   Select NVIDIA driver
 -   Select neovim configuration
 -   Break down programs/tools into setup steps (packages, services, usergroups, setups, etc.)
 -   Distro specific setup (add repos, install codecs, etc.)
 -   Add user to usergroups listed before
 -   Run setups for selected apps
 -   Start listed services
+-   Update system after setup finishes
 -   Ask for hostname (optional)
+
+## List of packages to install
+
+### Mandatory install list
+
+-   Command line utilities: bat, eza, neovim
+-   Fonts: ms fonts, hack nerd fonts
+-   Archives: 7zip, rar
+-   Development tools: gcc, git, curl, wget
+
+### Bloat list
+
+-   akregator
+-   dragon
+-   elisa-player
+-   dragonplayer
+-   kaddressbook
+-   kmahjongg
+-   kmail
+-   kontact
+-   kmines
+-   konversation
+-   kmouth
+-   korganizer
+-   kpat
+-   kolourpaint
+-   kompare
+-   kreversi
+-   ksudoku
+-   xscreensaver
+-   qt5-qdbusviewer
+-   thunderbird
+-   konqueror
+
+### Native install list
+
+-   Browsers: firefox, librewolf, chromium, vivaldi, brave
+-   Gaming launchers: steam, lutris, heroic, itch
+-   Windows compatibility: wine
+-   Multimedia: haruna, celluloid, vlc, strawberry, audacious, kdenlive, gimp
+-   Office apps: libreoffice, calibre ebook reader
+-   Password managers: keepassxc
+-   Command line utilities: fastfetch, btop, github cli, neovim, eza, bat
+-   Shells: bash, fish, zsh
+-   Prompts: starship
+-   Containers: docker, docker-desktop, podman, distrobox
+-   Virtualization: qemu, virtualbox
+-   Code editors: vscode, vscodium
+-   Programming languages and development environments: gcc, nodejs, dotnet, rust, go, java, xampp
+-   Bittorrent clients: transmission, qbittorrent
+-   RGB management: openrgb
+
+### Flatpak install list
+
+-   Browsers: firefox, librewolf, floorp, google chrome, brave, vivaldi, mullvad
+-   Management: Flatseal(for flatpaks), Gear Lever(for appimages), Flatsweep (clean up leftover flatpak files)
+-   Gaming launchers: steam, heroic, itch
+-   Windows compatibility: Protonup-QT
+-   Office: libreoffice, onlyoffice
+-   Screen recording: obs, gpu screen recorder
+-   Container GUI apps: podman desktop
+-   Multimedia: gimp, kdenlive
+-   Video/Audio download: video downloader
+-   Password managers: keepassxc
+-   Discord clients: discord, webcord, vesktop
 
 ## Shell configurations
 
@@ -47,10 +114,9 @@
 
 ## 🌐 Firefox policy
 
-A firefox policy is included for increased privacy.
+3 firefox policy templates are included for increased privacy.
 
 > [!NOTE]
-> The policy is applied automatically when running the script with `--copy-firefox-policy` <br />
 > Can be found at `config/firefox/policies.json` <br />
 > Manually edit to customize, then copy to `/etc/firefox/policies/` for it to work
 
@@ -62,25 +128,28 @@ The project provides the following policy templates:
 
 ### 📖 Difference between policies
 
-| Changes                          |       Basic        |                      Default                      |          Full           |
-| :------------------------------- | :----------------: | :-----------------------------------------------: | :---------------------: |
-| Open previous session            |                    |                         X                         |            X            |
-| Disable telemetry                |         X          |                         X                         |            X            |
-| Disable firefox studies          |         X          |                         X                         |            X            |
-| Disable feedback commands        |         X          |                         X                         |            X            |
-| Disable pocket                   |         X          |                         X                         |            X            |
-| Disable form history             |                    |                         X                         |            X            |
-| Enable all tracking protection   |         X          |                         X                         |            X            |
-| Disable Offer to save logins     |                    |                         x                         |            x            |
-| Block requests for notifications |         X          |                         X                         |            X            |
-| Block audio and video autoplay   |                    |                         X                         |            X            |
-| Disable picture in picture       |                    |                         X                         |            X            |
-| Ask for download location        |                    |                         X                         |            X            |
-| Disable autofill address         |                    |                         X                         |            X            |
-| Disable autofill creditcard      |                    |                         X                         |            X            |
-| No default bookmarks             |         X          |                         X                         |            X            |
-| HTTPS-Only Mode in all windows   |         X          |                         X                         |            X            |
-| Extensions                       | Ublock origin only | All privacy extensions, choose from optional ones | All extensions included |
+| Changes                           |       Basic        |                      Default                      |          Full           |
+| :-------------------------------- | :----------------: | :-----------------------------------------------: | :---------------------: |
+| Open previous session             |                    |                         X                         |            X            |
+| Disable telemetry                 |         X          |                         X                         |            X            |
+| Disable firefox studies           |         X          |                         X                         |            X            |
+| Disable feedback commands         |         X          |                         X                         |            X            |
+| Disable pocket                    |         X          |                         X                         |            X            |
+| Disable extension recommendations |         X          |                         X                         |            X            |
+| Disable feature recommendations   |         X          |                         X                         |            X            |
+| Disable sponsored top sites       |         X          |                         X                         |            X            |
+| Disable form history              |                    |                         X                         |            X            |
+| Enable all tracking protection    |         X          |                         X                         |            X            |
+| Disable Offer to save logins      |                    |                         x                         |            x            |
+| Block requests for notifications  |         X          |                         X                         |            X            |
+| Block audio and video autoplay    |                    |                         X                         |            X            |
+| Ask for download location         |                    |                         X                         |            X            |
+| Disable autofill address          |                    |                         X                         |            X            |
+| Disable autofill creditcard       |                    |                         X                         |            X            |
+| No default bookmarks              |         X          |                         X                         |            X            |
+| HTTPS-Only Mode in all windows    |         X          |                         X                         |            X            |
+| DNS over HTTPS using mullvad DNS  |         X          |                         X                         |            X            |
+| Extensions                        | Ublock origin only | All privacy extensions, choose from optional ones | All extensions included |
 
 ### 📦 Installs basic extensions for privacy (can be removed anytime)
 
@@ -119,11 +188,14 @@ The project provides the following policy templates:
 .
 ├── config
 │   ├── firefox
+│   │   ├── basic_policies.json
+│   │   ├── full_policies.json
 │   │   └── policies.json
 │   ├── fish
 │   │   ├── config_debian.fish
 │   │   └── config.fish
 │   └── vscode
+│       ├── extensions.txt
 │       ├── keybindings.json
 │       └── settings.json
 ├── distros

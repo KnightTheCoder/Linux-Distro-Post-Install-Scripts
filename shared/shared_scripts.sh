@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 # Global colors
 readonly RED='\033[0;31m'
@@ -20,7 +20,7 @@ function remove_package() {
     local package_list="$1"
     local package="$2"
 
-    local result_package_list=${package_list//"$package"/}
+    local result_package_list=${package_list/"$package"/}
 
     echo "$result_package_list"
 }
@@ -76,6 +76,10 @@ function get_current_distro_icon() {
 #   whiptail screen
 #######################################
 function setup_firefox() {
+    if [[ ! "$(command -v firefox)" ]]; then
+        echo -e "${RED}firefox is not installed!${NC}"
+    fi
+
     echo -e "${GREEN}Setting up firefox...${NC}"
 
     local policy_filename="policies.json"
@@ -109,7 +113,7 @@ function setup_firefox() {
     local firefox_policy_directory=/etc/firefox/policies
 
     if [[ ! -f "${firefox_policy_directory}/policies.json" ]]; then
-        sudo mkdir -pv "${firefox_policy_directory}"
+        sudo mkdir -p "${firefox_policy_directory}"
     fi
 
     sudo cp -fv config/firefox/${policy_filename} "${firefox_policy_directory}/policies.json"
@@ -181,14 +185,14 @@ function setup_itch_app() {
         return
     fi
 
-    wget -O itch-setup "https://itch.io/app/download?platform=linux"
+    curl -Lo itch-setup "https://itch.io/app/download?platform=linux"
     chmod +x "./itch-setup"
     ./itch-setup
     rm -vf "./itch-setup"
 }
 
 #######################################
-# Install vscode extensions and copy keybindings
+# Install vscode extensions, copy settings and copy keybindings
 # Globals:
 #   HOME
 #   GREEN
@@ -204,7 +208,7 @@ function setup_itch_app() {
 function setup_vscode() {
     local code_editor=$1 # code or codium
 
-    if [[ -z "$code_editor" ]] || [[ "$code_editor" == code ]]; then
+    if [[ -z "$code_editor" ]]; then
         code_editor="code"
     fi
 
@@ -240,7 +244,7 @@ function setup_vscode() {
 
     local code_folder="Code"
 
-    if [[ $code_editor = "codium" ]]; then
+    if [[ $code_editor == "codium" ]]; then
         code_folder="VSCodium"
     fi
 
@@ -277,7 +281,7 @@ function setup_hacknerd_fonts() {
 
     echo -e "${GREEN}Installing hack nerd fonts...${NC}"
 
-    wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/Hack.zip
+    curl -Lo Hack.zip https://github.com/ryanoasis/nerd-fonts/releases/download/v3.3.0/Hack.zip
     unzip ./Hack.zip -d Hack
     mkdir -p "${hacknerdfont_directory}"
     cp -fv ./Hack/*.ttf "${hacknerdfont_directory}"
@@ -300,14 +304,15 @@ function setup_hacknerd_fonts() {
 function setup_bash() {
     if [[ -d ~/.local/share/blesh ]]; then
         echo -e "${YELLOW}blesh is already setup${NC}"
-        return
+    else
+        echo -e "${GREEN}Installing blesh...${NC}"
+
+        echo 'source ~/.local/share/blesh/ble.sh' >>~/.bashrc
+        git clone --recursive --depth 1 --shallow-submodules https://github.com/akinomyoga/ble.sh.git
+        make -C ble.sh install PREFIX=~/.local
+
+        rm -rfv ./ble.sh
     fi
-
-    echo -e "${GREEN}Installing blesh...${NC}"
-
-    git clone --recursive --depth 1 --shallow-submodules https://github.com/akinomyoga/ble.sh.git
-    make -C ble.sh install PREFIX=~/.local
-    # echo 'source ~/.local/share/blesh/ble.sh' >> ~/.bashrc
 
     local bat_fullname=bat
 
@@ -315,13 +320,12 @@ function setup_bash() {
         bat_fullname=batcat
     fi
 
-    {
-        echo 'source ~/.local/share/blesh/ble.sh'
-        echo "alias ls=\"eza\""
-        echo "alias cat=\"$bat_fullname\""
-    } >>~/.bashrc
-
-    rm -rfv ./ble.sh
+    if ! grep -iq eza ~/.bashrc && ! grep -iq $bat_fullname ~/.bashrc; then
+        {
+            echo "alias ls=\"eza\""
+            echo "alias cat=\"$bat_fullname\""
+        } >>~/.bashrc
+    fi
 }
 
 #######################################
@@ -346,9 +350,10 @@ function setup_fish() {
     if [[ -d "$HOME/.local/share/omf" ]]; then
         echo -e "${YELLOW}Oh my fish is already installed${NC}"
     else
-        echo -e "${YELLOW}Please run 'exit' to exit from fish and install the bobthefish theme${NC}"
+        echo -e "${YELLOW}Please run 'exit' to exit from fish and continue setup${NC}"
         curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
-        fish "../../shared/setup.fish"
+
+        fish -c "omf install bobthefish"
     fi
 
     echo -e "${GREEN}Copying fish config...${NC}"
@@ -388,15 +393,19 @@ function setup_zsh() {
         return
     fi
 
+    # Delete any leftovers from zsh install
+    echo -e "${GREEN}Deleting leftovers from zsh install...${NC}"
+    rm -rfv ~/.z*
+
     echo -e "${GREEN}Installing prezto...${NC}"
 
     # Add prezto as plugin manager
-    git clone --depth 1 -b master --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
+    git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
 
     zsh "../../shared/setup.zsh"
 
     # Add zsh-abbr for fish-like abbreviations
-    git clone --depth 1 -b main https://github.com/olets/zsh-abbr.git "$HOME/.zprezto/modules/zsh-abbr"
+    git clone https://github.com/olets/zsh-abbr --recurse-submodules --single-branch --branch main --depth 1 "$HOME/.zprezto/modules/zsh-abbr"
 
     # Add to the 40th line
     sed -i "40i 'autosuggestions' \\\\" "$HOME/.zpreztorc"
@@ -412,10 +421,6 @@ function setup_zsh() {
     fi
 
     printf "abbr cat=%s\nabbr ls=eza" $bat_fullname >"$HOME/.config/zsh-abbr/user-abbreviations"
-
-    # Change login shell to zsh
-    echo -e "${GREEN}Changing login shell for ${USER}...${NC}"
-    chsh -s /bin/zsh
 }
 
 #######################################
@@ -462,15 +467,15 @@ function setup_starship() {
     local zsh_config=~/.zshrc
 
     if [[ -x "$(command -v bash)" ]] && ! grep -iq starship $bash_config; then
-        printf "\neval \"\$(starship init bash)\"" | tee -a $bash_config
+        printf "\neval \"\$(starship init bash)\"\n" >>$bash_config
     fi
 
     if [[ -x "$(command -v fish)" ]] && ! grep -iq starship $fish_config; then
-        printf "\nstarship init fish | source" | tee -a $fish_config
+        printf "\nstarship init fish | source\n" >>$fish_config
     fi
 
     if [[ -x "$(command -v zsh)" ]] && ! grep -iq starship $zsh_config; then
-        printf "\neval \"\$(starship init zsh)\"" | tee -a $zsh_config
+        printf "\neval \"\$(starship init zsh)\"\n" >>$zsh_config
     fi
 
     local starship_config_file=~/.config/starship.toml
@@ -655,7 +660,7 @@ function setup_xampp() {
 
     local xampp_executable=xampp-linux-installer.run
 
-    wget -O "${xampp_executable}" https://sourceforge.net/projects/xampp/files/XAMPP%20Linux/8.2.12/xampp-linux-x64-8.2.12-0-installer.run/download
+    curl -Lo "${xampp_executable}" https://sourceforge.net/projects/xampp/files/XAMPP%20Linux/8.2.12/xampp-linux-x64-8.2.12-0-installer.run/download
     chmod +x "./${xampp_executable}"
     sudo "./${xampp_executable}"
     rm -rv "./${xampp_executable}"
@@ -677,10 +682,10 @@ function setup_virtualbox_extension() {
     echo -e "${GREEN}Installing virtualbox extension pack...${NC}"
 
     local manage="vboxmanage"
-    local extension_link="https://download.virtualbox.org/virtualbox/7.0.12/Oracle_VM_VirtualBox_Extension_Pack-7.0.12.vbox-extpack"
+    local extension_link="https://download.virtualbox.org/virtualbox/7.0.22/Oracle_VM_VirtualBox_Extension_Pack-7.0.22.vbox-extpack"
 
-    if grep -iq arch "$DISTRO_RELEASE" || grep -iq fedora "$DISTRO_RELEASE"; then
-        extension_link="https://download.virtualbox.org/virtualbox/7.1.0/Oracle_VirtualBox_Extension_Pack-7.1.0.vbox-extpack"
+    if grep -iq arch "$DISTRO_RELEASE" || grep -iq fedora "$DISTRO_RELEASE" || grep -iq opensuse "$DISTRO_RELEASE"; then
+        extension_link="https://download.virtualbox.org/virtualbox/7.1.4/Oracle_VirtualBox_Extension_Pack-7.1.4.vbox-extpack"
     fi
 
     if grep -iq opensuse "$DISTRO_RELEASE"; then
@@ -692,9 +697,10 @@ function setup_virtualbox_extension() {
         return
     fi
 
-    wget "$extension_link"
-    sudo "${manage}" extpack install Oracle*.vbox-extpack
-    rm -fv Oracle*.vbox-extpack
+    local vbox_ext_name="Oracle_VirtualBox_Extension_Pack.vbox-extpack"
+    curl -Lo "$vbox_ext_name" "$extension_link"
+    sudo "${manage}" extpack install "$vbox_ext_name"
+    rm -fv "$vbox_ext_name"
 }
 
 #######################################
@@ -705,12 +711,19 @@ function setup_virtualbox_extension() {
 #   whiptail screen
 #######################################
 function setup_flatpak() {
-    local apps
+    if [[ ! "$(command -v flatpak)" ]]; then
+        echo -e "${RED}flatpak is not installed!${NC}"
+        return
+    fi
 
+    local apps
     apps=$(
         whiptail --title "Flatpaks to install" --separate-output --notags --checklist "Choose what to install for flatpak" 0 0 0 \
             "io.missioncenter.MissionCenter" "MissionCenter" ON \
+            "net.nokyan.Resources" "Resources" OFF \
             "com.github.tchx84.Flatseal" "Flatseal" ON \
+            "it.mijorus.gearlever" "Gear Lever" OFF \
+            "io.github.giantpinkrobots.flatsweep" "Flatsweep" OFF \
             "com.valvesoftware.Steam" "Steam" OFF \
             "io.itch.itch" "Itch desktop app" OFF \
             "com.heroicgameslauncher.hgl" "Heroic Games Launcher" OFF \
@@ -739,11 +752,9 @@ function setup_flatpak() {
             3>&1 1>&2 2>&3
     )
 
-    if grep -iq fedora $DISTRO_RELEASE; then
-        # Remove fedora remote if it exists
-        if flatpak remotes | grep -iq fedora; then
-            sudo flatpak remote-delete fedora
-        fi
+    # Remove fedora remote if it exists
+    if grep -iq fedora $DISTRO_RELEASE && flatpak remotes | grep -iq fedora; then
+        sudo flatpak remote-delete fedora
     fi
 
     # Setup flathub

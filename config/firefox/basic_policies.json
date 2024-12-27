@@ -23,6 +23,18 @@
             }
         },
         "NoDefaultBookmarks": true,
-        "HttpsOnlyMode": "enabled"
+        "HttpsOnlyMode": "enabled",
+        "DNSOverHTTPS": {
+            "Enabled": true,
+            "ProviderURL": "https://base.dns.mullvad.net/dns-query",
+            "Fallback": true
+        },
+        "UserMessaging": {
+            "ExtensionRecommendations": false,
+            "FeatureRecommendations": false
+        },
+        "FirefoxHome": {
+            "SponsoredTopSites": false
+        }
     }
 }

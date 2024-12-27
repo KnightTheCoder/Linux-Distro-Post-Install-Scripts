@@ -52,12 +52,13 @@ Tested distros:
 -   ZorinOS
 -   Pop!\_OS
 -   MX Linux
+-   Linux Lite
 -   WSL
 -   Arch Linux
 -   EndeavourOS
 -   Manjaro Linux
 
-> Written in Bash and whiptail <br /> > <img src="https://skillicons.dev/icons?i=bash" />
+> Written in Bash and whiptail <br /> <img src="https://skillicons.dev/icons?i=bash" />
 
 > [!NOTE]
 > Originally designed for OpenSUSE Tumbleweed KDE <br />
@@ -69,10 +70,50 @@ Tested distros:
 
 ## 🛠 Requirements
 
--   wget (to download the scripts)
+-   curl (to download the scripts)
 -   unzip (to unzip the scripts)
 -   bash (to run the scripts)
 -   systemd (needed to start services)
+
+<details>
+
+<summary>Debian</summary>
+
+```console
+sudo apt install curl unzip bash -y
+```
+
+</details>
+
+<details>
+
+<summary>Fedora</summary>
+
+```console
+sudo dnf install curl unzip bash -y
+```
+
+</details>
+
+<details>
+
+<summary>OpenSUSE</summary>
+
+```console
+sudo zypper install --details -y curl unzip bash
+```
+
+</details>
+
+<details>
+
+<summary>Arch linux</summary>
+
+```console
+sudo pacman -Syy curl unzip bash --noconfirm --needed
+```
+
+</details>
 
 ## 💡 Usage
 
@@ -85,7 +126,7 @@ Tested distros:
 <summary>Stable</summary>
 
 ```console
-wget -O "$(xdg-user-dir DOWNLOAD)/post-install-scripts.zip" "https://github.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/archive/refs/heads/master.zip"
+curl -Lo "$(xdg-user-dir DOWNLOAD)/post-install-scripts.zip" "https://github.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/archive/refs/heads/master.zip"
 
 cd "$(xdg-user-dir DOWNLOAD)" && unzip -o post-install-scripts.zip && cd Linux-Distro-Post-Install-Scripts-master
 
@@ -98,7 +139,7 @@ bash ./post_install.sh
 <summary>Experimental</summary>
 
 ```console
-wget -O "$(xdg-user-dir DOWNLOAD)/post-install-scripts.zip" "https://github.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/archive/refs/heads/maintanence.zip"
+curl -Lo "$(xdg-user-dir DOWNLOAD)/post-install-scripts.zip" "https://github.com/KnightTheCoder/Linux-Distro-Post-Install-Scripts/archive/refs/heads/maintanence.zip"
 
 cd "$(xdg-user-dir DOWNLOAD)" && unzip -o post-install-scripts.zip && cd Linux-Distro-Post-Install-Scripts-maintanence
 
@@ -112,20 +153,22 @@ bash ./post_install.sh
 -   Choose the apps and configurations you need
 -   Install one of 3 firefox policy templates for privacy and preinstalled extensions
 -   Updates the system
--   Sets up flatpak and install apps
+-   Removes bloat
+-   Install NVIDIA drivers
+-   Option to remove discover
+-   Installs browsers
+-   Sets up flatpak and install flatpak apps
 -   Downloads and installs microsoft and hack nerd fonts
--   Installs Visual Studio Code and Codium extensions and copies the keybindings
--   Installs gaming launchers such as Steam, lutris, itch desktop app
--   Adds the following command line utilities: neofetch, htop, btop, neovim, eza, bat, tldr
--   Installs wine and Protonup-Qt to run windows games
--   Sets up bash, fish and zsh
--   Installs NvChad or AstroNvim for neovim
--   Installs the GitHub CLI
--   Installs docker, podman and distrobox for containers
--   Installs qemu, virtualbox for virtualization
--   Installs code editors: vscode, vscodium
--   Installs programming languages and development environments: gcc, nodejs, dotnet, rust, go, java, xampp
+-   Installs Visual Studio Code and Codium extensions and copies the keybindings (customizable in the config file)
+-   Adds the following command line utilities: neovim, eza, bat
+-   Installs gaming launchers
+-   Installs wine, Protonup-Qt to run windows games
+-   Sets up shells and prompts
+-   Installs NvChad or AstroNvim for neovim as configs
+-   Installs programming languages and development environments
 -   Optionally sets hostname
+
+## [Full list of packages](docs#list-of-packages-to-install)
 
 ## ❓ Why use it?
 
@@ -144,14 +187,13 @@ By using the provided commands the scripts will be downloaded and unzipped in yo
 
 ## 🌐 Firefox policy
 
-A firefox policy is included for increased privacy.
+3 firefox policy templates are included for increased privacy.
 
 Increases privacy, removes telemetry and installs privacy extensions.
 
 Full policy list and changes: [here](docs#-firefox-policy)
 
 > [!NOTE]
-> The policy is applied automatically when running the script with the `--copy-firefox-policy` argument <br />
 > Can be found at `config/firefox/policies.json` <br />
 > Manually edit to customize, then copy to `/etc/firefox/policies/` for it to work
 
