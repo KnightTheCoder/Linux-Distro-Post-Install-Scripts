@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 cd "$(dirname "$0")" || exit
 
@@ -21,6 +21,7 @@ function main() {
             "wine" "Wine" OFF \
             "gaming-overlay" "Gaming overlay" OFF \
             "steam" "Steam" OFF \
+            "steam-devices" "Steam devices (for the steam flatpak)" OFF \
             "itch" "Itch desktop app" OFF \
             "heroic" "Heroic Games Launcher" OFF \
             "firefox" "Firefox web browser" ON \
@@ -60,10 +61,8 @@ function main() {
     cli_packages=$(
         whiptail --title "CLI install" --separate-output --notags --checklist "Select cli applications to install" 0 0 0 \
             "neofetch" "neofetch" ON \
-            "htop" "htop" ON \
             "btop" "btop++" ON \
             "gh" "github cli" OFF \
-            "tldr" "tldr, short man pages" OFF \
             3>&1 1>&2 2>&3
     )
 
@@ -87,7 +86,25 @@ function main() {
     local services=()
     local setups=(hacknerd eza)
     local usergroups=()
-    local packages_to_remove="elisa dragonplayer akregator kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat kolourpaint thunderbird"
+    local snaps=()
+    local packages_to_remove="elisa dragonplayer akregator kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat kolourpaint thunderbird konqueror"
+
+    # Install NVIDIA drivers only on debian
+    if grep -iq ID=debian "$DISTRO_RELEASE"; then
+        local driver
+
+        driver=$(
+            whiptail --notags --title "Drivers" --menu "Choose an NVIDIA driver" 0 0 0 \
+                "" "None/Don't install" \
+                "nvidia" "GeForce 700 series and newer GPUs" \
+                3>&1 1>&2 2>&3
+        )
+
+        if [[ "$driver" == "nvidia" ]]; then
+            packages+=" nvidia-driver firmware-misc-nonfree"
+            setups+=(nvidia)
+        fi
+    fi
 
     # Add packages to the correct categories
     for package in $packages; do
@@ -129,6 +146,26 @@ function main() {
             packages+=" wine32 winetricks"
             ;;
 
+        firefox)
+            if grep -iq ID=debian "$DISTRO_RELEASE"; then
+                packages=$(remove_package "$packages" "$package")
+                packages+=" firefox-esr"
+
+            elif grep -iq ID=ubuntu "$DISTRO_RELEASE" && [[ -x "$(command -v snap)" ]]; then
+                packages=$(remove_package "$packages" "$package")
+                snaps+=(firefox)
+            fi
+
+            ;;
+
+        chromium)
+            if grep -iq ID=ubuntu "$DISTRO_RELEASE" && [[ -x "$(command -v snap)" ]]; then
+                packages=$(remove_package "$packages" "$package")
+                snaps+=(chromium)
+            fi
+
+            ;;
+
         vivaldi)
             packages=$(remove_package "$packages" "$package")
 
@@ -167,7 +204,7 @@ function main() {
         virtualbox)
             packages=$(remove_package "$packages" "$package")
 
-            packages+=" dkms build-essential linux-headers-$(uname -r) curl wget apt-transport-https gnupg2"
+            packages+=" dkms build-essential linux-headers-$(uname -r) apt-transport-https gnupg2"
 
             setups+=(virtualbox)
 
@@ -175,14 +212,9 @@ function main() {
             ;;
 
         steam)
-            # steam package has a different name for debian
-            if grep -iq ID=debian "$DISTRO_RELEASE"; then
-                packages=$(remove_package "$packages" "$package")
+            packages=$(remove_package "$packages" "$package")
 
-                packages+=" steam-installer"
-            fi
-
-            packages+=" steam-devices"
+            packages+=" steam-installer"
             ;;
 
         lutris)
@@ -261,7 +293,7 @@ function main() {
             ;;
 
         docker)
-            packages=${packages/"$package"/}
+            packages=$(remove_package "$packages" "$package")
 
             packages+=" ca-certificates"
             setups+=(docker)
@@ -300,10 +332,10 @@ function main() {
     if grep -iq "kde neon" "$DISTRO_RELEASE"; then
         echo -e "${GREEN}Installing nala...${NC}"
         # Download files for installing nala
-        wget -O 'volian-keyring.deb' "https://gitlab.com/volian/volian-archive/uploads/d9473098bc12525687dc9aca43d50159/volian-archive-keyring_0.2.0_all.deb"
+        curl -Lo 'volian-keyring.deb' "https://gitlab.com/volian/volian-archive/uploads/d9473098bc12525687dc9aca43d50159/volian-archive-keyring_0.2.0_all.deb"
         sudo apt install ./volian-keyring.deb
 
-        wget -O 'volian-nala.deb' "https://gitlab.com/volian/volian-archive/uploads/d00e44faaf2cc8aad526ca520165a0af/volian-archive-nala_0.2.0_all.deb"
+        curl -Lo 'volian-nala.deb' "https://gitlab.com/volian/volian-archive/uploads/d00e44faaf2cc8aad526ca520165a0af/volian-archive-nala_0.2.0_all.deb"
         sudo apt install ./volian-nala.deb
 
         rm -v "volian-*.deb"
@@ -311,7 +343,7 @@ function main() {
         echo -e "${GREEN}Adding extra repositories...${NC}"
         # Add extra repositories to debian
         sudo apt install software-properties-common -y
-        sudo apt-add-repository contrib non-free -y
+        sudo apt-add-repository contrib non-free non-free-firmware -y
     fi
 
     # Add 32 bit support if it's not available
@@ -336,6 +368,10 @@ function main() {
     # shellcheck disable=SC2086
     sudo nala install -y $packages
 
+    if ! grep -iq ID=debian "$DISTRO_RELEASE"; then
+        sudo snap install "${snaps[@]}"
+    fi
+
     echo -e "${GREEN}Adding user to groups...${NC}"
     # Add user to groups
     for group in "${usergroups[@]}"; do
@@ -348,13 +384,13 @@ function main() {
         case $app in
 
         lutris)
-            wget -O 'lutris.deb' "https://github.com/lutris/lutris/releases/download/v0.5.17/lutris_0.5.17_all.deb"
+            curl -Lo 'lutris.deb' "https://github.com/lutris/lutris/releases/download/v0.5.18/lutris_0.5.18_all.deb"
             sudo apt install -y ./lutris.deb
             rm -v ./lutris.deb
             ;;
 
         heroic)
-            wget -O heroic.deb https://github.com/Heroic-Games-Launcher/HeroicGamesLauncher/releases/download/v2.14.0/heroic_2.14.0_amd64.deb
+            curl -Lo heroic.deb https://github.com/Heroic-Games-Launcher/HeroicGamesLauncher/releases/download/v2.14.0/heroic_2.14.0_amd64.deb
             sudo dpkg -i heroic.deb
             rm -v heroic.deb
             ;;
@@ -394,7 +430,7 @@ function main() {
             ;;
 
         vivaldi)
-            wget -O vivaldi.deb https://downloads.vivaldi.com/stable/vivaldi-stable_6.9.3447.51-1_amd64.deb
+            curl -Lo vivaldi.deb https://downloads.vivaldi.com/stable/vivaldi-stable_6.9.3447.51-1_amd64.deb
             sudo nala update && sudo nala install -y ./vivaldi.deb
 
             rm -fv ./vivaldi.deb
@@ -496,7 +532,7 @@ function main() {
             ;;
 
         docker-desktop)
-            wget -O docker-desktop.deb "https://desktop.docker.com/linux/main/amd64/139021/docker-desktop-4.28.0-amd64.deb?utm_source=docker&utm_medium=webreferral&utm_campaign=docs-driven-download-linux-amd64"
+            curl -Lo docker-desktop.deb "https://desktop.docker.com/linux/main/amd64/139021/docker-desktop-4.28.0-amd64.deb?utm_source=docker&utm_medium=webreferral&utm_campaign=docs-driven-download-linux-amd64"
             sudo apt-get update
             sudo apt-get install -y ./docker-desktop.deb
             rm -v docker-desktop.deb
@@ -546,6 +582,18 @@ function main() {
             setup_flatpak
             ;;
 
+        nvidia)
+            sudo mkdir /etc/dracut.conf.d
+            sudo touch /etc/dracut.conf.d/10-nvidia.conf
+            echo install_items+=" /etc/modprobe.d/nvidia-blacklists-nouveau.conf /etc/modprobe.d/nvidia.conf /etc/modprobe.d/nvidia-options.conf " | sudo tee /etc/dracut.conf.d/10-nvidia.conf
+
+            if [[ $(cat /sys/module/nvidia_drm/parameters/modeset) == "N" ]]; then
+                sudo mkdir /etc/modprobe.d/
+                sudo touch /etc/modprobe.d/nvidia-options.conf
+                echo "options nvidia-drm modeset=1" | sudo tee -a /etc/modprobe.d/nvidia-options.conf
+            fi
+            ;;
+
         bash)
             setup_bash
             ;;
@@ -574,6 +622,9 @@ function main() {
     for serv in "${services[@]}"; do
         sudo systemctl enable --now "$serv"
     done
+
+    # Update system after setup
+    sudo nala upgrade -y
 }
 
 if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then

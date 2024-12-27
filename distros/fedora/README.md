@@ -8,3 +8,4 @@
 -   Updates the system
 -   Configures dnf to use yes by default and use parallel downloads (set to 20)
 -   Includes additional codecs
+-   Installs and uses dnf5

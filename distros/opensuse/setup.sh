@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 cd "$(dirname "$0")" || exit
 
@@ -50,8 +50,8 @@ function main() {
             "wine" "Wine" OFF \
             "gaming-overlay" "Gaming overlay" OFF \
             "steam" "Steam" OFF \
+            "steam-devices" "Steam devices (for the steam flatpak)" OFF \
             "itch" "Itch desktop app" OFF \
-            "heroic" "Heroic Games Launcher" OFF \
             "MozillaFirefox" "Firefox web browser" ON \
             "librewolf" "Librewolf web browser" OFF \
             "chromium" "Chromium web browser" OFF \
@@ -90,8 +90,7 @@ function main() {
     local cli_packages
     cli_packages=$(
         whiptail --title "CLI install" --separate-output --notags --checklist "Select cli applications to install" 0 0 0 \
-            "neofetch" "neofetch" ON \
-            "htop" "htop" ON \
+            "fastfetch" "fastfetch" ON \
             "btop" "btop++" ON \
             "gh" "github cli" OFF \
             3>&1 1>&2 2>&3
@@ -99,7 +98,7 @@ function main() {
 
     packages+=" $cli_packages"
 
-    packages+=" opi neovim eza bat fetchmsttfonts systemd-zram-service 7zip unrar"
+    packages+=" opi neovim eza bat curl wget fetchmsttfonts systemd-zram-service 7zip unrar"
 
     local shells
     shells=$(choose_shells)
@@ -121,6 +120,19 @@ function main() {
     local nvim_config
     nvim_config=$(choose_nvim_config)
     setups+=("$nvim_config")
+
+    # Install NVIDIA drivers
+    local driver
+    driver=$(
+        whiptail --notags --title "Drivers" --menu "Choose a driver" 0 0 0 \
+            "" "None/Don't install" \
+            "nvidia" "NVIDIA driver" \
+            3>&1 1>&2 2>&3
+    )
+
+    if [[ "$driver" == "nvidia" ]]; then
+        setups+=(nvidia)
+    fi
 
     # Add packages to the correct categories
     for package in $packages; do
@@ -147,7 +159,7 @@ function main() {
         gaming-overlay)
             packages=$(remove_package "$packages" "$package")
 
-            packages+=" goverlay mangohud gamemode"
+            packages+=" goverlay mangohud mangohud-32bit gamemode"
             ;;
 
         wine)
@@ -188,16 +200,6 @@ function main() {
             setups+=(virtualbox)
 
             usergroups+=(vboxusers)
-            ;;
-
-        steam)
-            packages+=" steam-devices"
-            ;;
-
-        heroic)
-            packages=$(remove_package "$packages" "$package")
-
-            opi+=(heroic-games-launcher)
             ;;
 
         itch)
@@ -248,7 +250,7 @@ function main() {
         java)
             packages=$(remove_package "$packages" "$package")
 
-            packages+=" java-22-openjdk-devel"
+            packages+=" java-devel"
             ;;
 
         xampp)
@@ -304,7 +306,7 @@ function main() {
     # shellcheck disable=SC2086
     sudo zypper remove --details -y --clean-deps -t pattern $patterns_to_remove
     # shellcheck disable=SC2086
-    sudo zypper -vv al -t pattern $patterns_to_remove
+    sudo zypper -vv addlock -t pattern $patterns_to_remove
 
     # Install packages
     # Don't use quotes, zypper won't recognize the packages
@@ -395,6 +397,12 @@ function main() {
             setup_flatpak
             ;;
 
+        nvidia)
+            sudo zypper install --details -y openSUSE-repos-Tumbleweed-NVIDIA
+            sudo zypper refresh
+            sudo zypper install-new-recommends --repo repo-non-free
+            ;;
+
         bash)
             setup_bash
             ;;
@@ -419,6 +427,9 @@ function main() {
     for serv in "${services[@]}"; do
         sudo systemctl enable --now "$serv"
     done
+
+    # Update system after setup
+    sudo zypper -vv dist-upgrade -y
 
     create_snapshot 1
 }
