@@ -551,7 +551,13 @@ function main() {
 
             sudo nala update
 
-            sudo nala install virtualbox-7.1 -y
+            vb_name="virtualbox"
+
+            if grep -iq ID=debian "$DISTRO_RELEASE"; then
+                vb_name="virtualbox-7.1"
+            fi
+
+            sudo nala install ${vb_name} -y
 
             setup_virtualbox_extension
             ;;
