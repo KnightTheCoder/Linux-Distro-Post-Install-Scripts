@@ -682,7 +682,12 @@ function setup_virtualbox_extension() {
     echo -e "${GREEN}Installing virtualbox extension pack...${NC}"
 
     local manage="vboxmanage"
+
     local extension_link="https://download.virtualbox.org/virtualbox/7.1.4/Oracle_VirtualBox_Extension_Pack-7.1.4.vbox-extpack"
+
+    if grep -iq ubuntu "$DISTRO_RELEASE"; then
+        extension_link="https://download.virtualbox.org/virtualbox/7.0.22/Oracle_VM_VirtualBox_Extension_Pack-7.0.22.vbox-extpack"
+    fi
 
     if grep -iq opensuse "$DISTRO_RELEASE"; then
         manage="VBoxManage"
@@ -693,10 +698,9 @@ function setup_virtualbox_extension() {
         return
     fi
 
-    local vbox_ext_name="Oracle_VirtualBox_Extension_Pack.vbox-extpack"
-    curl -Lo "$vbox_ext_name" "$extension_link"
-    sudo "${manage}" extpack install "$vbox_ext_name"
-    rm -fv "$vbox_ext_name"
+    wget "$extension_link"
+    sudo "${manage}" extpack install Oracle*.vbox-extpack
+    rm -fv Oracle*.vbox-extpack
 }
 
 #######################################
