@@ -697,7 +697,7 @@ function setup_virtualbox_extension() {
         return
     fi
 
-    local vbox_ext_name="Oracle_VirtualBox_Extension_Pack.vbox-extpack"
+    local vbox_ext_name="Oracle_VM_VirtualBox_Extension_Pack.vbox-extpack"
     curl -Lo "$vbox_ext_name" "$extension_link"
     sudo "${manage}" extpack install "$vbox_ext_name"
     rm -fv "$vbox_ext_name"
