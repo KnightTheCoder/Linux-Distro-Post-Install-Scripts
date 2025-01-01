@@ -151,7 +151,7 @@ function main() {
                 packages=$(remove_package "$packages" "$package")
                 packages+=" firefox-esr"
 
-            elif grep -iq ID=ubuntu "$DISTRO_RELEASE" && [[ -x "$(command -v snap)" ]]; then
+            elif [[ -x "$(command -v snap)" ]]; then
                 packages=$(remove_package "$packages" "$package")
                 snaps+=(firefox)
             fi
@@ -159,7 +159,7 @@ function main() {
             ;;
 
         chromium)
-            if grep -iq ID=ubuntu "$DISTRO_RELEASE" && [[ -x "$(command -v snap)" ]]; then
+            if [[ -x "$(command -v snap)" ]]; then
                 packages=$(remove_package "$packages" "$package")
                 snaps+=(chromium)
             fi
