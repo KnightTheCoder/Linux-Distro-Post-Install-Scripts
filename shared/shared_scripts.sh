@@ -724,6 +724,7 @@ function setup_flatpak() {
             "com.github.tchx84.Flatseal" "Flatseal" ON \
             "it.mijorus.gearlever" "Gear Lever" OFF \
             "io.github.giantpinkrobots.flatsweep" "Flatsweep" OFF \
+            "io.github.flattool.Warehouse" "Warehouse" OFF \
             "com.valvesoftware.Steam" "Steam" OFF \
             "io.itch.itch" "Itch desktop app" OFF \
             "com.heroicgameslauncher.hgl" "Heroic Games Launcher" OFF \
