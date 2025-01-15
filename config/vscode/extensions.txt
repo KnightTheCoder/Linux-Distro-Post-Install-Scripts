@@ -21,6 +21,7 @@ ms-vscode.cpptools
 ms-vscode.makefile-tools
 pkief.material-icon-theme
 rust-lang.rust-analyzer
+tauri-apps.tauri-vscode
 rvest.vs-code-prettier-eslint
 steoates.autoimport
 svelte.svelte-vscode
