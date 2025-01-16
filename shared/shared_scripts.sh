@@ -620,8 +620,12 @@ function setup_npm() {
     fi
 
     echo -e "${GREEN}Updating npm and installing npm-check...${NC}"
+    npm_packages=(npm npm-check npm-check-updates)
 
-    sudo npm -g install npm npm-check
+    for npm_package in "${npm_packages[@]}"; do
+        echo -e "${GREEN}Installing ${npm_package}...${NC}"
+        sudo npm -g install "${npm_package}"
+    done
 }
 
 #######################################
