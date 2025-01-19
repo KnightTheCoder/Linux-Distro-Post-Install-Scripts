@@ -139,6 +139,7 @@ The project provides the following policy templates:
 | Disable feature recommendations   |         X          |                         X                         |            X            |
 | Disable sponsored top sites       |         X          |                         X                         |            X            |
 | Disable form history              |                    |                         X                         |            X            |
+| Disable Firefox Accounts (sync)   |         X          |                         X                         |            X            |
 | Enable all tracking protection    |         X          |                         X                         |            X            |
 | Disable Offer to save logins      |                    |                         x                         |            x            |
 | Block requests for notifications  |         X          |                         X                         |            X            |
