@@ -161,6 +161,7 @@ The project provides the following policy templates:
 -   [LocalCDN][9]
 -   [ClearURLs][10]
 -   [Skip Redirect][11]
+-   [Firefox Multi-Account Containers][20]
 
 ### Optional extensions
 
@@ -257,3 +258,4 @@ Project documentation
 [17]: https://addons.mozilla.org/en-US/firefox/addon/protondb-for-steam/
 [18]: https://addons.mozilla.org/en-US/firefox/addon/darkreader/
 [19]: https://addons.mozilla.org/en-US/firefox/addon/save-webp-as-png-or-jpeg/
+[20]: https://addons.mozilla.org/en-US/firefox/addon/multi-account-containers/
