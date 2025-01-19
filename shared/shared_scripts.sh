@@ -750,6 +750,7 @@ function setup_flatpak() {
             "com.brave.Browser" "Brave web browser" OFF \
             "com.vivaldi.Vivaldi" "Vivaldi web browser" OFF \
             "net.mullvad.MullvadBrowser" "Mullavad Browser" OFF \
+            "app.zen_browser.zen" "Zen Browser" OFF \
             "org.libreoffice.LibreOffice" "Libreoffice" OFF \
             "org.onlyoffice.desktopeditors" "ONLYOFFICE Desktop Editors" OFF \
             "org.qbittorrent.qBittorrent" "qbittorrent bittorrent client" OFF \
