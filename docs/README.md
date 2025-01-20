@@ -162,6 +162,7 @@ The project provides the following policy templates:
 -   [ClearURLs][10]
 -   [Skip Redirect][11]
 -   [Firefox Multi-Account Containers][20]
+-   [Ublacklist][21]
 
 ### Optional extensions
 
@@ -259,3 +260,4 @@ Project documentation
 [18]: https://addons.mozilla.org/en-US/firefox/addon/darkreader/
 [19]: https://addons.mozilla.org/en-US/firefox/addon/save-webp-as-png-or-jpeg/
 [20]: https://addons.mozilla.org/en-US/firefox/addon/multi-account-containers/
+[21]: https://addons.mozilla.org/en-US/firefox/addon/ublacklist

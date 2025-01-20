@@ -17,7 +17,8 @@
                 "https://addons.mozilla.org/firefox/downloads/file/4251866/localcdn_fork_of_decentraleyes-2.6.65.xpi",
                 "https://addons.mozilla.org/firefox/downloads/file/4064884/clearurls-1.26.1.xpi",
                 "https://addons.mozilla.org/firefox/downloads/file/3920533/skip_redirect-2.3.6.xpi",
-                "https://addons.mozilla.org/firefox/downloads/file/4355970/multi_account_containers-8.2.0.xpi"
+                "https://addons.mozilla.org/firefox/downloads/file/4355970/multi_account_containers-8.2.0.xpi",
+                "https://addons.mozilla.org/firefox/downloads/file/4327308/ublacklist-8.9.2.xpi"
             ]
         },
         "EnableTrackingProtection": {
