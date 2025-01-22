@@ -565,7 +565,7 @@ function main() {
             ;;
 
         eza)
-            if [ ! -x /usr/bin/eza ]; then
+            if [ ! -x "$(command -v eza)" ]; then
                 sudo mkdir -p /etc/apt/keyrings
 
                 wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | sudo gpg --dearmor -o /etc/apt/keyrings/gierens.gpg
