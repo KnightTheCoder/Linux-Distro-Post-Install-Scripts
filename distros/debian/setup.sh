@@ -432,7 +432,7 @@ function main() {
             ;;
 
         vivaldi)
-            curl -Lo vivaldi.deb https://downloads.vivaldi.com/stable/vivaldi-stable_6.9.3447.51-1_amd64.deb
+            curl -Lo vivaldi.deb https://downloads.vivaldi.com/stable/vivaldi-stable_7.0.3495.29-1_amd64.deb
             sudo nala update && sudo nala install -y ./vivaldi.deb
 
             rm -fv ./vivaldi.deb
