@@ -459,7 +459,7 @@ function main() {
             ;;
 
         rust)
-            setup_rust
+            setup_rust default
             ;;
 
         npm)

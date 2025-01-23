@@ -356,6 +356,8 @@ function main() {
             ;;
 
         rust)
+            setup_rust
+
             rustup default stable
             ;;
 

@@ -411,6 +411,8 @@ function main() {
 
         rust)
             setup_rust
+
+            rustup-init
             ;;
 
         npm)

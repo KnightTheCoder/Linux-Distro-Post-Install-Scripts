@@ -378,7 +378,9 @@ function main() {
             ;;
 
         rust)
-            rustup toolchain install stable
+            setup_rust
+
+            rustup default stable
             ;;
 
         npm)

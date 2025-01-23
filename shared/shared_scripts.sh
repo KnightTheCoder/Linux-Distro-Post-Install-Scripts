@@ -646,7 +646,9 @@ function setup_rust() {
 
     echo -e "${GREEN}Installing rust...${NC}"
 
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+    if [[ "$1" == 'default' ]]; then
+        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+    fi
 }
 
 #######################################
