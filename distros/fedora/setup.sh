@@ -89,7 +89,7 @@ function main() {
     local setups=(hacknerd)
     local usergroups=()
     local groups=(c-development multimedia)
-    local packages_to_remove="akregator dragon elisa-player kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat kolourpaint qt5-qdbusviewer pim-sieve-editor neochat"
+    local packages_to_remove="akregator dragon elisa-player kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat kolourpaint qt5-qdbusviewer pim-sieve-editor neochat rhythmbox"
 
     # Install NVIDIA drivers
     local drivers

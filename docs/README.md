@@ -51,6 +51,7 @@
 -   qt5-qdbusviewer
 -   thunderbird
 -   konqueror
+-   rhythmbox
 
 ### Native install list
 
