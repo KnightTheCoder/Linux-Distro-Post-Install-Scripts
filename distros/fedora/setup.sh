@@ -166,6 +166,12 @@ function main() {
             packages+=" rocm-smi"
             ;;
 
+        vlc)
+            packages=$(remove_package "$packages" "$package")
+
+            groups+=(vlc)
+            ;;
+
         gaming-overlay)
             packages=$(remove_package "$packages" "$package")
 
