@@ -699,7 +699,7 @@ function setup_virtualbox_extension() {
 
     local extension_link="https://download.virtualbox.org/virtualbox/7.1.6/Oracle_VirtualBox_Extension_Pack-7.1.6.vbox-extpack"
 
-    if grep -iq ubuntu "$DISTRO_RELEASE"; then
+    if grep -iq ubuntu "$DISTRO_RELEASE" && ! grep -iq ID=linuxmint "$DISTRO_RELEASE"; then
         extension_link="https://download.virtualbox.org/virtualbox/7.0.22/Oracle_VM_VirtualBox_Extension_Pack-7.0.22.vbox-extpack"
     fi
 
