@@ -544,12 +544,12 @@ function main() {
             elif grep -iq LMDE "$DISTRO_RELEASE"; then
                 # shellcheck disable=SC1090
                 codename=$(. "$DISTRO_RELEASE" && echo "$DEBIAN_CODENAME")
-            elif grep -iq ubuntu "$DISTRO_RELEASE"; then
-                # shellcheck disable=SC1090
-                codename=$(. "$DISTRO_RELEASE" && echo "$VERSION_CODENAME")
             elif grep -iq ID=linuxmint "$DISTRO_RELEASE"; then
                 # shellcheck disable=SC1090
                 codename=$(. "$DISTRO_RELEASE" && echo "$UBUNTU_CODENAME")
+            elif grep -iq ubuntu "$DISTRO_RELEASE"; then
+                # shellcheck disable=SC1090
+                codename=$(. "$DISTRO_RELEASE" && echo "$VERSION_CODENAME")
             fi
 
             if [ ! -e /etc/apt/trusted.gpg.d/vbox.gpg ]; then
