@@ -90,7 +90,7 @@ function main() {
     local packages_to_remove="elisa dragonplayer akregator kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat kolourpaint thunderbird konqueror"
 
     # Install NVIDIA drivers only on debian
-    if grep -iq ID=debian "$DISTRO_RELEASE"; then
+    if grep -iq ID=debian "$DISTRO_RELEASE" || grep -iq LMDE "$DISTRO_RELEASE"; then
         local driver
 
         driver=$(
@@ -190,7 +190,7 @@ function main() {
             packages+=" libvirt-clients libvirt-daemon-system bridge-utils virtinst libvirt-daemon virt-manager"
 
             # shellcheck disable=SC2154
-            if grep -iq ID=debian "$DISTRO_RELEASE"; then
+            if grep -iq ID=debian "$DISTRO_RELEASE" || grep -iq LMDE "$DISTRO_RELEASE"; then
                 packages+=" qemu-system-x86"
             else
                 packages+=" qemu-kvm"
@@ -253,7 +253,7 @@ function main() {
         dotnet)
             packages=$(remove_package "$packages" "$package")
 
-            if grep -iq "ID=debian" "$DISTRO_RELEASE"; then
+            if grep -iq "ID=debian" "$DISTRO_RELEASE" || grep -iq LMDE "$DISTRO_RELEASE"; then
                 setups+=(dotnet)
             else
                 packages+=" dotnet-sdk-8.0"
@@ -339,7 +339,7 @@ function main() {
         sudo apt install ./volian-nala.deb
 
         rm -v "volian-*.deb"
-    elif grep -iq ID=debian "$DISTRO_RELEASE"; then
+    elif grep -iq ID=debian "$DISTRO_RELEASE" || grep -iq LMDE "$DISTRO_RELEASE"; then
         echo -e "${GREEN}Adding extra repositories...${NC}"
         # Add extra repositories to debian
         sudo apt install software-properties-common -y
@@ -386,13 +386,13 @@ function main() {
         case $app in
 
         lutris)
-            curl -Lo 'lutris.deb' "https://github.com/lutris/lutris/releases/download/v0.5.18/lutris_0.5.18_all.deb"
+            curl -Lo lutris.deb "https://github.com/lutris/lutris/releases/download/v0.5.18/lutris_0.5.18_all.deb"
             sudo apt install -y ./lutris.deb
             rm -v ./lutris.deb
             ;;
 
         heroic)
-            curl -Lo heroic.deb https://github.com/Heroic-Games-Launcher/HeroicGamesLauncher/releases/download/v2.14.0/heroic_2.14.0_amd64.deb
+            curl -Lo heroic.deb https://github.com/Heroic-Games-Launcher/HeroicGamesLauncher/releases/download/v2.15.2/heroic_2.15.2_amd64.deb
             sudo dpkg -i heroic.deb
             rm -v heroic.deb
             ;;
@@ -482,8 +482,16 @@ function main() {
             sudo apt-get update
             sudo install -m 0755 -d /etc/apt/keyrings
 
-            if grep -iq ID=debian "$DISTRO_RELEASE"; then
+            if grep -iq ID=debian "$DISTRO_RELEASE" || grep -iq LMDE "$DISTRO_RELEASE"; then
                 # Debian
+                codename=""
+                if grep -iq ID=debian "$DISTRO_RELEASE"; then
+                    # shellcheck disable=SC1090
+                    codename=$(. "$DISTRO_RELEASE" && echo "$VERSION_CODENAME")
+                elif grep -iq LMDE "$DISTRO_RELEASE"; then
+                    # shellcheck disable=SC1090
+                    codename=$(. "$DISTRO_RELEASE" && echo "$DEBIAN_CODENAME")
+                fi
 
                 # Add Docker's official GPG key:
                 if [ ! -e /etc/apt/keyrings/docker.asc ]; then
@@ -497,7 +505,7 @@ function main() {
                 # shellcheck disable=SC1091
                 echo \
                     "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
-                $(. /etc/os-release && echo "$VERSION_CODENAME") stable" |
+                ${codename} stable" |
                     sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
             else
                 # Ubuntu based
@@ -555,7 +563,7 @@ function main() {
 
             vb_name="virtualbox"
 
-            if grep -iq ID=debian "$DISTRO_RELEASE"; then
+            if grep -iq ID=debian "$DISTRO_RELEASE" || grep -iq LMDE "$DISTRO_RELEASE"; then
                 vb_name="virtualbox-7.1"
             fi
 

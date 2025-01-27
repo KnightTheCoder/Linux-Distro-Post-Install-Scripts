@@ -49,6 +49,7 @@ Tested distros:
 -   Debian
 -   Ubuntu
 -   Linux Mint
+-   LMDE
 -   ZorinOS
 -   Pop!\_OS
 -   MX Linux
