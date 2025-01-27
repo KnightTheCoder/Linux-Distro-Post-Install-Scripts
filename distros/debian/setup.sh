@@ -432,7 +432,7 @@ function main() {
             ;;
 
         vivaldi)
-            curl -Lo vivaldi.deb https://downloads.vivaldi.com/stable/vivaldi-stable_7.0.3495.29-1_amd64.deb
+            curl -Lo vivaldi.deb https://downloads.vivaldi.com/stable/vivaldi-stable_7.1.3570.39-1_amd64.deb
             sudo nala update && sudo nala install -y ./vivaldi.deb
 
             rm -fv ./vivaldi.deb
@@ -482,9 +482,12 @@ function main() {
             sudo apt-get update
             sudo install -m 0755 -d /etc/apt/keyrings
 
+            codename=""
+            system_base=""
+
             if grep -iq ID=debian "$DISTRO_RELEASE" || grep -iq LMDE "$DISTRO_RELEASE"; then
                 # Debian
-                codename=""
+                system_base="debian"
                 if grep -iq ID=debian "$DISTRO_RELEASE"; then
                     # shellcheck disable=SC1090
                     codename=$(. "$DISTRO_RELEASE" && echo "$VERSION_CODENAME")
@@ -492,50 +495,30 @@ function main() {
                     # shellcheck disable=SC1090
                     codename=$(. "$DISTRO_RELEASE" && echo "$DEBIAN_CODENAME")
                 fi
-
-                # Add Docker's official GPG key:
-                if [ ! -e /etc/apt/keyrings/docker.asc ]; then
-                    sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
-                fi
-
-                sudo chmod a+r /etc/apt/keyrings/docker.asc
-
-                # Add the repository to Apt sources:
-
-                # shellcheck disable=SC1091
-                echo \
-                    "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
-                ${codename} stable" |
-                    sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
             else
                 # Ubuntu based
-
-                # Add Docker's official GPG key:
-                if [ ! -e /etc/apt/keyrings/docker.asc ]; then
-                    sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-                fi
-
-                sudo chmod a+r /etc/apt/keyrings/docker.asc
-
-                # Add the repository to Apt sources:
+                system_base="ubuntu"
                 if grep -iq ID=linuxmint "$DISTRO_RELEASE"; then
-                    # Linux Mint
-
-                    # shellcheck disable=SC1091
-                    echo \
-                        "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
-                    $(. /etc/os-release && echo "$UBUNTU_CODENAME") stable" |
-                        sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
+                    # shellcheck disable=SC1090
+                    codename=$(. "$DISTRO_RELEASE" && echo "$UBUNTU_CODENAME")
                 else
-                    # Ubuntu
-
-                    # shellcheck disable=SC1091
-                    echo \
-                        "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
-                    $(. /etc/os-release && echo "$VERSION_CODENAME") stable" |
-                        sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
+                    # shellcheck disable=SC1090
+                    codename=$(. "$DISTRO_RELEASE" && echo "$VERSION_CODENAME")
                 fi
             fi
+
+            # Add Docker's official GPG key:
+            if [ ! -e /etc/apt/keyrings/docker.asc ]; then
+                sudo curl -fsSL https://download.docker.com/linux/"$system_base"/gpg -o /etc/apt/keyrings/docker.asc
+            fi
+
+            sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+            # Add the repository to Apt sources:
+            echo \
+                "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/${system_base} \
+                    $codename stable" |
+                sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
 
             sudo nala update
             sudo nala install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
@@ -553,11 +536,27 @@ function main() {
             ;;
 
         virtualbox)
+            codename=""
+
+            if grep -iq ID=debian "$DISTRO_RELEASE"; then
+                # shellcheck disable=SC1090
+                codename=$(. "$DISTRO_RELEASE" && echo "$VERSION_CODENAME")
+            elif grep -iq LMDE "$DISTRO_RELEASE"; then
+                # shellcheck disable=SC1090
+                codename=$(. "$DISTRO_RELEASE" && echo "$DEBIAN_CODENAME")
+            elif grep -iq ubuntu "$DISTRO_RELEASE"; then
+                # shellcheck disable=SC1090
+                codename=$(. "$DISTRO_RELEASE" && echo "$VERSION_CODENAME")
+            elif grep -iq ID=linuxmint "$DISTRO_RELEASE"; then
+                # shellcheck disable=SC1090
+                codename=$(. "$DISTRO_RELEASE" && echo "$UBUNTU_CODENAME")
+            fi
+
             if [ ! -e /etc/apt/trusted.gpg.d/vbox.gpg ]; then
                 curl -fsSL https://www.virtualbox.org/download/oracle_vbox_2016.asc | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/vbox.gpg
             fi
 
-            echo deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/vbox.gpg] http://download.virtualbox.org/virtualbox/debian noble contrib | sudo tee /etc/apt/sources.list.d/virtualbox.list
+            echo deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/vbox.gpg] http://download.virtualbox.org/virtualbox/debian "$codename" contrib | sudo tee /etc/apt/sources.list.d/virtualbox.list
 
             sudo nala update
 
