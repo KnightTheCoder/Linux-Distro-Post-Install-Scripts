@@ -25,6 +25,14 @@ function remove_package() {
     echo "$result_package_list"
 }
 
+function download_file() {
+    file_name="$1"
+    file_url="$2"
+
+    echo -e "${GREEN}Downloading ${file_name}...${NC}"
+    curl -Lo "$file_name" "$file_url"
+}
+
 #######################################
 # Get distro icon based on distro
 # Arguments:
@@ -185,7 +193,7 @@ function setup_itch_app() {
         return
     fi
 
-    curl -Lo itch-setup "https://itch.io/app/download?platform=linux"
+    download_file itch-setup "https://itch.io/app/download?platform=linux"
     chmod +x "./itch-setup"
     ./itch-setup
     rm -vf "./itch-setup"
@@ -281,7 +289,7 @@ function setup_hacknerd_fonts() {
 
     echo -e "${GREEN}Installing hack nerd fonts...${NC}"
 
-    curl -Lo Hack.zip https://github.com/ryanoasis/nerd-fonts/releases/download/v3.3.0/Hack.zip
+    download_file Hack.zip "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.3.0/Hack.zip"
     unzip ./Hack.zip -d Hack
     mkdir -p "${hacknerdfont_directory}"
     cp -fv ./Hack/*.ttf "${hacknerdfont_directory}"
@@ -666,7 +674,7 @@ function setup_xampp() {
 
     local xampp_executable=xampp-linux-installer.run
 
-    curl -Lo "${xampp_executable}" https://sourceforge.net/projects/xampp/files/XAMPP%20Linux/8.2.12/xampp-linux-x64-8.2.12-0-installer.run/download
+    download_file "${xampp_executable}" "https://sourceforge.net/projects/xampp/files/XAMPP%20Linux/8.2.12/xampp-linux-x64-8.2.12-0-installer.run/download"
     chmod +x "./${xampp_executable}"
     sudo "./${xampp_executable}"
     rm -rv "./${xampp_executable}"
