@@ -19,7 +19,7 @@ function main() {
         whiptail --title "Debian/Ubuntu app installer" --separate-output --notags --checklist "Choose which apps to install" 0 0 0 \
             "lutris" "Lutris" OFF \
             "wine" "Wine" OFF \
-            "gaming-overlay" "Gaming overlay" OFF \
+            "gaming-overlay" "Gaming overlay (goverlay, mangohud, gamemode)" OFF \
             "steam" "Steam" OFF \
             "steam-devices" "Steam devices (for the steam flatpak)" OFF \
             "itch" "Itch desktop app" OFF \

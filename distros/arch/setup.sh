@@ -19,7 +19,7 @@ function main() {
         whiptail --title "Arch linux app installer" --separate-output --notags --checklist "Choose which apps to install" 0 0 0 \
             "lutris" "Lutris" OFF \
             "wine" "Wine" OFF \
-            "gaming-overlay" "Gaming overlay" OFF \
+            "gaming-overlay" "Gaming overlay (goverlay, mangohud, gamemode)" OFF \
             "steam" "Steam" OFF \
             "itch" "Itch desktop app" OFF \
             "heroic" "Heroic Games Launcher" OFF \
