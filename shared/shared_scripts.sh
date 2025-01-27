@@ -29,7 +29,7 @@ function download_file() {
     file_name="$1"
     file_url="$2"
 
-    echo -e "${GREEN}Downloading ${file_name}...${NC}"
+    echo -e "${GREEN}Downloading ${file_name} from ${file_url}...${NC}"
     curl -Lo "$file_name" "$file_url"
 }
 
