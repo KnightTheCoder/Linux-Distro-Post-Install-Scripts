@@ -32,7 +32,8 @@ function main() {
             "haruna" "Haruna media player" ON \
             "celluloid" "Celluloid media player" ON \
             "vlc" "VLC media player" ON \
-            "audacious" "Audacious music player" OFF \
+            "strawberry" "Strawberry music player" OFF \
+            "audacious" "Audacious music player" ON \
             "libreoffice" "Libreoffice" OFF \
             "transmission" "Transmission bittorrent client" OFF \
             "gimp" "GIMP" OFF \
