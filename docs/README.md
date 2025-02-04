@@ -55,7 +55,7 @@
 
 ### Native install list
 
--   Browsers: firefox, librewolf, chromium, vivaldi, brave
+-   Browsers: firefox, librewolf, floorp, zen, chromium, vivaldi, brave
 -   Gaming launchers: steam, lutris, heroic, itch
 -   Windows compatibility: wine
 -   Multimedia: haruna, celluloid, vlc, strawberry, audacious, kdenlive, gimp
@@ -73,7 +73,7 @@
 
 ### Flatpak install list
 
--   Browsers: firefox, librewolf, floorp, google chrome, brave, vivaldi, mullvad, zen
+-   Browsers: firefox, librewolf, floorp, mullvad, zen, google chrome, brave, vivaldi
 -   Management: Flatseal(for flatpaks), Gear Lever(for appimages), Flatsweep (clean up leftover flatpak files)
 -   Gaming launchers: steam, heroic, itch
 -   Windows compatibility: Protonup-QT

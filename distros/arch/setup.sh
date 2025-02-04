@@ -26,6 +26,7 @@ function main() {
             "firefox" "Firefox web browser" ON \
             "librewolf" "Librewolf web browser" OFF \
             "floorp" "Floorp web browser" OFF \
+            "zen-browser" "Zen web browser" OFF \
             "chromium" "Chromium web browser" OFF \
             "vivaldi" "Vivaldi web browser" OFF \
             "brave" "Brave web browser" OFF \
@@ -181,6 +182,12 @@ function main() {
             aur+=(floorp-bin)
             ;;
 
+        zen-browser)
+            packages=$(remove_package "$packages" "$package")
+
+            aur+=(zen-browser-bin)
+            ;;
+
         qemu)
             packages+=" virt-manager virt-viewer dnsmasq vde2 bridge-utils openbsd-netcat dmidecode"
 
@@ -315,7 +322,7 @@ function main() {
     fi
 
     # Install AUR packages
-    yay -S "${aur[@]}" --needed
+    yay -S "${aur[@]}" --needed --rebuildall --answerclean A --noanswerdiff --noconfirm
 
     echo -e "${GREEN}Setting up zram...${NC}"
     # Setup zram
@@ -404,6 +411,9 @@ function main() {
 
     # Update system after setup
     sudo pacman -Syu --noconfirm
+
+    # Clean all packages after install is complete
+    yay -S --clean --noconfirm
 }
 
 if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then
