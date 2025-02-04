@@ -713,7 +713,7 @@ function setup_virtualbox_extension() {
     fi
 
     wget "$extension_link"
-    sudo "${manage}" extpack install Oracle*.vbox-extpack
+    sudo "${manage}" extpack install --replace Oracle*.vbox-extpack
     rm -fv Oracle*.vbox-extpack
 }
 
