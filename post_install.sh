@@ -117,20 +117,22 @@ function main() {
   whiptail --title "Linux Post-Install Script" --msgbox "Welcome to the post install script!\nFirst we'll need to gather some info about your system" 0 0
   # Auto detect distro
 
+  local detected_distro="unknown"
   local chosen_distro="unknown"
+
   # shellcheck disable=SC2154
   if grep -iq opensuse "$DISTRO_RELEASE"; then
-    chosen_distro="opensuse"
+    detected_distro="opensuse"
   elif grep -iq fedora "$DISTRO_RELEASE"; then
-    chosen_distro="fedora"
+    detected_distro="fedora"
   elif grep -iq "arch" "$DISTRO_RELEASE"; then
-    chosen_distro="arch"
+    detected_distro="arch"
   elif grep -iq debian "$DISTRO_RELEASE"; then
-    chosen_distro="debian"
+    detected_distro="debian"
   fi
 
   local distro_fullname
-  distro_fullname=$(resolve_distro "$chosen_distro")
+  distro_fullname=$(resolve_distro "$detected_distro")
 
   local distro_realname
   # shellcheck disable=SC1090
@@ -138,9 +140,10 @@ function main() {
 
   echo -e "${GREEN}${distro_fullname} and ${package_manager} detected!${NC}"
 
-  if [[ "$chosen_distro" != "unknown" ]]; then
+  if [[ "$detected_distro" != "unknown" ]]; then
     whiptail --title "Autodetection" --yesno "${distro_fullname} detected with ${package_manager} as your package manager!\nIs this correct?" 0 0
     local correct=$?
+    chosen_distro=$detected_distro
   else
     echo -e "${RED}Unknown distro detected!${NC}"
 
@@ -153,12 +156,14 @@ function main() {
   if [[ "$correct" != "0" ]]; then
     chosen_distro=$(
       whiptail --title "Select distro" --notags --menu "Please select your distro" --ok-button "Select" 0 0 40 \
-        "1" "OpenSUSE" \
-        "2" "Fedora" \
-        "3" "Arch linux" \
-        "4" "Debian" \
+        "opensuse" "OpenSUSE" \
+        "fedora" "Fedora" \
+        "arch" "Arch linux" \
+        "debian" "Debian" \
         3>&2 2>&1 1>&3
     )
+
+    distro_fullname=$(resolve_distro "$chosen_distro")
 
     if [[ -z "$chosen_distro" ]]; then
       echo -e "${RED}User canceled, Aborting...${NC}"
