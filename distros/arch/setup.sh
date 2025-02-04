@@ -322,7 +322,7 @@ function main() {
     fi
 
     # Install AUR packages
-    yay -S "${aur[@]}" --needed --rebuildall --answerclean A --noanswerdiff --noconfirm
+    yay -S "${aur[@]}" --needed --rebuildall --answerclean A --noanswerdiff --removemake --cleanafter --noconfirm
 
     echo -e "${GREEN}Setting up zram...${NC}"
     # Setup zram
