@@ -25,6 +25,14 @@ function remove_package() {
     echo "$result_package_list"
 }
 
+#######################################
+# Downloads a file from the internet
+# Arguments:
+#   File name
+#   File URL
+# Outputs:
+#   The name of the file and its download URL
+#######################################
 function download_file() {
     file_name="$1"
     file_url="$2"
