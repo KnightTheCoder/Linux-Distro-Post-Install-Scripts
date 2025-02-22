@@ -70,7 +70,7 @@ function main() {
 
     packages+=" $cli_packages"
 
-    packages+=" neovim eza bat curl wget cabextract xorg-x11-font-utils fontconfig p7zip p7zip-plugins unrar git dnf-plugins-core"
+    packages+=" neovim eza bat curl wget cabextract xorg-x11-font-utils fontconfig p7zip p7zip-plugins unrar git dnf-plugins-core ffmpeg-libs libva libva-utils openh264 gstreamer1-plugin-openh264 mozilla-openh264"
 
     local shells
     shells=$(choose_shells)
@@ -88,7 +88,7 @@ function main() {
     local services=()
     local setups=(hacknerd)
     local usergroups=()
-    local groups=(c-development multimedia)
+    local groups=(c-development multimedia sound-and-video)
     local packages_to_remove="akregator dragon elisa-player kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat kolourpaint qt5-qdbusviewer pim-sieve-editor neochat rhythmbox"
 
     # Install NVIDIA drivers
@@ -315,6 +315,9 @@ function main() {
     # shellcheck disable=SC2046
     sudo rpm -Uvh http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
+    # Enable openh264 for firefox
+    sudo dnf config-manager setopt fedora-cisco-openh264.enabled=1
+
     # Install dnf5 if it's an older system
     sudo dnf install -y dnf5 dnf5-plugins
 
@@ -333,6 +336,8 @@ function main() {
     for mesa_driver in "${mesa_drivers[@]}"; do
         sudo dnf swap "$mesa_driver" "${mesa_driver}-freeworld" -y
     done
+
+    sudo dnf swap 'ffmpeg-free' 'ffmpeg' --allowerasing -y
 
     # Install packages
     # shellcheck disable=SC2086
