@@ -428,7 +428,7 @@ function setup_fish() {
 
     # Need to use a different config for debian based systems because it's called batcat and not bat on them
     if grep -iq debian "$DISTRO_RELEASE"; then
-        replace bat batcat -- "$config_input"
+        perl -pi -e 's/bat/batcat/g' "$config_input"
     fi
 
     cp -fv "${config_input}" "${config_output}"
