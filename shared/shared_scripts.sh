@@ -371,7 +371,7 @@ function setup_bash() {
     else
         echo -e "${GREEN}Installing blesh...${NC}"
 
-        if ! grep -i blesh ~/.bashrc; then
+        if ! grep -iq blesh ~/.bashrc; then
             echo 'source ~/.local/share/blesh/ble.sh' >>~/.bashrc
         fi
 
