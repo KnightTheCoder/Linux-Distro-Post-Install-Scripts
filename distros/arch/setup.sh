@@ -321,12 +321,7 @@ function main() {
     # Setup zram
     printf "[zram0]\n zram-size = ram / 2\n compression-algorithm = zstd\n swap-priority = 100\n fs-type = swap\n" | sudo tee /etc/systemd/zram-generator.conf
 
-    echo -e "${GREEN}Adding user to groups...${NC}"
-    # Add user to groups
-    for group in "${usergroups[@]}"; do
-        sudo groupadd "$group"
-        sudo usermod -a -G "$group" "$USER"
-    done
+    add_user_to_groups "${usergroups[@]}"
 
     # Run setups
     for app in "${setups[@]}"; do
@@ -396,11 +391,7 @@ function main() {
         esac
     done
 
-    echo -e "${GREEN}Starting services...${NC}"
-    # Start services
-    for serv in "${services[@]}"; do
-        sudo systemctl enable --now "$serv"
-    done
+    start_systemd_services "${services[@]}"
 
     # Update system after setup
     sudo pacman -Syu --noconfirm

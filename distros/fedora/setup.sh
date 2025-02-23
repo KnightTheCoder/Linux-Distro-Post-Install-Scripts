@@ -185,6 +185,7 @@ function main() {
         vivaldi)
             packages=$(remove_package "$packages" "$package")
 
+            packages+=" dnf-utils"
             setups+=(vivaldi)
             ;;
 
@@ -342,12 +343,7 @@ function main() {
     echo -e "${GREEN}Installing microsoft core fonts...${NC}"
     sudo rpm -i https://downloads.sourceforge.net/project/mscorefonts2/rpms/msttcore-fonts-installer-2.6-1.noarch.rpm
 
-    echo -e "${GREEN}Adding user to groups...${NC}"
-    # Add user to groups
-    for group in "${usergroups[@]}"; do
-        sudo groupadd "$group"
-        sudo usermod -a -G "$group" "$USER"
-    done
+    add_user_to_groups "${usergroups[@]}"
 
     # Run setups
     for app in "${setups[@]}"; do
@@ -381,7 +377,6 @@ function main() {
             ;;
 
         vivaldi)
-            sudo dnf5 install dnf-utils -y
             sudo dnf5 config-manager addrepo --from-repofile=https://repo.vivaldi.com/archive/vivaldi-fedora.repo
 
             sudo dnf5 install -y vivaldi-stable
@@ -477,11 +472,7 @@ function main() {
         esac
     done
 
-    echo -e "${GREEN}Starting services...${NC}"
-    # Start services
-    for serv in "${services[@]}"; do
-        sudo systemctl enable --now "$serv"
-    done
+    start_systemd_services "${services[@]}"
 
     # Update system after setup
     sudo dnf5 upgrade -y --refresh

@@ -373,12 +373,7 @@ function main() {
         done
     fi
 
-    echo -e "${GREEN}Adding user to groups...${NC}"
-    # Add user to groups
-    for group in "${usergroups[@]}"; do
-        sudo groupadd "$group"
-        sudo usermod -a -G "$group" "$USER"
-    done
+    add_user_to_groups "${usergroups[@]}"
 
     # Run setups
     for app in "${setups[@]}"; do
@@ -584,6 +579,7 @@ function main() {
             else
                 echo -e "${YELLOW}eza is already installed${NC}"
             fi
+
             ;;
 
         flatpak)
@@ -600,6 +596,7 @@ function main() {
                 sudo touch /etc/modprobe.d/nvidia-options.conf
                 echo "options nvidia-drm modeset=1" | sudo tee -a /etc/modprobe.d/nvidia-options.conf
             fi
+
             ;;
 
         bash)
@@ -625,11 +622,7 @@ function main() {
         esac
     done
 
-    echo -e "${GREEN}Starting services...${NC}"
-    # Start services
-    for serv in "${services[@]}"; do
-        sudo systemctl enable --now "$serv"
-    done
+    start_systemd_services "${services[@]}"
 
     # Update system after setup
     sudo nala upgrade -y

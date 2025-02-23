@@ -82,6 +82,47 @@ function get_current_distro_icon() {
 }
 
 #######################################
+# Add user to groups
+# Globals:
+#   GREEN
+#   NC
+# Arguments:
+#   Usergroup array printed with ("${array[@]}")
+# Outputs:
+#   notice about user being added to groups
+#######################################
+function add_user_to_groups() {
+    usergroups=("$@")
+
+    echo -e "${GREEN}Adding user to groups...${NC}"
+
+    for group in "${usergroups[@]}"; do
+        sudo groupadd "$group"
+        sudo usermod -a -G "$group" "$USER"
+    done
+}
+
+#######################################
+# Start systemd services
+# Globals:
+#   GREEN
+#   NC
+# Arguments:
+#   services array printed with ("${array[@]}")
+# Outputs:
+#   notice about starting systemd services
+#######################################
+function start_systemd_services() {
+    services=("$@")
+
+    echo -e "${GREEN}Starting systemd services...${NC}"
+
+    for serv in "${services[@]}"; do
+        sudo systemctl enable --now "$serv"
+    done
+}
+
+#######################################
 # Copy policies and install extensions for firefox
 # Globals:
 #   GREEN
