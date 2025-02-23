@@ -90,7 +90,7 @@ function get_current_distro_icon() {
 #   GREEN
 #   NC
 # Arguments:
-#   Usergroup array printed with ("${array[@]}")
+#   Usergroup array printed with "${array[@]}"
 # Outputs:
 #   Log about user being added to groups
 #######################################
@@ -111,7 +111,7 @@ function add_user_to_groups() {
 #   GREEN
 #   NC
 # Arguments:
-#   Services array printed with ("${array[@]}")
+#   Services array printed with "${array[@]}"
 # Outputs:
 #   Log about starting systemd services
 #######################################
