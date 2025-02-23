@@ -301,7 +301,9 @@ function setup_hacknerd_fonts() {
     unzip ./Hack.zip -d Hack
     mkdir -p "${hacknerdfont_directory}"
     cp -fv ./Hack/*.ttf "${hacknerdfont_directory}"
+
     fc-cache -fv
+
     # Delete all fonts in the directory after caching
     rm -rfv ./Hack Hack.zip
 }

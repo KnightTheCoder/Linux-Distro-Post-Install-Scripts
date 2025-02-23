@@ -186,7 +186,6 @@ function main() {
             packages=$(remove_package "$packages" "$package")
 
             setups+=(vivaldi)
-
             ;;
 
         brave)
@@ -199,22 +198,18 @@ function main() {
             packages=$(remove_package "$packages" "$package")
 
             setups+=(librewolf)
-
             ;;
 
         qemu)
             packages=$(remove_package "$packages" "$package")
 
             packages+=" @virtualization"
-
             services+=(libvirtd.service)
-
             usergroups+=(libvirt)
             ;;
 
         VirtualBox)
             setups+=(virtualbox)
-
             usergroups+=(vboxusers)
             ;;
 
@@ -315,9 +310,6 @@ function main() {
     # shellcheck disable=SC2046
     sudo rpm -Uvh http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
-    # Enable openh264 for firefox
-    sudo dnf config-manager setopt fedora-cisco-openh264.enabled=1
-
     # Install dnf5 if it's an older system
     sudo dnf install -y dnf5 dnf5-plugins
 
@@ -342,6 +334,9 @@ function main() {
     # Install packages
     # shellcheck disable=SC2086
     sudo dnf5 install -y $packages
+
+    # Enable openh264 for firefox
+    sudo dnf config-manager setopt fedora-cisco-openh264.enabled=1
 
     # Install msfonts
     echo -e "${GREEN}Installing microsoft core fonts...${NC}"

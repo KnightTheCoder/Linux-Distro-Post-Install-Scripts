@@ -138,7 +138,6 @@ function main() {
 
         bash)
             packages+=" gawk"
-
             setups+=(bash)
             ;;
 
@@ -190,15 +189,12 @@ function main() {
 
         qemu)
             packages+=" virt-manager virt-viewer dnsmasq vde2 bridge-utils openbsd-netcat dmidecode"
-
             services+=(libvirtd.service)
-
             usergroups+=(libvirt)
             ;;
 
         virtualbox)
             setups+=(virtualbox)
-
             usergroups+=(vboxusers)
             ;;
 
@@ -218,7 +214,6 @@ function main() {
             packages=$(remove_package "$packages" "$package")
 
             aur+=(visual-studio-code-bin)
-
             setups+=(vscode)
             ;;
 
@@ -226,7 +221,6 @@ function main() {
             packages=$(remove_package "$packages" "$package")
 
             aur+=(vscodium-bin)
-
             setups+=(vscodium)
             ;;
 
@@ -236,7 +230,6 @@ function main() {
 
         nodejs)
             packages+=" npm"
-
             setups+=(npm)
             ;;
 
@@ -304,7 +297,7 @@ function main() {
 
     # Remove unneccessary packages
     # shellcheck disable=SC2086
-    sudo pacman -Rns $packages_to_remove
+    sudo pacman -Rns $packages_to_remove --noconfirm
 
     # Install packages
     # shellcheck disable=SC2086

@@ -113,7 +113,6 @@ function main() {
 
         bash)
             packages+=" gawk"
-
             setups+=(bash)
             ;;
 
@@ -150,10 +149,12 @@ function main() {
         firefox)
             if grep -iq ID=debian "$DISTRO_RELEASE"; then
                 packages=$(remove_package "$packages" "$package")
+
                 packages+=" firefox-esr"
 
             elif [[ -x "$(command -v snap)" ]]; then
                 packages=$(remove_package "$packages" "$package")
+
                 snaps+=(firefox)
             fi
 
@@ -171,8 +172,8 @@ function main() {
             packages=$(remove_package "$packages" "$package")
 
             setups+=(vivaldi)
-
             ;;
+
         brave)
             packages=$(remove_package "$packages" "$package")
 
@@ -198,7 +199,6 @@ function main() {
             fi
 
             services+=(libvirtd.service)
-
             usergroups+=(libvirt)
             ;;
 
@@ -206,9 +206,7 @@ function main() {
             packages=$(remove_package "$packages" "$package")
 
             packages+=" dkms build-essential linux-headers-$(uname -r) apt-transport-https gnupg2"
-
             setups+=(virtualbox)
-
             usergroups+=(vboxusers)
             ;;
 
@@ -222,7 +220,6 @@ function main() {
             packages=$(remove_package "$packages" "$package")
 
             setups+=(lutris)
-
             packages+=" wine"
             ;;
 
@@ -259,6 +256,7 @@ function main() {
             else
                 packages+=" dotnet-sdk-8.0"
             fi
+
             ;;
 
         rustup)
@@ -269,7 +267,6 @@ function main() {
 
         nodejs)
             setups+=(npm)
-
             packages+=" npm"
             ;;
 
@@ -279,6 +276,7 @@ function main() {
 
                 packages+=" golang-go"
             fi
+
             ;;
 
         java)

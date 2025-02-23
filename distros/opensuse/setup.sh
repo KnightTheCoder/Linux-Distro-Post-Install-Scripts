@@ -185,20 +185,14 @@ function main() {
             ;;
 
         qemu)
-            patterns+=(kvm_tools)
-            patterns+=(kvm_server)
-
+            patterns+=(kvm_tools kvm_server)
             packages+=" libvirt bridge-utils"
-
-            services+=(kvm_stat.service)
-            services+=(libvirtd.service)
-
+            services+=(kvm_stat.service libvirtd.service)
             usergroups+=(libvirt)
             ;;
 
         virtualbox)
             setups+=(virtualbox)
-
             usergroups+=(vboxusers)
             ;;
 
@@ -212,7 +206,6 @@ function main() {
             packages=$(remove_package "$packages" "$package")
 
             setups+=(vscode)
-
             opi+=(vscode)
             ;;
 
@@ -237,7 +230,6 @@ function main() {
             packages=$(remove_package "$packages" "$package")
 
             packages+=" nodejs-default"
-
             setups+=(npm)
             ;;
 
@@ -401,7 +393,9 @@ function main() {
 
         nvidia)
             sudo zypper install --details -y openSUSE-repos-Tumbleweed-NVIDIA
+
             sudo zypper refresh
+
             sudo zypper install-new-recommends --repo repo-non-free
             ;;
 
