@@ -369,7 +369,10 @@ function setup_bash() {
     else
         echo -e "${GREEN}Installing blesh...${NC}"
 
-        echo 'source ~/.local/share/blesh/ble.sh' >>~/.bashrc
+        if ! grep -i blesh ~/.bashrc; then
+            echo 'source ~/.local/share/blesh/ble.sh' >>~/.bashrc
+        fi
+
         git clone --recursive --depth 1 --shallow-submodules https://github.com/akinomyoga/ble.sh.git
         make -C ble.sh install PREFIX=~/.local
 
