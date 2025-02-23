@@ -423,15 +423,15 @@ function setup_fish() {
 
     echo -e "${GREEN}Copying fish config...${NC}"
 
-    local config_input=../../config/fish
+    local config_input=../../config/fish/config.fish
     local config_output="$HOME/.config/fish/config.fish"
 
     # Need to use a different config for debian based systems because it's called batcat and not bat on them
     if grep -iq debian "$DISTRO_RELEASE"; then
-        cp -fv "${config_input}/config_debian.fish" "${config_output}"
-    else
-        cp -fv "${config_input}/config.fish" "${config_output}"
+        replace bat batcat -- "$config_input"
     fi
+
+    cp -fv "${config_input}" "${config_output}"
 }
 
 #######################################
