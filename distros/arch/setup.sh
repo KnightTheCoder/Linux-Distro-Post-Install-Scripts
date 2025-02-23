@@ -7,6 +7,10 @@ source "../../shared/shared_scripts.sh"
 
 #######################################
 # Entry point for arch's setup
+# Globals:
+#   GREEN
+#   YELLOW
+#   NC
 # Arguments:
 #   None
 # Outputs:

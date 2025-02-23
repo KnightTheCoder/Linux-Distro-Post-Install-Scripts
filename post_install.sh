@@ -57,6 +57,9 @@ function get_package_manager() {
 
 #######################################
 # Returns setup execution path for the selected distro
+# Globals:
+#   RED
+#   NC
 # Arguments:
 #   Distro tag
 # Outputs:
@@ -76,6 +79,11 @@ fi
 
 #######################################
 # Entry point for the project
+# Globals:
+#   GREEN
+#   YELLOW
+#   RED
+#   NC
 # Arguments:
 #   None
 # Outputs:

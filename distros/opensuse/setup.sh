@@ -36,6 +36,10 @@ function create_snapshot() {
 
 #######################################
 # Entry point for opensuse's setup
+# Globals:
+#   GREEN
+#   RED
+#   NC
 # Arguments:
 #   None
 # Outputs:

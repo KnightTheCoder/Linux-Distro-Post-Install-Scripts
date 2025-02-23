@@ -7,6 +7,10 @@ source "../../shared/shared_scripts.sh"
 
 #######################################
 # Entry point for debian's setup
+# Globals:
+#   GREEN
+#   YELLOW
+#   NC
 # Arguments:
 #   None
 # Outputs:
@@ -368,6 +372,8 @@ function main() {
     sudo nala install -y $packages
 
     if [[ -x "$(command -v snap)" ]]; then
+        echo -e "${GREEN}Installing snaps...${NC}"
+
         for snap in "${snaps[@]}"; do
             sudo snap install "$snap"
         done
