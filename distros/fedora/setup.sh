@@ -466,7 +466,8 @@ function main() {
             ;;
 
         starship-install)
-            setup_starship_install
+            sudp dnf copr enable atim/starship -y
+            sudp dnf install starship -y
             ;;
 
         starship)
