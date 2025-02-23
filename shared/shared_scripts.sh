@@ -27,6 +27,9 @@ function remove_package() {
 
 #######################################
 # Downloads a file from the internet
+# Globals:
+#   GREEN
+#   NC
 # Arguments:
 #   File name
 #   File URL
