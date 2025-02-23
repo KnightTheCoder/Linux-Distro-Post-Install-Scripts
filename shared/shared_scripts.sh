@@ -92,7 +92,7 @@ function get_current_distro_icon() {
 # Arguments:
 #   Usergroup array printed with ("${array[@]}")
 # Outputs:
-#   notice about user being added to groups
+#   Log about user being added to groups
 #######################################
 function add_user_to_groups() {
     usergroups=("$@")
@@ -111,9 +111,9 @@ function add_user_to_groups() {
 #   GREEN
 #   NC
 # Arguments:
-#   services array printed with ("${array[@]}")
+#   Services array printed with ("${array[@]}")
 # Outputs:
-#   notice about starting systemd services
+#   Log about starting systemd services
 #######################################
 function start_systemd_services() {
     services=("$@")
@@ -129,11 +129,13 @@ function start_systemd_services() {
 # Copy policies and install extensions for firefox
 # Globals:
 #   GREEN
+#   RED
 #   NC
 # Arguments:
 #   None
 # Outputs:
 #   whiptail screen
+#   Warning about firefox not being installed
 #######################################
 function setup_firefox() {
     if [[ ! "$(command -v firefox)" ]]; then
