@@ -95,7 +95,7 @@ function main() {
     local packages_to_remove="elisa dragonplayer akregator kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat kolourpaint thunderbird konqueror"
 
     # Install NVIDIA drivers only on debian
-    if grep -iq ID=debian "$DISTRO_RELEASE" || grep -iq LMDE "$DISTRO_RELEASE"; then
+    if grep -iq ID=debian "$DISTRO_RELEASE" || grep -iq LMDE "$DISTRO_RELEASE" || grep -iq ID=pika "$DISTRO_RELEASE"; then
         local driver
 
         driver=$(
@@ -147,7 +147,12 @@ function main() {
             ;;
 
         wine)
-            packages+=" wine32 winetricks"
+            if grep -iq ID=pika "$DISTRO_RELEASE"; then
+                packages+=" winetricks"
+            else
+                packages+=" wine32 winetricks"
+            fi
+
             ;;
 
         firefox)
