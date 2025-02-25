@@ -50,6 +50,7 @@ Tested distros:
 -   Ubuntu
 -   Linux Mint
 -   LMDE
+-   PikaOS
 -   ZorinOS
 -   Pop!\_OS
 -   MX Linux

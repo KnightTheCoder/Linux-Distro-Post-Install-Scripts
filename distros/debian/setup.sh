@@ -196,7 +196,7 @@ function main() {
             packages+=" libvirt-clients libvirt-daemon-system bridge-utils virtinst libvirt-daemon virt-manager"
 
             # shellcheck disable=SC2154
-            if grep -iq ID=debian "$DISTRO_RELEASE" || grep -iq LMDE "$DISTRO_RELEASE"; then
+            if grep -iq ID=debian "$DISTRO_RELEASE" || grep -iq LMDE "$DISTRO_RELEASE" || grep -iq ID=pika "$DISTRO_RELEASE"; then
                 packages+=" qemu-system-x86"
             else
                 packages+=" qemu-kvm"
@@ -491,7 +491,7 @@ function main() {
                 if grep -iq ID=debian "$DISTRO_RELEASE"; then
                     # shellcheck disable=SC1090
                     codename=$(. "$DISTRO_RELEASE" && echo "$VERSION_CODENAME")
-                elif grep -iq LMDE "$DISTRO_RELEASE"; then
+                elif grep -iq LMDE "$DISTRO_RELEASE" || grep -iq ID=pika "$DISTRO_RELEASE"; then
                     # shellcheck disable=SC1090
                     codename=$(. "$DISTRO_RELEASE" && echo "$DEBIAN_CODENAME")
                 fi
@@ -541,7 +541,7 @@ function main() {
             if grep -iq ID=debian "$DISTRO_RELEASE"; then
                 # shellcheck disable=SC1090
                 codename=$(. "$DISTRO_RELEASE" && echo "$VERSION_CODENAME")
-            elif grep -iq LMDE "$DISTRO_RELEASE"; then
+            elif grep -iq LMDE "$DISTRO_RELEASE" || grep -iq ID=pika "$DISTRO_RELEASE"; then
                 # shellcheck disable=SC1090
                 codename=$(. "$DISTRO_RELEASE" && echo "$DEBIAN_CODENAME")
             elif grep -iq ID=linuxmint "$DISTRO_RELEASE"; then
@@ -562,7 +562,7 @@ function main() {
 
             vb_name="virtualbox"
 
-            if grep -iq ID=debian "$DISTRO_RELEASE" || grep -iq LMDE "$DISTRO_RELEASE" || grep -iq ID=linuxmint "$DISTRO_RELEASE"; then
+            if grep -iq ID=debian "$DISTRO_RELEASE" || grep -iq LMDE "$DISTRO_RELEASE" || grep -iq ID=pika "$DISTRO_RELEASE" || grep -iq ID=linuxmint "$DISTRO_RELEASE"; then
                 vb_name="virtualbox-7.1"
             fi
 
