@@ -217,7 +217,11 @@ function main() {
         steam)
             packages=$(remove_package "$packages" "$package")
 
-            packages+=" steam-installer"
+            if grep -iq ID=pika "$DISTRO_RELEASE"; then
+                packages+=" steam"
+            else
+                packages+=" steam-installer"
+            fi
             ;;
 
         lutris)
