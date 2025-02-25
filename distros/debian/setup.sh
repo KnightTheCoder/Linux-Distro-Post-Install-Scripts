@@ -485,15 +485,17 @@ function main() {
             codename=""
             system_base=""
 
-            if grep -iq ID=debian "$DISTRO_RELEASE" || grep -iq LMDE "$DISTRO_RELEASE"; then
+            if grep -iq ID=debian "$DISTRO_RELEASE" || grep -iq LMDE "$DISTRO_RELEASE" || grep -iq ID=pika "$DISTRO_RELEASE"; then
                 # Debian
                 system_base="debian"
                 if grep -iq ID=debian "$DISTRO_RELEASE"; then
                     # shellcheck disable=SC1090
                     codename=$(. "$DISTRO_RELEASE" && echo "$VERSION_CODENAME")
-                elif grep -iq LMDE "$DISTRO_RELEASE" || grep -iq ID=pika "$DISTRO_RELEASE"; then
+                elif grep -iq LMDE "$DISTRO_RELEASE"; then
                     # shellcheck disable=SC1090
                     codename=$(. "$DISTRO_RELEASE" && echo "$DEBIAN_CODENAME")
+                elif grep -iq ID=pika "$DISTRO_RELEASE"; then
+                    codename="bookworm"
                 fi
             else
                 # Ubuntu based
@@ -541,9 +543,11 @@ function main() {
             if grep -iq ID=debian "$DISTRO_RELEASE"; then
                 # shellcheck disable=SC1090
                 codename=$(. "$DISTRO_RELEASE" && echo "$VERSION_CODENAME")
-            elif grep -iq LMDE "$DISTRO_RELEASE" || grep -iq ID=pika "$DISTRO_RELEASE"; then
+            elif grep -iq LMDE "$DISTRO_RELEASE"; then
                 # shellcheck disable=SC1090
                 codename=$(. "$DISTRO_RELEASE" && echo "$DEBIAN_CODENAME")
+            elif grep -iq ID=pika "$DISTRO_RELEASE"; then
+                codename="bookworm"
             elif grep -iq ID=linuxmint "$DISTRO_RELEASE"; then
                 # shellcheck disable=SC1090
                 codename=$(. "$DISTRO_RELEASE" && echo "$UBUNTU_CODENAME")
