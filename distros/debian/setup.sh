@@ -570,7 +570,7 @@ function main() {
 
             vb_name="virtualbox"
 
-            if grep -iq ID=debian "$DISTRO_RELEASE" || grep -iq LMDE "$DISTRO_RELEASE" || grep -iq ID=pika "$DISTRO_RELEASE" || grep -iq ID=linuxmint "$DISTRO_RELEASE"; then
+            if grep -iq ID=debian "$DISTRO_RELEASE" || grep -iq LMDE "$DISTRO_RELEASE" || grep -iq ID=linuxmint "$DISTRO_RELEASE"; then
                 vb_name="virtualbox-7.1"
             fi
 
