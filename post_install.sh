@@ -123,8 +123,8 @@ function main() {
   fi
 
   whiptail --title "Linux Post-Install Script" --msgbox "Welcome to the post install script!\nFirst we'll need to gather some info about your system" 0 0
-  # Auto detect distro
 
+  # Auto detect distro
   local detected_distro="unknown"
   local chosen_distro="unknown"
 
