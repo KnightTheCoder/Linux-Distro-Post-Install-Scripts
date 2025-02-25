@@ -214,6 +214,13 @@ function main() {
             usergroups+=(vboxusers)
             ;;
 
+        haruna)
+            # Skip haruna on PikaOS because it's broken
+            if grep -iq ID=pika "$DISTRO_RELEASE"; then
+                packages=$(remove_package "$packages" "$package")
+            fi
+            ;;
+
         steam)
             packages=$(remove_package "$packages" "$package")
 
