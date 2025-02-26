@@ -645,17 +645,17 @@ function setup_fzf() {
 
     if [[ -x "$(command -v bash)" ]]; then
         printf "\neval \"\$(fzf --bash)\"\n" >>$bash_config
-        printf "\nexport %s \n" "$fzf_opts" >>$bash_config
+        printf "export %s \n" "$fzf_opts" >>$bash_config
     fi
 
     if [[ -x "$(command -v zsh)" ]]; then
         printf "\nsource <(fzf --zsh)\n" >>$zsh_config
-        printf "\nexport %s \n" "$fzf_opts" >>$zsh_config
+        printf "export %s \n" "$fzf_opts" >>$zsh_config
     fi
 
     if [[ -x "$(command -v fish)" ]]; then
         printf "\nfzf --fish | source\n" >>$fish_config
-        printf "\nset %s \n" "$fzf_opts" >>$fish_config
+        printf "set %s \n" "$fzf_opts" >>$fish_config
     fi
 }
 
