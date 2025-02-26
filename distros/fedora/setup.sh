@@ -167,6 +167,10 @@ function main() {
             setups+=(starship)
             ;;
 
+        fzf)
+            setups+=(fzf)
+            ;;
+
         btop)
             packages+=" rocm-smi"
             ;;
@@ -473,6 +477,10 @@ function main() {
 
         starship)
             setup_starship
+            ;;
+
+        fzf)
+            setup_fzf
             ;;
 
         esac

@@ -161,6 +161,10 @@ function main() {
             setups+=(starship)
             ;;
 
+        fzf)
+            setups+=(fzf)
+            ;;
+
         gaming-overlay)
             packages=$(remove_package "$packages" "$package")
 
@@ -413,6 +417,10 @@ function main() {
 
         starship)
             setup_starship
+            ;;
+
+        fzf)
+            setup_fzf
             ;;
 
         esac

@@ -621,6 +621,37 @@ function choose_shells() {
 }
 
 #######################################
+# Setup keybindings for fuzzy finder
+# Globals:
+#   GREEN
+#   RED
+#   NC
+# Arguments:
+#   None
+# Outputs:
+#   Log for starting step
+#######################################
+function setup_fzf() {
+    if [[ ! -x "$(command -v fzf)" ]]; then
+        echo -e "${RED}Fuzzy finder (fzf) is not installed!${NC}"
+    fi
+
+    echo -e "${GREEN}Setting up fuzzy finder (fzf)...${NC}"
+
+    if [[ -x "$(command -v bash)" ]]; then
+        echo "eval \"$(fzf --bash)\"" >>~/.bashrc
+    fi
+
+    if [[ -x "$(command -v zsh)" ]]; then
+        echo "source <(fzf --zsh)" >>~/.zshrc
+    fi
+
+    if [[ -x "$(command -v fish)" ]]; then
+        echo "fzf --fish | source" >>~/.config/fish/config.fish
+    fi
+}
+
+#######################################
 # Setup NvChad for neovim
 # Globals:
 #   GREEN
