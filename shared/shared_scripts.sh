@@ -642,7 +642,7 @@ function setup_fzf() {
 
     echo -e "${GREEN}Setting up fuzzy finder (fzf)...${NC}"
     fzf_variable="FZF_DEFAULT_OPTS"
-    fzf_opts="\"--layout=reverse --border=bold --border=rounded --color=dark\""
+    fzf_opts="\"--layout=reverse --border=bold --border=rounded --color=dark --margin=3%\""
 
     if [[ -x "$(command -v bash)" ]] && ! grep -iq fzf $bash_config; then
         printf "\neval \"\$(fzf --bash)\"\n" >>$bash_config
