@@ -366,22 +366,9 @@ function setup_hacknerd_fonts() {
 #   Log if already installed
 #######################################
 function setup_bash() {
+    echo -e "${GREEN}Setting up bash...${NC}"
+
     local bash_config=~/.bashrc
-
-    if [[ -d ~/.local/share/blesh ]]; then
-        echo -e "${YELLOW}blesh is already setup${NC}"
-    else
-        echo -e "${GREEN}Installing blesh...${NC}"
-
-        if ! grep -iq blesh "$bash_config"; then
-            echo 'source ~/.local/share/blesh/ble.sh' >>"$bash_config"
-        fi
-
-        git clone --recursive --depth 1 --shallow-submodules https://github.com/akinomyoga/ble.sh.git
-        make -C ble.sh install PREFIX=~/.local
-
-        rm -rfv ./ble.sh
-    fi
 
     if ! grep -iq xterm-256color "$bash_config"; then
         printf "export TERM=\"xterm-256color\"\n" >>"$bash_config"
@@ -415,6 +402,8 @@ function setup_bash() {
 #   Log if already installed
 #######################################
 function setup_fish() {
+    echo -e "${GREEN}Setting up fish...${NC}"
+
     if [[ ! -x "$(command -v fish)" ]]; then
         echo -e "${RED}Fish is not installed!${NC}"
         return
@@ -460,6 +449,8 @@ function setup_fish() {
 #   Log if already installed
 #######################################
 function setup_zsh() {
+    echo -e "${GREEN}Setting up zsh...${NC}"
+
     if [[ ! -x "$(command -v zsh)" ]]; then
         echo -e "${RED}Zsh is not installed!${NC}"
         return

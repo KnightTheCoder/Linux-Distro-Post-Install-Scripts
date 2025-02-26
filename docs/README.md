@@ -61,7 +61,7 @@
 -   Multimedia: haruna, celluloid, vlc, strawberry, audacious, kdenlive, gimp
 -   Office apps: libreoffice, calibre ebook reader
 -   Password managers: keepassxc
--   Command line utilities: fastfetch, btop, github cli, neovim, eza, bat
+-   Command line utilities: fastfetch, btop, github cli, neovim, eza, bat, fzf
 -   Shells: bash, fish, zsh
 -   Prompts: starship
 -   Containers: docker, docker-desktop, podman, distrobox
@@ -89,15 +89,16 @@
 
 ### Bash
 
--   [blesh](https://github.com/akinomyoga/ble.sh)
 -   cat is alias for bat
 -   ls is alias for eza
+-   fzf keybindings and defaults
 
 ### Fish
 
 -   [oh-my-fish](https://github.com/oh-my-fish/oh-my-fish)
 -   cat is alias for bat
 -   ls is alias for eza
+-   fzf keybindings and defaults
 
 ### Zsh
 
@@ -107,6 +108,7 @@
 -   Zsh abbreviation
 -   cat is alias for bat
 -   ls is alias for eza
+-   fzf keybindings and defaults
 
 ### Starship
 

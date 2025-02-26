@@ -142,7 +142,6 @@ function main() {
         case $package in
 
         bash)
-            packages+=" gawk"
             setups+=(bash)
             ;;
 
