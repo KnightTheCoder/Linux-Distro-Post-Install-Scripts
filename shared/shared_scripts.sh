@@ -636,18 +636,26 @@ function setup_fzf() {
         echo -e "${RED}Fuzzy finder (fzf) is not installed!${NC}"
     fi
 
+    local bash_config=~/.bashrc
+    local fish_config=~/.config/fish/config.fish
+    local zsh_config=~/.zshrc
+
     echo -e "${GREEN}Setting up fuzzy finder (fzf)...${NC}"
+    fzf_opts="FZF_DEFAULT_OPTS \"--layout=reverse --border=bold --border=rounded --color=dark\""
 
     if [[ -x "$(command -v bash)" ]]; then
-        echo "eval \"$(fzf --bash)\"" >>~/.bashrc
+        printf "\neval \"\$(fzf --bash)\"\n" >>$bash_config
+        printf "\nexport %s \n" "$fzf_opts" >>$bash_config
     fi
 
     if [[ -x "$(command -v zsh)" ]]; then
-        echo "source <(fzf --zsh)" >>~/.zshrc
+        printf "\nsource <(fzf --zsh)\n" >>$zsh_config
+        printf "\nexport %s \n" "$fzf_opts" >>$zsh_config
     fi
 
     if [[ -x "$(command -v fish)" ]]; then
-        echo "fzf --fish | source" >>~/.config/fish/config.fish
+        printf "\nfzf --fish | source\n" >>$fish_config
+        printf "\nset %s \n" "$fzf_opts" >>$fish_config
     fi
 }
 
