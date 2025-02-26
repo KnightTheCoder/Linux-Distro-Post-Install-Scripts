@@ -389,13 +389,9 @@ function main() {
     sudo nala remove -y $packages_to_remove
 
     # Install packages
-    if grep -iq ID=pika "$DISTRO_RELEASE"; then
-        # shellcheck disable=SC2086
-        sudo apt install -y $packages
-    else
-        # shellcheck disable=SC2086
-        sudo nala install -y $packages
-    fi
+
+    # shellcheck disable=SC2086
+    sudo apt install -y $packages
 
     if [[ -x "$(command -v snap)" ]]; then
         echo -e "${GREEN}Installing snaps...${NC}"
