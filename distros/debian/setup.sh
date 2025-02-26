@@ -67,6 +67,7 @@ function main() {
         whiptail --title "CLI install" --separate-output --notags --checklist "Select cli applications to install" 0 0 0 \
             "neofetch" "neofetch" ON \
             "btop" "btop++" ON \
+            "fzf" "fzf" ON \
             "gh" "github cli" OFF \
             3>&1 1>&2 2>&3
     )
