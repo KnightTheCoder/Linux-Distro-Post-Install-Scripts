@@ -644,17 +644,17 @@ function setup_fzf() {
     fzf_variable="FZF_DEFAULT_OPTS"
     fzf_opts="\"--layout=reverse --border=bold --border=rounded --color=dark\""
 
-    if [[ -x "$(command -v bash)" ]]; then
+    if [[ -x "$(command -v bash)" ]] && ! grep -iq fzf $bash_config; then
         printf "\neval \"\$(fzf --bash)\"\n" >>$bash_config
         printf "export %s=%s \n" "$fzf_variable" "$fzf_opts" >>$bash_config
     fi
 
-    if [[ -x "$(command -v zsh)" ]]; then
+    if [[ -x "$(command -v zsh)" ]] && ! grep -iq fzf $zsh_config; then
         printf "\nsource <(fzf --zsh)\n" >>$zsh_config
         printf "export %s=%s \n" "$fzf_variable" "$fzf_opts" >>$zsh_config
     fi
 
-    if [[ -x "$(command -v fish)" ]]; then
+    if [[ -x "$(command -v fish)" ]] && ! grep -iq fzf $fish_config; then
         printf "\nfzf --fish | source\n" >>$fish_config
         printf "set %s %s \n" "$fzf_variable" "$fzf_opts" >>$fish_config
     fi
