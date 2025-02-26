@@ -641,21 +641,22 @@ function setup_fzf() {
     local zsh_config=~/.zshrc
 
     echo -e "${GREEN}Setting up fuzzy finder (fzf)...${NC}"
-    fzf_opts="FZF_DEFAULT_OPTS \"--layout=reverse --border=bold --border=rounded --color=dark\""
+    fzf_variable="FZF_DEFAULT_OPTS"
+    fzf_opts="--layout=reverse --border=bold --border=rounded --color=dark"
 
     if [[ -x "$(command -v bash)" ]]; then
         printf "\neval \"\$(fzf --bash)\"\n" >>$bash_config
-        printf "export %s \n" "$fzf_opts" >>$bash_config
+        printf "export %s=%s \n" "$fzf_variable" "$fzf_opts" >>$bash_config
     fi
 
     if [[ -x "$(command -v zsh)" ]]; then
         printf "\nsource <(fzf --zsh)\n" >>$zsh_config
-        printf "export %s \n" "$fzf_opts" >>$zsh_config
+        printf "export %s=%s \n" "$fzf_variable" "$fzf_opts" >>$zsh_config
     fi
 
     if [[ -x "$(command -v fish)" ]]; then
         printf "\nfzf --fish | source\n" >>$fish_config
-        printf "set %s \n" "$fzf_opts" >>$fish_config
+        printf "set %s %s \n" "$fzf_variable" "$fzf_opts" >>$fish_config
     fi
 }
 
