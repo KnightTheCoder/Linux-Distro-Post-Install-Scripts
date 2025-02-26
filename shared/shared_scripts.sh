@@ -366,13 +366,15 @@ function setup_hacknerd_fonts() {
 #   Log if already installed
 #######################################
 function setup_bash() {
+    local bash_config=~/.bashrc
+
     if [[ -d ~/.local/share/blesh ]]; then
         echo -e "${YELLOW}blesh is already setup${NC}"
     else
         echo -e "${GREEN}Installing blesh...${NC}"
 
-        if ! grep -iq blesh ~/.bashrc; then
-            echo 'source ~/.local/share/blesh/ble.sh' >>~/.bashrc
+        if ! grep -iq blesh "$bash_config"; then
+            echo 'source ~/.local/share/blesh/ble.sh' >>"$bash_config"
         fi
 
         git clone --recursive --depth 1 --shallow-submodules https://github.com/akinomyoga/ble.sh.git
@@ -381,17 +383,21 @@ function setup_bash() {
         rm -rfv ./ble.sh
     fi
 
+    if ! grep -iq xterm-256color "$bash_config"; then
+        printf "export TERM=\"xterm-256color\"\n" >>"$bash_config"
+    fi
+
     local bat_fullname=bat
 
     if grep -iq debian "$DISTRO_RELEASE"; then
         bat_fullname=batcat
     fi
 
-    if ! grep -iq eza ~/.bashrc && ! grep -iq $bat_fullname ~/.bashrc; then
+    if ! grep -iq eza "$bash_config" && ! grep -iq $bat_fullname "$bash_config"; then
         {
             echo "alias ls=\"eza\""
             echo "alias cat=\"$bat_fullname\""
-        } >>~/.bashrc
+        } >>"$bash_config"
     fi
 }
 
@@ -434,6 +440,10 @@ function setup_fish() {
     fi
 
     cp -fv "${config_input}" "${config_output}"
+
+    if ! grep -iq xterm-256color "$config_output"; then
+        printf "set TERM=\"xterm-256color\"\n" >>"$config_output"
+    fi
 }
 
 #######################################
@@ -470,6 +480,10 @@ function setup_zsh() {
     git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
 
     zsh "../../shared/setup.zsh"
+
+    if ! grep -iq xterm-256color ~/.zshrc; then
+        printf "export TERM=\"xterm-256color\"\n" >>~/.zshrc
+    fi
 
     # Add zsh-abbr for fish-like abbreviations
     git clone https://github.com/olets/zsh-abbr --recurse-submodules --single-branch --branch main --depth 1 "$HOME/.zprezto/modules/zsh-abbr"
