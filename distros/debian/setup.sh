@@ -241,15 +241,6 @@ function main() {
 
             ;;
 
-        steam-devices)
-            #Skip steam-devices package only if steam has been chosen as well
-            if grep -iq ID=pika "$DISTRO_RELEASE" && [[ $packages == *"steam"* ]]; then
-                packages=$(remove_package "$packages" "$package")
-                whiptail --title "Package removed" --msgbox "Steam-devices has been skipped because it's broken on pikaos when used with steam package" 0 0
-            fi
-
-            ;;
-
         lutris)
             packages=$(remove_package "$packages" "$package")
 
