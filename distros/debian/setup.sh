@@ -72,8 +72,6 @@ function main() {
             3>&1 1>&2 2>&3
     )
 
-    packages+=" $cli_packages"
-
     packages+=" git build-essential neovim bat curl wget gpg ttf-mscorefonts-installer fontconfig p7zip p7zip-rar unrar rar"
 
     local shells
@@ -83,7 +81,7 @@ function main() {
         shells="starship-install $shells"
     fi
 
-    packages="$shells $packages"
+    packages="$packages $shells $cli_packages"
 
     # Remove new lines
     packages=$(echo "$packages" | tr "\n" " ")

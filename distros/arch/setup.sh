@@ -75,14 +75,12 @@ function main() {
             3>&1 1>&2 2>&3
     )
 
-    packages+=" $cli_packages"
-
     packages+=" neovim eza bat zram-generator wget curl ark filelight git base-devel p7zip unrar"
 
     local shells
     shells=$(choose_shells)
 
-    packages="$shells $packages"
+    packages="$packages $shells $cli_packages"
 
     # Remove new lines
     packages=$(echo "$packages" | tr "\n" " ")
