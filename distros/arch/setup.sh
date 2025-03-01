@@ -90,7 +90,7 @@ function main() {
     local setups=(hacknerd)
     local usergroups=()
     local aur=(ttf-ms-win11-auto)
-    local packages_to_remove="akregator kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat"
+    local packages_to_remove="akregator kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat rhythmbox"
 
     # Install NVIDIA drivers
     local driver
