@@ -431,7 +431,7 @@ function setup_fish() {
     cp -fv "${config_input}" "${config_output}"
 
     if ! grep -iq xterm-256color "$config_output"; then
-        printf "set TERM=\"xterm-256color\"\n" >>"$config_output"
+        printf "set TERM \"xterm-256color\"\n" >>"$config_output"
     fi
 }
 
