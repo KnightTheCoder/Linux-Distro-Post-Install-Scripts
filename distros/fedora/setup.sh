@@ -73,7 +73,7 @@ function main() {
             3>&1 1>&2 2>&3
     )
 
-    packages+=" neovim eza bat curl wget cabextract xorg-x11-font-utils fontconfig p7zip p7zip-plugins unrar git dnf-plugins-core ffmpeg-libs libva libva-utils openh264 gstreamer1-plugin-openh264 mozilla-openh264"
+    packages+=" neovim eza bat curl wget cabextract xorg-x11-font-utils fontconfig p7zip p7zip-plugins unrar git dnf-plugins-core ffmpeg-libs libva libva-utils openh264 gstreamer1-plugin-openh264 mozilla-openh264 \*appstream-data"
 
     local shells
     shells=$(choose_shells)
