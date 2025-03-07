@@ -407,7 +407,7 @@ function main() {
             ;;
 
         heroic)
-            download_file heroic.deb "https://github.com/Heroic-Games-Launcher/HeroicGamesLauncher/releases/download/v2.15.2/heroic_2.15.2_amd64.deb"
+            download_file heroic.deb "https://github.com/Heroic-Games-Launcher/HeroicGamesLauncher/releases/download/v2.16.0/Heroic-2.16.0-linux-amd64.deb"
             sudo dpkg -i heroic.deb
             rm -v heroic.deb
             ;;
