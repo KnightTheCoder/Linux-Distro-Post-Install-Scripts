@@ -91,7 +91,7 @@ function main() {
     local setups=(hacknerd eza)
     local usergroups=()
     local snaps=()
-    local packages_to_remove="elisa dragonplayer akregator kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat kolourpaint thunderbird konqueror"
+    local packages_to_remove="elisa dragonplayer akregator kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat kolourpaint thunderbird konqueror rhythmbox"
 
     # Install NVIDIA drivers only on debian
     if grep -iq ID=debian "$DISTRO_RELEASE" || grep -iq LMDE "$DISTRO_RELEASE" || grep -iq ID=pika "$DISTRO_RELEASE"; then
