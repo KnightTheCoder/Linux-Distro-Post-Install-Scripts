@@ -53,6 +53,7 @@ Tested distros:
 -   PikaOS
 -   ZorinOS
 -   Pop!\_OS
+-   Q4OS
 -   MX Linux
 -   Linux Lite
 -   WSL
