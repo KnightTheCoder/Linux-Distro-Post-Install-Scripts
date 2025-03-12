@@ -274,7 +274,7 @@ function main() {
     packages=$(echo "$packages" | xargs)
 
     # Ask if you want to remove discover
-    if whiptail --title "Remove discover" --yesno "Would you like to remove discover?" --defaultno 0 0; then
+    if [[ -x $(command -v plasma-discover) ]] && whiptail --title "Remove discover" --yesno "Would you like to remove discover?" --defaultno 0 0; then
         packages_to_remove+=" discover"
     fi
 
