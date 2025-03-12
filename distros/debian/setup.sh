@@ -361,6 +361,7 @@ function main() {
         # Add extra repositories to debian
         sudo apt install software-properties-common -y
         sudo apt-add-repository contrib non-free non-free-firmware -y
+        sudo apt install libavcodec-extra -y
     fi
 
     # Add 32 bit support if it's not available
