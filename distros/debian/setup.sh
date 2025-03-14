@@ -223,6 +223,7 @@ function main() {
                 packages=$(remove_package "$packages" "$package")
                 whiptail --title "Package removed" --msgbox "Haruna has been skipped because it's broken on pikaos" 0 0
             fi
+
             ;;
 
         steam)

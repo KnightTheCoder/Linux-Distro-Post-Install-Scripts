@@ -371,7 +371,7 @@ function setup_bash() {
     local bash_config=~/.bashrc
 
     if ! grep -iq xterm-256color "$bash_config"; then
-        printf "export TERM=\"xterm-256color\"\n" >>"$bash_config"
+        printf "export TERM=\"xterm-256color\"\n\n" >>"$bash_config"
     fi
 
     local bat_fullname=bat
@@ -431,7 +431,7 @@ function setup_fish() {
     cp -fv "${config_input}" "${config_output}"
 
     if ! grep -iq xterm-256color "$config_output"; then
-        printf "set TERM \"xterm-256color\"\n" >>"$config_output"
+        printf "set TERM \"xterm-256color\"\n\n" >>"$config_output"
     fi
 }
 
@@ -473,7 +473,7 @@ function setup_zsh() {
     zsh "../../shared/setup.zsh"
 
     if ! grep -iq xterm-256color ~/.zshrc; then
-        printf "export TERM=\"xterm-256color\"\n" >>~/.zshrc
+        printf "export TERM=\"xterm-256color\"\n\n" >>~/.zshrc
     fi
 
     # Add zsh-abbr for fish-like abbreviations
@@ -655,8 +655,11 @@ function setup_fzf() {
     fi
 
     if [[ -x "$(command -v zsh)" ]] && ! grep -iq fzf $zsh_config; then
-        printf "\nsource <(fzf --zsh)\n" >>$zsh_config
-        printf "export %s=%s \n" "$fzf_variable" "$fzf_opts" >>$zsh_config
+        {
+            printf "\nsource <(fzf --zsh)\n"
+            printf "export %s=%s \n" "$fzf_variable" "$fzf_opts"
+            printf "compdef _gnu_generic fzf\n"
+        } >>$zsh_config
     fi
 
     if [[ -x "$(command -v fish)" ]] && ! grep -iq fzf $fish_config; then
