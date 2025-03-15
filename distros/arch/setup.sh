@@ -197,6 +197,7 @@ function main() {
             packages+=" virt-manager virt-viewer dnsmasq vde2 bridge-utils openbsd-netcat dmidecode"
             services+=(libvirtd.service)
             usergroups+=(libvirt)
+            setups+=(qemu)
             ;;
 
         virtualbox)
@@ -372,6 +373,10 @@ function main() {
 
         virtualbox)
             setup_virtualbox_extension
+            ;;
+
+        qemu)
+            setup_qemu
             ;;
 
         flatpak)

@@ -824,6 +824,13 @@ function setup_virtualbox_extension() {
     rm -fv Oracle*.vbox-extpack
 }
 
+function setup_qemu() {
+    for drv in qemu interface network nodedev nwfilter secret storage; do
+        sudo systemctl enable virt${drv}d.service
+        sudo systemctl enable virt${drv}d{,-ro,-admin}.socket
+    done
+}
+
 #######################################
 # Select and install flatpak applications and remove default fedora repo
 # Arguments:

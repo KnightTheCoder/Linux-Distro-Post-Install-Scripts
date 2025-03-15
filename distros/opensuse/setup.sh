@@ -194,6 +194,7 @@ function main() {
             packages+=" libvirt bridge-utils"
             services+=(kvm_stat.service libvirtd.service)
             usergroups+=(libvirt)
+            setups+=(qemu)
             ;;
 
         virtualbox)
@@ -385,6 +386,10 @@ function main() {
 
         virtualbox)
             setup_virtualbox_extension
+            ;;
+
+        qemu)
+            setup_qemu
             ;;
 
         flatpak)
