@@ -209,7 +209,7 @@ function main() {
         qemu)
             packages=$(remove_package "$packages" "$package")
 
-            packages+=" @virtualization"
+            packages+=" @virtualization libvirt guestfs-tools"
             services+=(libvirtd.service)
             usergroups+=(libvirt)
             ;;
