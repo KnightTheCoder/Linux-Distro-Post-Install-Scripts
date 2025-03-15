@@ -210,7 +210,6 @@ function main() {
             packages=$(remove_package "$packages" "$package")
 
             packages+=" @virtualization libvirt guestfs-tools libayatana-appindicator-gtk3"
-            #services+=(libvirtd.service)
             usergroups+=(libvirt)
             setups+=(qemu)
             ;;

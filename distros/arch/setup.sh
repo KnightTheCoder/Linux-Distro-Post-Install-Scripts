@@ -195,7 +195,6 @@ function main() {
 
         qemu)
             packages+=" virt-manager virt-viewer dnsmasq vde2 bridge-utils openbsd-netcat dmidecode libayatana-appindicator"
-            #services+=(libvirtd.service)
             usergroups+=(libvirt)
             setups+=(qemu)
             ;;
