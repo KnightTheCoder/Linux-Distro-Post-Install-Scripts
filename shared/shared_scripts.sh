@@ -824,10 +824,21 @@ function setup_virtualbox_extension() {
     rm -fv Oracle*.vbox-extpack
 }
 
+#######################################
+# Setup qemu with modular services
+# Globals:
+#   GREEN
+#   NC
+# Arguments:
+#   None
+# Outputs:
+#   Log for starting step
 function setup_qemu() {
+    echo -e "${GREEN}Starting qemu modular services${NC}"
+
     for drv in qemu interface network nodedev nwfilter secret storage; do
-        sudo systemctl enable virt${drv}d.service
-        sudo systemctl enable virt${drv}d{,-ro,-admin}.socket
+        sudo systemctl enable --now virt${drv}d.service
+        sudo systemctl enable --now virt${drv}d{,-ro,-admin}.socket
     done
 }
 
