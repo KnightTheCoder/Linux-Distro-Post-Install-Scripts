@@ -452,7 +452,7 @@ function main() {
             ;;
 
         qemu)
-            echo -e "${GREEN} Installing virtio-win drivers for windows...${NC}"
+            echo -e "${GREEN}Installing virtio-win drivers for windows...${NC}"
             echo -e "${GREEN}Drivers can be found in ${YELLOW}/usr/share/virtio-win/${GREEN} after install is finished${NC}"
 
             sudo wget https://fedorapeople.org/groups/virt/virtio-win/virtio-win.repo \
