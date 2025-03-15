@@ -212,6 +212,7 @@ function main() {
             packages+=" @virtualization libvirt guestfs-tools"
             services+=(libvirtd.service)
             usergroups+=(libvirt)
+            setups+=(qemu)
             ;;
 
         VirtualBox)
@@ -401,6 +402,13 @@ function main() {
             curl -fsSL https://repo.librewolf.net/librewolf.repo | sudo pkexec tee /etc/yum.repos.d/librewolf.repo
 
             sudo dnf5 install -y librewolf
+            ;;
+
+        qemu)
+            sudo wget https://fedorapeople.org/groups/virt/virtio-win/virtio-win.repo \
+                -O /etc/yum.repos.d/virtio-win.repo
+
+            sudo dnf install virtio-win -y
             ;;
 
         hacknerd)
