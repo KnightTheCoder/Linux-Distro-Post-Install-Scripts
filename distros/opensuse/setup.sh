@@ -192,7 +192,8 @@ function main() {
         qemu)
             patterns+=(kvm_tools kvm_server)
             packages+=" libvirt bridge-utils"
-            services+=(kvm_stat.service libvirtd.service)
+            services+=(kvm_stat.service)
+            #services+=(kvm_stat.service libvirtd.service)
             usergroups+=(libvirt)
             setups+=(qemu)
             ;;

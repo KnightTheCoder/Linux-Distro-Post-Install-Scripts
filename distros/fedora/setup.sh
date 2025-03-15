@@ -210,7 +210,7 @@ function main() {
             packages=$(remove_package "$packages" "$package")
 
             packages+=" @virtualization libvirt guestfs-tools"
-            services+=(libvirtd.service)
+            #services+=(libvirtd.service)
             usergroups+=(libvirt)
             setups+=(qemu)
             ;;
