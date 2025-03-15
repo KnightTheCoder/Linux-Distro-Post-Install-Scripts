@@ -324,9 +324,13 @@ function main() {
     # Install AUR packages
     yay -S "${aur[@]}" --needed --rebuildall --answerclean A --noanswerdiff --removemake --cleanafter --noconfirm
 
-    echo -e "${GREEN}Setting up zram...${NC}"
     # Setup zram
-    printf "[zram0]\n zram-size = ram / 2\n compression-algorithm = zstd\n swap-priority = 100\n fs-type = swap\n" | sudo tee /etc/systemd/zram-generator.conf
+    if [[ ! -f /etc/systemd/zram-generator.conf ]]; then
+        echo -e "${GREEN}Setting up zram...${NC}"
+        printf "[zram0]\n zram-size = ram / 2\n compression-algorithm = zstd\n swap-priority = 100\n fs-type = swap\n" | sudo tee /etc/systemd/zram-generator.conf
+    else
+        echo -e "${RED}zram is already setup!${NC}"
+    fi
 
     add_user_to_groups "${usergroups[@]}"
 
