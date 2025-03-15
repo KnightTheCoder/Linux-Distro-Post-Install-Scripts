@@ -836,6 +836,13 @@ function setup_virtualbox_extension() {
 function setup_qemu() {
     echo -e "${GREEN}Starting qemu modular services${NC}"
 
+    # Stop and disable monolithic daemon
+    sudo systemctl stop libvirtd.service
+    sudo systemctl stop libvirtd{,-ro,-admin}.socket
+
+    sudo systemctl disable libvirtd.service
+    sudo systemctl disable libvirtd{,-ro,-admin}.socket
+
     for drv in qemu interface network nodedev nwfilter secret storage; do
         sudo systemctl enable --now virt${drv}d.service
         sudo systemctl enable --now virt${drv}d{,-ro,-admin}.socket
