@@ -30,6 +30,7 @@ function main() {
             "heroic" "Heroic Games Launcher" OFF \
             "firefox" "Firefox web browser" ON \
             "librewolf" "Librewolf web browser" OFF \
+            "zen-browser" "Zen web browser" OFF \
             "chromium" "Chromium web browser" OFF \
             "vivaldi" "Vivaldi web browser" OFF \
             "brave" "Brave web browser" OFF \
@@ -204,6 +205,12 @@ function main() {
             packages=$(remove_package "$packages" "$package")
 
             setups+=(librewolf)
+            ;;
+
+        zen-browser)
+            packages=$(remove_package "$packages" "$package")
+
+            setups+=(zen-browser)
             ;;
 
         qemu)
@@ -401,6 +408,12 @@ function main() {
             curl -fsSL https://repo.librewolf.net/librewolf.repo | sudo pkexec tee /etc/yum.repos.d/librewolf.repo
 
             sudo dnf5 install -y librewolf
+            ;;
+
+        zen-browser)
+            sudo dnf copr enable sneexy/zen-browser -y
+
+            sudo dnf install zen-browser -y
             ;;
 
         hacknerd)
