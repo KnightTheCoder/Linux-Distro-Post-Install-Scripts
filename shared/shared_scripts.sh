@@ -905,6 +905,7 @@ function setup_flatpak() {
     # Remove fedora remote if it exists
     if grep -iq fedora $DISTRO_RELEASE && flatpak remotes | grep -iq fedora; then
         sudo flatpak remote-delete fedora
+        sudo flatpak remote-delete fedora-testing
     fi
 
     # Setup flathub
