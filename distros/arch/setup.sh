@@ -60,6 +60,7 @@ function main() {
             "distrobox" "Distrobox" OFF \
             "flatpak" "Flatpak" ON \
             "qemu" "QEMU/KVM" OFF \
+            "cockpit" "Cockpit (needs qemu)" OFF \
             "virtualbox" "Oracle Virtualbox" OFF \
             "openrgb" "OpenRGB" OFF \
             3>&1 1>&2 2>&3
@@ -197,6 +198,13 @@ function main() {
             packages+=" virt-manager virt-viewer dnsmasq vde2 bridge-utils openbsd-netcat dmidecode libayatana-appindicator"
             usergroups+=(libvirt)
             setups+=(qemu)
+            ;;
+
+        cockpit)
+            packages=$(remove_package "$packages" "$package")
+
+            aur+=(cockpit cockpit-machines)
+            services+=(cockpit.socket)
             ;;
 
         virtualbox)

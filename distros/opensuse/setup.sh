@@ -86,6 +86,7 @@ function main() {
             "distrobox" "Distrobox" OFF \
             "flatpak" "Flatpak" ON \
             "qemu" "QEMU/KVM" OFF \
+            "cockpit" "Cockpit (needs qemu)" OFF \
             "virtualbox" "Oracle Virtualbox" OFF \
             "OpenRGB" "OpenRGB" OFF \
             3>&1 1>&2 2>&3
@@ -195,6 +196,11 @@ function main() {
             services+=(kvm_stat.service)
             usergroups+=(libvirt)
             setups+=(qemu)
+            ;;
+
+        cockpit)
+            packages+=" cockpit-machines"
+            services+=(cockpit.socket)
             ;;
 
         virtualbox)

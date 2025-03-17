@@ -65,7 +65,7 @@
 -   Shells: bash, fish, zsh
 -   Prompts: starship
 -   Containers: docker, docker-desktop, podman, distrobox
--   Virtualization: qemu, virtualbox
+-   Virtualization: qemu, cockpit, virtualbox
 -   Code editors: vscode, vscodium
 -   Programming languages and development environments: gcc, nodejs, dotnet, rust, go, java, xampp
 -   Bittorrent clients: transmission, qbittorrent

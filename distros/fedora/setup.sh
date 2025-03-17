@@ -59,6 +59,7 @@ function main() {
             "distrobox" "Distrobox" OFF \
             "flatpak" "Flatpak" ON \
             "qemu" "QEMU/KVM" OFF \
+            "cockpit" "Cockpit (needs qemu)" OFF \
             "VirtualBox" "Oracle Virtualbox" OFF \
             "openrgb" "OpenRGB" OFF \
             3>&1 1>&2 2>&3
@@ -219,6 +220,11 @@ function main() {
             packages+=" @virtualization libvirt guestfs-tools libayatana-appindicator-gtk3"
             usergroups+=(libvirt)
             setups+=(qemu)
+            ;;
+
+        cockpit)
+            packages+=" cockpit-machines"
+            services+=(cockpit.socket)
             ;;
 
         VirtualBox)

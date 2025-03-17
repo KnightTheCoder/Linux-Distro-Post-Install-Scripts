@@ -58,6 +58,7 @@ function main() {
             "distrobox" "Distrobox" OFF \
             "flatpak" "Flatpak" ON \
             "qemu" "QEMU/KVM" OFF \
+            "cockpit" "Cockpit (needs qemu)" OFF \
             "virtualbox" "Oracle Virtualbox" OFF \
             3>&1 1>&2 2>&3
     )
@@ -207,6 +208,11 @@ function main() {
 
             services+=(libvirtd.service)
             usergroups+=(libvirt)
+            ;;
+
+        cockpit)
+            packages+=" cockpit-machines"
+            services+=(cockpit.socket)
             ;;
 
         virtualbox)
