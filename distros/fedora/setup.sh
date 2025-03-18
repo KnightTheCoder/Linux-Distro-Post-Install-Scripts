@@ -329,6 +329,11 @@ function main() {
     # shellcheck disable=SC2046
     sudo rpm -Uvh http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
+    # Add the eza copr repo for fedora 42 and later
+    if [[ $(rpm -E %fedora) -ge 42 ]]; then
+        sudo dnf copr enable alternateved/eza -y
+    fi
+
     # Install dnf5 if it's an older system
     sudo dnf install -y dnf5 dnf5-plugins
 
