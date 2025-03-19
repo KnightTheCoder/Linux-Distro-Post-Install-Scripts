@@ -75,7 +75,7 @@ function main() {
             3>&1 1>&2 2>&3
     )
 
-    packages+=" neovim eza bat curl wget cabextract xorg-x11-font-utils fontconfig p7zip p7zip-plugins unrar git dnf-plugins-core ffmpeg-libs libva libva-utils openh264 gstreamer1-plugin-openh264 mozilla-openh264 \*appstream-data"
+    packages+=" vim neovim eza bat curl wget cabextract xorg-x11-font-utils fontconfig p7zip p7zip-plugins unrar git dnf-plugins-core ffmpeg-libs libva libva-utils openh264 gstreamer1-plugin-openh264 mozilla-openh264 \*appstream-data"
 
     local shells
     shells=$(choose_shells)
@@ -328,6 +328,9 @@ function main() {
     # shellcheck disable=SC2046
     sudo rpm -Uvh http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
+    # Enable openh264 for firefox
+    # sudo dnf config-manager setopt fedora-cisco-openh264.enabled=1
+
     # Add the eza copr repo for fedora 42 and later
     if [[ $(rpm -E %fedora) -ge 42 ]]; then
         sudo dnf copr enable alternateved/eza -y
@@ -357,9 +360,6 @@ function main() {
     # Install packages
     # shellcheck disable=SC2086
     sudo dnf5 install -y $packages
-
-    # Enable openh264 for firefox
-    sudo dnf config-manager setopt fedora-cisco-openh264.enabled=1
 
     # Install msfonts
     echo -e "${GREEN}Installing microsoft core fonts...${NC}"
