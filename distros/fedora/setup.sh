@@ -328,9 +328,6 @@ function main() {
     # shellcheck disable=SC2046
     sudo rpm -Uvh http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
-    # Enable openh264 for firefox
-    # sudo dnf config-manager setopt fedora-cisco-openh264.enabled=1
-
     # Add the eza copr repo for fedora 42 and later
     if [[ $(rpm -E %fedora) -ge 42 ]]; then
         sudo dnf copr enable alternateved/eza -y
