@@ -215,7 +215,8 @@ function main() {
             ;;
 
         qemu)
-            packages+=" @virtualization libvirt guestfs-tools libayatana-appindicator-gtk3"
+            groups+=(virtualization)
+            packages+=" libvirt guestfs-tools libayatana-appindicator-gtk3"
             usergroups+=(libvirt)
             setups+=(qemu)
             ;;
