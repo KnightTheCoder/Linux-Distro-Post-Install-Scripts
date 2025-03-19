@@ -483,6 +483,10 @@ function main() {
 
             sudo dnf install virtio-win -y
 
+            sudo virsh pool-define-as --name virtio-win --type dir --target /usr/share/virtio-win
+            sudo virsh pool-autostart virtio-win
+            sudo virsh pool-start virtio-win
+
             setup_qemu
             ;;
 
