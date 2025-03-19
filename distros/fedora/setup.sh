@@ -484,9 +484,11 @@ function main() {
 
             setup_qemu
 
-            sudo virsh pool-define-as --name virtio-win --type dir --target /usr/share/virtio-win
-            sudo virsh pool-autostart virtio-win
-            sudo virsh pool-start virtio-win
+            if ! sudo virsh pool-list | grep -iq virtio-win; then
+                sudo virsh pool-define-as --name virtio-win --type dir --target /usr/share/virtio-win
+                sudo virsh pool-autostart virtio-win
+                sudo virsh pool-start virtio-win
+            fi
             ;;
 
         flatpak)
