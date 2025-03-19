@@ -206,8 +206,9 @@ function main() {
   echo -e "${GREEN}${package_manager} found for ${distro_fullname}!${NC}"
   bash "$(get_execution_path "$chosen_distro")"
 
+  current_hostname=$(hostnamectl hostname)
   # Set hostname
-  if hostname=$(whiptail --title "Hostname" --inputbox "Type in your hostname\nLeave empty to not change it" 0 0 3>&1 1>&2 2>&3); then
+  if hostname=$(whiptail --title "Hostname" --inputbox "Your current hostname: ${current_hostname}\nType in your hostname\nLeave empty to not change it" 0 0 3>&1 1>&2 2>&3); then
     # Check if hostname is not empty
     if [[ -n "$hostname" ]]; then
       sudo hostnamectl hostname "$hostname"
