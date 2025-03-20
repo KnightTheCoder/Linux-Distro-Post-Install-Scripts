@@ -54,6 +54,7 @@ Tested distros:
 -   ZorinOS
 -   Pop!\_OS
 -   Q4OS
+-   TUXEDO OS
 -   MX Linux
 -   Linux Lite
 -   WSL
