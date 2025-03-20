@@ -846,8 +846,8 @@ function setup_qemu() {
     for drv in qemu interface network nodedev nwfilter secret storage; do
         sudo systemctl unmask virt${drv}d.service
         sudo systemctl unmask virt${drv}d{,-ro,-admin}.socket
-        sudo systemctl enable virt${drv}d.service
-        sudo systemctl enable virt${drv}d{,-ro,-admin}.socket
+        sudo systemctl enable --now virt${drv}d.service
+        sudo systemctl enable --now virt${drv}d{,-ro,-admin}.socket
     done
 }
 
