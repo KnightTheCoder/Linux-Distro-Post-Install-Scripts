@@ -2,8 +2,6 @@
 
 cd "$(dirname "$0")" || exit
 
-# shellcheck source=.../../shared/shared_scripts.sh
-source "../../shared/shared_scripts.sh"
 # shellcheck source=./functions.sh
 source "./functions.sh"
 
@@ -249,21 +247,13 @@ function main() {
     # Install groups
     sudo dnf4 group install -y "${groups[@]}" --allowerasing
 
-    # Swap mesa drivers to freeworld ones
-    local mesa_drivers=(mesa-va-drivers mesa-vdpau-drivers)
-    for mesa_driver in "${mesa_drivers[@]}"; do
-        sudo dnf swap "$mesa_driver" "${mesa_driver}-freeworld" -y
-    done
-
-    sudo dnf swap 'ffmpeg-free' 'ffmpeg' --allowerasing -y
+    swap_free_to_rpm_fusion_packages
 
     # Install packages
     # shellcheck disable=SC2086
     sudo dnf5 install -y $packages
 
-    # Install msfonts
-    echo -e "${GREEN}Installing microsoft core fonts...${NC}"
-    sudo rpm -i https://downloads.sourceforge.net/project/mscorefonts2/rpms/msttcore-fonts-installer-2.6-1.noarch.rpm
+    install_ms_core_fonts
 
     add_user_to_groups "${usergroups[@]}"
 

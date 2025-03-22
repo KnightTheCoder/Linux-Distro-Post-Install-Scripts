@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# shellcheck source=.../../shared/shared_scripts.sh
+source "../../shared/shared_scripts.sh"
+
 #######################################
 # Choose from packages
 # Arguments:
@@ -185,13 +188,43 @@ function add_rpm_fusion_repos() {
 }
 
 #######################################
-# Performs various dnf actions after script
+# Swaps free packages to rpm fusion ones
+# Globals:
+#   GREEN
+#   NC
+# Arguments:
+#   None
+#######################################
+function swap_free_to_rpm_fusion_packages() {
+    local mesa_drivers=(mesa-va-drivers mesa-vdpau-drivers)
+    for mesa_driver in "${mesa_drivers[@]}"; do
+        sudo dnf swap "$mesa_driver" "${mesa_driver}-freeworld" -y
+    done
+
+    sudo dnf swap 'ffmpeg-free' 'ffmpeg' --allowerasing -y
+}
+
+#######################################
+# Installs microsoft core fonts
 # Globals:
 #   GREEN
 #   NC
 # Arguments:
 #   None
 # Outputs:
+#   Log about step being performed
+#######################################
+function install_ms_core_fonts() {
+    echo -e "${GREEN}Installing microsoft core fonts...${NC}"
+    sudo rpm -i https://downloads.sourceforge.net/project/mscorefonts2/rpms/msttcore-fonts-installer-2.6-1.noarch.rpm
+}
+
+#######################################
+# Performs various dnf actions after script
+# Globals:
+#   GREEN
+#   NC
+# Arguments:
 #   None
 #######################################
 function post_script_dnf_actions() {
