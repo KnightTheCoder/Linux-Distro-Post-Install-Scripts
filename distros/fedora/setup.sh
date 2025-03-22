@@ -536,6 +536,8 @@ function main() {
 
     # Update system after setup
     sudo dnf5 upgrade -y --refresh
+
+    sudo dnf5 update @multimedia -y --refresh
 }
 
 if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then
