@@ -132,6 +132,10 @@ function main() {
 
     esac
 
+    if [[ -n "$drivers" ]]; then
+        drivers+=" libva-nvidia-driver"
+    fi
+
     packages+=" $drivers"
 
     local nvim_config
