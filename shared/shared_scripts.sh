@@ -463,7 +463,7 @@ function setup_zsh() {
 
     # Delete any leftovers from zsh install
     echo -e "${GREEN}Deleting leftovers from zsh install...${NC}"
-    rm -rfv ~/.z*
+    rm -rfv ~/.z{login,logout,prezto,reztorc,profile,sh_history,shenv,shrc}
 
     echo -e "${GREEN}Installing prezto...${NC}"
 
