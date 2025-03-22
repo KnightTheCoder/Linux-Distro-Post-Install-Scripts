@@ -1,5 +1,12 @@
 #!/bin/bash
 
+#######################################
+# Choose from packages
+# Arguments:
+#   None
+# Outputs:
+#   Package names in a string, seperated by a new line
+#######################################
 function get_main_packages() {
     local packages
     packages=$(
@@ -51,6 +58,13 @@ function get_main_packages() {
     echo "$packages"
 }
 
+#######################################
+# Choose from cli packages
+# Arguments:
+#   None
+# Outputs:
+#   Package names in a string, seperated by a new line
+#######################################
 function get_cli_packages() {
     local cli_packages
     cli_packages=$(
@@ -65,6 +79,13 @@ function get_cli_packages() {
     echo "$cli_packages"
 }
 
+#######################################
+# Choose from nvidia driver packages
+# Arguments:
+#   None
+# Outputs:
+#   Package names in a string, seperated by spaces
+#######################################
 function get_nvidia_drivers() {
     local drivers
     local driver
@@ -106,4 +127,49 @@ function get_nvidia_drivers() {
     fi
 
     echo "$drivers"
+}
+
+function get_remove_discover() {
+    if [[ -x $(command -v plasma-discover) ]] && whiptail --title "Remove discover" --yesno "Would you like to remove discover?" --defaultno 0 0; then
+        packages_to_remove+=" plasma-discover"
+    fi
+}
+
+function modify_configurations() {
+    echo -e "${GREEN}Modifying dnf configuration...${NC}"
+
+    # Set parallel downloads and default to yes, if it hasn't been set yet
+    if grep -iq "max_parallel_downloads=20" /etc/dnf/dnf.conf && grep -iq "defaultyes=True" /etc/dnf/dnf.conf; then
+        echo -e "${YELLOW}Config was already modified!${NC}"
+    else
+        printf "max_parallel_downloads=20\ndefaultyes=True\n" | sudo tee -a /etc/dnf/dnf.conf
+    fi
+
+    echo -e "${GREEN}Increasing the inotify watch count...${NC}"
+
+    if grep -iq fs.inotify.max_user_watches=10000000 /etc/sysctl.conf || grep -iq fs.inotify.max_user_instances=256 /etc/sysctl.conf; then
+        echo -e "${YELLOW}inotify watch count already modified!${NC}"
+    else
+        printf "\nfs.inotify.max_user_watches=10000000\nfs.inotify.max_user_instances=256\n" | sudo tee -a /etc/sysctl.conf
+        sudo sysctl -p
+    fi
+}
+
+function add_rpm_fusion_repos() {
+    echo -e "${GREEN}Adding rpm fusion repositories...${NC}"
+
+    # shellcheck disable=SC2046
+    sudo rpm -Uvh http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+    # shellcheck disable=SC2046
+    sudo rpm -Uvh http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+}
+
+function post_script_dnf_actions() {
+    sudo dnf check-update --refresh
+
+    sudo dnf5 update @multimedia -y
+
+    sudo dnf5 autoremove -y
+
+    sudo dnf5 upgrade -y
 }
