@@ -328,7 +328,7 @@ function main() {
     if grep -iq fs.inotify.max_user_watches=10000000 /etc/sysctl.conf || grep -iq fs.inotify.max_user_instances = 256 /etc/sysctl.conf; then
         echo -e "${YELLOW}inotify watch count already modified!${NC}"
     else
-        printf "\nfs.inotify.max_user_watches=10000000\nfs.inotify.max_user_instances = 256\n" | tee -a /etc/sysctl.conf
+        printf "\nfs.inotify.max_user_watches=10000000\nfs.inotify.max_user_instances = 256\n" | sudo tee -a /etc/sysctl.conf
         sudo sysctl -p
     fi
 
