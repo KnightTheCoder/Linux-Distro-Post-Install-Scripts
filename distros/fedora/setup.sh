@@ -537,7 +537,9 @@ function main() {
     # Update system after setup
     sudo dnf5 upgrade -y --refresh
 
-    sudo dnf5 update @multimedia -y --refresh
+    sudo dnf5 update @multimedia -y
+
+    sudo dnf5 autoremove -y
 }
 
 if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then
