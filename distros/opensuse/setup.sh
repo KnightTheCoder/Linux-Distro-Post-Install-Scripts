@@ -107,7 +107,7 @@ function main() {
     local shells
     shells=$(choose_shells)
 
-    packages="$packages $shells $cli_packages"
+    packages="$shells $cli_packages $packages"
 
     # Remove new lines
     packages=$(echo "$packages" | tr "\n" " ")

@@ -33,7 +33,7 @@ function main() {
         shells="starship-install $shells"
     fi
 
-    packages="$packages $shells $cli_packages"
+    packages="$shells $cli_packages $packages"
 
     # Remove new lines
     packages=$(echo "$packages" | tr "\n" " ")
