@@ -129,6 +129,16 @@ function get_nvidia_drivers() {
     echo "$drivers"
 }
 
+#######################################
+# Choose to keep or remove plasma discover
+# Globals:
+#   GREEN
+#   NC
+# Arguments:
+#   None
+# Outputs:
+#   whiptail screen
+#######################################
 function get_remove_discover() {
     if [[ -x $(command -v plasma-discover) ]] && whiptail --title "Remove discover" --yesno "Would you like to remove discover?" --defaultno 0 0; then
         packages_to_remove+=" plasma-discover"
@@ -155,6 +165,16 @@ function modify_configurations() {
     fi
 }
 
+#######################################
+# Enable rpm fusion free and nonfree repositories
+# Globals:
+#   GREEN
+#   NC
+# Arguments:
+#   None
+# Outputs:
+#   Log about step being performed
+#######################################
 function add_rpm_fusion_repos() {
     echo -e "${GREEN}Adding rpm fusion repositories...${NC}"
 
@@ -164,12 +184,26 @@ function add_rpm_fusion_repos() {
     sudo rpm -Uvh http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 }
 
+#######################################
+# Performs various dnf actions after script
+# Globals:
+#   GREEN
+#   NC
+# Arguments:
+#   None
+# Outputs:
+#   None
+#######################################
 function post_script_dnf_actions() {
-    sudo dnf check-update --refresh
+    echo -e "${GREEN}Performing dnf cleanup...${NC}"
+
+    sudo dnf5 check-update --refresh
 
     sudo dnf5 update @multimedia -y
 
     sudo dnf5 autoremove -y
 
     sudo dnf5 upgrade -y
+
+    sudo dnf4 clean all
 }
