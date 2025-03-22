@@ -14,6 +14,24 @@
     "splitHTMLAttributes.closingBracketOnNewLine": true,
     "explorer.confirmDelete": false,
     "prettier.trailingComma": "none",
+    "[html]": {
+        "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
+    },
+    "[markdown]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[svelte]": {
+        "editor.defaultFormatter": "svelte.svelte-vscode"
+    },
+    "[shellscript]": {
+        "editor.defaultFormatter": "foxundermoon.shell-format"
+    },
     "css.lint.unknownAtRules": "ignore",
     "eslint.format.enable": true,
     "telemetry.telemetryLevel": "off",
@@ -27,5 +45,6 @@
     "editor.fontFamily": " 'Hack Nerd Font', 'Droid Sans Mono', 'monospace', monospace",
     "emmet.includeLanguages": {
         "javascript": "javascriptreact"
-    }
+    },
+    "code-runner.enableAppInsights": false
 }

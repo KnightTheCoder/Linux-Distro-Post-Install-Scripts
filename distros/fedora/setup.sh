@@ -324,6 +324,14 @@ function main() {
         printf "max_parallel_downloads=20\ndefaultyes=True\n" | sudo tee -a /etc/dnf/dnf.conf
     fi
 
+    echo -e "${GREEN}Increasing the inotify watch count...${NC}"
+    if grep -iq fs.inotify.max_user_watches=10000000 /etc/sysctl.conf || grep -iq fs.inotify.max_user_instances = 256 /etc/sysctl.conf; then
+        echo -e "${YELLOW}inotify watch count already modified!${NC}"
+    else
+        printf "\nfs.inotify.max_user_watches=10000000\nfs.inotify.max_user_instances = 256\n" | tee -a /etc/sysctl.conf
+        sudo sysctl -p
+    fi
+
     echo -e "${GREEN}Adding rpm fusion repositories...${NC}"
     # Add rpm fusion repositories
 
