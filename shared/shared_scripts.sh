@@ -123,6 +123,9 @@ function start_systemd_services() {
     for serv in "${services[@]}"; do
         sudo systemctl enable --now "$serv"
     done
+
+    echo -e "${GREEN}Disabling network manager wait online service for faster startup...${NC}"
+    sudo systemctl disable NetworkManager-wait-online.service
 }
 
 #######################################
