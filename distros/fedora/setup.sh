@@ -132,6 +132,8 @@ function main() {
             ;;
 
         qemu)
+            packages=$(remove_package "$packages" "$package")
+
             groups+=(virtualization)
             packages+=" libvirt guestfs-tools libayatana-appindicator-gtk3"
             usergroups+=(libvirt)
