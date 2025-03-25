@@ -55,7 +55,7 @@ function main() {
     nvim_config=$(choose_nvim_config)
     setups+=("$nvim_config")
 
-    handle_packages "$packages" "${services[@]}" "${setups[@]}" "${usergroups[@]}" "${groups[@]}"
+    handle_packages packages services "setups usergroups groups
 
     # Add packages to the correct categories
     # for package in $packages; do
