@@ -145,11 +145,11 @@ function get_nvidia_drivers() {
 #######################################
 function handle_packages() {
     # Return variables
-    declare -n packages=$1
-    declare -n services=$2
-    declare -n setups=$3
-    declare -n usergroups=$4
-    declare -n groups=$5
+    local -n packages=$1
+    local -n services=$2
+    local -n setups=$3
+    local -n usergroups=$4
+    local -n groups=$5
 
     for package in $packages; do
         case $package in
