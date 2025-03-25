@@ -417,9 +417,9 @@ function install_ms_core_fonts() {
 #   Log about installing virtio-win drivers
 #######################################
 function handle_setups() {
-    local setups=("$1")
+    local -n setups_to_handle=$1
 
-    for app in "${setups[@]}"; do
+    for app in "${setups_to_handle[@]}"; do
         case $app in
         vscode)
             sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
