@@ -94,7 +94,7 @@ function main() {
 
     add_user_to_groups "${usergroups[@]}"
 
-    handle_setups "${setups[@]}"
+    handle_setups setups
 
     start_systemd_services "${services[@]}"
 
