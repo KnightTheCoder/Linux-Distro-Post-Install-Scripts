@@ -55,172 +55,174 @@ function main() {
     nvim_config=$(choose_nvim_config)
     setups+=("$nvim_config")
 
+    handle_packages "$packages" "${services[@]}" "${setups[@]}" "${usergroups[@]}" "${groups[@]}"
+
     # Add packages to the correct categories
-    for package in $packages; do
-        case $package in
-        bash)
-            setups+=(bash)
-            ;;
+    # for package in $packages; do
+    #     case $package in
+    #     bash)
+    #         setups+=(bash)
+    #         ;;
 
-        fish)
-            setups+=(fish)
-            ;;
+    #     fish)
+    #         setups+=(fish)
+    #         ;;
 
-        zsh)
-            setups+=(zsh)
-            ;;
+    #     zsh)
+    #         setups+=(zsh)
+    #         ;;
 
-        starship-install)
-            packages=$(remove_package "$packages" "$package")
+    #     starship-install)
+    #         packages=$(remove_package "$packages" "$package")
 
-            setups+=(starship-install)
-            ;;
+    #         setups+=(starship-install)
+    #         ;;
 
-        starship)
-            packages=$(remove_package "$packages" "$package")
+    #     starship)
+    #         packages=$(remove_package "$packages" "$package")
 
-            setups+=(starship)
-            ;;
+    #         setups+=(starship)
+    #         ;;
 
-        fzf)
-            setups+=(fzf)
-            ;;
+    #     fzf)
+    #         setups+=(fzf)
+    #         ;;
 
-        btop)
-            packages+=" rocm-smi"
-            ;;
+    #     btop)
+    #         packages+=" rocm-smi"
+    #         ;;
 
-        vlc)
-            packages=$(remove_package "$packages" "$package")
+    #     vlc)
+    #         packages=$(remove_package "$packages" "$package")
 
-            groups+=(vlc)
-            ;;
+    #         groups+=(vlc)
+    #         ;;
 
-        gaming-overlay)
-            packages=$(remove_package "$packages" "$package")
+    #     gaming-overlay)
+    #         packages=$(remove_package "$packages" "$package")
 
-            packages+=" goverlay mangohud gamemode"
-            ;;
+    #         packages+=" goverlay mangohud gamemode"
+    #         ;;
 
-        wine)
-            packages+=" wine-mono winetricks"
-            ;;
+    #     wine)
+    #         packages+=" wine-mono winetricks"
+    #         ;;
 
-        vivaldi)
-            packages=$(remove_package "$packages" "$package")
+    #     vivaldi)
+    #         packages=$(remove_package "$packages" "$package")
 
-            packages+=" dnf-utils"
-            setups+=(vivaldi)
-            ;;
+    #         packages+=" dnf-utils"
+    #         setups+=(vivaldi)
+    #         ;;
 
-        brave)
-            packages=$(remove_package "$packages" "$package")
+    #     brave)
+    #         packages=$(remove_package "$packages" "$package")
 
-            setups+=(brave)
-            ;;
+    #         setups+=(brave)
+    #         ;;
 
-        librewolf)
-            packages=$(remove_package "$packages" "$package")
+    #     librewolf)
+    #         packages=$(remove_package "$packages" "$package")
 
-            setups+=(librewolf)
-            ;;
+    #         setups+=(librewolf)
+    #         ;;
 
-        zen-browser)
-            packages=$(remove_package "$packages" "$package")
+    #     zen-browser)
+    #         packages=$(remove_package "$packages" "$package")
 
-            setups+=(zen-browser)
-            ;;
+    #         setups+=(zen-browser)
+    #         ;;
 
-        qemu)
-            packages=$(remove_package "$packages" "$package")
+    #     qemu)
+    #         packages=$(remove_package "$packages" "$package")
 
-            groups+=(virtualization)
-            packages+=" libvirt guestfs-tools libayatana-appindicator-gtk3"
-            usergroups+=(libvirt)
-            setups+=(qemu)
-            ;;
+    #         groups+=(virtualization)
+    #         packages+=" libvirt guestfs-tools libayatana-appindicator-gtk3"
+    #         usergroups+=(libvirt)
+    #         setups+=(qemu)
+    #         ;;
 
-        cockpit)
-            packages+=" cockpit-machines"
-            services+=(cockpit.socket)
-            ;;
+    #     cockpit)
+    #         packages+=" cockpit-machines"
+    #         services+=(cockpit.socket)
+    #         ;;
 
-        VirtualBox)
-            setups+=(virtualbox)
-            usergroups+=(vboxusers)
-            ;;
+    #     VirtualBox)
+    #         setups+=(virtualbox)
+    #         usergroups+=(vboxusers)
+    #         ;;
 
-        heroic)
-            packages=$(remove_package "$packages" "$package")
+    #     heroic)
+    #         packages=$(remove_package "$packages" "$package")
 
-            setups+=(heroic)
-            ;;
+    #         setups+=(heroic)
+    #         ;;
 
-        itch)
-            packages=$(remove_package "$packages" "$package")
+    #     itch)
+    #         packages=$(remove_package "$packages" "$package")
 
-            setups+=("$package")
-            ;;
+    #         setups+=("$package")
+    #         ;;
 
-        vscode)
-            packages=$(remove_package "$packages" "$package")
+    #     vscode)
+    #         packages=$(remove_package "$packages" "$package")
 
-            setups+=(vscode)
-            ;;
+    #         setups+=(vscode)
+    #         ;;
 
-        vscodium)
-            packages=$(remove_package "$packages" "$package")
+    #     vscodium)
+    #         packages=$(remove_package "$packages" "$package")
 
-            setups+=(vscodium)
-            ;;
+    #         setups+=(vscodium)
+    #         ;;
 
-        rustup)
-            setups+=(rust)
-            ;;
+    #     rustup)
+    #         setups+=(rust)
+    #         ;;
 
-        nodejs)
-            setups+=(npm)
-            ;;
+    #     nodejs)
+    #         setups+=(npm)
+    #         ;;
 
-        java)
-            packages=$(remove_package "$packages" "$package")
+    #     java)
+    #         packages=$(remove_package "$packages" "$package")
 
-            packages+=" java-latest-openjdk"
-            ;;
+    #         packages+=" java-latest-openjdk"
+    #         ;;
 
-        dotnet)
-            packages=$(remove_package "$packages" "$package")
+    #     dotnet)
+    #         packages=$(remove_package "$packages" "$package")
 
-            packages+=" dotnet-sdk-8.0"
-            ;;
+    #         packages+=" dotnet-sdk-8.0"
+    #         ;;
 
-        xampp)
-            packages=$(remove_package "$packages" "$package")
+    #     xampp)
+    #         packages=$(remove_package "$packages" "$package")
 
-            setups+=(xampp)
-            ;;
+    #         setups+=(xampp)
+    #         ;;
 
-        docker)
-            packages=$(remove_package "$packages" "$package")
+    #     docker)
+    #         packages=$(remove_package "$packages" "$package")
 
-            setups+=(docker)
-            services+=(docker.service)
-            usergroups+=(docker)
-            ;;
+    #         setups+=(docker)
+    #         services+=(docker.service)
+    #         usergroups+=(docker)
+    #         ;;
 
-        docker-desktop)
-            packages=$(remove_package "$packages" "$package")
+    #     docker-desktop)
+    #         packages=$(remove_package "$packages" "$package")
 
-            setups+=(docker-desktop)
-            packages+=" gnome-terminal"
-            ;;
+    #         setups+=(docker-desktop)
+    #         packages+=" gnome-terminal"
+    #         ;;
 
-        flatpak)
-            setups+=(flatpak)
-            ;;
+    #     flatpak)
+    #         setups+=(flatpak)
+    #         ;;
 
-        esac
-    done
+    #     esac
+    # done
 
     # Remove extra whitespace
     packages=$(echo "$packages" | xargs)
@@ -259,161 +261,163 @@ function main() {
 
     add_user_to_groups "${usergroups[@]}"
 
+    handle_setups "${setups[@]}"
+
     # Run setups
-    for app in "${setups[@]}"; do
-        case $app in
-        vscode)
-            sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
-            sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
-            sudo dnf5 check-update --refresh
-            sudo dnf5 install -y code
+    # for app in "${setups[@]}"; do
+    #     case $app in
+    #     vscode)
+    #         sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
+    #         sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
+    #         sudo dnf5 check-update --refresh
+    #         sudo dnf5 install -y code
 
-            setup_vscode code
-            ;;
+    #         setup_vscode code
+    #         ;;
 
-        vscodium)
-            sudo rpmkeys --import https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/-/raw/master/pub.gpg
+    #     vscodium)
+    #         sudo rpmkeys --import https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/-/raw/master/pub.gpg
 
-            printf "[gitlab.com_paulcarroty_vscodium_repo]\nname=download.vscodium.com\nbaseurl=https://download.vscodium.com/rpms/\nenabled=1\ngpgcheck=1\nrepo_gpgcheck=1\ngpgkey=https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/-/raw/master/pub.gpg\nmetadata_expire=1h\n" | sudo tee -a /etc/yum.repos.d/vscodium.repo
+    #         printf "[gitlab.com_paulcarroty_vscodium_repo]\nname=download.vscodium.com\nbaseurl=https://download.vscodium.com/rpms/\nenabled=1\ngpgcheck=1\nrepo_gpgcheck=1\ngpgkey=https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/-/raw/master/pub.gpg\nmetadata_expire=1h\n" | sudo tee -a /etc/yum.repos.d/vscodium.repo
 
-            sudo dnf5 install codium -y
+    #         sudo dnf5 install codium -y
 
-            setup_vscode codium
-            ;;
+    #         setup_vscode codium
+    #         ;;
 
-        heroic)
-            sudo dnf5 copr enable atim/heroic-games-launcher -y
-            sudo dnf5 -y install heroic-games-launcher-bin
-            ;;
+    #     heroic)
+    #         sudo dnf5 copr enable atim/heroic-games-launcher -y
+    #         sudo dnf5 -y install heroic-games-launcher-bin
+    #         ;;
 
-        itch)
-            setup_itch_app
-            ;;
+    #     itch)
+    #         setup_itch_app
+    #         ;;
 
-        vivaldi)
-            sudo dnf5 config-manager addrepo --from-repofile=https://repo.vivaldi.com/archive/vivaldi-fedora.repo
+    #     vivaldi)
+    #         sudo dnf5 config-manager addrepo --from-repofile=https://repo.vivaldi.com/archive/vivaldi-fedora.repo
 
-            sudo dnf5 install -y vivaldi-stable
+    #         sudo dnf5 install -y vivaldi-stable
 
-            sudo rm -fv /etc/yum.repos.d/vivaldi.repo
-            ;;
+    #         sudo rm -fv /etc/yum.repos.d/vivaldi.repo
+    #         ;;
 
-        brave)
-            sudo dnf5 config-manager addrepo --from-repofile=https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
+    #     brave)
+    #         sudo dnf5 config-manager addrepo --from-repofile=https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
 
-            sudo rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
+    #         sudo rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
 
-            sudo dnf5 install -y brave-browser
-            ;;
+    #         sudo dnf5 install -y brave-browser
+    #         ;;
 
-        librewolf)
-            curl -fsSL https://repo.librewolf.net/librewolf.repo | sudo pkexec tee /etc/yum.repos.d/librewolf.repo
+    #     librewolf)
+    #         curl -fsSL https://repo.librewolf.net/librewolf.repo | sudo pkexec tee /etc/yum.repos.d/librewolf.repo
 
-            sudo dnf5 install -y librewolf
-            ;;
+    #         sudo dnf5 install -y librewolf
+    #         ;;
 
-        zen-browser)
-            sudo dnf copr enable sneexy/zen-browser -y
+    #     zen-browser)
+    #         sudo dnf copr enable sneexy/zen-browser -y
 
-            sudo dnf install zen-browser -y
-            ;;
+    #         sudo dnf install zen-browser -y
+    #         ;;
 
-        hacknerd)
-            setup_hacknerd_fonts
-            ;;
+    #     hacknerd)
+    #         setup_hacknerd_fonts
+    #         ;;
 
-        nvchad)
-            setup_nvchad
-            ;;
+    #     nvchad)
+    #         setup_nvchad
+    #         ;;
 
-        astronvim)
-            setup_astronvim
-            ;;
+    #     astronvim)
+    #         setup_astronvim
+    #         ;;
 
-        rust)
-            setup_rust
+    #     rust)
+    #         setup_rust
 
-            rustup-init
-            ;;
+    #         rustup-init
+    #         ;;
 
-        npm)
-            setup_npm
-            ;;
+    #     npm)
+    #         setup_npm
+    #         ;;
 
-        xampp)
-            setup_xampp
-            ;;
+    #     xampp)
+    #         setup_xampp
+    #         ;;
 
-        docker)
-            if grep -iq VERSION_ID=40 "$DISTRO_RELEASE"; then
-                sudo dnf4 config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
-            else
-                sudo dnf5 config-manager addrepo --from-repofile=https://download.docker.com/linux/fedora/docker-ce.repo
+    #     docker)
+    #         if grep -iq VERSION_ID=40 "$DISTRO_RELEASE"; then
+    #             sudo dnf4 config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+    #         else
+    #             sudo dnf5 config-manager addrepo --from-repofile=https://download.docker.com/linux/fedora/docker-ce.repo
 
-            fi
+    #         fi
 
-            sudo dnf5 install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-            ;;
+    #         sudo dnf5 install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+    #         ;;
 
-        docker-desktop)
-            download_file docker-desktop.rpm "https://desktop.docker.com/linux/main/amd64/139021/docker-desktop-4.28.0-x86_64.rpm?utm_source=docker&utm_medium=webreferral&utm_campaign=docs-driven-download-linux-amd64"
-            sudo dnf5 -y install docker-desktop.rpm
-            rm -v docker-desktop.rpm
-            ;;
+    #     docker-desktop)
+    #         download_file docker-desktop.rpm "https://desktop.docker.com/linux/main/amd64/139021/docker-desktop-4.28.0-x86_64.rpm?utm_source=docker&utm_medium=webreferral&utm_campaign=docs-driven-download-linux-amd64"
+    #         sudo dnf5 -y install docker-desktop.rpm
+    #         rm -v docker-desktop.rpm
+    #         ;;
 
-        virtualbox)
-            setup_virtualbox_extension
-            ;;
+    #     virtualbox)
+    #         setup_virtualbox_extension
+    #         ;;
 
-        qemu)
-            echo -e "${GREEN}Installing virtio-win drivers for windows...${NC}"
-            echo -e "${GREEN}Drivers can be found in ${YELLOW}/usr/share/virtio-win/${GREEN} after install is finished${NC}"
+    #     qemu)
+    #         echo -e "${GREEN}Installing virtio-win drivers for windows...${NC}"
+    #         echo -e "${GREEN}Drivers can be found in ${YELLOW}/usr/share/virtio-win/${GREEN} after install is finished${NC}"
 
-            sudo wget https://fedorapeople.org/groups/virt/virtio-win/virtio-win.repo \
-                -O /etc/yum.repos.d/virtio-win.repo
+    #         sudo wget https://fedorapeople.org/groups/virt/virtio-win/virtio-win.repo \
+    #             -O /etc/yum.repos.d/virtio-win.repo
 
-            sudo dnf install virtio-win -y
+    #         sudo dnf install virtio-win -y
 
-            setup_qemu
+    #         setup_qemu
 
-            if ! sudo virsh pool-list | grep -iq virtio-win; then
-                sudo virsh pool-define-as --name virtio-win --type dir --target /usr/share/virtio-win
-                sudo virsh pool-autostart virtio-win
-                sudo virsh pool-start virtio-win
-            fi
-            ;;
+    #         if ! sudo virsh pool-list | grep -iq virtio-win; then
+    #             sudo virsh pool-define-as --name virtio-win --type dir --target /usr/share/virtio-win
+    #             sudo virsh pool-autostart virtio-win
+    #             sudo virsh pool-start virtio-win
+    #         fi
+    #         ;;
 
-        flatpak)
-            setup_flatpak
-            ;;
+    #     flatpak)
+    #         setup_flatpak
+    #         ;;
 
-        bash)
-            setup_bash
-            ;;
+    #     bash)
+    #         setup_bash
+    #         ;;
 
-        fish)
-            setup_fish
-            ;;
+    #     fish)
+    #         setup_fish
+    #         ;;
 
-        zsh)
-            setup_zsh
-            ;;
+    #     zsh)
+    #         setup_zsh
+    #         ;;
 
-        starship-install)
-            sudo dnf copr enable atim/starship -y
-            sudo dnf install starship -y
-            ;;
+    #     starship-install)
+    #         sudo dnf copr enable atim/starship -y
+    #         sudo dnf install starship -y
+    #         ;;
 
-        starship)
-            setup_starship
-            ;;
+    #     starship)
+    #         setup_starship
+    #         ;;
 
-        fzf)
-            setup_fzf
-            ;;
+    #     fzf)
+    #         setup_fzf
+    #         ;;
 
-        esac
-    done
+    #     esac
+    # done
 
     start_systemd_services "${services[@]}"
 
