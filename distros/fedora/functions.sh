@@ -145,173 +145,173 @@ function get_nvidia_drivers() {
 #######################################
 function handle_packages() {
     # Return variables
-    local -n packages=$1
-    local -n services=$2
-    local -n setups=$3
-    local -n usergroups=$4
-    local -n groups=$5
+    local -n func_packages=$1
+    local -n func_services=$2
+    local -n func_setups=$3
+    local -n func_usergroups=$4
+    local -n func_groups=$5
 
-    for package in $packages; do
+    for package in $func_packages; do
         case $package in
         bash)
-            setups+=(bash)
+            func_setups+=(bash)
             ;;
 
         fish)
-            setups+=(fish)
+            func_setups+=(fish)
             ;;
 
         zsh)
-            setups+=(zsh)
+            func_setups+=(zsh)
             ;;
 
         starship-install)
-            packages=$(remove_package "$packages" "$package")
+            func_packages=$(remove_package "$func_packages" "$package")
 
-            setups+=(starship-install)
+            func_setups+=(starship-install)
             ;;
 
         starship)
-            packages=$(remove_package "$packages" "$package")
+            func_packages=$(remove_package "$func_packages" "$package")
 
-            setups+=(starship)
+            func_setups+=(starship)
             ;;
 
         fzf)
-            setups+=(fzf)
+            func_setups+=(fzf)
             ;;
 
         btop)
-            packages+=" rocm-smi"
+            func_packages+=" rocm-smi"
             ;;
 
         vlc)
-            packages=$(remove_package "$packages" "$package")
+            func_packages=$(remove_package "$func_packages" "$package")
 
-            groups+=(vlc)
+            func_groups+=(vlc)
             ;;
 
         gaming-overlay)
-            packages=$(remove_package "$packages" "$package")
+            func_packages=$(remove_package "$func_packages" "$package")
 
-            packages+=" goverlay mangohud gamemode"
+            func_packages+=" goverlay mangohud gamemode"
             ;;
 
         wine)
-            packages+=" wine-mono winetricks"
+            func_packages+=" wine-mono winetricks"
             ;;
 
         vivaldi)
-            packages=$(remove_package "$packages" "$package")
+            func_packages=$(remove_package "$func_packages" "$package")
 
-            packages+=" dnf-utils"
-            setups+=(vivaldi)
+            func_packages+=" dnf-utils"
+            func_setups+=(vivaldi)
             ;;
 
         brave)
-            packages=$(remove_package "$packages" "$package")
+            func_packages=$(remove_package "$func_packages" "$package")
 
-            setups+=(brave)
+            func_setups+=(brave)
             ;;
 
         librewolf)
-            packages=$(remove_package "$packages" "$package")
+            func_packages=$(remove_package "$func_packages" "$package")
 
-            setups+=(librewolf)
+            func_setups+=(librewolf)
             ;;
 
         zen-browser)
-            packages=$(remove_package "$packages" "$package")
+            func_packages=$(remove_package "$func_packages" "$package")
 
-            setups+=(zen-browser)
+            func_setups+=(zen-browser)
             ;;
 
         qemu)
-            packages=$(remove_package "$packages" "$package")
+            func_packages=$(remove_package "$func_packages" "$package")
 
-            groups+=(virtualization)
-            packages+=" libvirt guestfs-tools libayatana-appindicator-gtk3"
-            usergroups+=(libvirt)
-            setups+=(qemu)
+            func_groups+=(virtualization)
+            func_packages+=" libvirt guestfs-tools libayatana-appindicator-gtk3"
+            func_usergroups+=(libvirt)
+            func_setups+=(qemu)
             ;;
 
         cockpit)
-            packages+=" cockpit-machines"
-            services+=(cockpit.socket)
+            func_packages+=" cockpit-machines"
+            func_services+=(cockpit.socket)
             ;;
 
         VirtualBox)
-            setups+=(virtualbox)
-            usergroups+=(vboxusers)
+            func_setups+=(virtualbox)
+            func_usergroups+=(vboxusers)
             ;;
 
         heroic)
-            packages=$(remove_package "$packages" "$package")
+            func_packages=$(remove_package "$func_packages" "$package")
 
-            setups+=(heroic)
+            func_setups+=(heroic)
             ;;
 
         itch)
-            packages=$(remove_package "$packages" "$package")
+            func_packages=$(remove_package "$func_packages" "$package")
 
-            setups+=("$package")
+            func_setups+=("$package")
             ;;
 
         vscode)
-            packages=$(remove_package "$packages" "$package")
+            func_packages=$(remove_package "$func_packages" "$package")
 
-            setups+=(vscode)
+            func_setups+=(vscode)
             ;;
 
         vscodium)
-            packages=$(remove_package "$packages" "$package")
+            func_packages=$(remove_package "$func_packages" "$package")
 
-            setups+=(vscodium)
+            func_setups+=(vscodium)
             ;;
 
         rustup)
-            setups+=(rust)
+            func_setups+=(rust)
             ;;
 
         nodejs)
-            setups+=(npm)
+            func_setups+=(npm)
             ;;
 
         java)
-            packages=$(remove_package "$packages" "$package")
+            func_packages=$(remove_package "$func_packages" "$package")
 
-            packages+=" java-latest-openjdk"
+            func_packages+=" java-latest-openjdk"
             ;;
 
         dotnet)
-            packages=$(remove_package "$packages" "$package")
+            func_packages=$(remove_package "$func_packages" "$package")
 
-            packages+=" dotnet-sdk-8.0"
+            func_packages+=" dotnet-sdk-8.0"
             ;;
 
         xampp)
-            packages=$(remove_package "$packages" "$package")
+            func_packages=$(remove_package "$func_packages" "$package")
 
-            setups+=(xampp)
+            func_setups+=(xampp)
             ;;
 
         docker)
-            packages=$(remove_package "$packages" "$package")
+            func_packages=$(remove_package "$func_packages" "$package")
 
-            setups+=(docker)
-            services+=(docker.service)
-            usergroups+=(docker)
+            func_setups+=(docker)
+            func_services+=(docker.service)
+            func_usergroups+=(docker)
             ;;
 
         docker-desktop)
-            packages=$(remove_package "$packages" "$package")
+            func_packages=$(remove_package "$func_packages" "$package")
 
-            setups+=(docker-desktop)
-            packages+=" gnome-terminal"
+            func_setups+=(docker-desktop)
+            func_packages+=" gnome-terminal"
             ;;
 
         flatpak)
-            setups+=(flatpak)
+            func_setups+=(flatpak)
             ;;
 
         esac
