@@ -145,173 +145,173 @@ function get_nvidia_drivers() {
 #######################################
 function handle_packages() {
     # Return variables
-    local -n func_packages=$1
-    local -n func_services=$2
-    local -n func_setups=$3
-    local -n func_usergroups=$4
-    local -n func_groups=$5
+    local -n packages_to_handle=$1
+    local -n services_to_handle=$2
+    local -n setups_to_handle=$3
+    local -n usergroups_to_handle=$4
+    local -n groups_to_handle=$5
 
-    for package in $func_packages; do
+    for package in $packages_to_handle; do
         case $package in
         bash)
-            func_setups+=(bash)
+            setups_to_handle+=(bash)
             ;;
 
         fish)
-            func_setups+=(fish)
+            setups_to_handle+=(fish)
             ;;
 
         zsh)
-            func_setups+=(zsh)
+            setups_to_handle+=(zsh)
             ;;
 
         starship-install)
-            func_packages=$(remove_package "$func_packages" "$package")
+            packages_to_handle=$(remove_package "$packages_to_handle" "$package")
 
-            func_setups+=(starship-install)
+            setups_to_handle+=(starship-install)
             ;;
 
         starship)
-            func_packages=$(remove_package "$func_packages" "$package")
+            packages_to_handle=$(remove_package "$packages_to_handle" "$package")
 
-            func_setups+=(starship)
+            setups_to_handle+=(starship)
             ;;
 
         fzf)
-            func_setups+=(fzf)
+            setups_to_handle+=(fzf)
             ;;
 
         btop)
-            func_packages+=" rocm-smi"
+            packages_to_handle+=" rocm-smi"
             ;;
 
         vlc)
-            func_packages=$(remove_package "$func_packages" "$package")
+            packages_to_handle=$(remove_package "$packages_to_handle" "$package")
 
-            func_groups+=(vlc)
+            groups_to_handle+=(vlc)
             ;;
 
         gaming-overlay)
-            func_packages=$(remove_package "$func_packages" "$package")
+            packages_to_handle=$(remove_package "$packages_to_handle" "$package")
 
-            func_packages+=" goverlay mangohud gamemode"
+            packages_to_handle+=" goverlay mangohud gamemode"
             ;;
 
         wine)
-            func_packages+=" wine-mono winetricks"
+            packages_to_handle+=" wine-mono winetricks"
             ;;
 
         vivaldi)
-            func_packages=$(remove_package "$func_packages" "$package")
+            packages_to_handle=$(remove_package "$packages_to_handle" "$package")
 
-            func_packages+=" dnf-utils"
-            func_setups+=(vivaldi)
+            packages_to_handle+=" dnf-utils"
+            setups_to_handle+=(vivaldi)
             ;;
 
         brave)
-            func_packages=$(remove_package "$func_packages" "$package")
+            packages_to_handle=$(remove_package "$packages_to_handle" "$package")
 
-            func_setups+=(brave)
+            setups_to_handle+=(brave)
             ;;
 
         librewolf)
-            func_packages=$(remove_package "$func_packages" "$package")
+            packages_to_handle=$(remove_package "$packages_to_handle" "$package")
 
-            func_setups+=(librewolf)
+            setups_to_handle+=(librewolf)
             ;;
 
         zen-browser)
-            func_packages=$(remove_package "$func_packages" "$package")
+            packages_to_handle=$(remove_package "$packages_to_handle" "$package")
 
-            func_setups+=(zen-browser)
+            setups_to_handle+=(zen-browser)
             ;;
 
         qemu)
-            func_packages=$(remove_package "$func_packages" "$package")
+            packages_to_handle=$(remove_package "$packages_to_handle" "$package")
 
-            func_groups+=(virtualization)
-            func_packages+=" libvirt guestfs-tools libayatana-appindicator-gtk3"
-            func_usergroups+=(libvirt)
-            func_setups+=(qemu)
+            groups_to_handle+=(virtualization)
+            packages_to_handle+=" libvirt guestfs-tools libayatana-appindicator-gtk3"
+            usergroups_to_handle+=(libvirt)
+            setups_to_handle+=(qemu)
             ;;
 
         cockpit)
-            func_packages+=" cockpit-machines"
-            func_services+=(cockpit.socket)
+            packages_to_handle+=" cockpit-machines"
+            services_to_handle+=(cockpit.socket)
             ;;
 
         VirtualBox)
-            func_setups+=(virtualbox)
-            func_usergroups+=(vboxusers)
+            setups_to_handle+=(virtualbox)
+            usergroups_to_handle+=(vboxusers)
             ;;
 
         heroic)
-            func_packages=$(remove_package "$func_packages" "$package")
+            packages_to_handle=$(remove_package "$packages_to_handle" "$package")
 
-            func_setups+=(heroic)
+            setups_to_handle+=(heroic)
             ;;
 
         itch)
-            func_packages=$(remove_package "$func_packages" "$package")
+            packages_to_handle=$(remove_package "$packages_to_handle" "$package")
 
-            func_setups+=("$package")
+            setups_to_handle+=("$package")
             ;;
 
         vscode)
-            func_packages=$(remove_package "$func_packages" "$package")
+            packages_to_handle=$(remove_package "$packages_to_handle" "$package")
 
-            func_setups+=(vscode)
+            setups_to_handle+=(vscode)
             ;;
 
         vscodium)
-            func_packages=$(remove_package "$func_packages" "$package")
+            packages_to_handle=$(remove_package "$packages_to_handle" "$package")
 
-            func_setups+=(vscodium)
+            setups_to_handle+=(vscodium)
             ;;
 
         rustup)
-            func_setups+=(rust)
+            setups_to_handle+=(rust)
             ;;
 
         nodejs)
-            func_setups+=(npm)
+            setups_to_handle+=(npm)
             ;;
 
         java)
-            func_packages=$(remove_package "$func_packages" "$package")
+            packages_to_handle=$(remove_package "$packages_to_handle" "$package")
 
-            func_packages+=" java-latest-openjdk"
+            packages_to_handle+=" java-latest-openjdk"
             ;;
 
         dotnet)
-            func_packages=$(remove_package "$func_packages" "$package")
+            packages_to_handle=$(remove_package "$packages_to_handle" "$package")
 
-            func_packages+=" dotnet-sdk-8.0"
+            packages_to_handle+=" dotnet-sdk-8.0"
             ;;
 
         xampp)
-            func_packages=$(remove_package "$func_packages" "$package")
+            packages_to_handle=$(remove_package "$packages_to_handle" "$package")
 
-            func_setups+=(xampp)
+            setups_to_handle+=(xampp)
             ;;
 
         docker)
-            func_packages=$(remove_package "$func_packages" "$package")
+            packages_to_handle=$(remove_package "$packages_to_handle" "$package")
 
-            func_setups+=(docker)
-            func_services+=(docker.service)
-            func_usergroups+=(docker)
+            setups_to_handle+=(docker)
+            services_to_handle+=(docker.service)
+            usergroups_to_handle+=(docker)
             ;;
 
         docker-desktop)
-            func_packages=$(remove_package "$func_packages" "$package")
+            packages_to_handle=$(remove_package "$packages_to_handle" "$package")
 
-            func_setups+=(docker-desktop)
-            func_packages+=" gnome-terminal"
+            setups_to_handle+=(docker-desktop)
+            packages_to_handle+=" gnome-terminal"
             ;;
 
         flatpak)
-            func_setups+=(flatpak)
+            setups_to_handle+=(flatpak)
             ;;
 
         esac
