@@ -136,16 +136,16 @@ function get_nvidia_drivers() {
 # Handle actions for packages
 # Arguments:
 #   packages: string containing the list of packages, separated by space
-# Returns:
 #   services: indexed array
 #   setups: indexed array
 #   usergroups: indexed array
 #   groups: indexed array
+# Outputs:
+#   None
 #######################################
 function handle_packages() {
-    local packages=$1
-
     # Return variables
+    declare -n packages=$1
     declare -n services=$2
     declare -n setups=$3
     declare -n usergroups=$4
