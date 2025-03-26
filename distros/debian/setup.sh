@@ -40,6 +40,7 @@ function main() {
             "audacious" "Audacious music player" ON \
             "libreoffice" "Libreoffice" OFF \
             "transmission" "Transmission bittorrent client" OFF \
+            "qbittorrent" "Qbittorrent bittorrent client" OFF \
             "gimp" "GIMP" OFF \
             "kdenlive" "Kdenlive" OFF \
             "calibre" "Calibre E-book manager" OFF \
