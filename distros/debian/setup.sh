@@ -679,8 +679,10 @@ function main() {
 
     start_systemd_services "${services[@]}"
 
+    post_script_apt_actions
+
     # Update system after setup
-    sudo nala upgrade -y
+    # sudo apt upgrade -y
 }
 
 if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then

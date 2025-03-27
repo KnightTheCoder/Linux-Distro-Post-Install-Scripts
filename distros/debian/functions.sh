@@ -695,3 +695,21 @@ function handle_setups() {
         esac
     done
 }
+
+#######################################
+# Performs various apt actions after script
+# Globals:
+#   GREEN
+#   NC
+# Arguments:
+#   None
+#######################################
+function post_script_apt_actions() {
+    echo -e "${GREEN}Performing apt cleanup...${NC}"
+
+    sudo apt update
+
+    sudo apt upgrade -y
+
+    sudo apt clean
+}
