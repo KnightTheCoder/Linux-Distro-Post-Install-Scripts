@@ -20,7 +20,10 @@ function remove_package() {
     local package_list="$1"
     local package="$2"
 
-    local result_package_list=${package_list/"$package"/}
+    local result_package_list
+
+    # shellcheck disable=SC2001
+    result_package_list=$(echo "$package_list" | sed "s/\b${package}\b[^-]//g")
 
     echo "$result_package_list"
 }
