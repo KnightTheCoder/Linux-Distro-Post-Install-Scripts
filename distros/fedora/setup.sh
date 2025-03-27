@@ -60,10 +60,7 @@ function main() {
     # Remove extra whitespace
     packages=$(echo "$packages" | xargs)
 
-    local discover_package_name
-    discover_package_name=$(get_remove_discover)
-
-    packages_to_remove+=" ${discover_package_name}"
+    discover_package_name packages_to_remove
 
     modify_configurations
 
