@@ -133,13 +133,13 @@ function get_nvidia_drivers() {
 }
 
 #######################################
-# Handle actions for packages
+# Add packages to the correct categories
 # Arguments:
-#   packages: string containing the list of packages, separated by space
-#   services: indexed array
-#   setups: indexed array
-#   usergroups: indexed array
-#   groups: indexed array
+#   packages: string containing the list of packages, separated by space, name of the variable
+#   services: indexed array, name of the variable
+#   setups: indexed array, name of the variable
+#   usergroups: indexed array, name of the variable
+#   groups: indexed array, name of the variable
 # Outputs:
 #   None
 #######################################
@@ -320,20 +320,29 @@ function handle_packages() {
 
 #######################################
 # Choose to keep or remove plasma discover
-# Globals:
-#   GREEN
-#   NC
 # Arguments:
 #   None
 # Outputs:
 #   whiptail screen
+#   discover package name to remove
 #######################################
 function get_remove_discover() {
     if [[ -x $(command -v plasma-discover) ]] && whiptail --title "Remove discover" --yesno "Would you like to remove discover?" --defaultno 0 0; then
-        packages_to_remove+=" plasma-discover"
+        echo "plasma-discover"
     fi
 }
 
+#######################################
+# Max out parallel downloads and increase inotify watch count
+# Globals:
+#   GREEN
+#   YELLOW
+#   NC
+# Arguments:
+#   None
+# Outputs:
+#   Log about step being performed
+#######################################
 function modify_configurations() {
     echo -e "${GREEN}Modifying dnf configuration...${NC}"
 
@@ -412,7 +421,7 @@ function install_ms_core_fonts() {
 #   YELLOW
 #   NC
 # Arguments:
-#   setups: indexed array
+#   setups: indexed array, name of the variable
 # Outputs:
 #   Log about installing virtio-win drivers
 #######################################
