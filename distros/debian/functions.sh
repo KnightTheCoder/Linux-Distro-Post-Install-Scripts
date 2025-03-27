@@ -375,7 +375,7 @@ function get_remove_discover() {
     local -n packages_to_remove_list=$1
 
     if [[ -x $(command -v plasma-discover) ]] && whiptail --title "Remove discover" --yesno "Would you like to remove discover?" --defaultno 0 0; then
-        packages_to_remove_list+="plasma-discover"
+        packages_to_remove_list+=" plasma-discover"
     fi
 }
 
