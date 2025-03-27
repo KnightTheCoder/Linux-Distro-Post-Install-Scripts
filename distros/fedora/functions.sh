@@ -324,7 +324,7 @@ function handle_packages() {
 #   None
 # Outputs:
 #   whiptail screen
-#   discover package name to remove
+#   discover package name
 #######################################
 function get_remove_discover() {
     if [[ -x $(command -v plasma-discover) ]] && whiptail --title "Remove discover" --yesno "Would you like to remove discover?" --defaultno 0 0; then
