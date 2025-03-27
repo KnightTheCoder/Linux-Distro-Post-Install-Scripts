@@ -68,9 +68,7 @@ function get_current_distro_icon() {
     fi
 
     if grep -iq debian "$DISTRO_RELEASE"; then
-        if grep -iq ID=debian "$DISTRO_RELEASE"; then
-            distro_icon=
-        fi
+        distro_icon=
 
         if grep -iq ID=ubuntu "$DISTRO_RELEASE"; then
             distro_icon=
@@ -78,6 +76,10 @@ function get_current_distro_icon() {
 
         if grep -iq ID=linuxmint "$DISTRO_RELEASE"; then
             distro_icon=󰣭
+        fi
+
+        if grep -iq ID=zorin "$DISTRO_RELEASE"; then
+            distro_icon=
         fi
     fi
 
