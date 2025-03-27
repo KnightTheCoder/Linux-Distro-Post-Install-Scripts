@@ -360,7 +360,7 @@ function main() {
     # Remove extra whitespace
     packages=$(echo "$packages" | xargs)
 
-    discover_package_name packages_to_remove
+    get_remove_discover packages_to_remove
 
     # Ask if you want to remove discover
     # if [[ -x $(command -v plasma-discover) ]] && whiptail --title "Remove discover" --yesno "Would you like to remove discover?" --defaultno 0 0; then
