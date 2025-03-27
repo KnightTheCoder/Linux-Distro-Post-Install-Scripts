@@ -98,7 +98,7 @@ function main() {
 
     start_systemd_services "${services[@]}"
 
-    post_script_dnf_actions
+    perform_post_script_actions
 }
 
 if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then

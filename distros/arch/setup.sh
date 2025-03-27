@@ -421,9 +421,6 @@ function main() {
 
     # Update system after setup
     sudo pacman -Syu --noconfirm
-
-    # Clean all packages after install is complete
-    yay -S --clean --noconfirm
 }
 
 if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then

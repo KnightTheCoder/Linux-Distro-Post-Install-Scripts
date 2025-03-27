@@ -594,8 +594,8 @@ function handle_setups() {
 # Arguments:
 #   None
 #######################################
-function post_script_dnf_actions() {
-    echo -e "${GREEN}Performing dnf cleanup...${NC}"
+function perform_post_script_actions() {
+    echo -e "${GREEN}Performing post install actions...${NC}"
 
     sudo dnf5 check-update --refresh
 
@@ -604,6 +604,4 @@ function post_script_dnf_actions() {
     sudo dnf5 autoremove -y
 
     sudo dnf5 upgrade -y
-
-    sudo dnf4 clean all
 }

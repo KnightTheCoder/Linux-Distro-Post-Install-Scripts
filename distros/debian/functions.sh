@@ -704,12 +704,10 @@ function handle_setups() {
 # Arguments:
 #   None
 #######################################
-function post_script_apt_actions() {
-    echo -e "${GREEN}Performing apt cleanup...${NC}"
+function perform_post_script_actions() {
+    echo -e "${GREEN}Performing post install actions...${NC}"
 
     sudo apt update
 
     sudo apt upgrade -y
-
-    sudo apt clean
 }
