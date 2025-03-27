@@ -295,10 +295,10 @@ function main() {
     create_snapshot 0
 
     # Refresh repositories
-    sudo "$PARALLEL_ENV" zypper refresh
+    sudo $PARALLEL_ENV zypper refresh
 
     # Update system
-    sudo "$PARALLEL_ENV" zypper -vv dist-upgrade -y
+    sudo $PARALLEL_ENV zypper -vv dist-upgrade -y
 
     echo -e "${GREEN}Checking connection...${NC}"
 
@@ -313,19 +313,19 @@ function main() {
 
     # Remove unncessary packages
     # shellcheck disable=SC2086
-    sudo "$PARALLEL_ENV" zypper remove --details -y --clean-deps $packages_to_remove
+    sudo $PARALLEL_ENV zypper remove --details -y --clean-deps $packages_to_remove
     # shellcheck disable=SC2086
-    sudo "$PARALLEL_ENV" zypper remove --details -y --clean-deps -t pattern $patterns_to_remove
+    sudo $PARALLEL_ENV zypper remove --details -y --clean-deps -t pattern $patterns_to_remove
     # shellcheck disable=SC2086
-    sudo "$PARALLEL_ENV" zypper -vv addlock -t pattern $patterns_to_remove
+    sudo $PARALLEL_ENV zypper -vv addlock -t pattern $patterns_to_remove
 
     # Install packages
     # Don't use quotes, zypper won't recognize the packages
     # shellcheck disable=SC2086
-    sudo "$PARALLEL_ENV" zypper install --details -y $packages
+    sudo $PARALLEL_ENV zypper install --details -y $packages
 
     # Install patterns
-    sudo "$PARALLEL_ENV" zypper install --details -yt pattern "${patterns[@]}"
+    sudo $PARALLEL_ENV zypper install --details -yt pattern "${patterns[@]}"
 
     # Install opi packages
     opi -nm "${opi[@]}"
@@ -443,7 +443,7 @@ function main() {
     start_systemd_services "${services[@]}"
 
     # Update system after setup
-    sudo "$PARALLEL_ENV" zypper -vv dist-upgrade -y
+    sudo $PARALLEL_ENV zypper -vv dist-upgrade -y
 
     create_snapshot 1
 }
