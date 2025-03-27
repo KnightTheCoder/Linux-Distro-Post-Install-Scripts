@@ -288,7 +288,7 @@ function main() {
     fi
 
     # Modify zypper config
-    if grep -iq "download.max_concurrent_connections = 20" /etc/zypp/zypp.conf; then
+    if ! grep -iq "download.max_concurrent_connections = 20" /etc/zypp/zypp.conf; then
         printf "\ndownload.max_concurrent_connections = 20\n" | sudo tee -a /etc/zypp/zypp.conf
     fi
 
