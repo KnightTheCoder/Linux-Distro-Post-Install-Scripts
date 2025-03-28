@@ -167,7 +167,7 @@ function main() {
         gaming-overlay)
             packages=$(remove_package "$packages" "$package")
 
-            packages+=" goverlay mangohud mangohud-32bit gamemode"
+            packages+=" goverlay mangohud mangohud-32bit gamemode selinux-policy-targeted-gaming"
             ;;
 
         wine)
