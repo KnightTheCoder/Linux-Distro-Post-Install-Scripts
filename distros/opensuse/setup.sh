@@ -104,7 +104,7 @@ function main() {
             3>&1 1>&2 2>&3
     )
 
-    packages+=" opi neovim eza bat curl wget fetchmsttfonts systemd-zram-service 7zip unrar"
+    packages+=" opi neovim eza bat curl wget fetchmsttfonts systemd-zram-service 7zip unrar selinux-policy-targeted-gaming"
 
     local shells
     shells=$(choose_shells)
@@ -167,7 +167,7 @@ function main() {
         gaming-overlay)
             packages=$(remove_package "$packages" "$package")
 
-            packages+=" goverlay mangohud mangohud-32bit gamemode selinux-policy-targeted-gaming"
+            packages+=" goverlay mangohud mangohud-32bit gamemode"
             ;;
 
         wine)
