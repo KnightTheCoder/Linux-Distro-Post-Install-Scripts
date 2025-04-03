@@ -882,6 +882,7 @@ function setup_flatpak() {
             "io.github.giantpinkrobots.flatsweep" "Flatsweep" OFF \
             "io.github.flattool.Warehouse" "Warehouse" OFF \
             "com.valvesoftware.Steam" "Steam" OFF \
+            "net.lutris.Lutris" "Lutris" OFF \
             "io.itch.itch" "Itch desktop app" OFF \
             "com.heroicgameslauncher.hgl" "Heroic Games Launcher" OFF \
             "net.davidotek.pupgui2" "ProtonUp-QT" OFF \
