@@ -710,4 +710,6 @@ function perform_post_script_actions() {
     sudo apt update
 
     sudo apt upgrade -y
+
+    sudo snap refresh
 }

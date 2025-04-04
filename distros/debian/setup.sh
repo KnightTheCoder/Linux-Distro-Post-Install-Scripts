@@ -69,6 +69,11 @@ function main() {
     # Update system
     sudo nala upgrade -y
 
+    # Update snaps
+    if [[ -x "$(command -v snap)" ]]; then
+        sudo snap refresh
+    fi
+
     # Remove unnecessary packages
     # shellcheck disable=SC2086
     sudo nala remove -y $packages_to_remove
