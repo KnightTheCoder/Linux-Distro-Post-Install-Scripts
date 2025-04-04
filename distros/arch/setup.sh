@@ -76,7 +76,7 @@ function main() {
             3>&1 1>&2 2>&3
     )
 
-    packages+=" neovim eza bat zram-generator wget curl ark filelight git base-devel p7zip unrar"
+    packages+=" neovim eza bat zram-generator wget curl ark filelight git base-devel p7zip unrar fuse2"
 
     local shells
     shells=$(choose_shells)
