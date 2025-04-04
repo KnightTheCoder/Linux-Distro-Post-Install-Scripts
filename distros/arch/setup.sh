@@ -282,8 +282,10 @@ function main() {
     packages=$(echo "$packages" | xargs)
 
     # Ask if you want to remove discover
+
+    remove_discover=0
     if [[ -x $(command -v plasma-discover) ]] && whiptail --title "Remove discover" --yesno "Would you like to remove discover?" --defaultno 0 0; then
-        packages_to_remove+=" discover"
+        remove_discover=1
     fi
 
     echo -e "${GREEN}Adding multilib repo...${NC}"
@@ -312,6 +314,11 @@ function main() {
     # Remove unneccessary packages
     # shellcheck disable=SC2086
     sudo pacman -Rns $packages_to_remove --noconfirm
+
+    # Remove discover with its special command in case plasma-meta package was installed
+    if [[ $remove_discover == 1 ]]; then
+        sudo pacman -Rnsdd discover
+    fi
 
     # Install packages
     # shellcheck disable=SC2086
