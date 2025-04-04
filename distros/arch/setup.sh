@@ -329,7 +329,7 @@ function main() {
     fi
 
     # Install AUR packages
-    yay -S "${aur[@]}" --needed --rebuildall --answerclean A --noanswerdiff --removemake --cleanafter --noconfirm
+    yay -S "${aur[@]}" --needed --rebuildall --answerclean A --noanswerdiff --removemake --cleanafter --noconfirm --sudoloop
 
     # Setup zram
     if [[ ! -f /etc/systemd/zram-generator.conf ]]; then
