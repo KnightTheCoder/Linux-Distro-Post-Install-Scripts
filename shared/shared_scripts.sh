@@ -886,6 +886,9 @@ function setup_flatpak() {
             "io.itch.itch" "Itch desktop app" OFF \
             "com.heroicgameslauncher.hgl" "Heroic Games Launcher" OFF \
             "net.davidotek.pupgui2" "ProtonUp-QT" OFF \
+            "org.freedesktop.Platform.VulkanLayer.MangoHud" "MangoHud" OFF \
+            "com.valvesoftware.Steam.CompatibilityTool.Proton-GE" "Proton-GE" OFF \
+            "com.github.Matoking.protontricks" "protontricks" OFF \
             "com.obsproject.Studio" "OBS Studio" OFF \
             "com.dec05eba.gpu_screen_recorder" "GPU screen recoder" OFF \
             "io.podman_desktop.PodmanDesktop" "Podman Desktop" OFF \
