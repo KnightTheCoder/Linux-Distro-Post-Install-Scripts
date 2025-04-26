@@ -392,10 +392,10 @@ function add_rpm_fusion_repos() {
 #   None
 #######################################
 function swap_free_to_rpm_fusion_packages() {
-    local mesa_drivers=(mesa-va-drivers mesa-vdpau-drivers)
-    for mesa_driver in "${mesa_drivers[@]}"; do
-        sudo dnf swap "$mesa_driver" "${mesa_driver}-freeworld" -y
-    done
+    sudo dnf swap mesa-va-drivers mesa-va-drivers-freeworld
+    sudo dnf swap mesa-vdpau-drivers mesa-vdpau-drivers-freeworld
+    sudo dnf swap mesa-va-drivers.i686 mesa-va-drivers-freeworld.i686
+    sudo dnf swap mesa-vdpau-drivers.i686 mesa-vdpau-drivers-freeworld.i686
 
     sudo dnf swap 'ffmpeg-free' 'ffmpeg' --allowerasing -y
 }
