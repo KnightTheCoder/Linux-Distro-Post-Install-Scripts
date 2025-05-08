@@ -63,9 +63,6 @@ function main() {
 
     sudo apt update
 
-    # Install nala
-    sudo apt install -y nala
-
     # Update system
     sudo apt upgrade -y
 

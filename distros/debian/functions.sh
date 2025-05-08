@@ -381,24 +381,14 @@ function get_remove_discover() {
 
 #######################################
 # Performs setups for kde neon and debian
-# adds nala for kde neon and configures debian
+# configures debian
 # Arguments:
 #   None
 # Outputs:
 #   Logs for steps being performaned
 #######################################
 function perform_distro_setups() {
-    if grep -iq "kde neon" "$DISTRO_RELEASE"; then
-        echo -e "${GREEN}Installing nala...${NC}"
-        # Download files for installing nala
-        download_file volian-keyring.deb "https://gitlab.com/volian/volian-archive/uploads/d9473098bc12525687dc9aca43d50159/volian-archive-keyring_0.2.0_all.deb"
-        sudo apt install ./volian-keyring.deb
-
-        download_file volian-nala.deb "https://gitlab.com/volian/volian-archive/uploads/d00e44faaf2cc8aad526ca520165a0af/volian-archive-nala_0.2.0_all.deb"
-        sudo apt install ./volian-nala.deb
-
-        rm -v "volian-*.deb"
-    elif grep -iq ID=debian "$DISTRO_RELEASE" || grep -iq LMDE "$DISTRO_RELEASE"; then
+    if grep -iq ID=debian "$DISTRO_RELEASE" || grep -iq LMDE "$DISTRO_RELEASE"; then
         echo -e "${GREEN}Adding extra repositories...${NC}"
         # Add extra repositories to debian
         sudo apt install software-properties-common -y
