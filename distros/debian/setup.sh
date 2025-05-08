@@ -67,7 +67,7 @@ function main() {
     sudo apt install -y nala
 
     # Update system
-    sudo nala upgrade -y
+    sudo apt upgrade -y
 
     # Update snaps
     if [[ -x "$(command -v snap)" ]]; then
@@ -76,7 +76,7 @@ function main() {
 
     # Remove unnecessary packages
     # shellcheck disable=SC2086
-    sudo nala remove -y $packages_to_remove
+    sudo apt remove -y $packages_to_remove
 
     # Install packages
 

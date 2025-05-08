@@ -473,8 +473,8 @@ function handle_setups() {
 
             sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
 
-            sudo nala update
-            sudo nala install -y code
+            sudo apt update
+            sudo apt install -y code
 
             setup_vscode code
             ;;
@@ -489,14 +489,14 @@ function handle_setups() {
             echo 'deb [ signed-by=/usr/share/keyrings/vscodium-archive-keyring.gpg ] https://download.vscodium.com/debs vscodium main' |
                 sudo tee /etc/apt/sources.list.d/vscodium.list
 
-            sudo nala update && sudo nala install codium -y
+            sudo apt update && sudo apt install codium -y
 
             setup_vscode codium
             ;;
 
         vivaldi)
             download_file vivaldi.deb "https://downloads.vivaldi.com/stable/vivaldi-stable_7.1.3570.39-1_amd64.deb"
-            sudo nala update && sudo nala install -y ./vivaldi.deb
+            sudo apt update && sudo apt install -y ./vivaldi.deb
 
             rm -fv ./vivaldi.deb
             ;;
@@ -506,7 +506,7 @@ function handle_setups() {
 
             echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
 
-            sudo nala update && sudo nala install brave-browser -y
+            sudo apt update && sudo apt install brave-browser -y
             ;;
 
         librewolf)
@@ -514,7 +514,7 @@ function handle_setups() {
 
             sudo extrepo enable librewolf
 
-            sudo nala update && sudo nala install librewolf -y
+            sudo apt update && sudo apt install librewolf -y
             ;;
 
         hacknerd)
@@ -534,7 +534,7 @@ function handle_setups() {
             sudo dpkg -i packages-microsoft-prod.deb
             rm -v packages-microsoft-prod.deb
 
-            sudo nala update && sudo nala install -y dotnet-sdk-8.0
+            sudo apt update && sudo apt install -y dotnet-sdk-8.0
             ;;
 
         xampp)
@@ -585,8 +585,8 @@ function handle_setups() {
                     $codename stable" |
                 sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
 
-            sudo nala update
-            sudo nala install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+            sudo apt update
+            sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
             ;;
 
         docker-desktop)
@@ -625,7 +625,7 @@ function handle_setups() {
 
             echo deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/vbox.gpg] http://download.virtualbox.org/virtualbox/debian "$codename" contrib | sudo tee /etc/apt/sources.list.d/virtualbox.list
 
-            sudo nala update
+            sudo apt update
 
             vb_name="virtualbox"
 
@@ -633,7 +633,7 @@ function handle_setups() {
                 vb_name="virtualbox-7.1"
             fi
 
-            sudo nala install ${vb_name} -y
+            sudo apt install ${vb_name} -y
 
             setup_virtualbox_extension
             ;;
@@ -647,8 +647,8 @@ function handle_setups() {
                 echo "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de stable main" | sudo tee /etc/apt/sources.list.d/gierens.list
                 sudo chmod 644 /etc/apt/keyrings/gierens.gpg /etc/apt/sources.list.d/gierens.list
 
-                sudo nala update
-                sudo nala install -y eza
+                sudo apt update
+                sudo apt install -y eza
             else
                 echo -e "${YELLOW}eza is already installed${NC}"
             fi
