@@ -892,6 +892,7 @@ function setup_flatpak() {
             "com.obsproject.Studio" "OBS Studio" OFF \
             "com.dec05eba.gpu_screen_recorder" "GPU screen recoder" OFF \
             "io.podman_desktop.PodmanDesktop" "Podman Desktop" OFF \
+            "io.github.dvlv.boxbuddyrs" "BoxBuddy" OFF \
             "com.github.unrud.VideoDownloader" "Video Downloader" ON \
             "org.gimp.GIMP" "GIMP" OFF \
             "org.kde.kdenlive" "Kdenlive" OFF \
