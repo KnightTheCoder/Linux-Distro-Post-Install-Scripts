@@ -46,6 +46,7 @@ function main() {
             "kdenlive" "Kdenlive" OFF \
             "calibre" "Calibre E-book manager" OFF \
             "keepassxc" "KeePassXC" OFF \
+            "bleachbit" "BleachBit" OFF \
             "vscode" "Visual Studio Code" OFF \
             "vscodium" "VSCodium" OFF \
             "nodejs" "Nodejs" OFF \

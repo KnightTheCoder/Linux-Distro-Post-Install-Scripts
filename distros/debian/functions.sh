@@ -38,6 +38,7 @@ function get_main_packages() {
             "kdenlive" "Kdenlive" OFF \
             "calibre" "Calibre E-book manager" OFF \
             "keepass2" "KeePass" OFF \
+            "bleachbit" "BleachBit" OFF \
             "vscode" "Visual Studio Code" OFF \
             "vscodium" "VSCodium" OFF \
             "nodejs" "Nodejs" OFF \

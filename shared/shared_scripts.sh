@@ -894,6 +894,7 @@ function setup_flatpak() {
             "io.podman_desktop.PodmanDesktop" "Podman Desktop" OFF \
             "io.github.dvlv.boxbuddyrs" "BoxBuddy" OFF \
             "com.github.unrud.VideoDownloader" "Video Downloader" ON \
+            "org.bleachbit.BleachBit" "BleachBit" OFF \
             "org.gimp.GIMP" "GIMP" OFF \
             "org.kde.kdenlive" "Kdenlive" OFF \
             "org.keepassxc.KeePassXC" "KeePassXC" OFF \
