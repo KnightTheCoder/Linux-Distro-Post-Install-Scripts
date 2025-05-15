@@ -895,6 +895,7 @@ function setup_flatpak() {
             "io.github.dvlv.boxbuddyrs" "BoxBuddy" OFF \
             "com.github.unrud.VideoDownloader" "Video Downloader" ON \
             "org.bleachbit.BleachBit" "BleachBit" OFF \
+            "md.obsidian.Obsidian" "Obsidian" OFF \
             "org.gimp.GIMP" "GIMP" OFF \
             "org.kde.kdenlive" "Kdenlive" OFF \
             "org.keepassxc.KeePassXC" "KeePassXC" OFF \
