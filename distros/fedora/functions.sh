@@ -385,6 +385,23 @@ function add_rpm_fusion_repos() {
 }
 
 #######################################
+# Enable rpm fusion free and nonfree repositories
+# Globals:
+#   GREEN
+#   NC
+# Arguments:
+#   None
+# Outputs:
+#   Log about step being performed
+#######################################
+function add_terra_repos() {
+    echo -e "${GREEN}Adding terra repositories...${NC}"
+
+    # shellcheck disable=SC2016
+    dnf install --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' terra-release
+}
+
+#######################################
 # Swaps free packages to rpm fusion ones
 # Globals:
 #   GREEN
