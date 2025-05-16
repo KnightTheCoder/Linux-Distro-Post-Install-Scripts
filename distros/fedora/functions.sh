@@ -398,7 +398,7 @@ function add_terra_repos() {
     echo -e "${GREEN}Adding terra repositories...${NC}"
 
     # shellcheck disable=SC2016
-    sudo dnf install --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' terra-release
+    sudo dnf install --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' terra-release -y
 }
 
 #######################################
