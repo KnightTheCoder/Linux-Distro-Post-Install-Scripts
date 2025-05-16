@@ -29,10 +29,6 @@ function main() {
     local shells
     shells=$(choose_shells)
 
-    if [[ $shells == *"starship"* ]]; then
-        shells="starship-install $shells"
-    fi
-
     packages="$shells $cli_packages $packages"
 
     # Remove new lines

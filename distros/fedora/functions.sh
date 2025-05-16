@@ -166,12 +166,6 @@ function handle_packages() {
             setups_to_handle+=(zsh)
             ;;
 
-        starship-install)
-            packages_to_handle=$(remove_package "$packages_to_handle" "$package")
-
-            setups_to_handle+=(starship-install)
-            ;;
-
         starship)
             packages_to_handle=$(remove_package "$packages_to_handle" "$package")
 
@@ -246,12 +240,6 @@ function handle_packages() {
             usergroups_to_handle+=(vboxusers)
             ;;
 
-        heroic)
-            packages_to_handle=$(remove_package "$packages_to_handle" "$package")
-
-            setups_to_handle+=(heroic)
-            ;;
-
         itch)
             packages_to_handle=$(remove_package "$packages_to_handle" "$package")
 
@@ -267,6 +255,7 @@ function handle_packages() {
         vscodium)
             packages_to_handle=$(remove_package "$packages_to_handle" "$package")
 
+            packages_to_handle+=" codium"
             setups_to_handle+=(vscodium)
             ;;
 
@@ -465,18 +454,7 @@ function handle_setups() {
             ;;
 
         vscodium)
-            sudo rpmkeys --import https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/-/raw/master/pub.gpg
-
-            printf "[gitlab.com_paulcarroty_vscodium_repo]\nname=download.vscodium.com\nbaseurl=https://download.vscodium.com/rpms/\nenabled=1\ngpgcheck=1\nrepo_gpgcheck=1\ngpgkey=https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/-/raw/master/pub.gpg\nmetadata_expire=1h\n" | sudo tee -a /etc/yum.repos.d/vscodium.repo
-
-            sudo dnf5 install codium -y
-
             setup_vscode codium
-            ;;
-
-        heroic)
-            sudo dnf5 copr enable atim/heroic-games-launcher -y
-            sudo dnf5 -y install heroic-games-launcher-bin
             ;;
 
         itch)
@@ -590,11 +568,6 @@ function handle_setups() {
 
         zsh)
             setup_zsh
-            ;;
-
-        starship-install)
-            sudo dnf copr enable atim/starship -y
-            sudo dnf install starship -y
             ;;
 
         starship)
