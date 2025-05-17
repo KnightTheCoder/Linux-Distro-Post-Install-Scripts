@@ -700,6 +700,8 @@ function perform_post_script_actions() {
 
     sudo apt update
 
+    sudo apt autoremove -y
+
     sudo apt upgrade -y
 
     sudo snap refresh
