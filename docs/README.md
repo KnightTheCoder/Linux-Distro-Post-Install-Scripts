@@ -144,6 +144,7 @@ The project provides the following policy templates:
 | Disable form history              |                    |                         X                         |            X            |
 | Disable Firefox Accounts (sync)   |         X          |                         X                         |            X            |
 | Enable all tracking protection    |         X          |                         X                         |            X            |
+| Disable third party cookies       |         X          |                         X                         |            X            |
 | Disable Offer to save logins      |                    |                         x                         |            x            |
 | Block requests for notifications  |         X          |                         X                         |            X            |
 | Block audio and video autoplay    |                    |                         X                         |            X            |

@@ -18,6 +18,9 @@
             "Fingerprinting": true,
             "EmailTracking": true
         },
+        "Cookies": {
+            "Behavior": "reject-foreign"
+        },
         "Permissions": {
             "Notifications": {
                 "BlockNewRequests": true

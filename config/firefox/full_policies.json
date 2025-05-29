@@ -35,6 +35,9 @@
             "Fingerprinting": true,
             "EmailTracking": true
         },
+        "Cookies": {
+            "Behavior": "reject-foreign"
+        },
         "OfferToSaveLogins": false,
         "Permissions": {
             "Notifications": {
