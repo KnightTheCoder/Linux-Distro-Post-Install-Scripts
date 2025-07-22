@@ -91,7 +91,7 @@ function main() {
     local services=()
     local setups=(hacknerd)
     local usergroups=()
-    local aur=(ttf-ms-win11-auto)
+    local aur=(ttf-ms-fonts)
     local packages_to_remove="akregator kaddressbook kmahjongg kmail kontact kmines konversation kmouth korganizer kpat rhythmbox"
 
     # Install NVIDIA drivers
