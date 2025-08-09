@@ -5,8 +5,6 @@ cd "$(dirname "$0")" || exit
 # shellcheck source=.../../shared/shared_scripts.sh
 source "../../shared/shared_scripts.sh"
 
-PARALLEL_ENV="env ZYPP_PCK_PRELOAD=1 ZYPP_CURL2=1"
-
 #######################################
 # Creates a snapshot with snapper
 # Arguments:
@@ -296,10 +294,10 @@ function main() {
     create_snapshot 0
 
     # Refresh repositories
-    sudo $PARALLEL_ENV zypper refresh
+    sudo zypper refresh
 
     # Update system
-    sudo $PARALLEL_ENV zypper -vv dist-upgrade -y
+    sudo zypper -vv dist-upgrade -y
 
     echo -e "${GREEN}Checking connection...${NC}"
 
@@ -314,19 +312,19 @@ function main() {
 
     # Remove unncessary packages
     # shellcheck disable=SC2086
-    sudo $PARALLEL_ENV zypper remove --details -y --clean-deps $packages_to_remove
+    sudo zypper remove --details -y --clean-deps $packages_to_remove
     # shellcheck disable=SC2086
-    sudo $PARALLEL_ENV zypper remove --details -y --clean-deps -t pattern $patterns_to_remove
+    sudo zypper remove --details -y --clean-deps -t pattern $patterns_to_remove
     # shellcheck disable=SC2086
-    sudo $PARALLEL_ENV zypper -vv addlock -t pattern $patterns_to_remove
+    sudo zypper -vv addlock -t pattern $patterns_to_remove
 
     # Install packages
     # Don't use quotes, zypper won't recognize the packages
     # shellcheck disable=SC2086
-    sudo $PARALLEL_ENV zypper install --details -y $packages
+    sudo zypper install --details -y $packages
 
     # Install patterns
-    sudo $PARALLEL_ENV zypper install --details -yt pattern "${patterns[@]}"
+    sudo zypper install --details -yt pattern "${patterns[@]}"
 
     # Install opi packages
     opi -nm "${opi[@]}"
