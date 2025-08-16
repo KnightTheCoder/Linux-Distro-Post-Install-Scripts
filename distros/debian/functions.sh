@@ -55,6 +55,7 @@ function get_main_packages() {
             "qemu" "QEMU/KVM" OFF \
             "cockpit" "Cockpit (needs qemu)" OFF \
             "virtualbox" "Oracle Virtualbox" OFF \
+            "mullvad-vpn" "MullvadVPN" OFF \
             3>&1 1>&2 2>&3
     )
 
@@ -361,6 +362,12 @@ function handle_packages() {
             setups_to_handle+=(flatpak)
             ;;
 
+        mullvad-vpn)
+            packages=$(remove_package "$packages" "$package")
+
+            setups+=(mullvad-vpn)
+            ;;
+
         esac
     done
 }
@@ -661,6 +668,15 @@ function handle_setups() {
                 echo "options nvidia-drm modeset=1" | sudo tee -a /etc/modprobe.d/nvidia-options.conf
             fi
 
+            ;;
+
+        mullvad-vpn)
+            sudo curl -fsSLo /usr/share/keyrings/mullvad-keyring.asc https://repository.mullvad.net/deb/mullvad-keyring.asc
+
+            echo "deb [signed-by=/usr/share/keyrings/mullvad-keyring.asc arch=$( dpkg --print-architecture )] https://repository.mullvad.net/deb/stable stable main" | sudo tee /etc/apt/sources.list.d/mullvad.list
+
+            sudo apt update
+            sudo apt install mullvad-vpn -y
             ;;
 
         bash)

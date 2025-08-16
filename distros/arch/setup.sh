@@ -64,6 +64,7 @@ function main() {
             "cockpit" "Cockpit (needs qemu)" OFF \
             "virtualbox" "Oracle Virtualbox" OFF \
             "openrgb" "OpenRGB" OFF \
+            "mullvad-vpn" "MullvadVPN" OFF \
             3>&1 1>&2 2>&3
     )
 
@@ -274,6 +275,12 @@ function main() {
 
         flatpak)
             setups+=(flatpak)
+            ;;
+
+        mullvad-vpn)
+            packages=$(remove_package "$packages" "$package")
+
+            aur+=(mullvad-vpn-bin)
             ;;
 
         esac

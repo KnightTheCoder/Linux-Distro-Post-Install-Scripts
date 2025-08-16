@@ -90,6 +90,7 @@ function main() {
             "cockpit" "Cockpit (needs qemu)" OFF \
             "virtualbox" "Oracle Virtualbox" OFF \
             "OpenRGB" "OpenRGB" OFF \
+            "mullvad-vpn" "MullvadVPN" OFF \
             3>&1 1>&2 2>&3
     )
 
@@ -275,6 +276,12 @@ function main() {
             usergroups+=(wheel)
             ;;
 
+        mullvad-vpn)
+            packages=$(remove_package "$packages" "$package")
+
+            setups+=(mullvad-vpn)
+            ;;
+
         esac
     done
 
@@ -414,6 +421,14 @@ function main() {
             sudo zypper refresh
 
             sudo zypper install-new-recommends --repo repo-non-free
+            ;;
+
+        mullvad-vpn)
+            sudo rpm --import https://mullvad.net/media/mullvad-code-signing.asc
+
+            sudo zypper ar -f https://repository.mullvad.net/rpm/stable/x86_64/ MullvadVPN
+
+            sudo zypper in --details -y mullvad-vpn
             ;;
 
         bash)

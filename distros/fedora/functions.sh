@@ -56,6 +56,7 @@ function get_main_packages() {
             "cockpit" "Cockpit (needs qemu)" OFF \
             "VirtualBox" "Oracle Virtualbox" OFF \
             "openrgb" "OpenRGB" OFF \
+            "mullvad-vpn" "MullvadVPN" OFF \
             3>&1 1>&2 2>&3
     )
 
@@ -302,6 +303,12 @@ function handle_packages() {
 
         flatpak)
             setups_to_handle+=(flatpak)
+            ;;
+
+        mullvad-vpn)
+            packages=$(remove_package "$packages" "$package")
+
+            setups+=(mullvad-vpn)
             ;;
 
         esac
@@ -552,6 +559,12 @@ function handle_setups() {
                 sudo virsh pool-autostart virtio-win
                 sudo virsh pool-start virtio-win
             fi
+            ;;
+
+        mullvad-vpn)
+            sudo dnf config-manager addrepo --from-repofile=https://repository.mullvad.net/rpm/stable/mullvad.repo
+
+            sudo dnf install mullvad-vpn
             ;;
 
         flatpak)
