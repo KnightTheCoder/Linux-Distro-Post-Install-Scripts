@@ -562,7 +562,7 @@ function handle_setups() {
         mullvad-vpn)
             sudo dnf config-manager addrepo --from-repofile=https://repository.mullvad.net/rpm/stable/mullvad.repo
 
-            sudo dnf install mullvad-vpn
+            sudo dnf install mullvad-vpn -y
             ;;
 
         flatpak)
