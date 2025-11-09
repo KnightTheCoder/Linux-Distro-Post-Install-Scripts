@@ -168,8 +168,6 @@ function handle_packages() {
             ;;
 
         starship)
-            packages_to_handle=$(remove_package "$packages_to_handle" "$package")
-
             setups_to_handle+=(starship)
             ;;
 
