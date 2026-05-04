@@ -46,5 +46,7 @@
     "emmet.includeLanguages": {
         "javascript": "javascriptreact"
     },
-    "code-runner.enableAppInsights": false
+    "code-runner.enableAppInsights": false,
+    "chat.disableAIFeatures": true,
+    "git.addAICoAuthor": "off"
 }
